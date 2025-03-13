@@ -4,11 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Products;
+use App\Http\Controllers\{
+    HomeController,
+};
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/' , [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard', function () {
@@ -28,4 +29,5 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
     Route::get('/admin/products', Products::class)->name('admin.products');
 });
+
 require __DIR__.'/auth.php';

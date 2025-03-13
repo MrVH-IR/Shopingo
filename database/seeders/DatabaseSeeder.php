@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use illuminate\Support\Facades\Hash;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
@@ -19,7 +20,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-
+        User::create([
+            "name" => "Admin",
+            "email" => "admin@gmail.com",
+            "password" => Hash::make("password")
+        ]);
         Category::factory(5)->create()->each(function ($category) {
             Product::factory(10)->create(['category_id' => $category->id]);
         });
