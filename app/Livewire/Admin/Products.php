@@ -4,14 +4,15 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\Product;
 use App\Models\Category;
 
 class Products extends Component
 {
-    use WithPagination;
+    use WithPagination , WithFileUploads;
 
-    public $name, $description, $price, $stock, $category_id, $product_id;
+    public $name, $description, $price, $stock, $category_id, $product_id , $image;
     public $isEditing = false;
     public $showForm = false;
     protected $listeners = ['productUpdated' => 'render'];
@@ -23,6 +24,7 @@ class Products extends Component
         'price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
         'category_id' => 'required|exists:categories,id',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
     ];
 
     public function render()
@@ -48,6 +50,8 @@ class Products extends Component
 
     public function store()
     {
+        $imagePath = $this->image ? $this->image->store('images/products', 'public') : null;
+
         $this->validate();
         Product::create([
             'name' => $this->name,
@@ -55,6 +59,7 @@ class Products extends Component
             'price' => $this->price,
             'stock' => $this->stock,
             'category_id' => $this->category_id,
+            'image_uri' => $imagePath,
         ]);
         session()->flash('message', 'محصول با موفقیت اضافه شد.');
         $this->resetFields();
@@ -72,10 +77,13 @@ class Products extends Component
         $this->stock = $product->stock;
         $this->category_id = $product->category_id;
         $this->isEditing = true;
+        $this->showForm = true;
     }
 
     public function update()
     {
+        $imagePath = $this->image ? $this->image->store('images/products', 'public') : null;
+
         $this->validate();
         Product::findOrFail($this->product_id)->update([
             'name' => $this->name,
@@ -83,6 +91,7 @@ class Products extends Component
             'price' => $this->price,
             'stock' => $this->stock,
             'category_id' => $this->category_id,
+            'image_uri' => $imagePath,
         ]);
         session()->flash('message', 'محصول با موفقیت ویرایش شد.');
         $this->resetFields();
