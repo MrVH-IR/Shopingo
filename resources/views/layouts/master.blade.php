@@ -5,6 +5,7 @@
     @yield('head')
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="{{ url('/css/master.css') }}"
     @vite('resources/css/app.css')
 </head>
 
@@ -15,6 +16,11 @@
             <h1 class="text-4xl font-bold">Welcome to Our Store</h1>
             <p class="text-lg mt-2">Discover products and scroll to explore!</p>
         </div>
+        <a href="/your-link-here" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:scale-105 transition-transform">
+            <img src="{{ url('/images/menu/Shopingo_Menu_Icon_1.gif') }}"
+                 alt="Menu Icon"
+                 class="w-12 h-12 object-contain"> <!-- Fixed size and containment -->
+        </a>
     </header>
 
     <!-- SVG Positioned Under Header -->
