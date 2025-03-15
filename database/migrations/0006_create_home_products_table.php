@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('home_products', function (Blueprint $table) {
             $table->id();
-            $table->enum('first_div', ['active' , 'disable']);
-            $table->enum('second_div', ['active', 'disable']);
-            $table->enum('third_div', ['active', 'disable']);
+            $table->foreignId('first_div')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('second_div')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('third_div')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -17,6 +17,9 @@
                     <flux:navlist.item icon="product" :href="route('admin.products')" :current="request()->routeIs('admin.products')" wire:navigate>
                         {{ __('مدیریت محصولات') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="custom-settings" :href="route('admin.manage')" :current="request()->routeIs('admin.manage')" wire:navigate>
+                        {{ __('مدیریت صفحه اصلی') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

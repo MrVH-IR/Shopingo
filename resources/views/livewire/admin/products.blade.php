@@ -1,5 +1,5 @@
 <div class="p-6 bg-white dark:bg-zinc-800 shadow-md rounded-lg">
-    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">مدیریت محصولات</h2>
+    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Manage Products</h2>
 
     <!-- پیام موفقیت -->
     @if (session()->has('message'))

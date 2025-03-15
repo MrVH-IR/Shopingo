@@ -15,6 +15,7 @@
                 <ul class="ml-4">
                     <li>
                         <a href="{{ route('admin.products') }}" class="block p-2 hover:bg-gray-600">📦 مدیریت محصولات</a>
+                        <a href="{{ route('admin.manage') }}" class="block p-2 hover:bg-gray-600">⚙️ مدیریت صفحه اصلی</a>
                     </li>
                 </ul>
             </li>
