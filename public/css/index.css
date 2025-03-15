@@ -1,0 +1,66 @@
+/* Carousel animations */
+.animate-carousel {
+  width: 200%;
+  animation: scroll 30s linear infinite;
+}
+
+#second-carousel.animate-carousel {
+  animation: scroll-reverse 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Fade effects for sides */
+.overflow-hidden::before,
+.overflow-hidden::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.overflow-hidden::before {
+  left: 0;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.overflow-hidden::after {
+  right: 0;
+  background: linear-gradient(to left, white, transparent);
+}
+
+/* Pause animation on hover */
+.animate-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Item hover effect */
+.animate-carousel > div {
+  opacity: 0.9;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.animate-carousel > div:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  z-index: 2;
+}
