@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\Market\CategoryController;
+use App\Http\Controllers\Admin\{
+    AdminDashboardController,
+    Market\CategoryController,
+
+};
+
 
 Route::get('/', function () {
     return view('welcome');
