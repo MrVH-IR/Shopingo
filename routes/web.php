@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     AdminDashboardController,
     Market\CategoryController,
+    Market\BrandController,
+    Market\CommentController,
 
 };
 
@@ -39,10 +41,26 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
             Route::delete('/delete/{id}' , [CategoryController::class , 'destroy'])->name('admin.market.category.destroy');
             // Route::resource('/' , CategoryController::class); // Can Be used And Delete All Those Above For (Category).
         });
+        Route::prefix('brand')->group(function() {
+            Route::get('/' , [BrandController::class , 'index'])->name('admin.market.brand.index');
+            Route::get('/create' , [BrandController::class , 'create'])->name('admin.market.brand.create');
+            Route::post('/store' , [BrandController::class , 'store'])->name('admin.market.brand.store');
+            Route::get('/edit/{id}' , [BrandController::class , 'edit'])->name('admin.market.brand.edit');
+            Route::put('/update/{id}' , [BrandController::class , 'update'])->name('admin.market.brand.update');
+            Route::delete('/delete/{id}' , [BrandController::class , 'destroy'])->name('admin.market.brand.destroy');
+            // Route::resource('/' , BrandController::class); // Can Be used And Delete All Those Above For (Category).
+        });
+        Route::prefix('comment')->group(function() {
+            Route::get('/' , [CommentController::class , 'index'])->name('admin.market.comment.index');
+            // Route::get('/create' , [CommentController::class , 'create'])->name('admin.market.brand.create');
+            // Route::post('/store' , [CommentController::class , 'store'])->name('admin.market.brand.store');
+            Route::get('/edit/{id}' , [CommentController::class , 'edit'])->name('admin.market.comment.edit');
+            Route::put('/update/{id}' , [CommentController::class , 'update'])->name('admin.market.comment.update');
+            Route::delete('/delete/{id}' , [CommentController::class , 'destroy'])->name('admin.market.comment.destroy');
+            // Route::resource('/' , CommentController::class); // Can Be used And Delete All Those Above For (Category).
+        });
+
     });
-
-
-
 });
 
 /**

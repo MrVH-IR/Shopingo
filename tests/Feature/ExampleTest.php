@@ -16,4 +16,13 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function not_all_routes_should_work(): void
+    {
+        $adminRoute = $this->get('/admin');
+        $adminRoute->assertStatus(403);
+
+        $adminRoute2 = $this->get('/admin/category');
+        $adminRoute2->assertStatus(403);
+    }
 }
