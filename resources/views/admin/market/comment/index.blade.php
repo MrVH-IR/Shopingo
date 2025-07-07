@@ -54,7 +54,7 @@
                                 <td>شیائومی Note 20</td>
                                 <td>تایید شده</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
+                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
                                     <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-clock"></i>  عدم تایید</button>
                                 </td>
                             </tr>
@@ -66,7 +66,7 @@
                                 <td>شارژر type C</td>
                                 <td>در انتظار تایید</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
+                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
                                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>  تایید</button>
                                 </td>
                             </tr>
@@ -78,7 +78,7 @@
                                 <td>ساعت هوشمند apple watch</td>
                                 <td>در انتظار تایید</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
+                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
                                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>  تایید</button>
                                 </td>
                             </tr>
