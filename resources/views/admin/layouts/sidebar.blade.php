@@ -61,13 +61,13 @@
                         <i class="fas fa-angle-left angle"></i>
                     </section>
                     <section class="sidebar-dropdown">
-                        <a href="#">کپن تخفیف</a>
+                        <a href="{{ route('admin.market.discount.index') }}">کوپن تخفیف</a>
                         <a href="#">تخفیف عمومی</a>
                         <a href="#">فروش شگفت انگیز</a>
                     </section>
                 </section>
 
-            <a href="#" class="sidebar-link">
+            <a href="{{ route('admin.market.delivery.index') }}" class="sidebar-link">
                 <i class="fa fa-paper-plane"></i>
                 <span>روش های ارسال</span>
             </a>

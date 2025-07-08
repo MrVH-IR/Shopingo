@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\{
     Market\CategoryController,
     Market\BrandController,
     Market\CommentController,
+    Market\DeliveryController,
+    Market\DiscountController,
 
 };
 
@@ -41,6 +43,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
             Route::delete('/destroy/{id}' , [CategoryController::class , 'destroy'])->name('admin.market.category.destroy');
             // Route::resource('/' , CategoryController::class); // Can Be used And Delete All Those Above For (Category).
         });
+        //Brand
         Route::prefix('brand')->group(function() {
             Route::get('/' , [BrandController::class , 'index'])->name('admin.market.brand.index');
             Route::get('/create' , [BrandController::class , 'create'])->name('admin.market.brand.create');
@@ -48,8 +51,9 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
             Route::get('/edit/{id}' , [BrandController::class , 'edit'])->name('admin.market.brand.edit');
             Route::put('/update/{id}' , [BrandController::class , 'update'])->name('admin.market.brand.update');
             Route::delete('/destroy/{id}' , [BrandController::class , 'destroy'])->name('admin.market.brand.destroy');
-            // Route::resource('/' , BrandController::class); // Can Be used And Delete All Those Above For (Category).
+            // Route::resource('/' , BrandController::class); // Can Be used And Delete All Those Above For (Brand).
         });
+        //Comment
         Route::prefix('comment')->group(function() {
             Route::get('/' , [CommentController::class , 'index'])->name('admin.market.comment.index');
             Route::get('/show' , [CommentController::class , 'show'])->name('admin.market.comment.show');
@@ -57,9 +61,28 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
             // Route::get('/edit/{id}' , [CommentController::class , 'edit'])->name('admin.market.comment.edit');
             // Route::put('/update/{id}' , [CommentController::class , 'update'])->name('admin.market.comment.update');
             Route::delete('/destroy/{id}' , [CommentController::class , 'destroy'])->name('admin.market.comment.destroy');
-            // Route::resource('/' , CommentController::class); // Can Be used And Delete All Those Above For (Category).
+            // Route::resource('/' , CommentController::class); // Can Be used And Delete All Those Above For (Comment).
         });
-
+        //Delivery
+        Route::prefix('delivery')->group(function() {
+            Route::get('/' , [DeliveryController::class , 'index'])->name('admin.market.delivery.index');
+            Route::get('/create' , [DeliveryController::class , 'create'])->name('admin.market.delivery.create');
+            Route::post('/store' , [DeliveryController::class , 'store'])->name('admin.market.delivery.store');
+            Route::get('/edit/{id}' , [DeliveryController::class , 'edit'])->name('admin.market.delivery.edit');
+            Route::put('/update/{id}' , [DeliveryController::class , 'update'])->name('admin.market.delivery.update');
+            Route::delete('/destroy/{id}' , [DeliveryController::class , 'destroy'])->name('admin.market.delivery.destroy');
+            // Route::resource('/' , DeliveryController::class); // Can Be used And Delete All Those Above For (Delivery).
+        });
+        //Discount
+        Route::prefix('discount')->group(function() {
+            Route::get('/' , [DiscountController::class , 'index'])->name('admin.market.discount.index');
+            Route::get('/create' , [DiscountController::class , 'create'])->name('admin.market.discount.create');
+            Route::post('/store' , [DiscountController::class , 'store'])->name('admin.market.discount.store');
+            Route::get('/edit/{id}' , [DiscountController::class , 'edit'])->name('admin.market.discount.edit');
+            Route::put('/update/{id}' , [DiscountController::class , 'update'])->name('admin.market.discount.update');
+            Route::delete('/destroy/{id}' , [DiscountController::class , 'destroy'])->name('admin.market.discount.destroy');
+            // Route::resource('/' , DiscountController::class); // Can Be used And Delete All Those Above For (Discount).
+        });
     });
 });
 
