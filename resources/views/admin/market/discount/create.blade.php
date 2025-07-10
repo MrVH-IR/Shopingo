@@ -15,7 +15,7 @@
              <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.discount.index') }}">کوپن تخفیف</a>
+            <a href="{{ route('admin.market.discount.copan') }}">کوپن تخفیف</a>
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
             ایجاد کوپن تخفیف
@@ -32,7 +32,7 @@
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.discount.index') }}" class="btn btn-info btn-sm">بازگشت</a>
+                    <a href="{{ route('admin.market.discount.copan') }}" class="btn btn-info btn-sm">بازگشت</a>
                 </section>
 
                 <section>
@@ -41,7 +41,8 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Category" class="h6">کد کوپن</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                        <input type="text" name="discount" id="" class="form-control form-control-sm">
+                                        <i class="fa fa-bolt" onclick="randomDiscount()"> ایجاد کد رندوم</i>
                                 </div>
                             </section>
                             <section class="col-12 col-md-6">
@@ -108,5 +109,16 @@
         altInput: true,
         altFormat: "F j, Y",
     });
+
+    function randomDiscount(length = 10)
+    {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0 ; i < length ; i++){
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        document.getElementsByName('discount')[0].value = result;
+    }
 </script>
 @endsection
