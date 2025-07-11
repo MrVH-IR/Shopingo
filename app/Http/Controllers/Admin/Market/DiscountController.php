@@ -10,12 +10,12 @@ class DiscountController extends Controller
 
     public function copan()
     {
-        return view('admin.market.discount.index');
+        return view('admin.market.discount.copan');
     }
 
     public function copanCreate()
     {
-        return view('admin.market.discount.create');
+        return view('admin.market.discount.copan-create');
     }
 
     public function commonDiscount()

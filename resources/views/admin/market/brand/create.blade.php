@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>برند</title>
+<title>ایجاد برند</title>
 @endsection
 
 @section('content')

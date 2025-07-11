@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>روش های ارسال</title>
+<title>ایجاد روش ارسال جدید</title>
 @endsection
 
 @section('content')

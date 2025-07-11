@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>دسته بندی</title>
+<title>ایجاد دسته بندی</title>
 @endsection
 
 @section('content')

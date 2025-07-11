@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>کوپن تخفیف</title>
+<title>افزودن به فروش شگفت انگیز</title>
 @endsection
 
 @section('content')
@@ -15,10 +15,10 @@
              <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.discount.copan') }}">کوپن تخفیف</a>
+            <a href="{{ route('admin.market.discount.amazingSale') }}">فروش شگفت انگیز</a>
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ایجاد کوپن تخفیف
+            افزودن به فروش شگفت انگیز
         </li>
     </ol>
 </nav>
@@ -28,11 +28,11 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                       ایجاد کوپن تخفیف
+                       افزودن به فروش شگفت انگیز
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.discount.copan') }}" class="btn btn-info btn-sm">بازگشت</a>
+                    <a href="{{ route('admin.market.discount.amazingSale') }}" class="btn btn-info btn-sm">بازگشت</a>
                 </section>
 
                 <section>
@@ -40,35 +40,13 @@
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">کد کوپن</label>
-                                        <input type="text" name="discount" id="" class="form-control form-control-sm">
-                                        <i class="fa fa-bolt" onclick="randomDiscount()"> ایجاد کد رندوم</i>
-                                </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group ">
-                                    <label for="Category" class="h6">نوع کوپن</label>
-                                    <select name="" id="" class="form-control form-control-sm">
-                                        <option value="">عمومی</option>
-                                        <option value="">خصوصی</option>
-                                    </select>
+                                    <label for="Category" class="h6">نام کالا</label>
+                                        <input type="text" name="" id="" class="form-control form-control-sm">
                                 </div>
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Category" class="h6">درصد تخفیف</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
-                                </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">حداکثر تخفیف</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
-                                </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">عنوان مناسبت</label>
                                         <input type="text" name="" id="" class="form-control form-control-sm">
                                 </div>
                             </section>
