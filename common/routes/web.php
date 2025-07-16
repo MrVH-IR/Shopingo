@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\{
     Market\CommentController,
     Market\DeliveryController,
     Market\DiscountController,
+    Market\OrderController,
 
 };
 
@@ -69,7 +70,19 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
             Route::get('/common-discount/create' , [DiscountController::class , 'commonDiscountCreate'])->name('admin.market.discount.commonDiscount.create');
             Route::get('/amazing-sale' , [DiscountController::class , 'amazingSale'])->name('admin.market.discount.amazingSale');
             Route::get('/amazing-sale/create' , [DiscountController::class , 'amazingSaleCreate'])->name('admin.market.discount.amazingSale.create');
-            // Route::resource('/' , DiscountController::class); // Can Be used And Delete All Those Above For (Discount).
+        });
+                //Discount
+        Route::prefix('order')->group(function() {
+            Route::get('/' , [OrderController::class , 'all'])->name('admin.market.order.all');
+            Route::get('/new-order' , [OrderController::class , 'newOrders'])->name('admin.market.order.newOrders');
+            Route::get('/sending' , [OrderController::class , 'sending'])->name('admin.market.order.sending');
+            Route::get('/unpaid' , [OrderController::class , 'unpaid'])->name('admin.market.order.unpaid');
+            Route::get('/canceled' , [OrderController::class , 'cancele'])->name('admin.market.order.canceled');
+            Route::get('/returned' , [OrderController::class , 'returned'])->name('admin.market.order.returned');
+            Route::get('/show' , [OrderController::class , 'show'])->name('admin.market.order.show');
+            Route::get('/change-send-status' , [OrderController::class , 'changeSendStatus'])->name('admin.market.order.changeStatus');
+            Route::get('/change-order-status' , [OrderController::class , 'changeOrderStatus'])->name('admin.market.order.orderStatus');
+            Route::get('/cancel-order' , [OrderController::class , 'cancelOrder'])->name('admin.market.order.cancelOrder');
         });
     });
 });

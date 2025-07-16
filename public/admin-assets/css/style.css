@@ -43,6 +43,14 @@
     max-width: 16rem;
 }
 
+.max-width-8-rem {
+    max-width: 8rem;
+}
+
 .main-body table{
     font-size: .75rem;
+}
+
+.h-150px {
+    height: 150px;
 }
