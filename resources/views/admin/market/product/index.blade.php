@@ -51,7 +51,7 @@
                             <tr>
                                 <th>1</th>
                                 <td>گوشی آیفون 12</td>
-                                <td><img src="{{ asset('admin-assets/images/Iphone-12.png') }}" alt="Product" style="max-height: 4rem;"></td>
+                                <td><img src="{{ asset('admin-assets/images/Iphone-12.png') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
                                 <td>12.000.000 تومان</td>
                                 <td>1 کیلو</td>
                                 <td>کالای الکترونیکی</td>
@@ -76,7 +76,7 @@
                             <tr>
                                 <th>2</th>
                                 <td>تلویزیون Smart TV LG</td>
-                                <td><img src="{{ asset('admin-assets/images/LG-TV.jpeg') }}" alt="Product" style="max-height: 4rem;"></td>
+                                <td><img src="{{ asset('admin-assets/images/LG-TV.jpeg') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
                                 <td>90.000.000 تومان</td>
                                 <td>12 کیلو</td>
                                 <td>کالای الکترونیکی</td>
@@ -101,7 +101,7 @@
                             <tr>
                                 <th>3</th>
                                 <td>گوشی سامسونگ S23</td>
-                                <td><img src="{{ asset('admin-assets/images/samsung-s23.jpg') }}" alt="Product" style="max-height: 4rem;"></td>
+                                <td><img src="{{ asset('admin-assets/images/samsung-s23.jpg') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
                                 <td>60.000.000 تومان</td>
                                 <td>250 گرم</td>
                                 <td>کالای الکترونیکی</td>

@@ -40,7 +40,7 @@
                         <thead>
                             <th>#</th>
                             <th>نام برند</th>
-                            <th>لوگو</th>
+                            <th>تصویر برند</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>

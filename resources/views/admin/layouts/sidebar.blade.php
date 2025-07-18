@@ -16,10 +16,10 @@
                     </section>
                     <section class="sidebar-dropdown">
                         <a href="{{ route('admin.market.category.index') }}">دسته بندی</a>
-                        <a href="#">فرم کالا</a>
+                        <a href="{{ route('admin.market.property.index') }}">فرم کالا</a>
                         <a href="{{ route('admin.market.brand.index') }}">برند ها</a>
                         <a href="{{ route('admin.market.product.index') }}">کالا ها</a>
-                        <a href="#">انبار</a>
+                        <a href="{{ route('admin.market.store.index') }}">انبار</a>
                         <a href="{{ route('admin.market.comment.index') }}">نظرات</a>
                     </section>
                 </section>
@@ -81,12 +81,12 @@
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
-                    <a>دسته بندی</a>
-                    <a>پست ها</a>
+                    <a href="{{ route('admin.content.category.index') }}">دسته بندی</a>
+                    <a href="{{ route('admin.content.post.index') }}">پست ها</a>
                     <a>نظرات</a>
-                    <a>منو</a>
-                    <a>سوالات متداول</a>
-                    <a>پیج ساز</a>
+                    <a href="{{ route('admin.content.menu.index') }}">منو</a>
+                    <a href="{{ route('admin.content.faq.index') }}">سوالات متداول</a>
+                    <a href="{{ route('admin.content.page.index') }}">پیج ساز</a>
                 </section>
             </section>
 
