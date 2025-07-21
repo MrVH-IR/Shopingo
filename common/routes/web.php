@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\{
     Content\MenuController,
     Content\PageController,
     Content\PostController,
+    User\AdminUserController,
 
 };
 
@@ -197,6 +198,19 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::put('/update/{id}' , [PostController::class , 'update'])->name('admin.content.post.update');
             Route::delete('/destroy/{id}' , [PostController::class , 'destroy'])->name('admin.content.post.destroy');
             // Route::resource('/' , PostController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+    });
+    //User Prefix
+    Route::prefix('user')->namespace('User')->group(function () {
+        //Admin
+        Route::prefix('admin-user')->group(function() {
+            Route::get('/' , [AdminUserController::class , 'index'])->name('admin.user.admin-user.index');
+            Route::get('/create' , [AdminUserController::class , 'create'])->name('admin.user.admin-user.create');
+            Route::post('/store' , [AdminUserController::class , 'store'])->name('admin.user.admin-user.store');
+            Route::get('/edit/{id}' , [AdminUserController::class , 'edit'])->name('admin.user.admin-user.edit');
+            Route::put('/update/{id}' , [AdminUserController::class , 'update'])->name('admin.user.admin-user.update');
+            Route::delete('/destroy/{id}' , [AdminUserController::class , 'destroy'])->name('admin.user.admin-user.destroy');
+            // Route::resource('/' , AdminUserController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });
 });

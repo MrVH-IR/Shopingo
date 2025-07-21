@@ -99,7 +99,7 @@
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
-                    <a href="#">کاربران ادمین</a>
+                    <a href="{{ route('admin.user.admin-user.index') }}">کاربران ادمین</a>
                     <a href="#">مشتریان</a>
                     <a href="#">سطوح دسترسی</a>
                 </section>
