@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>کاربران ادمین</title>
+<title>مشتریان</title>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
              <a href="#">بخش کاربران</a>
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            کاربران ادمین
+            مشتریان
         </li>
     </ol>
 </nav>
@@ -25,11 +25,11 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        کاربران ادمین
+                        مشتریان
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.user.admin-user.create') }}" class="btn btn-info btn-sm">ایجاد ادمین چدید</a>
+                    <a href="{{ route('admin.user.customer.create') }}" class="btn btn-info btn-sm">ایجاد مشتری چدید</a>
                     <div class="max-width-16-rem">
                         <input type="text" placeholder="جستجو" name="search" id="search" class="form-control form-control-sm form-text">
                     </div>
@@ -43,7 +43,7 @@
                             <th>شماره موبایل</th>
                             <th>نام</th>
                             <th>نام خانوادگی</th>
-                            <th>نقش</th>
+                            <th>کد ملی</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                                 <th>091209993</th>
                                 <td>علیرضا</td>
                                 <td>اسب شاخدار</td>
-                                <td>مسئول فروش اسب ها</td>
+                                <td>5987654421</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
@@ -66,7 +66,7 @@
                                 <th>091209993</th>
                                 <td>علیرضا</td>
                                 <td>اسب شاخدار</td>
-                                <td>مسئول فروش اسب ها</td>
+                                <td>5987654421</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
@@ -79,7 +79,7 @@
                                 <th>091209993</th>
                                 <td>علیرضا</td>
                                 <td>اسب شاخدار</td>
-                                <td>مسئول فروش اسب ها</td>
+                                <td>5987654421</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>

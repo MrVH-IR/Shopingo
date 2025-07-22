@@ -21,6 +21,9 @@ use App\Http\Controllers\Admin\{
     Content\PageController,
     Content\PostController,
     User\AdminUserController,
+    User\CustomerController,
+    User\RoleController,
+    User\PermissionController,
 
 };
 
@@ -211,6 +214,36 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::put('/update/{id}' , [AdminUserController::class , 'update'])->name('admin.user.admin-user.update');
             Route::delete('/destroy/{id}' , [AdminUserController::class , 'destroy'])->name('admin.user.admin-user.destroy');
             // Route::resource('/' , AdminUserController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+        //Customer
+        Route::prefix('customer')->group(function() {
+            Route::get('/' , [CustomerController::class , 'index'])->name('admin.user.customer.index');
+            Route::get('/create' , [CustomerController::class , 'create'])->name('admin.user.customer.create');
+            Route::post('/store' , [CustomerController::class , 'store'])->name('admin.user.customer.store');
+            Route::get('/edit/{id}' , [CustomerController::class , 'edit'])->name('admin.user.customer.edit');
+            Route::put('/update/{id}' , [CustomerController::class , 'update'])->name('admin.user.customer.update');
+            Route::delete('/destroy/{id}' , [CustomerController::class , 'destroy'])->name('admin.user.customer.destroy');
+            // Route::resource('/' , CustomerController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+        //Role
+        Route::prefix('role')->group(function() {
+            Route::get('/' , [RoleController::class , 'index'])->name('admin.user.role.index');
+            Route::get('/create' , [RoleController::class , 'create'])->name('admin.user.role.create');
+            Route::post('/store' , [RoleController::class , 'store'])->name('admin.user.role.store');
+            Route::get('/edit/{id}' , [RoleController::class , 'edit'])->name('admin.user.role.edit');
+            Route::put('/update/{id}' , [RoleController::class , 'update'])->name('admin.user.role.update');
+            Route::delete('/destroy/{id}' , [RoleController::class , 'destroy'])->name('admin.user.role.destroy');
+            // Route::resource('/' , RoleController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+        //Permission
+        Route::prefix('permission')->group(function() {
+            Route::get('/' , [PermissionController::class , 'index'])->name('admin.user.permission.index');
+            Route::get('/create' , [PermissionController::class , 'create'])->name('admin.user.permission.create');
+            Route::post('/store' , [PermissionController::class , 'store'])->name('admin.user.permission.store');
+            Route::get('/edit/{id}' , [PermissionController::class , 'edit'])->name('admin.user.permission.edit');
+            Route::put('/update/{id}' , [PermissionController::class , 'update'])->name('admin.user.permission.update');
+            Route::delete('/destroy/{id}' , [PermissionController::class , 'destroy'])->name('admin.user.permission.destroy');
+            // Route::resource('/' , PermissionController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });
 });

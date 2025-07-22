@@ -100,8 +100,8 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.user.admin-user.index') }}">کاربران ادمین</a>
-                    <a href="#">مشتریان</a>
-                    <a href="#">سطوح دسترسی</a>
+                    <a href="{{ route('admin.user.customer.index') }}">مشتریان</a>
+                    <a href="{{ route('admin.user.role.index') }}">سطوح دسترسی</a>
                 </section>
             </section>
 
