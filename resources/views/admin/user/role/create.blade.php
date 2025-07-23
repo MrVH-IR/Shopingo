@@ -78,7 +78,7 @@
                                             <input type="checkbox" class="form-check-input" name="" id="check3" checked>
                                             <label class="form-check-label mr-3 mt-1" for="check3">حذف کالای جدید</label>
                                         </div>
-                                    </section>×
+                                    </section>
                                     <section class="col-md-3">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" name="" id="check4" checked>

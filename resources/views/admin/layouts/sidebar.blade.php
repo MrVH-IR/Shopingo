@@ -129,8 +129,8 @@
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
-                    <a href="#">اعلامیه ایمیلی</a>
-                    <a href="#">اعلامیه پیامک</a>
+                    <a href="{{ route('admin.email.index') }}">اعلامیه ایمیلی</a>
+                    <a href="{{ route('admin.sms.index') }}">اعلامیه پیامک</a>
                 </section>
             </section>
 

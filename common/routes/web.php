@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\{
     User\CustomerController,
     User\RoleController,
     User\PermissionController,
+    Notification\EmailController,
+    Notification\SMSController,
 
 };
 
@@ -244,6 +246,29 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::put('/update/{id}' , [PermissionController::class , 'update'])->name('admin.user.permission.update');
             Route::delete('/destroy/{id}' , [PermissionController::class , 'destroy'])->name('admin.user.permission.destroy');
             // Route::resource('/' , PermissionController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+    });
+    //Notification
+    Route::prefix('notification')->namespace('Notification')->group(function () {
+        Route::prefix('email')->group(function () {
+            //Email
+            Route::get('/' , [EmailController::class , 'index'])->name('admin.email.index');
+            Route::get('/create' , [EmailController::class , 'create'])->name('admin.email.create');
+            Route::post('/store' , [EmailController::class , 'store'])->name('admin.email.store');
+            Route::get('/edit/{id}' , [EmailController::class , 'edit'])->name('admin.email.edit');
+            Route::put('/update/{id}' , [EmailController::class , 'update'])->name('admin.email.update');
+            Route::delete('/destroy/{id}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
+            // Route::resource('/' , EmailController::class); // Can Be used And Delete All Those Above For (Comment).
+        });
+        //SMS
+        Route::prefix('sms')->group(function () {
+            Route::get('/' , [SMSController::class , 'index'])->name('admin.sms.index');
+            Route::get('/create' , [SMSController::class , 'create'])->name('admin.sms.create');
+            Route::post('/store' , [SMSController::class , 'store'])->name('admin.sms.store');
+            Route::get('/edit/{id}' , [SMSController::class , 'edit'])->name('admin.sms.edit');
+            Route::put('/update/{id}' , [SMSController::class , 'update'])->name('admin.sms.update');
+            Route::delete('/destroy/{id}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy');
+            // Route::resource('/' , SmsController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });
 });
