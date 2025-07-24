@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\{
     User\PermissionController,
     Notification\EmailController,
     Notification\SMSController,
+    Ticket\TicketController,
+    Setting\SettingController,
 
 };
 
@@ -270,6 +272,28 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::delete('/destroy/{id}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy');
             // Route::resource('/' , SmsController::class); // Can Be used And Delete All Those Above For (Comment).
         });
+    });
+    Route::prefix('ticket')->namespace('Ticket')->group(function () {
+            Route::get('/new-tickets' , action: [TicketController::class , 'newTickets'])->name('admin.ticket.newtickets');
+            Route::get('/open-tickets' , [TicketController::class , 'openTickets'])->name('admin.ticket.opentickets');
+            Route::get('/close-tickets' , [TicketController::class , 'closeTickets'])->name('admin.ticket.closetickets');
+            Route::get('/' , [TicketController::class , 'index'])->name('admin.ticket.index');
+            Route::get('/create' , [TicketController::class , 'create'])->name('admin.ticket.create');
+            Route::get('/show' , [TicketController::class , 'show'])->name('admin.ticket.show');
+            Route::post('/store' , [TicketController::class , 'store'])->name('admin.ticket.store');
+            Route::get('/edit/{id}' , [TicketController::class , 'edit'])->name('admin.ticket.edit');
+            Route::put('/update/{id}' , [TicketController::class , 'update'])->name('admin.ticket.update');
+            Route::delete('/destroy/{id}' , [TicketController::class , 'destroy'])->name('admin.ticket.destroy');
+            // Route::resource('/' , TicketController::class); // Can Be used And Delete All Those Above For (Comment).
+    });
+    Route::prefix('setting')->namespace('Setting')->group(function() {
+            Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index');
+            Route::get('/create' , [SettingController::class , 'create'])->name('admin.setting.create');
+            Route::post('/store' , [SettingController::class , 'store'])->name('admin.setting.store');
+            Route::get('/edit/{id}' , [SettingController::class , 'edit'])->name('admin.setting.edit');
+            Route::put('/update/{id}' , [SettingController::class , 'update'])->name('admin.setting.update');
+            Route::delete('/destroy/{id}' , [SettingController::class , 'destroy'])->name('admin.setting.destroy');
+            // Route::resource('/' , SettingController::class); // Can Be used And Delete All Those Above For (Comment).
     });
 });
 
