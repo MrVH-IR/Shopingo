@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menus', static function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('url');
-            $table->string('status');
-            $table->foreignId('parent_id')->nullable()->constrained('menus')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('persian_name');
+            $table->string('original_name');
+            $table->string('slug')->unique();
+            $table->text('image');
+            $table->tinyInteger('status')->default(0)->comment('0=Inactive, 1=Active');
+            $table->string('tags')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('brands');
     }
 };
