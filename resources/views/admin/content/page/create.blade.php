@@ -67,8 +67,33 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
-<script>
-    CKEDITOR.replace('body');
-</script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#body'), {
+                language: 'fa',
+                toolbar: [
+                    'heading',
+                    '|',
+                    'bold', 'italic', 'underline', 'strikethrough',
+                    'subscript', 'superscript',
+                    '|',
+                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
+                    '|',
+                    'link', 'blockQuote', 'code', 'codeBlock',
+                    '|',
+                    'bulletedList', 'numberedList', 'todoList',
+                    'outdent', 'indent', 'alignment',
+                    '|',
+                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
+                    '|',
+                    'highlight', 'selectAll',
+                    '|',
+                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
+                ]
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection
