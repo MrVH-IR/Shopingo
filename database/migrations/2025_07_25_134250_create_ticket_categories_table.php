@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menus', static function (Blueprint $table) {
+        Schema::create('ticket_categories', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('url');
-            $table->string('status');
-            $table->foreignId('parent_id')->constrained('menus')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->tinyInteger('status')->default(0)->comment('0 for Inactive, 1 for Active');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('ticket_categories');
     }
 };

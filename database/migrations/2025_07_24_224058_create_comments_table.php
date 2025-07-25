@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', static function (Blueprint $table) {
             $table->id();
             $table->text('body');
 
             $table->morphs('commentable');
 
-            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('parent_id')->constrained('comments');
+            $table->foreignId('author_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('parent_id')->constrained('comments')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->tinyInteger('seen')->default(0)->comment('0 => for Unseen, 1 for Seen');
             $table->tinyInteger('approved')->default(0)->comment('0 for Unapproved, 1 for Approved');

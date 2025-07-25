@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('tags');
             $table->timestamp('published_at');
 
-            $table->foreignId('author_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('category_id')->constrained('post_categories')->cascadeOnDelete();
+            $table->foreignId('author_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('post_categories')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
             $table->softDeletes();

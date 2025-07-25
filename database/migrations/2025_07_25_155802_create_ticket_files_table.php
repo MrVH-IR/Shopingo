@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menus', static function (Blueprint $table) {
+        Schema::create('ticket_files', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('url');
-            $table->string('status');
-            $table->foreignId('parent_id')->constrained('menus')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->text('file_path');
+            $table->bigInteger('file_size');
+            $table->string('file_type', '50');
+            $table->foreignId('ticket_id')->constrained('tickets')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('ticket_files');
     }
 };
