@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_default_values', function (Blueprint $table) {
+        Schema::create('category_default_values', static function (Blueprint $table) {
             $table->id();
+            $table->string('value');
+
+            $table->foreignId('category_attribute_id')->constrained('category_attributes')->cascadeOnUpdate()->cascadeOnDelete();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
