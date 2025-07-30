@@ -4,30 +4,28 @@ namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class TicketController extends Controller
 {
-    public function newTickets()
+    public function newTickets() : View
     {
         return view('admin.ticket.index');
     }
-    public function openTickets()
+    public function openTickets() : View
     {
         return view('admin.ticket.index');
-
     }
     public function closeTickets()
     {
         return view('admin.ticket.index');
-
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
         return view('admin.ticket.index');
-
     }
 
     /**
@@ -49,7 +47,7 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show() : View
     {
         return view('admin.ticket.show');
     }
@@ -57,7 +55,7 @@ class TicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id) : Void
     {
         //
     }
@@ -65,7 +63,7 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id) : Void
     {
         //
     }
@@ -73,7 +71,7 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id) : Void
     {
         //
     }

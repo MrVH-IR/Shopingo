@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_default_values', static function (Blueprint $table) {
+        Schema::create('category_attribute_default_values', static function (Blueprint $table) {
             $table->id();
             $table->string('value');
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_default_values');
+        Schema::dropIfExists('category_attribute_default_values');
     }
 };

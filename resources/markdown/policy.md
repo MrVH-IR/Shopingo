@@ -1,3 +1,4 @@
 # Privacy Policy
 
-Edit this file to define the privacy policy for your application.
+<p>Your Personal Data Will <strong>NOT</strong> Be shared to a 3rd Party Software and 
+will be used only for better understanding the needs of our customers</p>

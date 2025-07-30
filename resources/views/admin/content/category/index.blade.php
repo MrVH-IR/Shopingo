@@ -38,10 +38,12 @@
                 <section class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
+                        <tr>
                             <th>#</th>
                             <th>نام دسته بندی</th>
                             <th>دسته والد</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
+                        </tr>
                         </thead>
                         <tbody>
                             <tr>
