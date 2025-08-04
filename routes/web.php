@@ -18,7 +18,17 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
-Route::get('test' , function() {
-    return view('test');
+// Informations 
+Route::get('/about-us', function () {
+    return view('informations.about');
 });
+
+Route::get('/contact-us', function () {
+    return view('informations.contact');
+});
+
+Route::get('/partnership', function() {
+    return view('informations.partnership');
+});
+
+// End Informations Route

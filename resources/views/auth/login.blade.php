@@ -44,5 +44,13 @@
                 </x-button>
             </div>
         </form>
+
+<div class="flex justify-end mt-2">
+    <a href="{{ url('/register') }}" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline transition-colors duration-150 ease-in-out">
+        Not registered?
+    </a>
+</div>
+
+
     </x-authentication-card>
 </x-guest-layout>
