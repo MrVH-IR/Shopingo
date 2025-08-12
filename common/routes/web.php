@@ -151,9 +151,10 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [ContentCategoryContoller::class , 'index'])->name('admin.content.category.index');
             Route::get('/create' , [ContentCategoryContoller::class , 'create'])->name('admin.content.category.create');
             Route::post('/store' , [ContentCategoryContoller::class , 'store'])->name('admin.content.category.store');
-            Route::get('/edit/{id}' , [ContentCategoryContoller::class , 'edit'])->name('admin.content.category.edit');
-            Route::put('/update/{id}' , [ContentCategoryContoller::class , 'update'])->name('admin.content.category.update');
-            Route::delete('/destroy/{id}' , [ContentCategoryContoller::class , 'destroy'])->name('admin.content.category.destroy');
+            Route::get('/edit/{postCategory}' , [ContentCategoryContoller::class , 'edit'])->name('admin.content.category.edit');
+            Route::put('/update/{postCategory}' , [ContentCategoryContoller::class , 'update'])->name('admin.content.category.update');
+            Route::delete('/destroy/{postCategory}' , [ContentCategoryContoller::class , 'destroy'])->name('admin.content.category.destroy');
+            Route::get('/status/{postCategory}' , [ContentCategoryContoller::class , 'status'])->name('admin.content.category.status');
             // Route::resource('/' , ContentCategoryContoller::class); // Can Be used And Delete All Those Above For (Category).
         });
         //Comment
