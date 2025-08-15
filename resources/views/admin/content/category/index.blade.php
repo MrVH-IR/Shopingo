@@ -143,36 +143,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $category)
+                        @foreach($postCategories as $postCategory)
                             <tr>
-                                <th>{{ $category->id }}</th>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->description }}</td>
-                                <td>{{ $category->slug }}</td>
+                                <th>{{ $postCategory->id }}</th>
+                                <td>{{ $postCategory->name }}</td>
+                                <td>{{ $postCategory->description }}</td>
+                                <td>{{ $postCategory->slug }}</td>
                                 <td>
-                                    <img src="{{ $category->image }}"
+                                    <img src="{{ $postCategory->image }}"
                                          alt="images"
                                          class="preview-img"
                                          style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
                                          loading="lazy">
                                 </td>
-                                <td>{{ $category->tags }}</td>
+                                <td>{{ $postCategory->tags }}</td>
                                 <td>
                                     <div class="status-wrapper" style="position: relative;">
                                         <label>
-                                            <input id="{{ $category->id }}" onchange="changeStatus({{ $category->id }})" type="checkbox"
-                                                   @if($category->status == 1) checked @endif
-                                                   data-url="{{ route('admin.content.category.status', $category->id) }}">
+                                            <input id="{{ $postCategory->id }}" onchange="changeStatus({{ $postCategory->id }})" type="checkbox"
+                                                   @if($postCategory->status == 1) checked @endif
+                                                   data-url="{{ route('admin.content.category.status', $postCategory->id) }}">
                                         </label>
                                     </div>
                                 </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.content.category.edit' , $category->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <form action="{{ route('admin.content.category.destroy', $category->id) }}" method="POST" id="delete-form-{{ $category->id }}" class="d-none">
+                                    <a href="{{ route('admin.content.category.edit' , $postCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.content.category.destroy', $postCategory->id) }}" method="POST" id="delete-form-{{ $postCategory->id }}" class="d-none">
                                         @csrf
                                         @method('DELETE')
                                     </form>
-                                    <button type="submit" form="delete-form-{{ $category->id }}" class="btn btn-danger btn-sm">
+                                    <button type="submit" form="delete-form-{{ $postCategory->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $postCategory->id }}" >
                                         <i class="fa fa-trash-alt"></i> حذف
                                     </button>
                                 </td>
@@ -184,7 +186,7 @@
             </section>
         </section>
     </section>
-            {{ $categories->links() }}
+            {{ $postCategories->links() }}
 
     <div id="imageModal" class="modal-overlay">
         <span class="close-btn">&times;</span>
@@ -274,4 +276,6 @@
                 }, 3000);
             }
     </script>
+
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

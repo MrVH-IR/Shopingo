@@ -22,6 +22,9 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 - Bootstrap 5
 - FontAwesome 6
 - MySQL (or any Laravel-supported database)
+- SweetAlert
+- ToastAlert
+- CKEditor
 
 ### 📦 Installation & Setup
 
@@ -66,12 +69,12 @@ sudo usermod -aG docker $USER
 newgrp docker
 docker --version
 
-cp -r my-laravel-project ./app
+cp -r shopingo ./app
 
 docker-compose up -d --build
 
 docker exec -it laravel_app bash
 composer install
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 ```

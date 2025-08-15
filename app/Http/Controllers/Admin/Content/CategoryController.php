@@ -14,10 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = PostCategory::orderBy('created_at', 'desc')
+        $postCategories = PostCategory::orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->cursorPaginate(10 , '*' , 'page');
-        return view('admin.content.category.index' , compact('categories'));
+        return view('admin.content.category.index' , compact('postCategories'));
     }
 
     /**
@@ -80,7 +80,7 @@ class CategoryController extends Controller
             $validatedData['image'] = '/postcategories/' . $fileName;
         }
         $postCategory->update($validatedData);
-        return redirect()->route('admin.content.category.index')->with('success' , 'Category updated successfully');
+        return redirect()->route('admin.content.category.index')->with('swal-success' , 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -127,5 +127,12 @@ class CategoryController extends Controller
                 'status' => false,
             ]);
         }
+    }
+
+    public function test($id) {
+        return response()->json([
+            "status" => 200,
+            "message" => "Test Message",
+        ]);
     }
 }
