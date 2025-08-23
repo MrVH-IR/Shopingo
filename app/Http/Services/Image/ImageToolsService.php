@@ -13,11 +13,6 @@ class ImageToolsService
     protected $finalImageDirectory;
     protected $finalImageName;
 
-    public function __construct()
-    {
-        //
-    }
-
     public function setImage($image)
     {
         $this->image = $image;
@@ -92,7 +87,7 @@ class ImageToolsService
     {
         if(!file_exists($imageDirectory))
         {
-            mkdir($imageDirectory, 666, true);
+            mkdir($imageDirectory, 0777, true);
         }
     }
 
@@ -107,7 +102,8 @@ class ImageToolsService
         $this->getImageName() ?? $this->setImageName(time());
         $this->getImageExtension() ?? $this->setImageExtension($this->image->extension());
 
-        $finalImageDirectory = empty($this->getExclusiveDirectory() ? $this->getImageDirectory() : $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getImageDirectory());
+        $finalImageDirectory = $this->getExclusiveDirectory() ? $this->getExclusiveDirectory() . DIRECTORY_SEPARATOR . $this->getImageDirectory() : $this->getImageDirectory();
+
         $this->setFinalImageDirectory($finalImageDirectory);
 
         $this->setFinalImageName($this->getImageName() . '.' . $this->getImageExtension());

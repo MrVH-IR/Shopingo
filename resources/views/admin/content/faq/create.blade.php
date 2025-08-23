@@ -46,7 +46,7 @@
                             </section>
                             <section class="col-12">
                                 <label for="faq">پاسخ</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm" rows="10"></textarea>
+                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10"></textarea>
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
@@ -62,32 +62,5 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#body'), {
-                language: 'fa',
-                toolbar: [
-                    'heading',
-                    '|',
-                    'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript',
-                    '|',
-                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                    '|',
-                    'link', 'blockQuote', 'code', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList',
-                    'outdent', 'indent', 'alignment',
-                    '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
-                    '|',
-                    'highlight', 'selectAll',
-                    '|',
-                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
-                ]
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
 @endsection

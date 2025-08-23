@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\{
     Market\GalleryController,
     Market\PropertyController,
     Market\StoreController,
-    Content\CategoryController as ContentCategoryContoller,
+    Content\CategoryController as ContentCategoryController,
     Content\CommentController as ContentCommentController,
     Content\FAQController,
     Content\MenuController,
@@ -148,14 +148,14 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
     Route::prefix('content')->namespace('Content')->group(function() {
         //Category
         Route::prefix('category')->group(function() {
-            Route::get('/' , [ContentCategoryContoller::class , 'index'])->name('admin.content.category.index');
-            Route::get('/create' , [ContentCategoryContoller::class , 'create'])->name('admin.content.category.create');
-            Route::post('/store' , [ContentCategoryContoller::class , 'store'])->name('admin.content.category.store');
-            Route::get('/edit/{postCategory}' , [ContentCategoryContoller::class , 'edit'])->name('admin.content.category.edit');
-            Route::put('/update/{postCategory}' , [ContentCategoryContoller::class , 'update'])->name('admin.content.category.update');
-            Route::delete('/destroy/{postCategory}' , [ContentCategoryContoller::class , 'destroy'])->name('admin.content.category.destroy');
-            Route::get('/status/{postCategory}' , [ContentCategoryContoller::class , 'status'])->name('admin.content.category.status');
-            // Route::resource('/' , ContentCategoryContoller::class); // Can Be used And Delete All Those Above For (Category).
+            Route::get('/' , [ContentCategoryController::class , 'index'])->name('admin.content.category.index');
+            Route::get('/create' , [ContentCategoryController::class , 'create'])->name('admin.content.category.create');
+            Route::post('/store' , [ContentCategoryController::class , 'store'])->name('admin.content.category.store');
+            Route::get('/edit/{postCategory}' , [ContentCategoryController::class , 'edit'])->name('admin.content.category.edit');
+            Route::put('/update/{postCategory}' , [ContentCategoryController::class , 'update'])->name('admin.content.category.update');
+            Route::delete('/destroy/{postCategory}' , [ContentCategoryController::class , 'destroy'])->name('admin.content.category.destroy');
+            Route::get('/status/{postCategory}' , [ContentCategoryController::class , 'status'])->name('admin.content.category.status');
+            // Route::resource('/' , ContentCategoryController::class); // Can Be used And Delete All Those Above For (Category).
         });
         //Comment
         Route::prefix('comment')->group(function() {

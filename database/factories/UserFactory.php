@@ -27,14 +27,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'mobile' => fake()->phoneNumber(),
+            'national_code' => fake()->numberBetween(1000000000, 9999999999),
+            'slug' => $this->faker->slug(),
             'password' => static::$password ??= Hash::make('password'),
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
-            'profile_photo_path' => null,
+            'profile_photo_path' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
             'current_team_id' => null,
         ];
     }

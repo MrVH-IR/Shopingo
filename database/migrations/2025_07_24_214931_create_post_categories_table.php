@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('slug')->unique()->nullable();
             $table->text('image')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment('0 => Inactive, 1 => Active');
             $table->string('tags');
             $table->timestamps();
             $table->softDeletes();

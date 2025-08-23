@@ -2,10 +2,8 @@
 
 
 @section('head-tag')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fa.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 <title>ایجاد اطلاعیه ایمیلی</title>
 @endsection
 
@@ -51,12 +49,14 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Category" class="h6">تاریخ انتشار</label>
-                                        <input type="date" name="publish_date" id="publish_date" class="form-control form-control-sm flatpickr-date">
+                                    <input type="text" id="publish_date" name="publish_date" class="form-control form-control-sm jalali-input" data-jdp data-jdp-format="YYYY-MM-DD">
+                                    <i class="fa fa-calendar position-absolute" id="calendar_icon"
+                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
                             </section>
                             <section class="col-12">
                                 <label for="faq">متن ایمیل</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm" rows="10"></textarea>
+                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10"></textarea>
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
@@ -72,41 +72,6 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#body'), {
-                language: 'fa',
-                toolbar: [
-                    'heading',
-                    '|',
-                    'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript',
-                    '|',
-                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                    '|',
-                    'link', 'blockQuote', 'code', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList',
-                    'outdent', 'indent', 'alignment',
-                    '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
-                    '|',
-                    'highlight', 'selectAll',
-                    '|',
-                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
-                ]
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-<script>
-    flatpickr(".flatpickr-date", {
-        "locale": "fa",
-        dateFormat: "Y-m-d",
-        disableMobile: true,
-        altInput: true,
-        altFormat: "F j, Y",
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
 @endsection

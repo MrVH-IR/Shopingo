@@ -2,6 +2,8 @@
 
 
 @section('head-tag')
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 <title>افزودن به فروش شگفت انگیز</title>
 @endsection
 
@@ -53,13 +55,19 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="start_date" class="h6 d-flex">تاریخ شروع</label>
-                                    <input type="text" id="start_date" name="start_date" class="form-control form-control-sm flatpickr-date" placeholder="انتخاب تاریخ شروع">
+                                    <input type="text" id="start_date" name="start_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ شروع">
+                                    <i class="fa fa-calendar calendar-icon position-absolute"
+                                       data-target="#start_date"
+                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="end_date" class="h6 d-flex">تاریخ پایان</label>
-                                    <input type="text" id="end_date" name="end_date" class="form-control form-control-sm flatpickr-date" placeholder="انتخاب تاریخ پایان">
+                                    <input type="text" id="end_date" name="end_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ پایان">
+                                    <i class="fa fa-calendar calendar-icon position-absolute"
+                                       data-target="#end_date"
+                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
                             </section>
                             <section class="col-12">
@@ -75,19 +83,8 @@
 @endsection
 
 @section('script')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fa.js"></script>
+<script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
 <script>
-    flatpickr(".flatpickr-date", {
-        "locale": "fa",
-        dateFormat: "Y-m-d",
-        disableMobile: true,
-        altInput: true,
-        altFormat: "F j, Y",
-    });
-
     function randomDiscount(length = 10)
     {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

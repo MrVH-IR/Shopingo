@@ -78,7 +78,7 @@
                             </section>
                             <section class="col-12">
                                 <label for="">توضیجات</label>
-                                <textarea name="formbody" id="formbody" class="form-control form-control-sm" rows="10" cols="80"></textarea>
+                                <textarea name="formbody" id="formbody" class="form-control form-control-sm ckeditor" rows="10" cols="80"></textarea>
                             </section>
                             <section class="col-12 border-top border-bottom py-3 mb-3">
                                 <div class="row">
@@ -112,8 +112,6 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
-<script>
-CKEDITOR.replace( 'formbody' );
-</script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
 @endsection

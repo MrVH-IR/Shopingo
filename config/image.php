@@ -63,5 +63,28 @@ return [
         ]
     ],
 
-    'default-current-index-image' => 'medium'
+    'default-current-index-image' => 'medium',
+
+    /**
+     * Cache Image Size
+     */
+
+    'cache-image-sizes' => [
+        'large' => [
+            'width' => 800,
+            'height' => 600,
+        ],
+        'medium' => [
+            'width' => 400,
+            'height' => 300,
+        ],
+        'small' => [
+            'width' => 80,
+            'height' => 60,
+        ]
+    ],
+
+    'image-cache-life-time' => 2,
+    'image-not-found' => '',
+    'default-current-cache-image' => 'medium'
 ];

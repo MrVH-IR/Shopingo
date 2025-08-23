@@ -3,6 +3,72 @@
 
 @section('head-tag')
     <title>تغییر دسته بندی</title>
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            inset: 0;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1000;
+        }
+        .close-btn:hover {
+            color: #ff4d4d;
+        }
+
+        .fade-in {
+            animation: modalFadeIn 0.3s ease forwards;
+        }
+        .zoom-in {
+            animation: zoomIn 0.3s ease forwards;
+        }
+
+        .fade-out {
+            animation: modalFadeOut 0.3s ease forwards;
+        }
+        .zoom-out {
+            animation: zoomOut 0.3s ease forwards;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes modalFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes zoomOut {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.8); opacity: 0; }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -91,9 +157,6 @@
                                     <label for="image" class="h6">تصویر</label>
                                     <input type="file" name="image" id="image" class="form-control form-control-sm" accept="image/png , image/jpg ,
                                     image/jpeg , image/webp , image/svg">
-                                    @if($postCategory->image)
-                                        <img src="{{ $postCategory->image }}" class="img-fluid" style="max-width: 50px;" loading="lazy">
-                                    @endif
                                 </div>
                                 @error('image')
                                 <div class="alert alert-danger">
@@ -102,11 +165,33 @@
                                     </li>
                                 </div>
                                 @enderror
+
+                                <section class="row">
+                                    @php
+                                        $number = 1;
+                                    @endphp
+                                    @foreach($postCategory->image['indexArray'] as $key => $value)
+                                        <section class="col-md-{{ 6/ $number }}">
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input d-flex align-items-center" name="currentImage"
+                                                       value="{{ $key }}" id="{{ $number }}" @if($postCategory->image['currentImage'] == $key)
+                                                                                                 checked
+                                                       @endif>
+                                                <label for="{{ $number }}" class="form-check-label mx-2">
+                                                    <img src="{{ asset($value) }}" class="w-100 preview-img mt-4">
+                                                </label>
+                                            </div>
+                                        </section>
+                                        @php
+                                            $number ++;
+                                        @endphp
+                                    @endforeach
+                                </section>
                             </section>
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="description" class="h6">توضیحات</label>
-                                    <textarea class="form-control form-control-sm" rows="6" name="description" id="description">
+                                    <textarea class="form-control form-control-sm ckeditor" rows="6" name="description" id="description">
                                         {{ old('description', $postCategory->description) }}
                                     </textarea>
                                 </div>
@@ -128,65 +213,49 @@
         </section>
     </section>
 
+    <div id="imageModal" class="modal-overlay">
+        <span class="close-btn">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
 @endsection
 
 @section('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#description'), {
-                language: 'fa',
-                toolbar: [
-                    'heading',
-                    '|',
-                    'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript',
-                    '|',
-                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                    '|',
-                    'link', 'blockQuote', 'code', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList',
-                    'outdent', 'indent', 'alignment',
-                    '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
-                    '|',
-                    'highlight', 'selectAll',
-                    '|',
-                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
-                ]
-            })
-            .catch(error => {
-                console.error(error);
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close-btn');
+
+            document.querySelectorAll('.preview-img').forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.style.display = "flex";
+                    modal.classList.remove('fade-out');
+                    modalImg.classList.remove('zoom-out');
+                    modal.classList.add('fade-in');
+                    modalImg.classList.add('zoom-in');
+                    modalImg.src = this.src;
+                });
             });
-    </script>
 
-    <script>
-        $(document).ready(function () {
-            var tags_input = $('#tags');
-            var select_tags = $('#select_tags');
-            var default_tags = tags_input.val();
-            var default_data = null;
-
-            if(tags_input.val !== null && tags_input.val().length > 0) {
-                default_data = default_tags.split('-');
+            function closeModal() {
+                modal.classList.remove('fade-in');
+                modalImg.classList.remove('zoom-in');
+                modal.classList.add('fade-out');
+                modalImg.classList.add('zoom-out');
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 300);
             }
 
-            select_tags.select2({
-                placeholder: "لطفا تگ های خود را وارد نمایید",
-                tags: true,
-                width: '100%',
-                data: default_data,
-            });
+            closeBtn.addEventListener('click', closeModal);
 
-            select_tags.children('option').attr('selected' , true).trigger('change');
-
-            $('#form').submit(function (event) {
-                if (select_tags.val() !== null && select_tags.val().length > 0) {
-                    var selectedSource = select_tags.val().join(',');
-                    tags_input.val(selectedSource);
-                }
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
             });
         });
     </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
 @endsection

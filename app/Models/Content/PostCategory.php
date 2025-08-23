@@ -17,6 +17,7 @@ class PostCategory extends Model
     {
         return [
             'deleted_at' => 'datetime',
+            'image' => 'array',
         ];
     }
 }

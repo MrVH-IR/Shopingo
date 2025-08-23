@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\PostCategoryRequest;
+use App\Http\Services\Image\ImageService;
 use App\Models\Content\PostCategory;
+// use Facades\App\Repository\PostCategory;
+use Exception;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -17,6 +20,11 @@ class CategoryController extends Controller
         $postCategories = PostCategory::orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->cursorPaginate(10 , '*' , 'page');
+        /**
+         * Only If You Need It Cached Uncomment This Below
+         * App\Repository\PostCategory
+         */
+        // $postCategories = PostCategory::all('created_at' , 'desc');
         return view('admin.content.category.index' , compact('postCategories'));
     }
 
@@ -30,23 +38,31 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws Exception
      */
-    public function store(PostCategoryRequest $request)
+    public function store(PostCategoryRequest $request , ImageService $imageService)
     {
         try {
             $validatedData = $request->validated();
-
+            if ($request->hasFile('image'))
+            {
+                $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
+                $result = $imageService->createIndexAndSave($request->file('image'));
+            }
+            if ($result === false)
+            {
+                return redirect()
+                    ->route('admin.content.category.index')
+                    ->with('swal-error' , 'مشکلی در آپلود عکس پیش آمده است');
+            }
+            $validatedData['image'] = $result;
             $validatedData['slug'] = Str::slug($validatedData['name']) . '-' . strtolower(Str::random(5));
-            $path = '/home/mrvh/Personal/Projects/Laravel/TutorialV2/admin/images/postcategories';
-            $fileName = uniqid() . '.' . $validatedData['image']->getClientOriginalExtension();
-            $validatedData['image']->move($path, $fileName);
-            $validatedData['image'] = '/postcategories/' . $fileName;
             $postCategory = PostCategory::create($validatedData);
             return redirect()
                 ->route('admin.content.category.index')
                 ->with('swal-success' , 'دسته بندی با موفقیت ایجاد شد');
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -69,18 +85,39 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostCategoryRequest $request , PostCategory $postCategory)
+    public function update(PostCategoryRequest $request, PostCategory $postCategory, ImageService $imageService)
     {
         $validatedData = $request->validated();
+
         if ($request->hasFile('image')) {
-            $path = '/home/mrvh/Personal/Projects/Laravel/TutorialV2/admin/images/postcategories';
-            $file = $request->file('image');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move($path, $fileName);
-            $validatedData['image'] = '/postcategories/' . $fileName;
+            if (!empty($postCategory->image)) {
+                $imageService->deleteDirectoryAndFiles($postCategory->image['directory']);
+            }
+
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
+            $result = $imageService->createIndexAndSave($request->file('image'));
+
+            if ($result === false) {
+                return redirect()
+                    ->route('admin.content.category.edit')
+                    ->with('swal-error', 'مشکلی در آپلود عکس پیش آمده است');
+            }
+
+            $validatedData['image'] = $result;
+        } else {
+            // وقتی فقط currentImage تغییر می‌کنه
+            if ($request->has('currentImage') && !empty($request->input('currentImage'))) {
+                $image = $postCategory->image; // array
+                $image['currentImage'] = $request->input('currentImage'); // مقدار جدید
+                $validatedData['image'] = $image;
+            }
         }
+
         $postCategory->update($validatedData);
-        return redirect()->route('admin.content.category.index')->with('swal-success' , 'دسته بندی شما با موفقیت ویرایش شد');
+
+        return redirect()
+            ->route('admin.content.category.index')
+            ->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -98,7 +135,7 @@ class CategoryController extends Controller
 
             return redirect()->route('admin.content.category.index')
                 ->with('swal-success', 'دسته بندی شما با موفقیت حذف شد');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.content.category.index')
                 ->with('swal-error', 'خطا در حذف رکورد: ' . $e->getMessage());
         }
@@ -127,12 +164,5 @@ class CategoryController extends Controller
                 'status' => false,
             ]);
         }
-    }
-
-    public function test($id) {
-        return response()->json([
-            "status" => 200,
-            "message" => "Test Message",
-        ]);
     }
 }

@@ -45,21 +45,36 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($posts as $key => $post)
                             <tr>
-                                <th>1</th>
-                                <td>چگونه از باطری موبایل خود نگهداری کنیم؟</td>
-                                <td>اقتصادی</td>
-                                <td><img src="{{ asset('admin-assets/images/samsung-s23.jpg') }}" alt="Product-Image" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
+                                <th>{{ $key +=1 }}</th>
+                                <td>{{ $post->title }}</td>
+                                <td>{{ $post->category->name }}</td>
+                                <td>
+{{--                                    @if(isset($post->image['indexArray'][$post->image['currentImage']]))--}}
+{{--                                        <img src="{{ asset($post->image['indexArray'][$post->image['currentImage']]) }}"--}}
+{{--                                             data-large="{{ asset($post->image['indexArray']['large']) }}"--}}
+{{--                                             alt="{{ $post->name }}"--}}
+{{--                                             class="preview-img"--}}
+{{--                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"--}}
+{{--                                             loading="lazy">--}}
+{{--                                    @else--}}
+{{--                                        <span class="text-muted">بدون تصویر</span>--}}
+{{--                                    @endif--}}
+                                </td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
+
+    {{ $posts->links() }}
 
 @endsection

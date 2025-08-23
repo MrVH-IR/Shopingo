@@ -2,10 +2,8 @@
 
 
 @section('head-tag')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fa.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 <title>ایجاد پست</title>
 @endsection
 
@@ -40,39 +38,141 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route("admin.content.post.store") }}" method="POST" enctype="multipart/form-data" id="form">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Category" class="h6">عنوان پست</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                        <input type="text" name="title" id="" class="form-control form-control-sm" value="{{ old('title') }}">
                                 </div>
+                                @error('title')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category-Select" class="h6">انتخاب دسته</label>
-                                        <select name="" id="" class="form-control form-control-sm">
+                                    <label for="Category-Select" class="h6">انتخاب دسته (فقط فعال ها)</label>
+                                        <select name="category_id" id="Category-Select" class="form-control form-control-sm">
                                             <option value="">دسته را انتخاب کنید</option>
-                                            <option value="Electronics">وسایل الکترونیک</option>
+                                            @foreach($postCategories as $id => $name)
+                                            <option value="{{ $id }}" @if( old('category_id') == $id) selected @endif>{{ $name }}</option>
+                                            @endforeach
                                         </select>
                                 </div>
+                                @error('category_id')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">تصویر</label>
-                                        <input type="file" name="" id="" class="form-control form-control-sm">
+                                    <label for="image" class="h6">تصویر</label>
+                                        <input type="file" name="image" id="image" class="form-control form-control-sm">
                                 </div>
+                                @error('image')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group datepicker-wrapper">
+                                    <label for="published_at" class="h6">تاریخ انتشار</label>
+                                    <input type="text" id="published_at" name="published_at" class="form-control form-control-sm jalali-input" value="{{ old('published_at') }}">
+                                    <i class="fa fa-calendar position-absolute"
+                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"
+                                       id="calendar_icon"></i>
+                                </div>
+                                @error('published_at')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">تاریخ انتشار</label>
-                                        <input type="date" name="publish_date" id="publish_date" class="form-control form-control-sm flatpickr-date">
+                                    <label for="Status-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Status-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
                                 </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Commentable-Select" class="h6">امکان درج کامنت</label>
+                                    <select name="commentable" id="Commentable-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('commentable') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('commentable') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('commentable')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
-                                <label for="faq">محتوا</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm" rows="10"></textarea>
+                                <div class="form-group">
+                                    <label for="tags" class="h6">نام تگ ها</label>
+                                    <input type="hidden" name="tags" id="tags" class="form-control form-control-sm d-none" value="{{ old('tags') }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple>
+
+                                    </select>
+                                </div>
+                                @error('tags')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
+                            <section class="col-12">
+                                <label for="body">محتوا</label>
+                                <textarea class="form-control form-control-sm ckeditor" rows="10" name="body">{{ old('body') }}</textarea>
+                            </section>
+                            @error('body')
+                            <div class="alert alert-danger">
+                                <li>
+                                    {{ $message }}
+                                </li>
+                            </div>
+                            @enderror
+                            <section class="col-12 mt-2">
+                                <label for="summary">خلاصه پست</label>
+                                <textarea class="form-control form-control-sm ckeditor" rows="10" name="summary">{{ old('summary') }}</textarea>
+                            </section>
+                            @error('summary')
+                            <div class="alert alert-danger">
+                                <li>
+                                    {{ $message }}
+                                </li>
+                            </div>
+                            @enderror
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
@@ -87,41 +187,7 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#body'), {
-                language: 'fa',
-                toolbar: [
-                    'heading',
-                    '|',
-                    'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript',
-                    '|',
-                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                    '|',
-                    'link', 'blockQuote', 'code', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList',
-                    'outdent', 'indent', 'alignment',
-                    '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
-                    '|',
-                    'highlight', 'selectAll',
-                    '|',
-                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
-                ]
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-<script>
-    flatpickr(".flatpickr-date", {
-        "locale": "fa",
-        dateFormat: "Y-m-d",
-        disableMobile: true,
-        altInput: true,
-        altFormat: "F j, Y",
-    });
-</script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
 @endsection

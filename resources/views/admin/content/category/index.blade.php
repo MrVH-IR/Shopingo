@@ -143,18 +143,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($postCategories as $postCategory)
+                        @foreach($postCategories as $key => $postCategory)
                             <tr>
-                                <th>{{ $postCategory->id }}</th>
+                                <th>{{ $key +=1 }}</th>
                                 <td>{{ $postCategory->name }}</td>
                                 <td>{{ $postCategory->description }}</td>
                                 <td>{{ $postCategory->slug }}</td>
                                 <td>
-                                    <img src="{{ $postCategory->image }}"
-                                         alt="images"
-                                         class="preview-img"
-                                         style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
-                                         loading="lazy">
+                                    @if(isset($postCategory->image['indexArray'][$postCategory->image['currentImage']]))
+                                        <img src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
+                                             data-large="{{ asset($postCategory->image['indexArray']['large']) }}"
+                                             alt="{{ $postCategory->name }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
                                 </td>
                                 <td>{{ $postCategory->tags }}</td>
                                 <td>
@@ -186,7 +191,8 @@
             </section>
         </section>
     </section>
-            {{ $postCategories->links() }}
+
+    {{ $postCategories->links() }}
 
     <div id="imageModal" class="modal-overlay">
         <span class="close-btn">&times;</span>

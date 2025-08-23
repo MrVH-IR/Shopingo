@@ -18,11 +18,21 @@ class PostCategoryFactory extends Factory
     protected $model = PostCategory::class;
     public function definition(): array
     {
+        $timestamp = time();
+
         return [
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
-            'image' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
+            'image' => [
+                'indexArray' => [
+                    'large' => "images/post-category/2025/08/21/{$timestamp}/{$timestamp}_large.jpg",
+                    'medium' => "images/post-category/2025/08/21/{$timestamp}/{$timestamp}_medium.jpg",
+                    'small' => "images/post-category/2025/08/21/{$timestamp}/{$timestamp}_small.jpg",
+                ],
+                'directory' => "images/post-category/2025/08/21/{$timestamp}",
+                'currentImage' => 'large',
+            ],
             'status' => (int) $this->faker->boolean(),
             'tags' => implode(',', $this->faker->words(3)),
         ];

@@ -102,7 +102,7 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="description" class="h6">توضیحات</label>
-                                    <textarea class="form-control form-control-sm" rows="6" name="description" id="description">
+                                    <textarea class="form-control form-control-sm ckeditor" rows="6" name="description" id="description">
                                         {{ old('description') }}
                                     </textarea>
                                 </div>
@@ -133,62 +133,6 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#description'), {
-                language: 'fa',
-                toolbar: [
-                    'heading',
-                    '|',
-                    'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript',
-                    '|',
-                    'fontColor', 'fontBackgroundColor', 'fontSize', 'fontFamily',
-                    '|',
-                    'link', 'blockQuote', 'code', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList',
-                    'outdent', 'indent', 'alignment',
-                    '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells',
-                    '|',
-                    'highlight', 'selectAll',
-                    '|',
-                    'undo', 'redo', 'imageUpload' , 'imageStyle:full/side/inline' , 'imageTextAlternative' , 'mediaEmbed'
-                ]
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-            var tags_input = $('#tags');
-            var select_tags = $('#select_tags');
-            var default_tags = tags_input.val();
-            var default_data = null;
-
-            if(tags_input.val !== null && tags_input.val().length > 0) {
-                default_data = default_tags.split('-');
-            }
-
-            select_tags.select2({
-                placeholder: "لطفا تگ های خود را وارد نمایید",
-                tags: true,
-                width: '100%',
-                data: default_data,
-            });
-
-            select_tags.children('option').attr('selected' , true).trigger('change');
-
-            $('#form').submit(function (event) {
-                if (select_tags.val() !== null && select_tags.val().length > 0) {
-                    var selectedSource = select_tags.val().join(',');
-                    tags_input.val(selectedSource);
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
 @endsection
