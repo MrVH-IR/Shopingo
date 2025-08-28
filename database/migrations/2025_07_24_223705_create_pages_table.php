@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('body');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->tinyInteger('status')->default(0)->comment('0 active, 1 inactive');
             $table->string('tags');
             $table->timestamps();

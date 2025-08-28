@@ -36,23 +36,65 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.content.page.store') }}" method="POST" id="form">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">عنوان</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="title" class="h6">عنوان</label>
+                                        <input type="text" name="title" id="title" class="form-control form-control-sm" value="{{ old('title') }}">
                                 </div>
+                                @error('title')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">آدرس url</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="tags" class="h6">نام تگ ها</label>
+                                    <input type="hidden" name="tags" id="tags" class="form-control form-control-sm d-none" value="{{ old('tags') }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple>
+
+                                    </select>
                                 </div>
+                                @error('tags')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Category-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Category-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <label for="faq">محتوا</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10"></textarea>
+                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10">{{ old('body') }}</textarea>
+                                @error('body')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 mt-3">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
@@ -69,4 +111,5 @@
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
 @endsection

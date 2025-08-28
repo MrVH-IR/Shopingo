@@ -3,6 +3,7 @@
 
 @section('head-tag')
 <title>پیج ساز</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -12,7 +13,7 @@
              <a href="{{ route('admin.home') }}">خانه</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
+             <a href="{{ route('admin.content.page.index') }}">بخش محتوا</a>
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
             پیج ساز
@@ -40,37 +41,31 @@
                         <thead>
                             <th>#</th>
                             <th>عنوان</th>
-                            <th>آدرس پیج</th>
+                            <th>تگ ها</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($pages as $key => $page)
                             <tr>
-                                <th>1</th>
-                                <td>صفحه تماس با ما</td>
-                                <td>http://localhost:8000/contact</td>
+                                <th>{{ $key + 1 }}</th>
+                                <td>{{ $page->title }}</td>
+                                <td>{{ $page->tags }}</td>
+                                <td>
+                                    <div class="status-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="{{ $page->id }}" onchange="changeStatus({{ $page->id }})" type="checkbox"
+                                                   @if($page->status == 1) checked @endif
+                                                   data-url="{{ route('admin.content.page.status', $page->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>صفحه درباره ما</td>
-                                <td>http://localhost:8000/about</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>صفحه محصولات ما</td>
-                                <td>http://localhost:8000/product</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -78,4 +73,10 @@
         </section>
     </section>
 
+    {{ $pages->links() }}
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection
