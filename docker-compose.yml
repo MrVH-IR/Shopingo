@@ -3,14 +3,14 @@ version: '3.8'
 services:
     app:
         build:
-            context:
-            dockerfile: ./DOCKERFILE
+            context: .
+            dockerfile: DOCKERFILE
         container_name: shopingo_laravel
         volumes:
             - ./app:/var/www
+        working_dir: /var/www
         depends_on:
             - db
-
 
     nginx:
         image: nginx:alpine
@@ -23,18 +23,17 @@ services:
         depends_on:
             - app
 
-
     db:
         image: mysql:8
         container_name: shopingo_db
         restart: always
-        enviroment:
-            - MYSQL_DATABASE: shopingo
-            - MYSQL_ROOT_PASSWORD: rootpass
-            - MYSQL_USER: admin
-            - MYSQL_PASSWORD: secret
+        environment:
+            - MYSQL_DATABASE=shopingo
+            - MYSQL_ROOT_PASSWORD=rootpass
+            - MYSQL_USER=admin
+            - MYSQL_PASSWORD=secret
         ports:
-            - 3306:3306
+            - "3306:3306"
         volumes:
             - dbdata:/var/lib/mysql
 
