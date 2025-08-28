@@ -3,72 +3,7 @@
 
 @section('head-tag')
     <title>تغییر دسته بندی</title>
-    <style>
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            inset: 0;
-            background-color: rgba(0,0,0,0.85);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            width: auto;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.6);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: color 0.3s;
-            z-index: 1000;
-        }
-        .close-btn:hover {
-            color: #ff4d4d;
-        }
-
-        .fade-in {
-            animation: modalFadeIn 0.3s ease forwards;
-        }
-        .zoom-in {
-            animation: zoomIn 0.3s ease forwards;
-        }
-
-        .fade-out {
-            animation: modalFadeOut 0.3s ease forwards;
-        }
-        .zoom-out {
-            animation: zoomOut 0.3s ease forwards;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes modalFadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        @keyframes zoomOut {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: scale(0.8); opacity: 0; }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
 @endsection
 
 @section('content')
@@ -221,40 +156,7 @@
 @endsection
 
 @section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const closeBtn = document.querySelector('.close-btn');
-
-            document.querySelectorAll('.preview-img').forEach(img => {
-                img.addEventListener('click', function() {
-                    modal.style.display = "flex";
-                    modal.classList.remove('fade-out');
-                    modalImg.classList.remove('zoom-out');
-                    modal.classList.add('fade-in');
-                    modalImg.classList.add('zoom-in');
-                    modalImg.src = this.src;
-                });
-            });
-
-            function closeModal() {
-                modal.classList.remove('fade-in');
-                modalImg.classList.remove('zoom-in');
-                modal.classList.add('fade-out');
-                modalImg.classList.add('zoom-out');
-                setTimeout(() => {
-                    modal.style.display = "none";
-                }, 300);
-            }
-
-            closeBtn.addEventListener('click', closeModal);
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>

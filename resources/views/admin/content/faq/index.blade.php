@@ -3,6 +3,7 @@
 
 @section('head-tag')
 <title>سوالات متداول</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -41,36 +42,42 @@
                             <th>#</th>
                             <th>پرسش</th>
                             <th>خلاصه پاسخ</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($faqs as $key => $faq)
                             <tr>
-                                <th>1</th>
-                                <td>پچوری میتونیم ثبت نام کنیم</td>
-                                <td>به بخش ثبت نام مراجعه...</td>
+                                <th>{{ $key +=1 }}</th>
+                                <td>{{ $faq->question }}</td>
+
+                                @php
+                                    $answer = strip_tags($faq->answer);
+                                @endphp
+                                <td>{{ substr($answer , 0 , 20) }}...</td>
+                                <td>
+                                    <label>
+                                        <div class="status-wrapper" style="position: relative;">
+                                            <input id="{{ $faq->id }}" onchange="changeStatus('{{ $faq->id }}')" type="checkbox"
+                                                   @if($faq->status == 1) checked @endif
+                                                   data-url="{{ route('admin.content.faq.status' , $faq->id) }}">
+                                        </div>
+                                    </label>
+                                </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.content.faq.edit' , $faq->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.content.faq.destroy', $faq->id) }}" method="POST" id="delete-form-{{ $faq->id }}" class="d-none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    <button type="submit" form="delete-form-{{ $faq->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $faq->id }}" >
+                                        <i class="fa fa-trash-alt"></i> حذف
+                                    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>چجوری میتونیم خرید کنیم</td>
-                                <td>محصول خود را انتخاب و به سبد...</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>بعد از پرداخت بانک سفارش ثبت نشد</td>
-                                <td>با پشتیبانی تماس...</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -78,4 +85,10 @@
         </section>
     </section>
 
+    {{ $faqs->links() }}
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

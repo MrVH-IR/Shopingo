@@ -1,10 +1,8 @@
-// admin-assets/js/jalaliDatePicker.js
 (function () {
     function bindInput(input) {
         if (input.dataset.jdpBound === '1') return;
         input.dataset.jdpBound = '1';
 
-        // اگه data-jdp نداشتی، اضافه کن تا پلاگین با startWatch هم کار کنه
         if (!input.hasAttribute('data-jdp')) {
             input.setAttribute('data-jdp', '');
         }
