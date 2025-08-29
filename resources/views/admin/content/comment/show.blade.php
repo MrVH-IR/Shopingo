@@ -12,13 +12,13 @@
              <a href="{{ route('admin.home') }}">خانه</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
+             <a href="{{ route('admin.content.category.index') }}">بخش محتوا</a>
         </li>
         <li class="breadcrumb-item font-size-12" aria-current="page">
             نظرات
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            نمایش نظرها
+            نمایش نظر
         </li>
     </ol>
 </nav>
@@ -37,11 +37,23 @@
 
                 <section class="card mb-3">
                     <section class="card-header text-white bg-primary">
-                        <p>کامران محمدی - 651251</p>
+                        <p>{{ $comment->author->first_name }} -- {{ $comment->author_id }}</p>
                     </section>
                     <section class="card-body">
                         <h5 class="card-title">ساعت apple watch - sm-12 کد کالا:512512</h5>
-                        <p class="card-text">به نظر من ساعت **** بود</p>
+                        <div class="card-text">
+                            <span class="text-preview">
+                                {{ substr(strip_tags($comment->body), 0, 50) }}...
+                            </span>
+                                                <span class="text-full" style="display: none;">
+                                {{ strip_tags($comment->body) }}
+                            </span>
+                            @if (strlen($comment->body) > 50)
+                                <a href="#" class="read-more text-primary small" style="font-size: 0.9em;">
+                                    نمایش بیشتر
+                                </a>
+                            @endif
+                        </div>
                     </section>
                 </section>
                 <section>
@@ -63,4 +75,29 @@
         </section>
     </section>
 
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const readMoreLinks = document.querySelectorAll('.read-more');
+
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const fullText = this.previousElementSibling;
+                    const previewText = fullText.previousElementSibling;
+
+                    if (fullText.style.display === 'inline') {
+                        fullText.style.display = 'none';
+                        previewText.style.display = 'inline';
+                        this.textContent = 'نمایش بیشتر';
+                    } else {
+                        fullText.style.display = 'inline';
+                        previewText.style.display = 'none';
+                        this.textContent = 'نمایش کمتر';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

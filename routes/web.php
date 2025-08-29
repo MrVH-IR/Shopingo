@@ -18,7 +18,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-// Informations
+// Information
 Route::get('/about-us', function () {
     return view('informations.about');
 });
@@ -30,4 +30,4 @@ Route::get('/contact-us', function () {
 Route::get('/partnership', function() {
     return view('informations.partnership');
 });
-// End Informations Route
+// End Information Route

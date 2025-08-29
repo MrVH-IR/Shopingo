@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Content\Comment;
 use App\Models\Content\FAQ;
 use App\Models\Content\Page;
 use App\Models\User;
@@ -21,6 +22,8 @@ class DatabaseSeeder extends Seeder
 //        PostCategory::factory()->count(1)->state(['status' => 0])->create();
 //        Post::factory()->count(10)->state(['status' => 0])->create();
 //        FAQ::factory(10)->count(10)->state(['status' => 0])->create();
-        Page::factory()->count(10)->state(['status' => 0])->create();
+//        Page::factory()->count(10)->state(['status' => 0])->create();
+//        Comment::factory()->count(10)->forPost()->create();
+//        Comment::factory()->count(10)->forUser()->create();
     }
 }

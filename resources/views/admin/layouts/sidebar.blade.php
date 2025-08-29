@@ -84,7 +84,7 @@
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.content.category.index') }}"><i class="fas fa-folder-open"></i> دسته بندی</a>
                     <a href="{{ route('admin.content.post.index') }}"><i class="fas fa-newspaper"></i> پست ها</a>
-                    <a><i class="fas fa-comment-dots"></i> نظرات</a>
+                    <a href="{{ route('admin.content.comment.index') }}"><i class="fas fa-comment-dots"></i> نظرات</a>
                     <a href="{{ route('admin.content.menu.index') }}"><i class="fas fa-bars"></i> منو</a>
                     <a href="{{ route('admin.content.faq.index') }}"><i class="fas fa-question-circle"></i> سوالات متداول</a>
                     <a href="{{ route('admin.content.page.index') }}"><i class="fas fa-pager"></i> پیج ساز</a>

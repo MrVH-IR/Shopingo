@@ -160,12 +160,9 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
         //Comment
         Route::prefix('comment')->group(function() {
             Route::get('/' , [ContentCommentController::class , 'index'])->name('admin.content.comment.index');
-            Route::get('/show' , [ContentCommentController::class , 'show'])->name('admin.content.comment.show');
-            Route::post('/store' , [ContentCommentController::class , 'store'])->name('admin.content.comment.store');
-            // Route::get('/edit/{id}' , [ContentCommentController::class , 'edit'])->name('admin.content.comment.edit');
-            // Route::put('/update/{id}' , [ContentCommentController::class , 'update'])->name('admin.content.comment.update');
-            Route::delete('/destroy/{id}' , [ContentCommentController::class , 'destroy'])->name('admin.content.comment.destroy');
-            // Route::resource('/' , ContentCommentController::class); // Can Be used And Delete All Those Above For (Comment).
+            Route::get('/show/{comment}' , [ContentCommentController::class , 'show'])->name('admin.content.comment.show');
+            Route::get('/status/{comment}', [ContentCommentController::class , 'status'])->name('admin.content.comment.status');
+            Route::get('/approved/{comment}', [ContentCommentController::class , 'approved'])->name('admin.content.comment.approved');
         });
         //FAQ
         Route::prefix('faq')->group(function() {
@@ -183,9 +180,10 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [MenuController::class , 'index'])->name('admin.content.menu.index');
             Route::get('/create' , [MenuController::class , 'create'])->name('admin.content.menu.create');
             Route::post('/store' , [MenuController::class , 'store'])->name('admin.content.menu.store');
-            Route::get('/edit/{id}' , [MenuController::class , 'edit'])->name('admin.content.menu.edit');
-            Route::put('/update/{id}' , [MenuController::class , 'update'])->name('admin.content.menu.update');
-            Route::delete('/destroy/{id}' , [MenuController::class , 'destroy'])->name('admin.content.menu.destroy');
+            Route::get('/edit/{menu}' , [MenuController::class , 'edit'])->name('admin.content.menu.edit');
+            Route::put('/update/{menu}' , [MenuController::class , 'update'])->name('admin.content.menu.update');
+            Route::delete('/destroy/{menu}' , [MenuController::class , 'destroy'])->name('admin.content.menu.destroy');
+            Route::get('/status/{menu}' , [MenuController::class , 'status'])->name('admin.content.menu.status');
             // Route::resource('/' , MenuController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //Page
@@ -193,9 +191,9 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [PageController::class , 'index'])->name('admin.content.page.index');
             Route::get('/create' , [PageController::class , 'create'])->name('admin.content.page.create');
             Route::post('/store' , [PageController::class , 'store'])->name('admin.content.page.store');
-            Route::get('/edit/{id}' , [PageController::class , 'edit'])->name('admin.content.page.edit');
-            Route::put('/update/{id}' , [PageController::class , 'update'])->name('admin.content.page.update');
-            Route::delete('/destroy/{id}' , [PageController::class , 'destroy'])->name('admin.content.page.destroy');
+            Route::get('/edit/{page}' , [PageController::class , 'edit'])->name('admin.content.page.edit');
+            Route::put('/update/{page}' , [PageController::class , 'update'])->name('admin.content.page.update');
+            Route::delete('/destroy/{page}' , [PageController::class , 'destroy'])->name('admin.content.page.destroy');
             Route::get('/status/{page}' , [PageController::class , 'status'])->name('admin.content.page.status');
             // Route::resource('/' , PageController::class); // Can Be used And Delete All Those Above For (Comment).
         });

@@ -9,13 +9,13 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
+            <a href="{{ route('admin.home') }}">خانه</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
+            <a href="{{ route('admin.content.page.index') }}">بخش محتوا</a>
         </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.content.menu.index') }}">منو</a>
+        <li class="breadcrumb-item font-size-12 active" aria-current="page">
+            منو
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
             ایجاد منو
@@ -36,40 +36,82 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.content.menu.store') }}" method="POST" id="form">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">عنوان منو</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="name" class="h6">عنوان منو</label>
+                                        <input type="text" placeholder="مثلا : تماس با ما" name="name" id="name" class="form-control form-control-sm" value="{{ old('name') }}">
                                 </div>
+                                @error('name')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">منو والد</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="Category-Select" class="h6">منو والد</label>
+                                    <select name="parent_id" id="" class="form-control form-control-sm">
+                                        <option value="">منو اصلی</option>
+                                        @foreach($menus as $menu)
+                                            <option value="{{ $menu->id }}" @if(old('parent_id') == $menu->id) selected @endif >{{ $menu->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                @error('parent_id')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">آدرس url</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="url" class="h6">آدرس URL</label>
+                                    <input
+                                        type="text"
+                                        name="url"
+                                        id="url"
+                                        class="form-control form-control-sm"
+                                        value="{{ old('url') }}"
+                                        placeholder="مثلاً: contact-us"
+                                    >
+                                    <small class="text-muted mt-1 d-block">
+                                        آدرس معتبر:
+                                        <code class="bg-light px-1 py-1 rounded border mx-1">contact-us</code>
+                                        <code class="bg-light px-1 py-1 rounded border mx-1">about</code>
+                                        <code class="bg-light px-1 py-1 rounded border mx-1">hello-world</code>
+                                    </small>
                                 </div>
+
+                                @error('url')
+                                <div class="alert alert-danger mt-2 py-2 small">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">عکس url</label>
-                                        <input type="file" name="" id="" class="form-control form-control-sm">
+                                    <label for="Category-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Category-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
                                 </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category-Select" class="h6">دسته والد</label>
-                                        <select name="" id="" class="form-control form-control-sm">
-                                            <option value="">دسته را انتخاب کنید</option>
-                                            <option value="Electronics">وسایل الکترونیک</option>
-                                        </select>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
                                 </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>

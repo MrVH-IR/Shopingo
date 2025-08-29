@@ -61,8 +61,16 @@
                                     </div>
                                 </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.content.page.edit', $page->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.content.page.destroy' , $page->id) }}" id="delete-form-{{ $page->id }}" method="POST" class="d-none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    <button type="submit" form="delete-form-{{ $page->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $page->id }}">
+                                        <i class="fa fa-trash-alt"></i>  حذف
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

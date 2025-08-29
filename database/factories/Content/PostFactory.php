@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Content;
 
+use App\Models\Content\PostCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Content\Post;
 use App\Models\User;
@@ -29,7 +30,7 @@ class PostFactory extends Factory
             'tags' => implode(',', $this->faker->words(3)),
             'published_at' => $this->faker->date(),
             'author_id' => User::factory(),
-            'category_id' => $this->faker->numberBetween(92,96),
+            'category_id' => PostCategory::factory(),
         ];
     }
 }

@@ -12,10 +12,10 @@
              <a href="{{ route('admin.home') }}">خانه</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
+            <a href="{{ route('admin.content.page.index') }}">بخش محتوا</a>
         </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.content.page.index') }}">پیج ساز</a>
+        <li class="breadcrumb-item font-size-12 active" aria-current="page">
+            پیج ساز
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
              ایجاد پیج
