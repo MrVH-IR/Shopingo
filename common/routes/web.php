@@ -162,7 +162,8 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [ContentCommentController::class , 'index'])->name('admin.content.comment.index');
             Route::get('/show/{comment}' , [ContentCommentController::class , 'show'])->name('admin.content.comment.show');
             Route::get('/status/{comment}', [ContentCommentController::class , 'status'])->name('admin.content.comment.status');
-            Route::get('/approved/{comment}', [ContentCommentController::class , 'approved'])->name('admin.content.comment.approved');
+            Route::post('/approved/{comment}', [ContentCommentController::class , 'approved'])->name('admin.content.comment.approved');
+            Route::post('/answer/{comment}', [ContentCommentController::class , 'answer'])->name('admin.content.comment.answer');
         });
         //FAQ
         Route::prefix('faq')->group(function() {
@@ -260,9 +261,10 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [EmailController::class , 'index'])->name('admin.email.index');
             Route::get('/create' , [EmailController::class , 'create'])->name('admin.email.create');
             Route::post('/store' , [EmailController::class , 'store'])->name('admin.email.store');
-            Route::get('/edit/{id}' , [EmailController::class , 'edit'])->name('admin.email.edit');
-            Route::put('/update/{id}' , [EmailController::class , 'update'])->name('admin.email.update');
-            Route::delete('/destroy/{id}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
+            Route::get('/edit/{email}' , [EmailController::class , 'edit'])->name('admin.email.edit');
+            Route::put('/update/{email}' , [EmailController::class , 'update'])->name('admin.email.update');
+            Route::delete('/destroy/{email}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
+            Route::get('/status/{email}' , [EmailController::class , 'status'])->name('admin.email.status');
             // Route::resource('/' , EmailController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //SMS
@@ -270,9 +272,10 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [SMSController::class , 'index'])->name('admin.sms.index');
             Route::get('/create' , [SMSController::class , 'create'])->name('admin.sms.create');
             Route::post('/store' , [SMSController::class , 'store'])->name('admin.sms.store');
-            Route::get('/edit/{id}' , [SMSController::class , 'edit'])->name('admin.sms.edit');
-            Route::put('/update/{id}' , [SMSController::class , 'update'])->name('admin.sms.update');
-            Route::delete('/destroy/{id}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy');
+            Route::get('/edit/{sms}' , [SMSController::class , 'edit'])->name('admin.sms.edit');
+            Route::put('/update/{sms}' , [SMSController::class , 'update'])->name('admin.sms.update');
+            Route::delete('/destroy/{sms}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy');
+            Route::get('/status/{sms}' , [SMSController::class , 'status'])->name('admin.sms.status');
             // Route::resource('/' , SmsController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });

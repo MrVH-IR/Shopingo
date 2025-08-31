@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Content\Comment;
 use App\Models\Content\FAQ;
 use App\Models\Content\Page;
+use App\Models\Notify\Email;
 use App\Models\User;
 use App\Models\Content\PostCategory;
 use App\Models\Content\Post;
@@ -25,5 +26,10 @@ class DatabaseSeeder extends Seeder
 //        Page::factory()->count(10)->state(['status' => 0])->create();
 //        Comment::factory()->count(10)->forPost()->create();
 //        Comment::factory()->count(10)->forUser()->create();
+//        Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
+        $this->call([
+            SMSSeeder::class,
+            EmailSeeder::class
+        ]);
     }
 }

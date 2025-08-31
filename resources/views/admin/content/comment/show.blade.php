@@ -37,15 +37,15 @@
 
                 <section class="card mb-3">
                     <section class="card-header text-white bg-primary">
-                        <p>{{ $comment->author->first_name }} -- {{ $comment->author_id }}</p>
+                        <p>{{ $comment->author->fullName }} - {{ $comment->author_id }}</p>
                     </section>
                     <section class="card-body">
-                        <h5 class="card-title">ساعت apple watch - sm-12 کد کالا:512512</h5>
+                        <h5 class="card-title">{{ $comment->commentable->title ?? '' }}</h5>
                         <div class="card-text">
                             <span class="text-preview">
                                 {{ substr(strip_tags($comment->body), 0, 50) }}...
                             </span>
-                                                <span class="text-full" style="display: none;">
+                            <span class="text-full" style="display: none;">
                                 {{ strip_tags($comment->body) }}
                             </span>
                             @if (strlen($comment->body) > 50)
@@ -57,12 +57,14 @@
                     </section>
                 </section>
                 <section>
-                    <form action="" method="">
+                    @if($comment->parent == null)
+                    <form action="{{ route('admin.content.comment.answer' , $comment->id )}}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="Category" class="h6">پاسخ ادمین</label>
-                                       <textarea name="admin-response" id="admin-response" class="form-control form-control-sm" rows="4"></textarea>
+                                       <textarea name="body" id="body" class="form-control form-control-sm" rows="4">{{ old('body') }}</textarea>
                                 </div>
                             </section>
                             <section class="col-12">
@@ -70,6 +72,7 @@
                             </section>
                         </section>
                     </form>
+                    @endif
                 </section>
             </section>
         </section>

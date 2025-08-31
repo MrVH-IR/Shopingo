@@ -39,7 +39,9 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <th>#</th>
+                            <th>نظر</th>
                             <th>نویسنده نظر</th>
+                            <th>پاسخ به</th>
                             <th>کد کاربر</th>
                             <th>کد پست</th>
                             <th>پست</th>
@@ -51,10 +53,18 @@
                         @foreach($comments as $key => $comment)
                             <tr>
                                 <th>{{ $key +=1 }}</th>
-                                <td>{{ $comment->author->first_name }}</td>
+                                <td><a href="{{ route('admin.content.comment.show' , $comment->id) }}">{{ substr($comment->body , 0 , 15) }}...</a></td>
+                                <td>{{ $comment->author->fullName }}</td>
+                                <td>
+                                    @if($comment->parent_id)
+                                        <a href="{{ route('admin.content.comment.show', $comment->parent_id) }}">
+                                            {{ substr($comment->parent->body, 0, 20) }}
+                                        </a>
+                                    @endif
+                                </td>
                                 <td>{{ $comment->author_id }}</td>
                                 <td>{{ $comment->commentable_id }}</td>
-                                <td>شیائومی Note 20</td>
+                                <td>{{ $comment->commentable->title }}</td>
                                 <td>{{ $comment->approved_label }}</td>
                                 <td>
                                     <div class="status-wrapper" style="position: relative;">
@@ -67,7 +77,10 @@
                                 </td>
                                 <td class="width-16-rem text-left">
                                     <a href="{{ route('admin.content.comment.show' , $comment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
-                                    <button type="submit" class="btn {{ $comment->approved ? "btn-success" : "btn-warning" }} btn-sm"><i class="fa {{ $comment->approved ? "fa-check" : "fa-clock" }}"></i>  {{ $comment->approved ? "تایید شده" : "تایید نشده" }}</button>
+                                    <form class="d-none" id="approve-{{ $comment->id }}" action="{{ route('admin.content.comment.approved' , $comment->id) }}" method="POST">
+                                        @csrf
+                                    </form>
+                                    <button data-id="{{ $comment->id }}" type="button" form="approve-{{ $comment->id }}" title="{{ $comment->approved ? 'این کامنت تایید شده است' : 'این کامنت هنوز تایید نشده' }}" class="btn {{ $comment->approved ? "btn-success" : "btn-warning" }} btn-sm toggle-approve"><i class="fa {{ $comment->approved ? "fa-check" : "fa-clock" }}"></i>  {{ $comment->approved ? "تایید شده" : "تایید نشده" }}</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -83,4 +96,5 @@
 @endsection
 @section('script')
 <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+<script type="text/javascript" src="{{ asset('admin-assets/js/toggleApprove.js') }}"></script>
 @endsection

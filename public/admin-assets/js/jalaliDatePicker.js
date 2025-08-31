@@ -1,68 +1,61 @@
-(function () {
-    function bindInput(input) {
+(() => {
+    const bindInput = (input) => {
         if (input.dataset.jdpBound === '1') return;
         input.dataset.jdpBound = '1';
 
-        if (!input.hasAttribute('data-jdp')) {
-            input.setAttribute('data-jdp', '');
-        }
-        // فرمت خروجی (دلخواه)
+        // اضافه کردن attribute های ضروری
+        input.setAttribute('data-jdp', '');
         if (!input.getAttribute('data-jdp-format')) {
-            input.setAttribute('data-jdp-format', 'YYYY-MM-DD');
+            input.setAttribute('data-jdp-format', 'YYYY-MM-DD HH:mm:ss'); // تاریخ + ساعت
         }
 
-        // باز شدن روی فوکوس
-        input.addEventListener('focus', function () {
-            try { jalaliDatepicker.show(input); } catch (e) {}
+        input.addEventListener('focus', () => {
+            try { jalaliDatepicker.show(input); } catch (e) { console.error(e); }
         });
-    }
+    };
 
-    function resolveTarget(icon) {
-        const sel = icon.dataset.target;
-        if (sel) return document.querySelector(sel);
-        // fallback: input کنار آیکون در همان form-group
+    const resolveTarget = (icon) => {
+        const selector = icon.dataset.target;
+        if (selector) return document.querySelector(selector);
+
         const parent = icon.closest('.form-group') || icon.parentElement;
-        if (!parent) return null;
-        return parent.querySelector('input.jalali-input');
-    }
+        return parent?.querySelector('input.jalali-input') || null;
+    };
 
-    function bindIcon(icon) {
+    const bindIcon = (icon) => {
         if (icon.dataset.jdpIconBound === '1') return;
         icon.dataset.jdpIconBound = '1';
 
-        icon.addEventListener('click', function (e) {
+        icon.addEventListener('click', (e) => {
             e.preventDefault();
             const input = resolveTarget(icon);
             if (!input) return;
 
-            // مطمئن شو data-jdp دارد
-            if (!input.hasAttribute('data-jdp')) input.setAttribute('data-jdp', '');
+            input.setAttribute('data-jdp', '');
 
-            try { jalaliDatepicker.startWatch(); } catch (e2) {}
+            try { jalaliDatepicker.startWatch(); } catch (e) { console.error(e); }
 
-            // بعضی‌وقت‌ها فقط focus کافی است، ولی برای اطمینان show هم می‌زنیم
             input.focus();
-            setTimeout(function () {
-                try { jalaliDatepicker.show(input); } catch (e3) {}
+            setTimeout(() => {
+                try { jalaliDatepicker.show(input); } catch (e) { console.error(e); }
             }, 0);
         });
-    }
+    };
 
-    function init(root = document) {
-        const inputs = root.querySelectorAll('input.jalali-input');
-        inputs.forEach(bindInput);
+    const initJalaliPickers = (root = document) => {
+        root.querySelectorAll('input.jalali-input').forEach(bindInput);
+        root.querySelectorAll('.calendar-icon').forEach(bindIcon);
 
-        const icons = root.querySelectorAll('.calendar-icon');
-        icons.forEach(bindIcon);
+        try { jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: true,
+            autoShow: true,
+            autoHide: true
+        }); } catch (e) { console.error(e); }
+    };
 
-        // safe to call multiple times
-        try { jalaliDatepicker.startWatch(); } catch (e) {}
-    }
+    // expose globally
+    window.initJalaliPickers = initJalaliPickers;
 
-    // اکسپورت برای استفاده بعد از ajax/livewire
-    window.initJalaliPickers = init;
-
-    document.addEventListener('DOMContentLoaded', function () {
-        init();
-    });
+    document.addEventListener('DOMContentLoaded', () => initJalaliPickers());
 })();

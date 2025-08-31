@@ -38,25 +38,65 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.sms.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">عنوان پیامک</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="title" class="h6">عنوان پیامک</label>
+                                        <input type="text" name="title" id="title" class="form-control form-control-sm" value="{{ old('title') }}">
                                 </div>
+                                @error('title')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">تاریخ انتشار</label>
-                                    <input type="text" id="publish_date" name="publish_date" class="form-control form-control-sm jalali-input" data-jdp data-jdp-format="YYYY-MM-DD">
-                                    <i class="fa fa-calendar position-absolute" id="calendar_icon"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
+                                <div class="form-group datepicker-wrapper">
+                                    <label for="published_at" class="h6">تاریخ انتشار</label>
+                                    <input type="text" id="published_at" name="published_at" class="form-control form-control-sm jalali-input" value="{{ old('published_at') }}">
+                                    <i class="fa fa-calendar position-absolute"
+                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"
+                                       id="calendar_icon"></i>
                                 </div>
+                                @error('published_at')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12">
+                                <div class="form-group">
+                                    <label for="Status-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Status-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <label for="faq">متن پیامک</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10"></textarea>
+                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10">{{ old('body') }}</textarea>
+                                @error('body')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
@@ -71,8 +111,6 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
-    <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
 @endsection
 

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin\Notification;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Notification\EmailRequest;
+use App\Http\Services\Time\TimeService;
+use App\Models\Notify\Email;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmailController extends Controller
 {
@@ -12,7 +16,8 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return view('admin.notification.email.index');
+        $emails = EmaiL::orderBy("created_at", "DESC")->simplePaginate(10);
+        return view('admin.notification.email.index' , compact('emails'));
     }
 
     /**
@@ -26,9 +31,37 @@ class EmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmailRequest $request , Email $email , TimeService $timeService)
     {
-        //
+        list($jalaliDate , $time) = explode(' ' , $request->published_at);
+        $jy = substr($request->published_at,0,4);
+        $jm = substr($request->published_at,5,2);
+        $jd = substr($request->published_at,8,2);
+        $published_at = $timeService->jalali_to_gregorian($jy, $jm , $jd);
+        $gy = $published_at[0];
+        $gm = str_pad($published_at[1], 2, "0", STR_PAD_LEFT);
+        $gd = str_pad($published_at[2], 2, "0", STR_PAD_LEFT);
+
+        $published_at = "$gy-$gm-$gd " . $time;
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
+            $validated['published_at'] = $published_at;
+            $result = Email::create($validated);
+            DB::commit();
+            return redirect()
+                ->route('admin.email.index')
+                ->with('swal-success' , 'ایمیل شما با موفقیت ساخته شد')
+                ->withInput();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $errorID = now()->format('YmdHis') . rand(1000 , 9999);
+            \Log::error("Throwable Exception: [$errorID]" . $th->getMessage());
+            return redirect()
+                ->back()
+                ->with('swal-error' ,"خطای داخلی:". $errorID)
+                ->withInput();
+        }
     }
 
     /**
@@ -42,24 +75,94 @@ class EmailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Email $email)
     {
-        //
+        return view('admin.notification.email.edit' , compact('email'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmailRequest $request, Email $email , TimeService $timeService)
     {
-        //
+        list($jalaliDate, $time) = explode(' ', $request->published_at);
+
+        list($jy, $jm, $jd) = explode('/', $jalaliDate);
+
+        $published_at = $timeService->jalali_to_gregorian($jy, $jm, $jd);
+
+        $gy = $published_at[0];
+        $gm = str_pad($published_at[1], 2, "0", STR_PAD_LEFT);
+        $gd = str_pad($published_at[2], 2, "0", STR_PAD_LEFT);
+
+        $published_at = "$gy-$gm-$gd $time";
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
+            $validated['published_at'] = $published_at;
+            $email->update($validated);
+            DB::commit();
+            return redirect()
+                ->route('admin.email.index')
+                ->with('swal-success' , 'ایمیل شما با تغییر یافت')
+                ->withInput();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $errorID = now()->format('YmdHis') . rand(1000 , 9999);
+            \Log::error("Throwable Exception: [$errorID]" . $th->getMessage());
+            return redirect()
+                ->back()
+                ->with('swal-error' ,"خطای داخلی:". $errorID)
+                ->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Email $email)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $email->delete();
+            DB::commit();
+            return redirect()
+                ->route('admin.email.index')
+                ->with('swal-success' , 'ایمیل مورد نظر با موفقت حدف شد');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $errorID = now()->format('YmdHis') . rand(1000 , 9999);
+            \Log::error("Throwable Exception: [$errorID]" . $th->getMessage());
+            return redirect()
+                ->back()
+                ->with('swal-error' ,"خطای داخلی:". $errorID)
+                ->withInput();
+        }
+    }
+
+    public function status(Email $email)
+    {
+        $email->status = $email->status == 0 ? 1 : 0;
+        $result = $email->save();
+        if ($result) {
+            if ($email->status == 0) {
+                return response()->json([
+                    'status' => true,
+                    'checked' => false,
+                ]);
+            } else {
+                if ($email->status == 1) {
+                    return response()->json([
+                        'status' => true,
+                        'checked' => true,
+                    ]);
+                }
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+            ]);
+        }
+
     }
 }

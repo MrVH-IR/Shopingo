@@ -51,7 +51,7 @@
                             <tr>
                                 <th>{{ $key +=1 }}</th>
                                 <td>{{ $menu->name }}</td>
-                                <td>{{ $menu->parent_id ? $menu->parent->name : "ندارد" }}</td>
+                                <td>{{ $menu->parent_id ? $menu->parent->name : "منو اصلی" }}</td>
                                 <td>{{ config('app.url') . "/" . $menu->url }}</td>
                                 <td>
                                     <div class="status-wrapper" style="position: relative;">

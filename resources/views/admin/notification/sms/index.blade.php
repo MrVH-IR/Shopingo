@@ -2,6 +2,7 @@
 
 @section('head-tag')
 <title>اطلاعیه پیامکی</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -39,37 +40,41 @@
                         <thead>
                             <th>#</th>
                             <th>عنوان اطلاعیه</th>
+                            <th>متن پیامک</th>
                             <th>تاریخ ارسال</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($sms as $key => $value)
                             <tr>
-                                <th>1</th>
-                                <td>فروش ویژه بهاری</td>
-                                <td>1402/01/01</td>
+                                <th>{{ $key +1 }}</th>
+                                <td>{{ $value->title }}</td>
+                                <td>{{ substr($value->body , 0 , 100) }} @if(mb_strlen($value->body) > 100) <p>...</p> @endif</td>
+                                <td>{{ $value->published_at_jalali }}</td>
+                                <td>
+                                    <label>
+                                        <div class="status-wrapper" style="position: relative;">
+                                            <input id="status-{{ $value->id }}" onchange="changeStatus('status-{{ $value->id }}')" type="checkbox"
+                                                   @if($value->status == 1) checked @endif
+                                                   data-url="{{ route('admin.sms.status' , $value->id) }}">
+                                        </div>
+                                    </label>
+                                </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-clock"></i>   حذف</button>
+                                    <a href="{{ route('admin.sms.edit' , $value->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.sms.destroy' , $value->id) }}" class="d-none" id="delete-form-{{ $value->id }}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                    </form>
+                                    <button type="submit" form="delete-form-{{ $value->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $value->id }}">
+                                        <i class="fa fa-clock"></i>   حذف
+                                    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>فروش ویژه تابستانه</td>
-                                <td>1402/04/01</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-clock"></i>   حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>فروش ویژه زمستانه</td>
-                                <td>1402/07/01</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-clock"></i>   حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -77,4 +82,10 @@
         </section>
     </section>
 
+    {{ $sms->links() }}
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

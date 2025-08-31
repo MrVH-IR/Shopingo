@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
+
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }
