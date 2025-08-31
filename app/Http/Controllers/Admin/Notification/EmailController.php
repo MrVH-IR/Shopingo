@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Notification\EmailRequest;
+use App\Http\Services\File\FileToolsService;
 use App\Http\Services\Time\TimeService;
 use App\Models\Notify\Email;
+use App\Models\Notify\EmailFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +33,7 @@ class EmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmailRequest $request , Email $email , TimeService $timeService)
+    public function store(EmailRequest $request , Email $email , TimeService $timeService , FileToolsService $fileToolsService)
     {
         list($jalaliDate , $time) = explode(' ' , $request->published_at);
         $jy = substr($request->published_at,0,4);
@@ -47,7 +49,29 @@ class EmailController extends Controller
         try {
             $validated = $request->validated();
             $validated['published_at'] = $published_at;
-            $result = Email::create($validated);
+            $mail = Email::create($validated);
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $result = $fileToolsService->setFile($file)->saveInStorage();
+                if (! $result) {
+                    DB::rollBack();
+                    return redirect()
+                        ->back()
+                        ->with('swal-error' , "مشکلی در آپلود فایل پیش آمده است")
+                        ->withInput();
+                }
+            }
+
+            $publicFiles = new EmailFile();
+            $publicFiles->public_mail_id = $mail->id;
+            $publicFiles->file_path = $result['path'];
+            $publicFiles->file_size = $result['size'];
+            $publicFiles->file_type = $result['extension'];
+            $publicFiles->status = 1;
+            $publicFiles->save();
+
+
             DB::commit();
             return redirect()
                 ->route('admin.email.index')
@@ -164,5 +188,10 @@ class EmailController extends Controller
             ]);
         }
 
+    }
+
+    public function downloadFile(EmailFile $file)
+    {
+        return response()->download(storage_path('app'. DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . $file->file_path));
     }
 }

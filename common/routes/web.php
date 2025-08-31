@@ -265,6 +265,7 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::put('/update/{email}' , [EmailController::class , 'update'])->name('admin.email.update');
             Route::delete('/destroy/{email}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
             Route::get('/status/{email}' , [EmailController::class , 'status'])->name('admin.email.status');
+            Route::get('/file/{file}' , [EmailController::class , 'downloadFile'])->name('admin.email.file.download');
             // Route::resource('/' , EmailController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //SMS
@@ -294,11 +295,8 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
     });
     Route::prefix('setting')->namespace('Setting')->group(function() {
             Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index');
-            Route::get('/create' , [SettingController::class , 'create'])->name('admin.setting.create');
-            Route::post('/store' , [SettingController::class , 'store'])->name('admin.setting.store');
             Route::get('/edit/{id}' , [SettingController::class , 'edit'])->name('admin.setting.edit');
             Route::put('/update/{id}' , [SettingController::class , 'update'])->name('admin.setting.update');
-            Route::delete('/destroy/{id}' , [SettingController::class , 'destroy'])->name('admin.setting.destroy');
             // Route::resource('/' , SettingController::class); // Can Be used And Delete All Those Above For (Comment).
     });
 });

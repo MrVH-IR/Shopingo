@@ -26,7 +26,7 @@
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="#" class="btn btn-info btn-sm disabled">ایجاد تنظیمات چدید</a>
+                    <a class="btn btn-info btn-sm disabled">ایجاد تنظیمات چدید</a>
                 </section>
 
                 <section class="table-responsive">
@@ -34,17 +34,22 @@
                         <thead>
                             <th>#</th>
                             <th>نام سایت</th>
-                            <th>عنوان سایت</th>
+                            <th>توضیحات سایت</th>
+                            <th>کلمات کلیدی</th>
+                            <th>لوگو</th>
+                            <th>آیکون</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
                             <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>فروشگاه من</td>
+                                <th>{{ $setting->id }}</th>
+                                <td>{{ $setting->title }}</td>
+                                <td>{{ $setting->description }}</td>
+                                <td>{{ $setting->keywords }}</td>
+                                <td>{{ $setting->logo }}</td>
+                                <td>{{ $setting->favicon }}</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button disabled type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
                         </tbody>

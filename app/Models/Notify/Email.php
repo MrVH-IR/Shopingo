@@ -24,4 +24,10 @@ class Email extends Model
 
         return $jalaliDate . ' ' . $time;
     }
+
+    public function file()
+    {
+        return $this->hasOne(EmailFile::class , "public_mail_id" , "id");
+    }
+
 }

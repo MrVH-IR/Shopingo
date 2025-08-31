@@ -5,6 +5,23 @@
 <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
 <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 <title>ایجاد اطلاعیه ایمیلی</title>
+<style>
+    .custom-file-input {
+        display: none; /* مخفی کردن input اصلی */
+    }
+    .custom-file-label {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 2px dashed #6c757d;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #f8f9fa;
+        transition: 0.3s;
+    }
+    .custom-file-label:hover {
+        background-color: #e9ecef;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -38,7 +55,7 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.email.store') }}" method="POST">
+                    <form action="{{ route('admin.email.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
@@ -70,7 +87,7 @@
                                 </div>
                                 @enderror
                             </section>
-                            <section class="col-12">
+                            <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="Status-Select" class="h6">وضعیت</label>
                                     <select name="status" id="Status-Select" class="form-control form-control-sm">
@@ -85,6 +102,20 @@
                                         {{ $message }}
                                     </li>
                                 </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <input type="file" id="file" name="file" class="custom-file-input">
+                                    <label for="file" class="custom-file-label">📎 انتخاب فایل</label>
+                                    <span id="file-chosen" style="margin-right:10px;">هیچ فایلی انتخاب نشده</span>
+                                </div>
+                                @error('file')
+                                    <div class="alert alert-danger">
+                                        <li>
+                                            {{ $message }}
+                                        </li>
+                                    </div>
                                 @enderror
                             </section>
                             <section class="col-12">
@@ -116,4 +147,9 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
+    <script>
+        document.getElementById("file").addEventListener("change", function(){
+            document.getElementById("file-chosen").textContent = this.files[0]?.name || "هیچ فایلی انتخاب نشده";
+        });
+    </script>
 @endsection

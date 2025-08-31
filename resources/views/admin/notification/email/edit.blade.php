@@ -88,6 +88,13 @@
                                 </div>
                                 @enderror
                             </section>
+                            @if ($email->file)
+                                <p>فایل پیوست: {{ $email->file->file_path }}</p>
+                                <a href="{{ route('admin.email.file.download' , $email->file->id) }}" target="_blank" class="btn btn-primary">
+                                    مشاهده / دانلود
+                                </a>
+                            @endif
+
                             <section class="col-12">
                                 <label for="faq">متن ایمیل</label>
                                 <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10">
