@@ -3,6 +3,7 @@
 
 @section('head-tag')
 <title>تنظیمات</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
 @endsection
 
 @section('content')
@@ -46,10 +47,32 @@
                                 <td>{{ $setting->title }}</td>
                                 <td>{{ $setting->description }}</td>
                                 <td>{{ $setting->keywords }}</td>
-                                <td>{{ $setting->logo }}</td>
-                                <td>{{ $setting->favicon }}</td>
+                                <td>
+                                    @if(isset($setting->logo))
+                                        <img src="{{ asset($setting->logo) }}"
+                                             data-large="{{ asset($setting->logo) }}"
+                                             alt="{{ $setting->logo }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($setting->favicon))
+                                        <img src="{{ asset($setting->favicon) }}"
+                                             data-large="{{ asset($setting->favicon) }}"
+                                             alt="{{ $setting->favicon }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
+                                </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <a href="{{ route('admin.setting.edit' , $setting->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -59,4 +82,12 @@
         </section>
     </section>
 
+<div id="imageModal" class="modal-overlay">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
 @endsection

@@ -7,7 +7,7 @@
 <title>ایجاد اطلاعیه ایمیلی</title>
 <style>
     .custom-file-input {
-        display: none; /* مخفی کردن input اصلی */
+        display: none;
     }
     .custom-file-label {
         display: inline-block;
@@ -104,7 +104,7 @@
                                 </div>
                                 @enderror
                             </section>
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 mt-4">
                                 <div class="form-group">
                                     <input type="file" id="file" name="file" class="custom-file-input">
                                     <label for="file" class="custom-file-label">📎 انتخاب فایل</label>

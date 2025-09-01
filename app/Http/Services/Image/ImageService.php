@@ -15,14 +15,16 @@ class ImageService extends ImageToolsService
 
         $manager = new ImageManager(new Driver());
 
+        $imageAddress = $this->getImageAddress($this->getFinalImageDirectory());
+
         $result = $manager->read($image->getRealPath())
             ->save(
-                public_path($this->getImageAddress($this->getFinalImageDirectory())),
+                public_path($imageAddress),
                 quality: 90,
                 format: $this->getImageExtension()
             );
 
-        return $result ? $this->getImageAddress() : false;
+        return $result ? $imageAddress : false;
     }
 
     public function fitAndSave($image, $width, $height)
