@@ -8,6 +8,7 @@ use App\Http\Services\File\FileToolsService;
 use App\Http\Services\Time\TimeService;
 use App\Models\Notify\Email;
 use App\Models\Notify\EmailFile;
+use Faker\Core\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class EmailController extends Controller
      */
     public function index()
     {
-        $emails = EmaiL::orderBy("created_at", "DESC")->simplePaginate(10);
+        $emails = EmaiL::orderBy("created_at", "DESC")->simplePaginate(10 , "*" , "صفحه");
         return view('admin.notification.email.index' , compact('emails'));
     }
 
@@ -51,26 +52,26 @@ class EmailController extends Controller
             $validated['published_at'] = $published_at;
             $mail = Email::create($validated);
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $result = $fileToolsService->setFile($file)->saveInStorage();
-                if (! $result) {
-                    DB::rollBack();
-                    return redirect()
-                        ->back()
-                        ->with('swal-error' , "مشکلی در آپلود فایل پیش آمده است")
-                        ->withInput();
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $result = $fileToolsService->setFile($file)->saveInStorage();
+                    if (! $result) {
+                        DB::rollBack();
+                        return redirect()
+                            ->back()
+                            ->with('swal-error' , "مشکلی در آپلود فایل پیش آمده است")
+                            ->withInput();
+                    }
+
+                    $publicFiles = new EmailFile();
+                    $publicFiles->public_mail_id = $mail->id;
+                    $publicFiles->file_path = $result['path'];
+                    $publicFiles->file_size = $result['size'];
+                    $publicFiles->file_type = $result['extension'];
+                    $publicFiles->status = 1;
+                    $publicFiles->save();
                 }
             }
-
-            $publicFiles = new EmailFile();
-            $publicFiles->public_mail_id = $mail->id;
-            $publicFiles->file_path = $result['path'];
-            $publicFiles->file_size = $result['size'];
-            $publicFiles->file_type = $result['extension'];
-            $publicFiles->status = 1;
-            $publicFiles->save();
-
 
             DB::commit();
             return redirect()
@@ -188,6 +189,27 @@ class EmailController extends Controller
             ]);
         }
 
+    }
+
+    public function viewFile(Email $email)
+    {
+        $emailFiles = $email->files;
+        return view('admin.notification.email.files' , compact('emailFiles' , 'email'));
+    }
+
+    public function deleteFile(Request $request, FileToolsService $fileToolsService)
+    {
+        $fileId = $request->input('file_id');
+        $emailFile = EmailFile::findOrFail($fileId);
+        if (! $emailFile) {
+            return redirect()->route('admin.email.index')->with('swal-error', 'فایل مورد نظر یافت نشد.');
+        }
+        if (! $fileToolsService->deleteFile($emailFile->file_path)) {
+            return redirect()->route('admin.email.index')->with('swal-error', 'حذف فایل از فضای ذخیره‌سازی با مشکل مواجه شد.');
+        }
+        $emailFile->delete();
+
+        return redirect()->route('admin.email.index')->with('swal-success', 'فایل با موفقیت حذف شد.');
     }
 
     public function downloadFile(EmailFile $file)

@@ -79,4 +79,11 @@ class FileToolsService
             return false;
         }
     }
+
+    public function deleteFile($path): bool
+    {
+        if (!Storage::exists($path)) return false;
+
+        return Storage::delete($path);
+    }
 }

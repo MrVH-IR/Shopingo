@@ -60,6 +60,9 @@
                                     </label>
                                 </td>
                                 <td class="width-16-rem text-left">
+                                    @if($value->files)
+                                        <a href="{{ route('admin.email.file.view' , $value->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-file"></i>  فایل های ضمیمه شده</a>
+                                    @endif
                                     <a href="{{ route('admin.email.edit' , $value->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
                                     <form action="{{ route('admin.email.destroy' , $value->id) }}" class="d-none" id="delete-form-{{ $value->id }}" method="POST">
                                         @csrf
@@ -79,6 +82,8 @@
             </section>
         </section>
     </section>
+
+    {{ $emails->links() }}
 
 @endsection
 @section('script')

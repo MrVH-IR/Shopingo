@@ -26,8 +26,8 @@ class EmailRequest extends FormRequest
             "body" => "required|string|min:3|max:500",
             "status" => "required|boolean|numeric|in:0,1",
             "published_at" => "required|string",
-            "file" => [
-                "nullable",
+            "file" => "nullable|array",
+            "file.*" => [
                 "file",
                 "max:10240",
                 "mimetypes:image/jpeg,image/png,image/gif,image/webp,image/svg+xml,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.spreadsheet,application/vnd.oasis.opendocument.presentation,text/plain,application/rtf"

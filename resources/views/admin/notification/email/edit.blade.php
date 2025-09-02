@@ -88,11 +88,15 @@
                                 </div>
                                 @enderror
                             </section>
-                            @if ($email->file)
-                                <p>فایل پیوست: {{ $email->file->file_path }}</p>
-                                <a href="{{ route('admin.email.file.download' , $email->file->id) }}" target="_blank" class="btn btn-primary">
-                                    مشاهده / دانلود
-                                </a>
+                            @if ($email->files)
+                                <section class="col-md-12">
+                                    @foreach($email->files as $file)
+                                        <p>فایل پیوست: {{ $file->file_path }}</p>
+                                        <a href="{{ route('admin.email.file.download' , $file->id) }}" target="_blank" class="btn btn-primary">
+                                            مشاهده / دانلود
+                                        </a>
+                                        @endforeach
+                                </section>
                             @endif
 
                             <section class="col-12">

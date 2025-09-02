@@ -104,20 +104,20 @@
                                 </div>
                                 @enderror
                             </section>
-                            <section class="col-12 col-md-6 mt-4">
-                                <div class="form-group">
-                                    <input type="file" id="file" name="file" class="custom-file-input">
-                                    <label for="file" class="custom-file-label">📎 انتخاب فایل</label>
-                                    <span id="file-chosen" style="margin-right:10px;">هیچ فایلی انتخاب نشده</span>
-                                </div>
-                                @error('file')
-                                    <div class="alert alert-danger">
-                                        <li>
-                                            {{ $message }}
-                                        </li>
+                            @for($i = 0; $i < 2; $i++)
+                                <section class="col-12 col-md-6 mt-4">
+                                    <div class="form-group">
+                                        <input type="file" id="file_{{ $i }}" name="files[]" class="custom-file-input">
+                                        <label for="file_{{ $i }}" class="custom-file-label">📎 انتخاب فایل</label>
+                                        <span id="file-chosen-{{ $i }}" style="margin-right:10px;">هیچ فایلی انتخاب نشده</span>
                                     </div>
-                                @enderror
-                            </section>
+                                    @error("files.$i")
+                                    <div class="alert alert-danger">
+                                        <li>{{ $message }}</li>
+                                    </div>
+                                    @enderror
+                                </section>
+                            @endfor
                             <section class="col-12">
                                 <label for="faq">متن ایمیل</label>
                                 <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10">

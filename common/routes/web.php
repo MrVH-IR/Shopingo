@@ -266,6 +266,8 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::delete('/destroy/{email}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
             Route::get('/status/{email}' , [EmailController::class , 'status'])->name('admin.email.status');
             Route::get('/file/{file}' , [EmailController::class , 'downloadFile'])->name('admin.email.file.download');
+            Route::get('/file/view/{email}' , [EmailController::class , 'viewFile'])->name('admin.email.file.view');
+            Route::delete('/email/file/delete/{emailFile}', [EmailController::class, 'deleteFile'])->name('admin.email.file.delete');
             // Route::resource('/' , EmailController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //SMS
