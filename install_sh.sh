@@ -1,5 +1,12 @@
 #!/bin/bash
 
+platform=$(uname -s)
+
+if [ "$platform" !== "Linux" ]; then
+    echo "You OS is not Linux"
+    exit 1
+fi
+
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
     echo "Please run this script with sudo or as root."
