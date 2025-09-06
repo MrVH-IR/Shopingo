@@ -30,7 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             //SMSSeeder::class,
             //EmailSeeder::class,
-            UserSeeder::class, // Password is shopingo
+            //UserSeeder::class, // Password is shopingo
+            //TicketCategorySeeder::class,
+            //TicketPrioritySeeder::class,
         ]);
     }
 }
