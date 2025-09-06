@@ -34,7 +34,7 @@
 
                     <form action="{{ route('admin.ticket.priority.update', $ticketPriority->id) }}" method="post">
                         @csrf
-                        {{ method_field('put') }}
+                        @method("PUT")
                         <section class="row">
 
                             <section class="col-12 col-md-6 my-2">
