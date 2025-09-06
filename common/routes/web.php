@@ -218,9 +218,11 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [AdminUserController::class , 'index'])->name('admin.user.admin-user.index');
             Route::get('/create' , [AdminUserController::class , 'create'])->name('admin.user.admin-user.create');
             Route::post('/store' , [AdminUserController::class , 'store'])->name('admin.user.admin-user.store');
-            Route::get('/edit/{id}' , [AdminUserController::class , 'edit'])->name('admin.user.admin-user.edit');
-            Route::put('/update/{id}' , [AdminUserController::class , 'update'])->name('admin.user.admin-user.update');
+            Route::get('/edit/{user}' , [AdminUserController::class , 'edit'])->name('admin.user.admin-user.edit');
+            Route::put('/update/{user}' , [AdminUserController::class , 'update'])->name('admin.user.admin-user.update');
             Route::delete('/destroy/{id}' , [AdminUserController::class , 'destroy'])->name('admin.user.admin-user.destroy');
+            Route::get('/activation/{user}' , [AdminUserController::class , 'activation'])->name('admin.user.admin-user.activation');
+            Route::get('/status/{user}' , [AdminUserController::class , 'status'])->name('admin.user.admin-user.status');
             // Route::resource('/' , AdminUserController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //Customer
@@ -228,9 +230,11 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [CustomerController::class , 'index'])->name('admin.user.customer.index');
             Route::get('/create' , [CustomerController::class , 'create'])->name('admin.user.customer.create');
             Route::post('/store' , [CustomerController::class , 'store'])->name('admin.user.customer.store');
-            Route::get('/edit/{id}' , [CustomerController::class , 'edit'])->name('admin.user.customer.edit');
-            Route::put('/update/{id}' , [CustomerController::class , 'update'])->name('admin.user.customer.update');
+            Route::get('/edit/{user}' , [CustomerController::class , 'edit'])->name('admin.user.customer.edit');
+            Route::put('/update/{user}' , [CustomerController::class , 'update'])->name('admin.user.customer.update');
             Route::delete('/destroy/{id}' , [CustomerController::class , 'destroy'])->name('admin.user.customer.destroy');
+            Route::get('/status/{user}' , [CustomerController::class , 'status'])->name('admin.user.customer.status');
+            Route::get('/activation/{user}' , [CustomerController::class , 'activation'])->name('admin.user.customer.activation');
             // Route::resource('/' , CustomerController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //Role

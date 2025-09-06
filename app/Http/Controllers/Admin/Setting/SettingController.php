@@ -7,12 +7,11 @@ use App\Http\Requests\Admin\Setting\SettingRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\Setting\Setting;
 use Database\Seeders\SettingSeeder;
-use Hamcrest\Core\Set;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 
 class SettingController extends Controller
 {
@@ -94,9 +93,16 @@ class SettingController extends Controller
                 if (in_array($ext, ['ico', 'svg'])) {
                     $favicon->move(public_path($directory), $filename);
                 } else {
-                    $manager = new ImageManager(\GdImage::class);
-                    $manager->make($favicon->getRealPath())
-                        ->save(public_path("$directory/$filename"), 90, $ext);
+
+                    $driver = extension_loaded('gd') ? new GdDriver() : new ImagickDriver();
+                    $manager = new ImageManager($driver);
+
+                    $image = $manager->read($favicon->getRealPath());
+                    $image->save(
+                        public_path("$directory/$filename"),
+                        quality: 90,
+                        format: $ext
+                    );
                 }
 
                 $validated['favicon'] = "$directory/$filename";

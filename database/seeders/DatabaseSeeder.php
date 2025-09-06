@@ -28,8 +28,9 @@ class DatabaseSeeder extends Seeder
 //        Comment::factory()->count(10)->forUser()->create();
 //        Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
         $this->call([
-            SMSSeeder::class,
-            EmailSeeder::class
+            //SMSSeeder::class,
+            //EmailSeeder::class,
+            UserSeeder::class, // Password is shopingo
         ]);
     }
 }

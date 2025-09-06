@@ -64,10 +64,11 @@ class FileToolsService
 
         try {
             $path = $this->file->storeAs(
-                'uploads',
+                'uploads' . DIRECTORY_SEPARATOR . $this->getFileExtension(),
                 $this->getFileName() . '_' . time() . '.' . $this->getFileExtension(),
                 'local'
             );
+
             return [
                 "path" => $path,
                 "name" => $this->getFileName(),
@@ -85,5 +86,13 @@ class FileToolsService
         if (!Storage::exists($path)) return false;
 
         return Storage::delete($path);
+    }
+
+    public static function formatSize($bytes): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.2f", $bytes / pow(1024, $factor)) . ' ' . @$units[$factor];
     }
 }

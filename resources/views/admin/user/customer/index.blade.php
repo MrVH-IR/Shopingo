@@ -3,6 +3,7 @@
 
 @section('head-tag')
 <title>مشتریان</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -12,7 +13,7 @@
              <a href="{{ route('admin.home') }}">خانه</a>
         </li>
         <li class="breadcrumb-item font-size-12">
-             <a href="#">بخش کاربران</a>
+             <a href="{{ route('admin.user.customer.index') }}">بخش کاربران</a>
         </li>
         <li class="breadcrumb-item font-size-12 active" aria-current="page">
             مشتریان
@@ -44,48 +45,52 @@
                             <th>نام</th>
                             <th>نام خانوادگی</th>
                             <th>کد ملی</th>
+                            <th>فعال سازی</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($users as $key => $value)
                             <tr>
-                                <th>1</th>
-                                <td>mrvh@example.com</td>
-                                <th>091209993</th>
-                                <td>علیرضا</td>
-                                <td>اسب شاخدار</td>
-                                <td>5987654421</td>
+                                <th>{{ $key +1 }}</th>
+                                <td>{{ $value->email }}</td>
+                                <th>{{ $value->mobile }}</th>
+                                <td>{{ $value->first_name }}</td>
+                                <td>{{ $value->last_name }}</td>
+                                <td>{{ $value->national_code }}</td>
+                                <td>
+                                    <div class="activation-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="activation-{{ $value->id }}" onchange="changeActivation({{ $value->id }})" type="checkbox"
+                                                   @if($value->activation == 1) checked @endif
+                                                   data-url="{{ route('admin.user.customer.activation', $value->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="status-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="{{ $value->id }}" onchange="changeStatus({{ $value->id }})" type="checkbox"
+                                                   @if($value->status == 1) checked @endif
+                                                   data-url="{{ route('admin.user.customer.status', $value->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.user.customer.edit' , $value->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.user.customer.destroy', $value->id) }}" method="POST" id="delete-form-{{ $value->id }}" class="d-none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    <button type="submit" form="delete-form-{{ $value->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $value->id }}" >
+                                        <i class="fa fa-trash-alt"></i> حذف
+                                    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>mrvh@example.com</td>
-                                <th>091209993</th>
-                                <td>علیرضا</td>
-                                <td>اسب شاخدار</td>
-                                <td>5987654421</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>mrvh@example.com</td>
-                                <th>091209993</th>
-                                <td>علیرضا</td>
-                                <td>اسب شاخدار</td>
-                                <td>5987654421</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -93,4 +98,9 @@
         </section>
     </section>
 
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/activation.js') }}"></script>
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection
