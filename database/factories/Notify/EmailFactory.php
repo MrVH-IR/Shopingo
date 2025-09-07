@@ -12,7 +12,7 @@ class EmailFactory extends Factory
     public function definition(): array
     {
         return [
-            "title" => $this->faker->word(),
+            "subject" => $this->faker->word(),
             "body" => $this->faker->text(),
             "status" => $this->faker->randomElement([0,1]),
             "published_at" => $this->faker->date(),
