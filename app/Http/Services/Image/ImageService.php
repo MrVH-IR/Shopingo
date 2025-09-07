@@ -8,6 +8,12 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class ImageService extends ImageToolsService
 {
+
+    /**
+     * Save the original Picture
+     * @param mixed $image
+     * @return bool|string
+     */
     public function save($image)
     {
         $this->setImage($image);
@@ -32,7 +38,12 @@ class ImageService extends ImageToolsService
 
         return $result ? $imageAddress : false;
     }
-
+    /**
+     * @param $image
+     * @param $width
+     * @param $height
+     * @return bool|string
+     */
 
     public function fitAndSave($image, $width, $height)
     {
@@ -40,6 +51,7 @@ class ImageService extends ImageToolsService
         $this->provider();
 
         $manager = new ImageManager(new Driver());
+        $imageAddress = $this->getImageAddress($this->getFinalImageDirectory());
 
         $result = $manager->read($image->getRealPath())
             ->cover($width, $height)
@@ -49,9 +61,13 @@ class ImageService extends ImageToolsService
                 format: $this->getImageExtension()
             );
 
-        return $result ? $this->getImageAddress() : false;
+        return $result ? $imageAddress : false;
     }
-
+    /**
+     *
+     * @param mixed $image
+     * @return array{currentImage: mixed, directory: string, indexArray: array|array{currentImage: mixed, directory: string, indexArray: string[]}|array{message: string}}
+     */
     public function createIndexAndSave($image) : array
     {
         $imageSizes = Config::get('image.index-image-sizes');
