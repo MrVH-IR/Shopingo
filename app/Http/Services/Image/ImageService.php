@@ -16,16 +16,23 @@ class ImageService extends ImageToolsService
         $manager = new ImageManager(new Driver());
 
         $imageAddress = $this->getImageAddress($this->getFinalImageDirectory());
+        $fullPath = public_path($imageAddress);
+        $dir = dirname($fullPath);
+
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
 
         $result = $manager->read($image->getRealPath())
             ->save(
-                public_path($imageAddress),
+                $fullPath,
                 quality: 90,
                 format: $this->getImageExtension()
             );
 
         return $result ? $imageAddress : false;
     }
+
 
     public function fitAndSave($image, $width, $height)
     {
@@ -104,6 +111,21 @@ class ImageService extends ImageToolsService
     {
         $directory = public_path($image['directory']);
         $this->deleteDirectoryAndFiles($directory);
+    }
+
+    public function deleteIndexString($image): void
+    {
+        $directory = public_path($image);
+        $this->deleteImage($directory);
+    }
+
+    public function deleteFile($filePath): void
+    {
+        $fullPath = public_path($filePath);
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
     }
 
     public function deleteDirectoryAndFiles($directory): bool

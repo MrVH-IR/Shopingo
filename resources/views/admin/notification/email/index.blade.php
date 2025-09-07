@@ -60,7 +60,7 @@
                                     </label>
                                 </td>
                                 <td class="width-16-rem text-left">
-                                    @if($value->files)
+                                    @if($value->files->isNotEmpty())
                                         <a href="{{ route('admin.email.file.view' , $value->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-file"></i>  فایل های ضمیمه شده</a>
                                     @endif
                                     <a href="{{ route('admin.email.edit' , $value->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>

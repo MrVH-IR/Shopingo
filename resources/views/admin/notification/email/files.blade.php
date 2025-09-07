@@ -47,17 +47,21 @@
 </style>
 <div class="mt-4">
     <h6>فایل‌های پیوست:</h6>
+{{--    @dd($emailFiles)--}}
 
     @if($emailFiles->isNotEmpty())
         @foreach($emailFiles as $emailFile)
             <div class="d-flex align-items-center mb-3 gap-2">
-                <!-- لینک دانلود -->
                 <x-files
                     href="{{ route('admin.email.file.download', $emailFile->id) }}"
                     title="{{ $emailFile->file_size_formatted ?? 'فایل' }}"
                 >
                     {{ basename($emailFile->file_path) }}
                 </x-files>
+                <small class="text-muted mt-1">
+                    Type: {{ strtoupper($emailFile->file_type) }} |
+                    Size: {{ \App\Http\Services\File\FileToolsService::formatSize($emailFile->file_size) }}
+                </small>
 
                 <form
                     action="{{ route('admin.email.file.delete', $emailFile) }}"
@@ -74,6 +78,7 @@
                 </form>
             </div>
         @endforeach
+            <a href="{{ route('admin.email.index') }}">بازگشت</a>
     @else
         <p class="text-muted">هیچ فایلی پیوست نشده است.</p>
         <a href="{{ route('admin.email.index') }}">بازگشت</a>

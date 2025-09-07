@@ -19,7 +19,9 @@ class EmailController extends Controller
      */
     public function index()
     {
-        $emails = EmaiL::orderBy("created_at", "DESC")->simplePaginate(10 , "*" , "صفحه");
+        $emails = Email::orderBy("created_at", "DESC")
+            ->with('files')
+            ->simplePaginate(10, ['*'], 'صفحه');
         return view('admin.notification.email.index' , compact('emails'));
     }
 

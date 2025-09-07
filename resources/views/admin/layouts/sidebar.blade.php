@@ -115,6 +115,8 @@
                     <i class="fas fa-angle-left angle"></i>
                 </section>
                 <section class="sidebar-dropdown">
+                    <a href="{{ route('admin.ticket.category.index') }}"><i class="fas fa-tags"></i> دسته بندی تیکت ها</a>
+                    <a href="{{ route('admin.ticket.priority.index') }}"><i class="fas fa-exclamation-circle"></i> اولویت تیکت ها</a>
                     <a href="{{ route('admin.ticket.newtickets') }}"><i class="fas fa-envelope-open-text"></i> تیکت های جدید</a>
                     <a href="{{ route('admin.ticket.opentickets') }}"><i class="fas fa-folder-open"></i> تیکت های باز</a>
                     <a href="{{ route('admin.ticket.closetickets') }}"><i class="fas fa-folder-minus"></i> تیکت های بسته</a>
