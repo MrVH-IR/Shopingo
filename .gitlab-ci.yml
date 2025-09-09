@@ -1,0 +1,48 @@
+stages:
+  - build
+  - deploy
+  - test
+
+variables:
+  SERVER: ""
+  PROJECT: ""
+  DIRECTORY: ""
+  SERVER_PASS: ""
+
+# -------------------- BUILD --------------------
+build-job:
+  stage: build
+  when: manual
+  before_script:
+    - apt-get update -y && apt-get install -y sshpass
+  script:
+    - echo "Deploying project: $PROJECT"
+    - echo "Target directory: $DIRECTORY"
+    - echo "Server: $SERVER"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "sudo apt-get update -y && sudo apt-get install -y php8.4-fpm php8.4-common php8.4-cli php8.4-mbstring php8.4-gd composer npm"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "mkdir -p $DIRECTORY && mv $PROJECT $DIRECTORY"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY && composer install --no-ansi --no-interaction && npm install"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY && php artisan migrate --seed && php artisan key:generate"
+
+# -------------------- DEPLOY --------------------
+deploy-job:
+  stage: deploy
+  when: manual
+  before_script:
+    - apt-get update -y && apt-get install -y sshpass curl
+  script:
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "[ -d $DIRECTORY/$PROJECT ] || (echo '❌ Project directory not found!' && exit 1)"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY/$PROJECT && nohup php artisan serve --host=0.0.0.0 --port=8000 > server.log 2>&1 &"
+    - echo "⏳ Waiting for server to start..."
+    - sleep 5
+    - curl --fail http://$(echo $SERVER | cut -d@ -f2):8000 || (echo '❌ Project is not responding on port 8000' && exit 1)
+    - echo "✅ Project deployed successfully and running on port 8000"
+
+# -------------------- TEST --------------------
+test-job:
+  stage: test
+  when: manual
+  before_script:
+    - apt-get update -y && apt-get install -y sshpass
+  script:
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY/$PROJECT && php artisan test"
