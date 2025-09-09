@@ -2,17 +2,16 @@ stages:
   - build
   - deploy
   - test
-
-variables:
-  SERVER: ""
-  PROJECT: ""
-  DIRECTORY: ""
-  SERVER_PASS: ""
-
+  
 # -------------------- BUILD --------------------
 build-job:
   stage: build
   when: manual
+  variables:
+    SERVER: ""
+    PROJECT: ""
+    DIRECTORY: ""
+    SERVER_PASS: ""
   before_script:
     - apt-get update -y && apt-get install -y sshpass
   script:
@@ -28,6 +27,11 @@ build-job:
 deploy-job:
   stage: deploy
   when: manual
+  variables:
+    SERVER: ""
+    PROJECT: ""
+    DIRECTORY: ""
+    SERVER_PASS: ""
   before_script:
     - apt-get update -y && apt-get install -y sshpass curl
   script:
@@ -42,6 +46,11 @@ deploy-job:
 test-job:
   stage: test
   when: manual
+  variables:
+    SERVER: ""
+    PROJECT: ""
+    DIRECTORY: ""
+    SERVER_PASS: ""
   before_script:
     - apt-get update -y && apt-get install -y sshpass
   script:
