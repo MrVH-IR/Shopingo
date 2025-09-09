@@ -2,7 +2,7 @@ stages:
   - build
   - deploy
   - test
-  
+
 # -------------------- BUILD --------------------
 build-job:
   stage: build
@@ -14,7 +14,7 @@ build-job:
     SERVER_PASS: ""
   before_script:
     - apt-get update -y && apt-get install -y sshpass
-  script:
+  script: |
     - echo "Deploying project: $PROJECT"
     - echo "Target directory: $DIRECTORY"
     - echo "Server: $SERVER"
