@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Content\Comment;
+use App\Models\User;
 use App\Models\Content\FAQ;
 use App\Models\Content\Page;
-use App\Models\Notify\Email;
-use App\Models\User;
-use App\Models\Content\PostCategory;
 use App\Models\Content\Post;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Notify\Email;
+use App\Models\Content\Comment;
 use Illuminate\Database\Seeder;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\RoleSeeder;
+use App\Models\Content\PostCategory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             //UserSeeder::class, // Password is shopingo
             //TicketCategorySeeder::class,
             //TicketPrioritySeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
