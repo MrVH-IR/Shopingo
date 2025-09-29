@@ -14,35 +14,18 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            [
-                "name" => "Content Manager",
-                "description" => "Full Access",
-                "status" => 1
-            ],
-            [
-                "name" => "Ticket Operator",
-                "description" => "Full Access",
-                "status" => 1
-            ],
-            [
-                "name" => "Support Sales",
-                "description" => "Full Access",
-                "status" => 1
-            ],
-                        [
-                "name" => "Notify Support",
-                "description" => "Full Access",
-                "status" => 1
-            ],
-                        [
-                "name" => "Super Admin",
-                "description" => "Full Access",
-                "status" => 1
-            ],
+            ["name" => "Content", "description" => "Full Access", "status" => 1],
+            ["name" => "Ticket", "description" => "Full Access", "status" => 1],
+            ["name" => "Support", "description" => "Full Access", "status" => 1],
+            ["name" => "Notify", "description" => "Full Access", "status" => 1],
+            ["name" => "SuperAdmin", "description" => "Full Access", "status" => 1],
         ];
 
-        foreach($permissions as $permission) {
-            Permission::create($permission);
+        foreach ($permissions as $p) {
+            Permission::updateOrCreate(
+                ['name' => $p['name']],
+                ['description' => $p['description'], 'status' => $p['status']]
+            );
         }
     }
 }

@@ -25,11 +25,6 @@ class CommentFactory extends Factory
         return $this->for(Post::factory()->create() , 'commentable');
     }
 
-    public function forUser(): CommentFactory
-    {
-        return $this->for(User::factory()->create() , 'commentable');
-    }
-
     //Uncomment When there is a product factory
 //    public function forProduct(): ProductFactory
 //    {

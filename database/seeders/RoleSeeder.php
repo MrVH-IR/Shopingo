@@ -14,35 +14,18 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            [
-                "name" => "مدیر محتوا",
-                "description" => "دسترسی به بخش محتوای پنل",
-                "status" => 1
-            ],
-            [
-                "name" => "اپراتور تیکت",
-                "description" => "مسئول مدیریت بخش تیکت",
-                "status" => 1
-            ],
-            [
-                "name" => "پشتیبان فروش",
-                "description" => "مسئول مدیریت فروشگاه",
-                "status" => 1
-            ],
-                        [
-                "name" => "پشتیبان اطلاع رسانی",
-                "description" => "مدیریت اطلاع رسانی به کاربران",
-                "status" => 1
-            ],
-                        [
-                "name" => "سوپر ادمین",
-                "description" => "دسترسی کامل به پنل ادمین",
-                "status" => 1
-            ],
+            ["name" => "مدیر محتوا", "description" => "دسترسی به بخش محتوای پنل", "status" => 1],
+            ["name" => "اپراتور تیکت", "description" => "مسئول مدیریت بخش تیکت", "status" => 1],
+            ["name" => "پشتیبان فروش", "description" => "مسئول مدیریت فروشگاه", "status" => 1],
+            ["name" => "پشتیبان اطلاع رسانی", "description" => "مدیریت اطلاع رسانی به کاربران", "status" => 1],
+            ["name" => "سوپر ادمین", "description" => "دسترسی کامل به پنل ادمین", "status" => 1],
         ];
 
-        foreach ($roles as $role) {
-            Role::create($role);
+        foreach ($roles as $r) {
+            Role::updateOrCreate(
+                ['name' => $r['name']],
+                ['description' => $r['description'], 'status' => $r['status']]
+            );
         }
     }
 }
