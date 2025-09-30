@@ -54,7 +54,7 @@
                             <tr>
                                 <th>{{ $key +=1 }}</th>
                                 <td><a href="{{ route('admin.content.comment.show' , $comment->id) }}">{{ substr($comment->body , 0 , 15) }}...</a></td>
-                                <td>{{ $comment->author->fullName }}</td>
+                                <td>{{ $comment->author->full_name }}</td>
                                 <td>
                                     @if($comment->parent_id)
                                         <a href="{{ route('admin.content.comment.show', $comment->parent_id) }}">

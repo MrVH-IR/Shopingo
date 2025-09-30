@@ -14,6 +14,7 @@ class TicketPrioritySeeder extends Seeder
     public function run(): void
     {
         $array = ["فوری" , "مهم" , "متوسط" , "کم اهمیت"];
+
         foreach($array as $value){
             TicketPriority::create([
                "name" => $value,

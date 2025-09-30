@@ -34,29 +34,39 @@
             <section class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نویسنده تیکت</th>
-                            <th>عنوان تیکت</th>
-                            <th>دسته تیکت</th>
-                            <th>اولویت تیکت</th>
-                            <th>ارجاع شده از</th>
-                            <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>نویسنده تیکت</th>
+                        <th>عنوان تیکت</th>
+                        <th>دسته تیکت</th>
+                        <th>اولویت تیکت</th>
+                        <th>ارجاع شده از</th>
+                        <th>تیکت والد</th>
+                        <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                    </tr>
                     </thead>
                     <tbody>
+                    @foreach($tickets as $ticket)
                         <tr>
-                            <th>1</th>
-                            <td>حامد احمدی	</td>
-                            <td>پرداخت انجام نمیشه!	</td>
-                            <td>دسته فروش	</td>
-                            <td>فوری</td>
-                            <td>-</td>
+                            <th>{{ $loop->iteration }}</th>
+                            <td>{{ $ticket->user?->full_name }}</td>
+                            <td>{{ $ticket->subject }}</td>
+                            <td>{{ $ticket->category?->name }}</td>
+                            <td>{{ $ticket->priority?->name }}</td>
+                            <td>{{ $ticket->admin?->user?->full_name }}</td>
+                            <td>{{ $ticket->parent?->subject ?? '-' }}</td>
                             <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.ticket.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
+                                <a href="{{ route('admin.ticket.show' , $ticket->id) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-eye"></i> مشاهده
+                                </a>
+                            </td>
+                            <td class="width-16-rem text-left">
+                                <a href="{{ route('admin.ticket.change' , $ticket->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-check"></i> {{ $ticket->status == 1 ? "باز کردن" : "بستن" }}
+                                </a>
                             </td>
                         </tr>
-
+                    @endforeach
                     </tbody>
                 </table>
             </section>
@@ -64,5 +74,7 @@
         </section>
     </section>
 </section>
+
+    {{ $tickets->links() }}
 
 @endsection

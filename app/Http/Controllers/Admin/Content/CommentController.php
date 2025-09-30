@@ -16,12 +16,6 @@ class CommentController extends Controller
      */
     public function index()
     {
-        // Returns 1 For all Comments - BUG
-//        $unSeenComments = Comment::where('seen' , 0)->get();
-//        foreach ($unSeenComments as $unSeenComment) {
-//            $unSeenComment->seen = 1;
-//            $result = $unSeenComment->save();
-//        }
         $comments = Comment::where('commentable_type' , Post::class)->orderBy('created_at' , 'DESC')->simplePaginate(15);
         foreach ($comments as $comment) {
             if ($comment->seen == 0) {
