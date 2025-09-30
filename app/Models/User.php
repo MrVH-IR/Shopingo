@@ -5,8 +5,6 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\User\Role;
 use App\Models\Content\Comment;
-<<<<<<< HEAD
-=======
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,14 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
->>>>>>> abcdba8 (Ticket Finished)
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -99,11 +90,11 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-<<<<<<< HEAD
     public function roles()
     {
         return $this->belongsToMany(Role::class);
-=======
+    }
+
     public function ticketAdmin()
     {
         return $this->hasOne(TicketAdmin::class);
@@ -112,6 +103,5 @@ class User extends Authenticatable
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
->>>>>>> abcdba8 (Ticket Finished)
     }
 }
