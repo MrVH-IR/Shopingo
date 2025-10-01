@@ -55,7 +55,6 @@
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->category->name }}</td>
                                 <td>
-
                                     @if(isset($post->image['indexArray'][$post->image['currentImage']]))
                                         <img src="{{ asset($post->image['indexArray'][$post->image['currentImage']]) }}"
                                              data-large="{{ asset($post->image['indexArray']['large']) }}"

@@ -3,6 +3,34 @@
 
 @section('head-tag')
 <title>ایجاد نقش</title>
+<style>
+    .permission-card {
+        background: #f8f9fa;
+        border: 1px solid #e1e5ea;
+        border-radius: 10px;
+        padding: 12px;
+        cursor: pointer;
+        transition: all .2s ease-in-out;
+    }
+    .permission-card:hover {
+        background: #e9ecef;
+    }
+    .permission-card input {
+        display: none;
+    }
+    .permission-card label {
+        display: block;
+        margin: 0;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    .permission-card input:checked + label {
+        background: #0d6efd;
+        color: #fff;
+        border-radius: 8px;
+        padding: 5px 10px;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -36,72 +64,78 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.user.role.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">عنوان نقش</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                        <input type="text" name="name" class="form-control form-control-sm">
                                 </div>
+                                @error('name')
+                                    <div class="alert alert-danger">
+                                        <li>
+                                            {{ $message }}
+                                        </li>
+                                    </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">توضیح نقش</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                        <input type="text" name="description" class="form-control form-control-sm">
                                 </div>
+                                @error('description')
+                                    <div class="alert alert-danger">
+                                        <li>
+                                            {{ $message }}
+                                        </li>
+                                    </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Status-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Status-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-2 mt-md-4">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                             </section>
                             <section class="col-12">
                                 <section class="row border-top mt-3 py-3">
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check1" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check1">نمایش دسته جدید</label>
+                                    <section class="col-12">
+                                        <div class="d-flex flex-wrap gap-3">
+                                            @foreach($permissions as $permission)
+                                                <div class="permission-card" style="flex: 1 1 calc(25% - 1rem); min-width:220px;">
+                                                    <input type="checkbox"
+                                                           name="permissions[]"
+                                                           value="{{ $permission->id }}"
+                                                           id="perm-{{ $permission->id }}">
+                                                    <label for="perm-{{ $permission->id }}">
+                                                        {{ $permission->description }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check2" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check2">ایجاد دسته جدید</label>
+                                        @error('permissions')
+                                        <div class="alert alert-danger">
+                                            <li>
+                                                {{ $message }}
+                                            </li>
                                         </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check2" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check2">ویرایش دسته جدید</label>
-                                        </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check3" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check3">حذف کالای جدید</label>
-                                        </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check4" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check4">حذف دسته جدید</label>
-                                        </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check5" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check5">نمایش کالای جدید</label>
-                                        </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check6" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check6">ایجاد کالای جدید</label>
-                                        </div>
-                                    </section>
-                                    <section class="col-md-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="" id="check7" checked>
-                                            <label class="form-check-label mr-3 mt-1" for="check7">ویرایش کالای جدید</label>
-                                        </div>
+                                        @enderror
                                     </section>
                                 </section>
                             </section>

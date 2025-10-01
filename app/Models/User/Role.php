@@ -4,10 +4,11 @@ namespace App\Models\User;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    
+    use SoftDeletes;
     protected $fillable = ["name" , "description" , "status"];
 
     public function users()
@@ -19,5 +20,5 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
-    
+
 }

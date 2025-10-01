@@ -242,9 +242,10 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [RoleController::class , 'index'])->name('admin.user.role.index');
             Route::get('/create' , [RoleController::class , 'create'])->name('admin.user.role.create');
             Route::post('/store' , [RoleController::class , 'store'])->name('admin.user.role.store');
-            Route::get('/edit/{id}' , [RoleController::class , 'edit'])->name('admin.user.role.edit');
-            Route::put('/update/{id}' , [RoleController::class , 'update'])->name('admin.user.role.update');
-            Route::delete('/destroy/{id}' , [RoleController::class , 'destroy'])->name('admin.user.role.destroy');
+            Route::get('/edit/{role}' , [RoleController::class , 'edit'])->name('admin.user.role.edit');
+            Route::put('/update/{role}' , [RoleController::class , 'update'])->name('admin.user.role.update');
+            Route::delete('/destroy/{role}' , [RoleController::class , 'destroy'])->name('admin.user.role.destroy');
+            Route::get('/status/{role}' , [RoleController::class , 'status'])->name('admin.user.role.status');
             // Route::resource('/' , RoleController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //Permission
