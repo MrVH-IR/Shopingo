@@ -71,7 +71,7 @@
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">عنوان نقش</label>
-                                        <input type="text" name="name" id="" class="form-control form-control-sm" value="{{ $role->name }}">
+                                        <input type="text" name="name" id="" class="form-control form-control-sm" value="{{ old('name', $role->name) }}">
                                 </div>
                                 @error('name')
                                     <div class="alert alert-danger">
@@ -84,7 +84,7 @@
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">توضیح نقش</label>
-                                        <input type="text" name="description" id="" class="form-control form-control-sm" value="{{ $role->description }}">
+                                        <input type="text" name="description" id="" class="form-control form-control-sm" value="{{ old('description', $role->description) }}">
                                 </div>
                                 @error('description')
                                     <div class="alert alert-danger">
@@ -99,8 +99,8 @@
                                     <label for="Status-Select" class="h6">وضعیت</label>
                                     <select name="status" id="Status-Select" class="form-control form-control-sm">
                                         <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                        <option value="0" @if(old('status' , $role->status) == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status' , $role->status) == 1) selected @endif>فعال</option>
                                     </select>
                                 </div>
                                 @error('status')

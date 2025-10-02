@@ -52,9 +52,11 @@
                                 <td>{{ $role->name }}</td>
                                 <th>
                                     <ul>
-                                        @foreach($role->permissions as $permission)
+                                        @forelse($role->permissions as $permission)
                                             <li>{{ $permission->description }}</li>
-                                        @endforeach
+                                        @empty
+                                            <span class="text-danger">برای این نقش هیچ سطح دسترسی تعریف نشده است</span>
+                                        @endforelse
                                     </ul>
                                 </th>
                                 <td>

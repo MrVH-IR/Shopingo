@@ -56,6 +56,8 @@ class RoleRequest extends FormRequest
             "description.min"        => "توضیحات نقش باید حداقل ۳ کاراکتر باشد",
             "description.max"        => "توضیحات نقش نباید بیشتر از ۲۵۵ کاراکتر باشد",
             "description.regex"      => "توضیحات فقط می‌تواند شامل حروف، اعداد و فاصله باشد",
+            "status.required"        => "فیلد وضغیت الزامی می باشد",
+            "status.in"              => "فیلد وضعیت معتبر نمی باشد" ,
         ];
     }
 }

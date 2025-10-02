@@ -2,61 +2,65 @@
 
 
 @section('head-tag')
-<title>ایجاد نقش</title>
-<style>
-    .permission-card {
-        background: #f8f9fa;
-        border: 1px solid #e1e5ea;
-        border-radius: 10px;
-        padding: 12px;
-        cursor: pointer;
-        transition: all .2s ease-in-out;
-    }
-    .permission-card:hover {
-        background: #e9ecef;
-    }
-    .permission-card input {
-        display: none;
-    }
-    .permission-card label {
-        display: block;
-        margin: 0;
-        cursor: pointer;
-        font-weight: 500;
-    }
-    .permission-card input:checked + label {
-        background: #0d6efd;
-        color: #fff;
-        border-radius: 8px;
-        padding: 5px 10px;
-    }
-</style>
+    <title>ایجاد نقش</title>
+    <style>
+        .permission-card {
+            background: #f8f9fa;
+            border: 1px solid #e1e5ea;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+        }
+
+        .permission-card:hover {
+            background: #e9ecef;
+        }
+
+        .permission-card input {
+            display: none;
+        }
+
+        .permission-card label {
+            display: block;
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .permission-card input:checked + label {
+            background: #0d6efd;
+            color: #fff;
+            border-radius: 8px;
+            padding: 5px 10px;
+        }
+    </style>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="#">بخش کاربران</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.user.role.index') }}">نقش ها</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-           ایجاد نقش
-        </li>
-    </ol>
-</nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item font-size-12">
+                <a href="{{ route('admin.home') }}">خانه</a>
+            </li>
+            <li class="breadcrumb-item font-size-12">
+                <a href="#">بخش کاربران</a>
+            </li>
+            <li class="breadcrumb-item font-size-12">
+                <a href="{{ route('admin.user.role.index') }}">نقش ها</a>
+            </li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page">
+                ایجاد نقش
+            </li>
+        </ol>
+    </nav>
 
     <section class="row">
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-         ایجاد نقش
+                        ایجاد نقش
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
@@ -70,27 +74,29 @@
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">عنوان نقش</label>
-                                        <input type="text" name="name" class="form-control form-control-sm">
+                                    <input type="text" name="name" class="form-control form-control-sm"
+                                           value="{{ old('name') }}">
                                 </div>
                                 @error('name')
-                                    <div class="alert alert-danger">
-                                        <li>
-                                            {{ $message }}
-                                        </li>
-                                    </div>
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
                                 @enderror
                             </section>
                             <section class="col-12 col-md-5">
                                 <div class="form-group">
                                     <label for="Category" class="h6">توضیح نقش</label>
-                                        <input type="text" name="description" class="form-control form-control-sm">
+                                    <input type="text" name="description" class="form-control form-control-sm"
+                                           value="{{ old('description') }}">
                                 </div>
                                 @error('description')
-                                    <div class="alert alert-danger">
-                                        <li>
-                                            {{ $message }}
-                                        </li>
-                                    </div>
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
                                 @enderror
                             </section>
                             <section class="col-12 col-md-6">
@@ -118,7 +124,8 @@
                                     <section class="col-12">
                                         <div class="d-flex flex-wrap gap-3">
                                             @foreach($permissions as $permission)
-                                                <div class="permission-card" style="flex: 1 1 calc(25% - 1rem); min-width:220px;">
+                                                <div class="permission-card"
+                                                     style="flex: 1 1 calc(25% - 1rem); min-width:220px;">
                                                     <input type="checkbox"
                                                            name="permissions[]"
                                                            value="{{ $permission->id }}"
