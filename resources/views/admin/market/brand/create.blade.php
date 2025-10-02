@@ -36,19 +36,80 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.brand.store') }}" method="POST" enctype="multipart/form-data" id="form">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">نام برند</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="persian_name" class="h6">نام فارسی برند</label>
+                                        <input type="text" name="persian_name" value="{{ old('persian_name') }}" class="form-control form-control-sm">
                                 </div>
+                                @error('persian_name')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category-Select" class="h6">لوگو</label>
-                                    <input type="file" class="form-control form-control-sm" name="" id="">
+                                    <label for="original_name" class="h6">نام انگلیسی برند</label>
+                                    <input type="text" name="original_name" value="{{ old('original_name') }}" class="form-control form-control-sm">
                                 </div>
+                                @error('original_name')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Category-Select" class="h6">وضعیت</label>
+                                    <select name="status" id="Category-Select" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="tags" class="h6">نام تگ ها</label>
+                                    <input type="hidden" name="tags" id="tags" class="form-control form-control-sm d-none" value="{{ old('tags') }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple>
+
+                                    </select>
+                                </div>
+                                @error('tags')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12">
+                                <div class="form-group">
+                                    <label for="image" class="h6">لوگو</label>
+                                    <input type="file" class="form-control form-control-sm" name="image" id="">
+                                </div>
+                                @error('image')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
@@ -60,4 +121,7 @@
         </section>
     </section>
 
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
 @endsection

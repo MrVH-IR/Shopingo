@@ -3,6 +3,8 @@
 
 @section('head-tag')
 <title>برند</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -41,36 +43,44 @@
                             <th>#</th>
                             <th>نام برند</th>
                             <th>تصویر برند</th>
+                            <th>تگ ها</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($brands as $brand)
                             <tr>
-                                <th>1</th>
-                                <td>Gemini</td>
-                                <td><img src="{{ asset('admin-assets/images/Google Ai Gemini.svg') }}" class="img-fluid w-25" alt="Logo"></td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $brand->original_name }}</td>
+                                <td>
+                                    @if(isset($brand->image['indexArray'][$brand->image['currentImage']]))
+                                        <img src="{{ asset($brand->image['indexArray'][$brand->image['currentImage']]) }}"
+                                             data-large="{{ asset($brand->image['indexArray']['large']) }}"
+                                             alt="{{ $brand->name }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
+                                </td>
+                                <td>{{ $brand->tags }}</td>
+                                <td>
+                                    <div class="status-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="{{ $brand->id }}" onchange="changeStatus({{ $brand->id }})" type="checkbox"
+                                                   @if($brand->status == 1) checked @endif
+                                                   data-url="{{ route('admin.market.brand.status', $brand->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.market.brand.edit' , $brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form class="d-none" method="POST" action="{{ route('admin.market.brand.destroy' , $brand->id) }}" id="delete-form-{{ $brand->id }}">@csrf @method('DELETE')</form>
+                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $brand->id }}" data-id="{{ $brand->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>Adobe</td>
-                                <td><img src="{{ asset('admin-assets/images/Adobe Photoshop CC Rounded.svg') }}" class="img-fluid w-25" alt="Logo" style=""></td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>Claude</td>
-                                <td><img src="{{ asset('admin-assets/images/Claude Ai.svg') }}" class="img-fluid w-25" alt="Logo"></td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -78,4 +88,18 @@
         </section>
     </section>
 
+{{ $brands->links() }}
+
+<div id="imageModal" class="modal-overlay">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+@endsection
+
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection
