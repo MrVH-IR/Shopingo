@@ -44,33 +44,25 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($productCategories as $productcategory)
                             <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکترونیک</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $productcategory->name }}</td>
+                                <td>{{ $productcategory->parent_id ? $productcategory->parent->name : 'منوی اصلی' }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.market.category.edit', $productcategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form action="{{ route('admin.market.category.destroy', $productcategory->id) }}" method="POST" id="delete-form-{{ $productcategory->id }}" class="d-none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    <button type="submit" form="delete-form-{{ $productcategory->id }}"
+                                            class="btn btn-danger btn-sm delete"
+                                            data-id="{{ $productcategory->id }}" >
+                                        <i class="fa fa-trash-alt"></i> حذف
+                                    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکترونیک</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکترونیک</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -78,4 +70,7 @@
         </section>
     </section>
 
+@endsection
+@section('script')
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

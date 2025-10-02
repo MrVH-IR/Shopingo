@@ -3,9 +3,36 @@
 namespace App\Models\Market;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductCategory extends Model
 {
+    use SoftDeletes;
+    protected $fillable = [
+        "name",
+        "description",
+        "slug",
+        "image",
+        "status",
+        "show_in_menu",
+        "tags",
+        "parent_id",
+    ];
 
-    protected $fillable = [];
+    public function casts()
+    {
+        return [
+          "image" => "array"
+        ];
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(ProductCategory::class, 'parent_id')->with('parent');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ProductCategory::class, 'parent_id')->with('children');
+    }
 }
