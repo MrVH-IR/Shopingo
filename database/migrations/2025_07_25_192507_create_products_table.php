@@ -17,10 +17,10 @@ return new class extends Migration
             $table->text('description');
             $table->string('slug')->unique();
             $table->text('image');
-            $table->decimal('weight', 10,2);
-            $table->decimal('length', 10,1)->comment('CM Unit');
-            $table->decimal('width', 10,1)->comment('CM Unit');
-            $table->decimal('height', 10,1)->comment('CM Unit');
+            $table->decimal('weight', 10,2)->nullable();
+            $table->decimal('length', 10,1)->comment('CM Unit')->nullable();
+            $table->decimal('width', 10,1)->comment('CM Unit')->nullable();
+            $table->decimal('height', 10,1)->comment('CM Unit')->nullable();
             $table->decimal('price', 20,3)->comment('Price');
             $table->tinyInteger('status')->default(0)->comment('0-Inactive, 1-Active');
             $table->tinyInteger('marketable')->default(0)->comment('0-Can Buy, 1-Can Not sell');

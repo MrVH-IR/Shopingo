@@ -3,6 +3,8 @@
 
 @section('head-tag')
 <title>کالا ها</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -45,17 +47,39 @@
                             <th>وزن کالا</th>
                             <th>دسته</th>
                             <th>فرم کالا</th>
+                            <th>وضعیت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($products as $product)
                             <tr>
-                                <th>1</th>
-                                <td>گوشی آیفون 12</td>
-                                <td><img src="{{ asset('admin-assets/images/Iphone-12.png') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
-                                <td>12.000.000 تومان</td>
-                                <td>1 کیلو</td>
-                                <td>کالای الکترونیکی</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $product->name }}</td>
+                                <td>
+                                    @if(isset($product->image['indexArray'][$product->image['currentImage']]))
+                                        <img src="{{ asset($brand->image['indexArray'][$brand->image['currentImage']]) }}"
+                                             data-large="{{ asset($brand->image['indexArray']['large']) }}"
+                                             alt="{{ $brand->name }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
+                                </td>
+                                <td>{{ $product->price }} تومان</td>
+                                <td>{{ $product->weight }}</td>
+                                <td>{{ $product->category }}</td>
                                 <td>اندازه نمایشگر</td>
+                                <td>
+                                    <div class="status-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="{{ $brand->id }}" onchange="changeStatus({{ $brand->id }})" type="checkbox"
+                                                   @if($brand->status == 1) checked @endif
+                                                   data-url="{{ route('admin.market.brand.status', $brand->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="width-8-rem text-left">
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
@@ -65,64 +89,17 @@
                                             <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i>گالری</a>
                                             <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i>فرم کالا</a>
                                             <a class="dropdown-item text-right" href="#"><i class="fa fa-edit"></i>ویرایش</a>
-                                            <form action="POST">
+                                            <form action="{{ route('admin.market.product.destroy' , $product->id) }}" method="POST" class="d-none" id="delete-form-{{ $product->id }}">
                                                 @method('DELETE')
-                                                <button type="submit" class="dropdown-item text-right"><i class="fa fa-window-close"></i> حذف</button>
+                                                @csrf
                                             </form>
+                                            <button type="submit" class="dropdown-item text-right" form="delete-form-{{ $product->id }}"
+                                             data-id="{{ $product->id }}"><i class="fa fa-window-close"></i> حذف</button>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>تلویزیون Smart TV LG</td>
-                                <td><img src="{{ asset('admin-assets/images/LG-TV.jpeg') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
-                                <td>90.000.000 تومان</td>
-                                <td>12 کیلو</td>
-                                <td>کالای الکترونیکی</td>
-                                <td>اندازه نمایشگر</td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-tools"></i>عملیات
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i>گالری</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i>فرم کالا</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-edit"></i>ویرایش</a>
-                                            <form action="POST">
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item text-right"><i class="fa fa-window-close"></i> حذف</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>گوشی سامسونگ S23</td>
-                                <td><img src="{{ asset('admin-assets/images/samsung-s23.jpg') }}" alt="Product" style="max-height: 4rem; mix-blend-mode: multiply;"></td>
-                                <td>60.000.000 تومان</td>
-                                <td>250 گرم</td>
-                                <td>کالای الکترونیکی</td>
-                                <td>اندازه نمایشگر</td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-tools"></i>عملیات
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i>گالری</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i>فرم کالا</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-edit"></i>ویرایش</a>
-                                            <form action="POST">
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item text-right"><i class="fa fa-window-close"></i> حذف</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -130,4 +107,18 @@
         </section>
     </section>
 
+{{ $products->links() }}
+
+<div id="imageModal" class="modal-overlay">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+@endsection
+
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

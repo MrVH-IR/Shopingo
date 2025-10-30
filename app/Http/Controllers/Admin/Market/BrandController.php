@@ -114,6 +114,7 @@ class BrandController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws \Throwable
      */
     public function destroy(Brand $brand)
     {

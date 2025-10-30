@@ -24,4 +24,9 @@ class Brand extends Model
             "image" => "array"
         ];
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

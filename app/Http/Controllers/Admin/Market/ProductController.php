@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Content\PostCategory;
+use App\Models\Market\Brand;
+use App\Models\Market\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.market.product.index');
+        $products = Product::simplePaginate(10);
+        return view('admin.market.product.index' , compact('products'));
     }
 
     /**
@@ -20,7 +24,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.market.product.create');
+        $productCategories = PostCategory::pluck('name' , 'id')->all();
+        $brands = Brand::select('original_name' , 'persian_name' , 'id')->get();
+        return view('admin.market.product.create' , compact('productCategories' , 'brands'));
     }
 
     /**
