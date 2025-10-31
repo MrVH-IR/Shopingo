@@ -57,9 +57,9 @@
                                 <td>{{ $product->name }}</td>
                                 <td>
                                     @if(isset($product->image['indexArray'][$product->image['currentImage']]))
-                                        <img src="{{ asset($brand->image['indexArray'][$brand->image['currentImage']]) }}"
-                                             data-large="{{ asset($brand->image['indexArray']['large']) }}"
-                                             alt="{{ $brand->name }}"
+                                        <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
+                                             data-large="{{ asset($product->image['indexArray']['large']) }}"
+                                             alt="{{ $product->name }}"
                                              class="preview-img"
                                              style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
                                              loading="lazy">
@@ -69,14 +69,14 @@
                                 </td>
                                 <td>{{ $product->price }} تومان</td>
                                 <td>{{ $product->weight }}</td>
-                                <td>{{ $product->category }}</td>
+                                <td>{{ $product->category->name }}</td>
                                 <td>اندازه نمایشگر</td>
                                 <td>
                                     <div class="status-wrapper" style="position: relative;">
                                         <label>
-                                            <input id="{{ $brand->id }}" onchange="changeStatus({{ $brand->id }})" type="checkbox"
-                                                   @if($brand->status == 1) checked @endif
-                                                   data-url="{{ route('admin.market.brand.status', $brand->id) }}">
+                                            <input id="{{ $product->id }}" onchange="changeStatus({{ $product->id }})" type="checkbox"
+                                                   @if($product->status == 1) checked @endif
+                                                   data-url="{{ route('admin.market.brand.status', $product->id) }}">
                                         </label>
                                     </div>
                                 </td>
@@ -88,13 +88,13 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i>گالری</a>
                                             <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i>فرم کالا</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-edit"></i>ویرایش</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.product.edit' , $product->id) }}"><i class="fa fa-edit"></i>ویرایش</a>
                                             <form action="{{ route('admin.market.product.destroy' , $product->id) }}" method="POST" class="d-none" id="delete-form-{{ $product->id }}">
-                                                @method('DELETE')
                                                 @csrf
+                                                @method('DELETE')
                                             </form>
                                             <button type="submit" class="dropdown-item text-right" form="delete-form-{{ $product->id }}"
-                                             data-id="{{ $product->id }}"><i class="fa fa-window-close"></i> حذف</button>
+                                             data-id="{{ $product->id }}"><i class="fa fa-window-close delete"></i> حذف</button>
                                         </div>
                                     </div>
                                 </td>

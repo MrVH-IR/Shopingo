@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_meta', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('meta_key');
             $table->string('meta_value');
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

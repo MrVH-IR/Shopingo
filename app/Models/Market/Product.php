@@ -13,7 +13,7 @@ class Product extends Model
     "height" , "price" , "status" , "marketable" , "tags" , "sold_out" , "frozen_number",
     "marketable_number" , "brand_id" , "product_categories" , "published_at"];
 
-    public function casts()
+    public function casts(): array
     {
         return [
             "image" => "array",
@@ -21,18 +21,18 @@ class Product extends Model
         ];
     }
 
-    public function brand()
+    public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function category()
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProductCategory::class, 'product_categories');
     }
 
-    public function meta()
+    public function metas(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        //
+        return $this->hasMany(ProductMeta::class);
     }
 }

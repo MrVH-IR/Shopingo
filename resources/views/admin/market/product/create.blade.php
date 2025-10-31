@@ -38,7 +38,7 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.product.store') }}" method="POST" id="form">
+                    <form action="{{ route('admin.market.product.store') }}" method="POST" id="form" enctype="multipart/form-data">
                         @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
@@ -56,15 +56,15 @@
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category-Select" class="h6">انتخاب دسته (فقط فعال ها)</label>
-                                    <select name="category_id" id="Category-Select" class="form-control form-control-sm">
+                                    <label for="product_categories" class="h6">انتخاب دسته (فقط فعال ها)</label>
+                                    <select name="product_categories" id="product_categories" class="form-control form-control-sm">
                                         <option value="">دسته را انتخاب کنید</option>
                                         @foreach($productCategories as $id => $name)
-                                            <option value="{{ $id }}" @if( old('category_id') == $id) selected @endif>{{ $name }}</option>
+                                            <option value="{{ $id }}" @if( old('product_categories') == $id) selected @endif>{{ $name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @error('category_id')
+                                @error('product_categories')
                                 <div class="alert alert-danger">
                                     <li>
                                         {{ $message }}
@@ -225,9 +225,9 @@
                                 @enderror
                             </section>
                             <section class="col-12">
-                                <label for="introduction">توضیجات</label>
-                                <textarea name="introduction" id="formbody" class="form-control form-control-sm ckeditor" rows="10" cols="80">{{ old('introduction') }}</textarea>
-                                @error('introduction')
+                                <label for="description">توضیجات</label>
+                                <textarea name="description" id="formbody" class="form-control form-control-sm ckeditor" rows="10" cols="80">{{ old('description') }}</textarea>
+                                @error('description')
                                 <div class="alert alert-danger">
                                     <li>
                                         {{ $message }}
@@ -239,9 +239,9 @@
                                 <div class="row">
                                     <section class="col-6 col-md-3">
                                         <div class="form-group">
-                                            <input type="text" name="property_type" class="form-control form-control-sm" placeholder="ویژگی...">
+                                            <input type="text" name="meta_key[]" class="form-control form-control-sm" placeholder="ویژگی...">
                                         </div>
-                                        @error('weight')
+                                        @error('meta_key')
                                         <div class="alert alert-danger">
                                             <li>
                                                 {{ $message }}
@@ -251,9 +251,9 @@
                                     </section>
                                     <section class="col-6 col-md-3">
                                         <div class="form-group">
-                                            <input type="text" name="property_value" class="form-control form-control-sm" placeholder="مقدار...">
+                                            <input type="text" name="meta_value[]" class="form-control form-control-sm" placeholder="مقدار...">
                                         </div>
-                                        @error('weight')
+                                        @error('meta_value')
                                         <div class="alert alert-danger">
                                             <li>
                                                 {{ $message }}
@@ -263,7 +263,7 @@
                                     </section>
                                 </div>
                                 <div class="col-6 my-3">
-                                    <button type="button" class="btn btn-success btn-sm">افزودن</button>
+                                    <button type="button" class="btn btn-success btn-sm" id="btn-copy">افزودن</button>
                                 </div>
                             </section>
 
@@ -285,4 +285,12 @@
     <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
+    <script>
+        $(function () {
+            $('#btn-copy').on('click' , function () {
+                var ele = $(this).parent().prev().clone(true);
+                $(this).before(ele);
+            })
+        })
+    </script>
 @endsection
