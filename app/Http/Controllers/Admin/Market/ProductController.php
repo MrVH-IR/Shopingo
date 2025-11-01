@@ -11,14 +11,17 @@ use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\ProductMeta;
 use Exception;
+use Fiber;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use function PHPUnit\Framework\callback;
 
 class ProductController extends Controller
 {
@@ -81,13 +84,17 @@ class ProductController extends Controller
             $errorID = now()->format("YmdHis") . rand(1000 , 9999);
             Log::error("Exception {$errorID} " . $e->getMessage());
             return redirect()->route('admin.market.product.create')->with('swal-error' , 'مشکی در ذخیره داده پیش آمده است' . ' ' . $errorID);
+        } finally {
+            if (isset($e) && $result) {
+                $imageService->deleteDirectoryAndFiles($result);
+            }
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
         //
     }
@@ -165,5 +172,28 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('admin.market.product.index')->with('swal-success' , 'محصول شما با موفقیت پاک شد');
+    }
+
+    public function status(Product $product)
+    {
+        $product->status = $product->status == 1 ? 0 : 1;
+        $result = $product->save();
+        if ($result) {
+            if ($product->status == 1) {
+                return response()->json([
+                    "status" => true,
+                    "checked" => true,
+                ]);
+            } else {
+                return response()->json([
+                    "status" => true,
+                    "checked" => false,
+                ]);
+            }
+        } else {
+            return response()->json([
+                "status" => false,
+            ]);
+        }
     }
 }

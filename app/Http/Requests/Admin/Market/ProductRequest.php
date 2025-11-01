@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
                 "price" => ["required", "numeric", "min:0" , "regex:/^[0-9.]+$/u"],
                 "status" => ["required", "boolean"],
                 "marketable" => ["required", "boolean"],
-                "tags" => ["required"],
+                "tags" => ["required" , "string" , "max:255"],
                 "brand_id" => ["required", "integer", "regex:/^[0-9]+$/u" , "exists:brands,id"],
                 "product_categories" => ["required", "integer" , "regex:/^[0-9]+$/u" , "exists:product_categories,id"],
                 "published_at" => ["required", "date", "date_format:Y/m/d H:i:s"],
@@ -114,8 +114,8 @@ class ProductRequest extends FormRequest
             "marketable.boolean" => "قابلیت فروش باید بولین باشد.",
 
             "tags.required" => "تگ‌ها الزامی هستند.",
-//            "tags.max" => "حداکثر کاراکتر 255 تا میباشد",
-//            "tags.string" => "از کاراکتر های غیر مجاز برای تگ استفاده نکنید",
+            "tags.max" => "حداکثر کاراکتر 255 تا میباشد",
+            "tags.string" => "از کاراکتر های غیر مجاز برای تگ استفاده نکنید",
 //            "tags.regex" => "از کارکتر های غیر ضروری و غیر مجاز برای نگ استفاده نکنید",
 
             "brand_id.required" => "انتخاب برند الزامی است.",

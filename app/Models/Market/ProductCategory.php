@@ -40,4 +40,9 @@ class ProductCategory extends Model
     {
         return $this->hasMany(Product::class, 'product_categories');
     }
+
+    public function attributes()
+    {
+        return $this->hasMany(CategoryAttribute::class);
+    }
 }

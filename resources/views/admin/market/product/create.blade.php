@@ -241,7 +241,7 @@
                                         <div class="form-group">
                                             <input type="text" name="meta_key[]" class="form-control form-control-sm" placeholder="ویژگی...">
                                         </div>
-                                        @error('meta_key')
+                                        @error('meta_key.*')
                                         <div class="alert alert-danger">
                                             <li>
                                                 {{ $message }}
@@ -253,7 +253,7 @@
                                         <div class="form-group">
                                             <input type="text" name="meta_value[]" class="form-control form-control-sm" placeholder="مقدار...">
                                         </div>
-                                        @error('meta_value')
+                                        @error('meta_value.*')
                                         <div class="alert alert-danger">
                                             <li>
                                                 {{ $message }}

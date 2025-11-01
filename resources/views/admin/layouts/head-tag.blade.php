@@ -6,20 +6,17 @@
 <meta name="keywords" content="Laravel, PHP, Web Development, Post Categories, Tutorial, MrVH, وب اپلیکیشن، دسته بندی محتوا">
 <meta name="robots" content="index, follow">
 
-<!-- Open Graph برای اشتراک گذاری بهتر در شبکه‌های اجتماعی -->
 <meta property="og:title" content="Shopingo">
 <meta property="og:description" content="فروشگاه شاپینگو ، بهترین فروشنده بازار آنلاین">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://example.com">
 <meta property="og:image" content="https://example.com/path-to-image.jpg">
 
-<!-- Twitter Card برای توییتر -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="عنوان پروژه یا وبسایت شما">
 <meta name="twitter:description" content="توضیح کوتاه درباره پروژه شما برای توییتر.">
 <meta name="twitter:image" content="https://example.com/path-to-image.jpg">
 
-<!-- سایر متا تگ‌های مفید -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="format-detection" content="telephone=no">
 

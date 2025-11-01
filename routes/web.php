@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Market\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,3 +32,5 @@ Route::get('/partnership', function() {
     return view('informations.partnership');
 });
 // End Information Route
+
+Route::get('/test' , [ProductController::class, 'show']);

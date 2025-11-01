@@ -76,7 +76,7 @@
                                         <label>
                                             <input id="{{ $product->id }}" onchange="changeStatus({{ $product->id }})" type="checkbox"
                                                    @if($product->status == 1) checked @endif
-                                                   data-url="{{ route('admin.market.brand.status', $product->id) }}">
+                                                   data-url="{{ route('admin.market.product.status', $product->id) }}">
                                         </label>
                                     </div>
                                 </td>
@@ -86,8 +86,8 @@
                                             <i class="fa fa-tools"></i>عملیات
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i>گالری</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i>فرم کالا</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.gallery.index' , $product->id) }}"><i class="fa fa-images"></i>گالری</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.color.index' , $product->id) }}"><i class="fa fa-list-ul"></i>رنگ کالا</a>
                                             <a class="dropdown-item text-right" href="{{ route('admin.market.product.edit' , $product->id) }}"><i class="fa fa-edit"></i>ویرایش</a>
                                             <form action="{{ route('admin.market.product.destroy' , $product->id) }}" method="POST" class="d-none" id="delete-form-{{ $product->id }}">
                                                 @csrf

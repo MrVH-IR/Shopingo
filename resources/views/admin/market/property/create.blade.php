@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<title>فرم کالا</title>
+<title>ایجاد فرم کالا</title>
 @endsection
 
 @section('content')
@@ -36,22 +36,72 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.property.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">نام فرم</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="name" class="h6">نام فرم</label>
+                                        <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
                                 </div>
+                                @error('name')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category-Select" class="h6">فرم والد</label>
-                                        <select name="" id="" class="form-control form-control-sm">
+                                    <label for="category_id" class="h6">فرم والد</label>
+                                        <select name="category_id" class="form-control form-control-sm">
                                             <option value="">فرم را انتخاب کنید</option>
-                                            <option value="Electronics">وسایل الکترونیک</option>
+                                            @foreach($productCategories as $productCategory)
+                                            <option value="{{ $productCategory->id }}" @if(old('category_id') == $productCategory->id) selected @endif>{{ $productCategory->name }}</option>
+                                            @endforeach
                                         </select>
                                 </div>
+                                @error('category_id')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="unit" class="h6">واحد اندازه گیری</label>
+                                    <input type="text" name="unit" value="{{ old('unit') }}" class="form-control form-control-sm">
+                                </div>
+                                @error('unit')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="type" class="h6">نوع نمایش ویژگی</label>
+                                    <select name="type" id="type" class="form-control form-control-sm">
+                                        <option value="">انتخاب کنید</option>
+                                        <option value="text" {{ old('type') == 'text' ? 'selected' : '' }}>فیلد متنی (Text)</option>
+                                        <option value="select" {{ old('type') == 'select' ? 'selected' : '' }}>لیست انتخابی (Select)</option>
+                                        <option value="checkbox" {{ old('type') == 'checkbox' ? 'selected' : '' }}>چک‌باکس (Checkbox)</option>
+                                        <option value="radio" {{ old('type') == 'radio' ? 'selected' : '' }}>رادیو باتن (Radio)</option>
+                                        <option value="textarea" {{ old('type') == 'textarea' ? 'selected' : '' }}>متن چند خطی (Textarea)</option>
+                                    </select>
+                                    <small class="form-text text-warning">نوع نمایش ویژگی را انتخاب کنید (مثلاً: select یا text)</small>
+                                </div>
+
+                                @error('type')
+                                <div class="alert alert-danger">
+                                    <li>{{ $message }}</li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
