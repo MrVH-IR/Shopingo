@@ -341,7 +341,6 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index');
             Route::get('/edit/{setting}' , [SettingController::class , 'edit'])->name('admin.setting.edit');
             Route::put('/update/{setting}' , [SettingController::class , 'update'])->name('admin.setting.update');
-            // Route::resource('/' , SettingController::class); // Can Be used And Delete All Those Above For (Comment).
     });
 });
 

@@ -2,6 +2,6 @@
 
 namespace Common\Controllers;
 
-class BaseController {
+abstract class BaseController {
     //
 }
