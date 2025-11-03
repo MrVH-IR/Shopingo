@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        $this->loadMigrationsFrom([base_path('/common' . DIRECTORY_SEPARATOR . 'migrations')]);
     }
 }

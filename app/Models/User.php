@@ -7,6 +7,7 @@ use App\Models\User\Role;
 use App\Models\Content\Comment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
+use Common\Models\UserCyberData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -103,5 +104,10 @@ class User extends Authenticatable
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function cyberData()
+    {
+        return $this->hasMany(UserCyberData::class);
     }
 }

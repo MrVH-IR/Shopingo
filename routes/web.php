@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\Market\ProductController;
+use Common\Controllers\Index\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class , 'index']);
 
 Route::middleware([
     'auth:sanctum',
@@ -32,5 +31,3 @@ Route::get('/partnership', function() {
     return view('informations.partnership');
 });
 // End Information Route
-
-Route::get('/test' , [ProductController::class, 'show']);
