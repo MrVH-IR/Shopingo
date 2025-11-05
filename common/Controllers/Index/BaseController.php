@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers;
+namespace Common\Controllers\Index;
 
 abstract class BaseController {
     //

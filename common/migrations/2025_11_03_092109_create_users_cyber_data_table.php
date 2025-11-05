@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users_cyber_data', function (Blueprint $table) {
             $table->id();
             $table->ipAddress();
-            $table->string('header');
+            $table->text('header');
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

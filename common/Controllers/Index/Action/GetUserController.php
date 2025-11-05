@@ -2,12 +2,12 @@
 
 namespace Common\Controllers\Index\Action;
 
-use Common\Controllers\BaseController;
+use Common\Controllers\Index\BaseController;
 use Illuminate\Support\Facades\Auth;
 
 
 class GetUserController extends BaseController {
-    
+
     protected $ip;
     protected $header;
     public function __construct($ip, $header)
