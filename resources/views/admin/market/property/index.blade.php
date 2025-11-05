@@ -53,7 +53,7 @@
                                 <td>{{ $categoryAttribute->category->name }}</td>
                                 <td class="width-16-rem text-left">
                                     <a href="{{ route('admin.market.property.edit' , $categoryAttribute->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>  ویژگی ها</a>
+                                    <a href="{{ route('admin.market.value.index' , $categoryAttribute->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>  ویژگی ها</a>
                                     <form class="d-none" method="POST" action="{{ route('admin.market.property.destroy' , $categoryAttribute->id) }}" id="delete-form-{{ $categoryAttribute->id }}">@csrf @method('DELETE')</form>
                                     <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $categoryAttribute->id }}" data-id="{{ $categoryAttribute->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>

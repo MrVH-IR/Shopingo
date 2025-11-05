@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\PropertyRequest;
 use App\Models\Market\CategoryAttribute;
 use App\Models\Market\ProductCategory;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -43,7 +44,7 @@ class PropertyController extends Controller
                 "checkbox" => 3,
                 "radio" => 4,
                 "textarea" => 5,
-                default => 1,
+                default => 2,
             };
             $result = CategoryAttribute::create($validatedData);
             return redirect()->route('admin.market.property.index')
@@ -96,7 +97,7 @@ class PropertyController extends Controller
             return redirect()->route('admin.market.property.edit', $categoryAttribute->id)
                 ->with('swal-error', 'هیچ تغییری اعمال نشد.');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('swal-success', 'ویرایش با خطا مواجه شد');
         }
