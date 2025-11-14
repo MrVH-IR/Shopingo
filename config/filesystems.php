@@ -60,6 +60,16 @@ return [
             'report' => false,
         ],
 
+        'ceph' => [
+            'driver' => 's3',
+            'key' => env('CEPH_KEY'),
+            'secret' => env('CEPH_SECRET'),
+            'region' => 'default',
+            'bucket' => env('CEPH_BUCKET'),
+            'endpoint' => env('CEPH_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+        ],
+
     ],
 
     /*
