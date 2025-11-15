@@ -9,6 +9,7 @@ use App\Models\Content\PostCategory;
 // use Facades\App\Repository\PostCategory;
 use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;

@@ -2,6 +2,7 @@
 
 @section('head-tag')
 <title>نظرات</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
 @endsection
 
 @section('content')
@@ -38,50 +39,51 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <th>#</th>
+                            <th>نظر</th>
                             <th>نویسنده نظر</th>
+                            <th>پاسخ به</th>
                             <th>کد کاربر</th>
-                            <th>کد کالا</th>
-                            <th>کالا</th>
-                            <th>وضعیت</th>
+                            <th>کد پست</th>
+                            <th>پست</th>
+                            <th>وضعیت تایید</th>
+                            <th>وضعیت کامنت</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($comments as $comment)
                             <tr>
-                                <th>1</th>
-                                <td>سحیل کاشانی</td>
-                                <td>4567542</td>
-                                <td>3896321</td>
-                                <td>شیائومی Note 20</td>
-                                <td>تایید شده</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td><a href="{{ route('admin.market.comment.show' , $comment->id) }}">{{ substr($comment->body , 0 , 15) }}...</a></td>
+                                <td>{{ $comment->author?->full_name }}</td>
+                                <td>
+                                    @if($comment->parent_id)
+                                        <a href="{{ route('admin.market.comment.show', $comment->parent_id) }}">
+                                            {{ substr($comment->parent->body, 0, 20) }}
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>{{ $comment->author_id }}</td>
+                                <td>{{ $comment->commentable_id }}</td>
+                                <td>{{ $comment->commentable?->title }}</td>
+                                <td>{{ $comment->approved_label }}</td>
+                                <td>
+                                    <div class="status-wrapper" style="position: relative;">
+                                        <label>
+                                            <input id="{{ $comment->id }}" onchange="changeStatus({{ $comment->id }})" type="checkbox"
+                                                   @if($comment->status == 1) checked @endif
+                                                   data-url="{{ route('admin.market.comment.status', $comment->id) }}">
+                                        </label>
+                                    </div>
+                                </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-clock"></i>  عدم تایید</button>
+                                    <a href="{{ route('admin.market.comment.show' , $comment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
+                                    <form class="d-none" id="approve-{{ $comment->id }}" action="{{ route('admin.market.comment.approved' , $comment->id) }}" method="POST">
+                                        @csrf
+                                    </form>
+                                    <button data-id="{{ $comment->id }}" type="button" form="approve-{{ $comment->id }}" title="{{ $comment->approved ? 'این کامنت تایید شده است' : 'این کامنت هنوز تایید نشده' }}" class="btn {{ $comment->approved ? "btn-success" : "btn-warning" }} btn-sm toggle-approve"><i class="fa {{ $comment->approved ? "fa-check" : "fa-clock" }}"></i>  {{ $comment->approved ? "تایید شده" : "تایید نشده" }}</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>امین موصدوفی</td>
-                                <td>4563421</td>
-                                <td>3895212</td>
-                                <td>شارژر type C</td>
-                                <td>در انتظار تایید</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
-                                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>  تایید</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>پژمان وطن خواه</td>
-                                <td>4354122</td>
-                                <td>3876541</td>
-                                <td>ساعت هوشمند apple watch</td>
-                                <td>در انتظار تایید</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.comment.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  نمایش</a>
-                                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>  تایید</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -89,4 +91,10 @@
         </section>
     </section>
 
+    {{ $comments->links() }}
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/toggleApprove.js') }}"></script>
 @endsection

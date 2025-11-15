@@ -146,6 +146,7 @@ class ImageService extends ImageToolsService
 
     public function deleteDirectoryAndFiles($directory): bool
     {
+
         if (!is_dir($directory))
         {
             return false;

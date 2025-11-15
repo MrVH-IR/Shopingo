@@ -38,9 +38,9 @@ class ProductRequest extends FormRequest
                 "product_categories" => ["required", "integer" , "regex:/^[0-9]+$/u" , "exists:product_categories,id"],
                 "published_at" => ["required", "date", "date_format:Y/m/d H:i:s"],
                 "meta_key" => ["nullable", "array"],
-                "meta_key.*" => ["string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
+                "meta_key.*" => ["nullable" ,"string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
                 "meta_value" => ["nullable", "array"],
-                "meta_value.*" => ["string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
+                "meta_value.*" => ["nullable","string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
             ];
         } elseif ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             return [
@@ -59,9 +59,9 @@ class ProductRequest extends FormRequest
                 "product_categories" => ["required", "integer" , "exists:product_categories,id"],
                 "published_at" => ["required", "date", "date_format:Y/m/d H:i:s"],
                 "meta_key" => ["nullable", "array"],
-                "meta_key.*" => ["string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
+                "meta_key.*" => ["nullable","string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
                 "meta_value" => ["nullable", "array"],
-                "meta_value.*" => ["string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
+                "meta_value.*" => ["nullable","string", "max:255", "regex:/^[\p{L}\p{N}\s!?_\;:.]+$/u"],
             ];
         }
         abort(400);

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Market\Product;
 use App\Models\User;
 use App\Models\Content\FAQ;
 use App\Models\Content\Page;
@@ -25,6 +26,8 @@ class DatabaseSeeder extends Seeder
 //       Post::factory()->count(10)->state(['status' => 0])->create();
 //       FAQ::factory(10)->count(10)->state(['status' => 0])->create();
 //       Page::factory()->count(10)->state(['status' => 0])->create();
+//       Product::factory()->count(10)->create();
+//       Comment::factory()->count(10)->forProduct()->create();
 //       Comment::factory()->count(10)->forPost()->create();
 //       Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
         $this->call([

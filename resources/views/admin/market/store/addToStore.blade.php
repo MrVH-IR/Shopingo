@@ -36,31 +36,52 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.store.store' , $product->id) }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">نام تحویل گیرنده</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="receiver" class="h6">نام تحویل گیرنده</label>
+                                        <input type="text" name="receiver" id="receiver" class="form-control form-control-sm" value="{{ old('receiver') }}">
                                 </div>
+                                @error('receiver')
+                                <div class="alert alert-danger">
+                                    <li>{{ $message }}</li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">نام دهنده</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="deliverer" class="h6">نام تحویل دهنده</label>
+                                        <input type="text" name="deliverer" id="deliverer" class="form-control form-control-sm" value="{{ old('deliverer') }}">
                                 </div>
+                                @error('deliverer')
+                                <div class="alert alert-danger">
+                                    <li>{{ $message }}</li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">تعداد</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="marketable_number" class="h6">تعداد</label>
+                                        <input type="text" name="marketable_number" id="marketable_number" class="form-control form-control-sm" value="{{ old('marketable_number') }}">
                                 </div>
+                                @error('marketable_number')
+                                <div class="alert alert-danger">
+                                    <li>{{ $message }}</li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">توضیحات</label>
-                                    <textarea name="" id="" role="4" class="form-control form-control-sm"></textarea>
+                                    <label for="description" class="h6">توضیحات</label>
+                                    <textarea name="description" id="description" role="4" class="form-control form-control-sm">{{ old('description') }}</textarea>
                                 </div>
+                                @error('description')
+                                <div class="alert alert-danger">
+                                    <li>{{ $message }}</li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>

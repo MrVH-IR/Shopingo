@@ -3,7 +3,9 @@
 namespace Database\Factories\Content;
 
 use App\Models\Content\Post;
+use App\Models\Market\Product;
 use App\Models\User;
+use Database\Factories\Market\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
@@ -25,9 +27,8 @@ class CommentFactory extends Factory
         return $this->for(Post::factory()->create() , 'commentable');
     }
 
-    //Uncomment When there is a product factory
-//    public function forProduct(): ProductFactory
-//    {
-//        return $this->for(Product::factory()->create() , 'commentable');
-//    }
+    public function forProduct(): CommentFactory
+    {
+        return $this->for(Product::factory()->create() , 'commentable');
+    }
 }

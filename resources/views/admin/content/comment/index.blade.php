@@ -64,7 +64,7 @@
                                 </td>
                                 <td>{{ $comment->author_id }}</td>
                                 <td>{{ $comment->commentable_id }}</td>
-                                <td>{{ $comment->commentable->title }}</td>
+                                <td>{{ $comment->commentable?->title }}</td>
                                 <td>{{ $comment->approved_label }}</td>
                                 <td>
                                     <div class="status-wrapper" style="position: relative;">

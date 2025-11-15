@@ -5,23 +5,18 @@ namespace App\Http\Controllers\Admin\Market;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\ProductRequest;
 use App\Http\Services\Image\ImageService;
-use App\Models\Content\PostCategory;
 use App\Models\Market\Brand;
 use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\ProductMeta;
 use Exception;
-use Fiber;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use function PHPUnit\Framework\callback;
 
 class ProductController extends Controller
 {
@@ -61,13 +56,16 @@ class ProductController extends Controller
                         ->route('admin.content.category.index')
                         ->with('swal-error' , 'مشکلی در آپلود عکس پیش آمده است');
                 }
+                $validatedData["image"] = $result;
             }
             $realTime = $validatedData['published_at'];
             $validatedData['published_at'] = date("Y-m-d", strtotime( (int) $realTime));
-            $validatedData["image"] = $result;
             $validatedData["slug"] = Str::slug($validatedData["name"] . "-" . Str::random(5));
             $product = Product::create($validatedData);
-            if(!empty($validatedData['meta_key']) && !empty($validatedData['meta_value'])){
+
+            $cleanKeys = array_filter($validatedData['meta_key'], fn($v) => !is_null($v) && $v !== '');
+            $cleanValues = array_filter($validatedData['meta_value'], fn($v) => !is_null($v) && $v !== '');
+            if(!empty($cleanKeys) && !empty($cleanValues)){
                 $metas = array_unique(array_combine($request->meta_key , $request->meta_value));
                 foreach($metas as $key => $value){
                     $meta = ProductMeta::create([
@@ -141,19 +139,21 @@ class ProductController extends Controller
             $validatedData['published_at'] = date("Y-m-d", strtotime( (int) $realTime));
             $validatedData["slug"] = Str::slug($validatedData["name"] . "-" . Str::random(5));
             $product->update($validatedData);
-            $meta_keys = $request->meta_key;
-            $meta_values = $request->meta_value;
-            $meta_ids = array_keys($meta_keys);
-            $metas = array_map(function ($meta_id , $meta_key , $meta_value) {
-                return array_combine([
-                    "meta_id" , "meta_key" , "meta_value"
-                ], [$meta_id , $meta_key , $meta_value]);
-            } , $meta_ids , $meta_keys , $meta_values);
-            foreach ($metas as $meta) {
-                ProductMeta::where('id' , $meta['meta_id'])->update([
-                    "meta_key" => $meta['meta_key'],
-                    "meta_value" => $meta['meta_value']
-                ]);
+            if(!empty($validatedData['meta_key']) && !empty($validatedData['meta_value'])){
+                $meta_keys = $request->meta_key;
+                $meta_values = $request->meta_value;
+                $meta_ids = array_keys($meta_keys);
+                $metas = array_map(function ($meta_id , $meta_key , $meta_value) {
+                    return array_combine([
+                        "meta_id" , "meta_key" , "meta_value"
+                    ], [$meta_id , $meta_key , $meta_value]);
+                } , $meta_ids , $meta_keys , $meta_values);
+                foreach ($metas as $meta) {
+                    ProductMeta::where('id' , $meta['meta_id'])->update([
+                        "meta_key" => $meta['meta_key'],
+                        "meta_value" => $meta['meta_value']
+                    ]);
+                }
             }
             DB::commit();
             return redirect()->route('admin.market.product.index')->with('swal-success' , 'محصول شما با موفقیت ویرایش شد');

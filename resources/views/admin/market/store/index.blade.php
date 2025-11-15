@@ -3,6 +3,7 @@
 
 @section('head-tag')
 <title>انبار</title>
+<link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
 @endsection
 
 @section('content')
@@ -41,48 +42,37 @@
                             <th>#</th>
                             <td>نام کالا</td>
                             <td>تصویر کلا</td>
-                            <td>موجودی</td>
-                            <td>ورودی انبار</td>
-                            <td>خروجی انبار</td>
+                            <td>تعداد قابل فروش</td>
+                            <td>تعداد رزرو شده</td>
+                            <td>تعداد فروخته شده</td>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($products as $product)
                             <tr>
-                                <th>1</th>
-                                <th>تلویزیو اسمارت LG</th>
-                                <th><img src="{{ asset('admin-assets/images/LG-TV.jpeg') }}" style="max-height: 3rem; mix-blend-mode: multiply;" alt="Product-Image"></th>
-                                <th>10 تا</th>
-                                <th>20 تا</th>
-                                <th>10 تا</th>
+                                <th>{{ $loop->iteration }}</th>
+                                <th>{{ $product->name }}</th>
+                                <th>
+                                    @if(isset($product->image['indexArray'][$product->image['currentImage']]))
+                                        <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
+                                             data-large="{{ asset($product->image['indexArray']['large']) }}"
+                                             alt="{{ $product->name }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             loading="lazy">
+                                    @else
+                                        <span class="text-muted">بدون تصویر</span>
+                                    @endif
+                                </th>
+                                <th>{{ $product->marketable_number }}</th>
+                                <th>{{ $product->frozen_number }}</th>
+                                <th>{{ $product->sold_out }}</th>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.store.addToStore') }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> افزایش موجودی</a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-trash-alt"></i>  اصلاح موجودی</button>
+                                    <a href="{{ route('admin.market.store.addToStore' , $product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> افزایش موجودی</a>
+                                    <a href="{{ route('admin.market.store.edit' , $product->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-alt"></i>  اصلاح موجودی</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>1</th>
-                                <th>IPhone 12 S</th>
-                                <th><img src="{{ asset('admin-assets/images/Iphone-12.png') }}" style="max-height: 3rem; mix-blend-mode: multiply;" alt="Product-Image"></th>
-                                <th>5 تا</th>
-                                <th>15 تا</th>
-                                <th>10 تا</th>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.store.addToStore') }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> افزایش موجودی</a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-trash-alt"></i>  اصلاح موجودی</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <th>Samsung S23</th>
-                                <th><img src="{{ asset('admin-assets/images/samsung-s23.jpg') }}" style="max-height: 3rem; mix-blend-mode: multiply;" alt="Product-Image"></th>
-                                <th>20 تا</th>
-                                <th>30 تا</th>
-                                <th>10 تا</th>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.store.addToStore') }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> افزایش موجودی</a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-trash-alt"></i>  اصلاح موجودی</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -90,4 +80,15 @@
         </section>
     </section>
 
+    {{ $products->links() }}
+
+<div id="imageModal" class="modal-overlay">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+@endsection
+
+@section('script')
+    <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
 @endsection

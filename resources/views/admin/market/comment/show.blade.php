@@ -37,30 +37,70 @@
 
                 <section class="card mb-3">
                     <section class="card-header text-white bg-primary">
-                        <p>کامران محمدی - 651251</p>
+                        <p>{{ $comment->author?->fullName }} - {{ $comment->author_id }}</p>
                     </section>
                     <section class="card-body">
-                        <h5 class="card-title">ساعت apple watch - sm-12 کد کالا:512512</h5>
-                        <p class="card-text">به نظر من ساعت **** بود</p>
+                        <h5 class="card-title">{{ $comment->commentable->title ?? '' }}</h5>
+                        <div class="card-text">
+                                <span class="text-preview">
+                                    {{ substr(strip_tags($comment->body), 0, 50) }}...
+                                </span>
+                            <span class="text-full" style="display: none;">
+                                    {{ strip_tags($comment->body) }}
+                                </span>
+                            @if (strlen($comment->body) > 50)
+                                <a href="#" class="read-more text-primary small" style="font-size: 0.9em;">
+                                    نمایش بیشتر
+                                </a>
+                            @endif
+                        </div>
                     </section>
                 </section>
                 <section>
-                    <form action="" method="">
-                        <section class="row">
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">پاسخ ادمین</label>
-                                       <textarea name="admin-response" id="admin-response" class="form-control form-control-sm" rows="4"></textarea>
-                                </div>
+                    @if($comment->parent == null)
+                        <form action="{{ route('admin.market.comment.answer' , $comment->id )}}" method="POST">
+                            @csrf
+                            <section class="row">
+                                <section class="col-12">
+                                    <div class="form-group">
+                                        <label for="Category" class="h6">پاسخ ادمین</label>
+                                        <textarea name="body" id="body" class="form-control form-control-sm" rows="4">{{ old('body') }}</textarea>
+                                    </div>
+                                </section>
+                                <section class="col-12">
+                                    <button class="btn btn-primary btn-sm">ثبت</button>
+                                </section>
                             </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
+                        </form>
+                    @endif
                 </section>
             </section>
         </section>
     </section>
 
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const readMoreLinks = document.querySelectorAll('.read-more');
+
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const fullText = this.previousElementSibling;
+                    const previewText = fullText.previousElementSibling;
+
+                    if (fullText.style.display === 'inline') {
+                        fullText.style.display = 'none';
+                        previewText.style.display = 'inline';
+                        this.textContent = 'نمایش بیشتر';
+                    } else {
+                        fullText.style.display = 'inline';
+                        previewText.style.display = 'none';
+                        this.textContent = 'نمایش کمتر';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
