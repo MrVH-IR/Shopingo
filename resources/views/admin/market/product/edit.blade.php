@@ -106,22 +106,24 @@
                                     @php
                                         $number = 1;
                                     @endphp
-                                    @foreach($product->image['indexArray'] as $key => $value)
+                                    @if (is_array($product->image))                                        
+                                        @foreach($product->image['indexArray'] as $key => $value)
                                         <section class="col-md-{{ 6/ $number }}">
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input d-flex align-items-center" name="currentImage"
-                                                       value="{{ $key }}" id="{{ $number }}" @if($product->image['currentImage'] == $key)
-                                                           checked
-                                                    @endif>
+                                                value="{{ $key }}" id="{{ $number }}" @if($product->image['currentImage'] == $key)
+                                                checked
+                                                @endif>
                                                 <label for="{{ $number }}" class="form-check-label mx-2">
                                                     <img src="{{ asset($value) }}" class="w-100 preview-img mt-4">
                                                 </label>
                                             </div>
                                         </section>
-                                        @php
-                                            $number ++;
-                                        @endphp
-                                    @endforeach
+                                            @php
+                                                $number ++;
+                                            @endphp
+                                        @endforeach
+                                    @endif
                                 </section>
                             </section>
                             <section class="col-12 col-md-6">

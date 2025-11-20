@@ -53,7 +53,7 @@
                                 <th>{{ $loop->iteration }}</th>
                                 <th>{{ $product->name }}</th>
                                 <th>
-                                    @if(isset($product->image['indexArray'][$product->image['currentImage']]))
+                                    @if(is_array($product->image) && isset($product->image['indexArray'][$product->image['currentImage']]))
                                         <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
                                              data-large="{{ asset($product->image['indexArray']['large']) }}"
                                              alt="{{ $product->name }}"

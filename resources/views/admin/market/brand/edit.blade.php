@@ -117,22 +117,24 @@
                                     @php
                                         $number = 1;
                                     @endphp
-                                    @foreach($brand->image['indexArray'] as $key => $value)
+                                    @if (is_array($brand->image))                 
+                                        @foreach($brand->image['indexArray'] as $key => $value)
                                         <section class="col-md-{{ 6/ $number }}">
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input d-flex align-items-center" name="currentImage"
-                                                       value="{{ $key }}" id="{{ $number }}" @if($brand->image['currentImage'] == $key)
-                                                           checked
-                                                    @endif>
+                                                value="{{ $key }}" id="{{ $number }}" @if($brand->image['currentImage'] == $key)
+                                                checked
+                                                @endif>
                                                 <label for="{{ $number }}" class="form-check-label mx-2">
                                                     <img src="{{ asset($value) }}" class="w-100 preview-img mt-4">
                                                 </label>
                                             </div>
                                         </section>
                                         @php
-                                            $number ++;
-                                        @endphp
-                                    @endforeach
+                                                $number ++;
+                                                @endphp
+                                        @endforeach
+                                    @endif
                                 </section>
                             </section>
                             </section>

@@ -60,7 +60,7 @@
                                 <td>{{ $postCategory->description }}</td>
                                 <td>{{ $postCategory->slug }}</td>
                                 <td>
-                                    @if(isset($postCategory->image['indexArray'][$postCategory->image['currentImage']]))
+                                    @if(is_array($postCategory->image) && isset($postCategory->image['indexArray'][$postCategory->image['currentImage']]))
                                         <img src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
                                              data-large="{{ asset($postCategory->image['indexArray']['large']) }}"
                                              alt="{{ $postCategory->name }}"

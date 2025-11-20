@@ -116,7 +116,11 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
             if ($request->hasFile('image')) {
-                if ($product->image) {
+                if (
+                    is_array($product->image) &&
+                    isset($product->image['directory']) &&
+                    is_dir($product->image['directory'])
+                ) {
                     $imageService->deleteDirectoryAndFiles($product->image['directory']);
                 }
                 $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'products');

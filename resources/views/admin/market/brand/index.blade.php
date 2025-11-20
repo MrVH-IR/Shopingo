@@ -53,7 +53,7 @@
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $brand->original_name }}</td>
                                 <td>
-                                    @if(isset($brand->image['indexArray'][$brand->image['currentImage']]))
+                                    @if(is_array($brand->image) && isset($brand->image['indexArray'][$brand->image['currentImage']]))
                                         <img src="{{ asset($brand->image['indexArray'][$brand->image['currentImage']]) }}"
                                              data-large="{{ asset($brand->image['indexArray']['large']) }}"
                                              alt="{{ $brand->name }}"

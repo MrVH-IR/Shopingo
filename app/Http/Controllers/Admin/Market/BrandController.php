@@ -84,7 +84,11 @@ class BrandController extends Controller
         $validated = $request->validated();
         try {
             if ($request->hasFile('image')) {
-                if (!empty($brand->image)) {
+                if (
+                    is_array($brand->image) &&
+                    isset($brand->image['directory']) &&
+                    is_dir($brand->image['directory'])
+                ) {
                     $imageService->deleteDirectoryAndFiles($brand->image['directory']);
                 }
                 $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'brands');

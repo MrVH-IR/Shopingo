@@ -7,6 +7,15 @@ use Illuminate\Validation\Rules\Password;
 
 class CustomerRequest extends FormRequest
 {
+
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -45,6 +54,7 @@ class CustomerRequest extends FormRequest
                 "profile_photo_path" => "nullable|image|mimes:jpeg,png,jpg,svg|max:2048",
             ];
         }
+        abort(403);
     }
 
     public function messages(): array
