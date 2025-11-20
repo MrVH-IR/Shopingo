@@ -28,7 +28,7 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 
 ### 📦 Installation & Setup
 
-> Make sure you have PHP 8.4+, Composer, and a database (like MySQL) ready.
+> Make sure you have PHP 8.4+, Composer, and a database (like MariaDB OR MySQL) ready.
 
 ### 1. Clone the repository
 
