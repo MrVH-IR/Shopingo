@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Market\Payment;
 use App\Models\User\Role;
 use App\Models\Content\Comment;
 use App\Models\Ticket\Ticket;
@@ -109,5 +110,10 @@ class User extends Authenticatable
     public function cyberData()
     {
         return $this->hasMany(UserCyberData::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

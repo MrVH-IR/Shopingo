@@ -47,45 +47,21 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($allPayments as $payment)
                             <tr>
-                                <th>1</th>
+                                <th>{{ $loop->iteration }}</th>
                                 <td>4534534</td>
-                                <td>ملت</td>
-                                <td>محمد رضا</td>
-                                <td>تایید شده</td>
-                                <td>آنلاین</td>
+                                <td>{{ $payment->gateway }}</td>
+                                <td>{{ $payment->user->mobile }} - {{ $payment->user->fullName }}</td>
+                                <td>{{ $payment->status }}</td>
+                                <td>@if( $payment->type == 0) آنلاین @elseif($payment->type == 1) آفلاین @else در محل @endif</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>  مشاهده</a>
                                     <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-close"></i>  باطل کردن</a>
                                     <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-reply"></i>  برگرداندن</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>6126126</td>
-                                <td>ملی</td>
-                                <td>کمال رضا</td>
-                                <td>تایید شده</td>
-                                <td>آنلاین</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>  مشاهده</a>
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-close"></i>  باطل کردن</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-reply"></i>  برگرداندن</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>1261261</td>
-                                <td>آینده</td>
-                                <td>علی رضا</td>
-                                <td>تایید شده</td>
-                                <td>افلاین</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>  مشاهده</a>
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-close"></i>  باطل کردن</a>
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-reply"></i>  برگرداندن</a>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>

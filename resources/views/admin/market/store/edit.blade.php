@@ -68,6 +68,23 @@
                             </section>
                         </section>
                     </form>
+
+                    <section>
+                        <section class="row">
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    @foreach($storageEnteries as $storageEntry)
+                                        <li>---------{{ $loop->iteration }}---------</li>
+                                        <li>تحویل دهنده : {{ $storageEntry->deliverer }}</li>
+                                        <li>گیرنده : {{ $storageEntry->receiver }}</li>
+                                        <li> توضیحات : {{ $storageEntry->description }}</li>
+                                        <li> تاریخ تحویل : {{ $storageEntry->created_at }}</li>
+                                    @endforeach
+                                </div>
+                            </section>
+                        </section>
+                    </section>
+
                 </section>
             </section>
         </section>

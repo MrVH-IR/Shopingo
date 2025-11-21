@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
 
-
     public function index()
     {
-        return view('admin.market.payment.index');
+        $allPayments = Payment::simplePaginate(10);
+        return view('admin.market.payment.index' , compact('allPayments'));
     }
 
     public function online()

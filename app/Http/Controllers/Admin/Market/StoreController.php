@@ -65,7 +65,8 @@ class StoreController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.market.store.edit' , compact('product'));
+        $storageEnteries = ShopStorage::on("sqlite")->where('product_id' , $product->id)->get();
+        return view('admin.market.store.edit' , compact('product' , 'storageEnteries'));
     }
 
     /**
