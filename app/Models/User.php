@@ -8,8 +8,12 @@ use App\Models\User\Role;
 use App\Models\Content\Comment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
+use Common\Models\BlockedUser;
 use Common\Models\UserCyberData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -82,7 +86,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
@@ -92,27 +96,32 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function roles()
+    public function roles(): belongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function ticketAdmin()
+    public function ticketAdmin(): HasOne
     {
         return $this->hasOne(TicketAdmin::class);
     }
 
-    public function tickets()
+    public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }
 
-    public function cyberData()
+    public function cyberData(): HasMany
     {
         return $this->hasMany(UserCyberData::class);
     }
 
-    public function payments()
+    public function blockedUser(): HasOne
+    {
+        return $this->hasOne(BlockedUser::class);
+    }
+
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }

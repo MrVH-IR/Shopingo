@@ -11,8 +11,8 @@ class HomeController extends BaseController {
     public function index()
     {
         $data = new GetUserController($ip = request()->ip() , $header = request()->header())();
-        if (!UserCyberData::where('ip_address' , $data['IP'])->exists()) {
-            UserCyberData::create([
+        if (!UserCyberData::on("sqlite")->where('ip_address' , $data['IP'])->exists()) {
+            UserCyberData::on("sqlite")->create([
                 "ip_address" => $data['IP'] ?? null,
                 "header"     => $data['header'] ?? null,
                 "user_id"    => $data['user']['id'] ?? null,

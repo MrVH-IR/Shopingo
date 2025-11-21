@@ -13,7 +13,8 @@ class UserCyberData extends Model {
     protected $fillable = [
         'ip_address',
         'header',
-        'user_id'
+        'user_id',
+        'updated_at'
     ];
 
     protected function casts(): array

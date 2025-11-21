@@ -69,4 +69,6 @@
         </section>
     </section>
 
+    {{ $allPayments->links() }}
+
 @endsection

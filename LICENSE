@@ -1,21 +1,113 @@
-MIT License
+Software License Agreement
 
-Copyright (c) 2025 Mr VH
+Last Updated: 22 November 2025
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This Software License Agreement (“Agreement”) is a legal contract between You (“Licensee”) and Mohammad Reza Vahdat (“Licensor”), the programmer and owner of this Software (“Licensor”) regarding the use of the software, scripts, codebase, or related materials (“Software”). By installing, downloading, integrating, or using the Software, You agree to be bound by the terms of this Agreement.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Grant of License
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+The Licensor grants the Licensee a non‑exclusive, non‑transferable, revocable, multi‑user license, limited to a single domain owned or controlled by the Licensee.
+
+This license allows multiple users/employees within the Licensee’s organization to access and use the Software only on the single licensed domain.
+
+This Agreement does not grant ownership of the Software. The Licensee receives only the right to use the Software under the conditions stated herein.
+
+2. Permitted Use
+
+Under this Agreement, the Licensee may:
+
+Install and use the Software on one (1) production domain.
+
+Use the Software on additional development or staging subdomains (e.g., dev.example.com, staging.example.com) solely for internal testing.
+
+Modify configuration files or environment variables if necessary for integration, without altering the Software’s source logic.
+
+Each license is valid for a single domain. Installation on multiple domains requires separate licenses.
+
+3. Restrictions
+
+The Licensee may NOT, under any circumstances:
+
+Sell, resell, sublicense, rent, lease, distribute, or commercially share the Software, in whole or in part.
+
+Copy, clone, fork, upload, or distribute the Software’s source code publicly or privately.
+
+Reverse engineer, decompile, decode, disassemble, or attempt to derive the source code or underlying algorithms.
+
+Remove, alter, or obscure copyright notices, license keys, or intellectual property marks.
+
+Use the Software on more than one domain, unless additional licenses are purchased.
+
+Use the Software to build a competing product or service.
+
+Any violation of these restrictions constitutes a material breach of this Agreement.
+
+4. Intellectual Property Rights
+
+The Software is protected by international copyright, trademark, and intellectual property laws.
+
+All rights, title, and ownership in the Software—including source code, design, algorithms, architecture, and documentation—remain exclusively with the Licensor.
+
+No rights are granted to the Licensee other than those explicitly stated in this Agreement.
+
+5. License Key and Activation
+
+The Software may require a valid license key for activation.
+
+The Licensee is responsible for safeguarding their license key.
+
+License keys may not be shared, sold, or distributed under any circumstances.
+
+The Licensor reserves the right to revoke or deactivate any license key used in violation of this Agreement.
+
+6. Updates & Support
+
+The Licensor may provide updates, patches, or improvements at its discretion.
+
+Updates may include security fixes, optimizations, or new features.
+
+Support terms (if any) may be defined separately in the purchase agreement.
+
+7. Term & Termination
+
+This license remains valid until terminated by either party.
+
+The Licensor may terminate the license immediately if:
+
+The Licensee violates any term of this Agreement
+
+Unauthorized distribution or sharing is detected
+
+Upon termination:
+
+The Licensee must immediately stop using the Software
+
+All copies must be deleted from all systems
+
+The license key will be deactivated
+
+8. Limited Warranty
+
+The Software is provided “as is” without warranties of any kind, either express or implied.
+
+The Licensor does not guarantee uninterrupted use or compatibility with all systems, environments, or third‑party services.
+
+9. Limitation of Liability
+
+To the maximum extent permitted by law:
+
+The Licensor shall not be liable for any indirect, incidental, special, or consequential damages arising from the use or inability to use the Software.
+
+The Licensee agrees to use the Software at their own risk.
+
+10. Governing Law
+
+This Agreement shall be governed by and interpreted in accordance with the laws of Iran, without regard to conflict‑of‑law principles.
+
+11. Entire Agreement
+
+This Agreement constitutes the entire understanding between the parties and supersedes all prior discussions or communications regarding the Software.
+
+12. Acceptance
+
+By installing, activating, or using the Software, the Licensee acknowledges that they have read, understood, and agree to be bound by this Agreement.
