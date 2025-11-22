@@ -15,6 +15,7 @@
         "league/flysystem-aws-s3-v3": "^3.30",
         "livewire/livewire": "^3.6.4",
         "monolog/monolog": "^3.7",
+        "morilog/jalali": "^3.4",
         "psr/log": "^3.0"
     },
     "require-dev": {

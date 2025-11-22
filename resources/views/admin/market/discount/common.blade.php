@@ -47,42 +47,20 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($commonDiscounts as $commonDiscount)
                             <tr>
-                                <th>1</th>
-                                <td>11%</td>
-                                <th>22.000 تومان</th>
-                                <td>Black Friday</td>
-                                <td>11 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $commonDiscount->discount }}</td>
+                                <th>{{ $commonDiscount->discount_ceiling }}</th>
+                                <td>{{ $commonDiscount->title }}</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->start_at) }}</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->end_at) }}</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>15%</td>
-                                <th>25.000 تومان</th>
-                                <td>Women's Day</td>
-                                <td>24 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>17%</td>
-                                <th>50.000 تومان</th>
-                                <td>Men's Day</td>
-                                <td>5 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>

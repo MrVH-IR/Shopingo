@@ -43,7 +43,14 @@
                         <h5 class="card-title"> مبلغ پرداخت شده : {{ $payment->amount }}</h5>
                         <h5 class="card-title"> درگاه : {{ $payment->paymentable->gateway ?? " - "}}</h5>
                         <h5 class="card-title"> کد تراکنش : {{ $payment->paymentable->transaction_id ?? " - "}}</h5>
-                        <h5 class="card-title"> تاریخ پرداخت : {{ $payment->paymentable->pay_date ?? " - "}}</h5>
+                        <h5 class="card-title">
+                            تاریخ پرداخت :
+                            @if($payment->paymentable->pay_date)
+                                {{ \Morilog\Jalali\Jalalian::fromCarbon($payment->paymentable->pay_date)->format('Y/m/d') }}
+                            @elseif($payment->paymentable->paid_date)
+                                {{ \Morilog\Jalali\Jalalian::fromCarbon($payment->paymentable->paid_date)->format('Y/m/d') }}
+                            @endif
+                        </h5>
                         <h5 class="card-title"> گیرنده : {{ $payment->paymentable->cash_receiver ?? " - "}}</h5>
                     </section>
                 </section>

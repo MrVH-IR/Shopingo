@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\CommonDiscount;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -20,7 +21,8 @@ class DiscountController extends Controller
 
     public function commonDiscount()
     {
-        return view('admin.market.discount.common');
+        $commonDiscounts = CommonDiscount::simplePaginate(10);
+        return view('admin.market.discount.common' , compact('commonDiscounts'));
     }
 
     public function commonDiscountCreate()

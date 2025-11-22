@@ -12,6 +12,13 @@ class CashPayment extends Model
 
     protected $fillable = ["amount" , "user_id" , "cash_receiver" , "pay_date" , "status"];
 
+    protected function casts(): array
+    {
+        return [
+            "pay_date" => "datetime",
+        ];
+    }
+
     public function payments()
     {
         return $this->morphMany(Payment::class, 'paymentable');

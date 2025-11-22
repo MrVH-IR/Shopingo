@@ -13,6 +13,13 @@ class OfflinePayment extends Model
 
     protected $fillable = ["amount" , "user_id" , "transaction_id" , "paid_date" , "status"];
 
+    protected function casts(): array
+    {
+        return [
+            "paid_date" => "datetime",
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
