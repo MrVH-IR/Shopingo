@@ -18,9 +18,9 @@ class OfflinePayment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function payment()
+    public function payments()
     {
-        return $this->morphOne(Payment::class, 'paymentable');
+        return $this->morphMany(Payment::class, 'paymentable');
     }
 
 //    public function transaction()

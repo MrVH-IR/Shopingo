@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('amount',20,3);
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment("0 => notPaid , 1 => paid , 2 => canceled , 3 => returned");
             $table->tinyInteger('type')->comment('0 => Online , 1 => Offline , 2 => Cash');
             $table->morphs('paymentable');
             $table->timestamps();

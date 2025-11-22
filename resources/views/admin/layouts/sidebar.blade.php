@@ -49,9 +49,9 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.market.payment.index') }}"><i class="fas fa-receipt"></i> تمام پرداخت ها</a>
-                    <a href="{{ route('admin.market.payment.index') }}"><i class="fas fa-globe"></i> پرداخت های آنلاین</a>
-                    <a href="{{ route('admin.market.payment.index') }}"><i class="fas fa-money-bill"></i> پرداخت های آفلاین</a>
-                    <a href="{{ route('admin.market.payment.index') }}"><i class="fas fa-map-marker-alt"></i> پرداخت در محل</a>
+                    <a href="{{ route('admin.market.payment.online') }}"><i class="fas fa-globe"></i> پرداخت های آنلاین</a>
+                    <a href="{{ route('admin.market.payment.offline') }}"><i class="fas fa-money-bill"></i> پرداخت های آفلاین</a>
+                    <a href="{{ route('admin.market.payment.cash') }}"><i class="fas fa-map-marker-alt"></i> پرداخت در محل</a>
                 </section>
             </section>
 

@@ -21,6 +21,6 @@ class OnlinePayment extends Model
 
     public function payments()
     {
-        return $this->morphOne(Payment::class, 'paymentable');
+        return $this->morphMany(Payment::class, 'paymentable');
     }
 }
