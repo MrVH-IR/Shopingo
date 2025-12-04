@@ -38,37 +38,88 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.discount.amazingSale.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">نام کالا</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="product" class="h6">نام کالا</label>
+                                    <select name="product_id" id="product" class="form-control form-control-sm">
+                                        <option>نام کالا را انتخاب کنید...</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}" @if(old('product_id') == $product->id) selected @endif>{{ $product->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                @error('product_id')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">درصد تخفیف</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="percentage" class="h6">درصد تخفیف</label>
+                                        <input type="text" name="percentage" id="percentage" class="form-control form-control-sm">
                                 </div>
+                                @error('percentage')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="start_date" class="h6 d-flex">تاریخ شروع</label>
-                                    <input type="text" id="start_date" name="start_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ شروع">
+                                    <label for="start_at" class="h6 d-flex">تاریخ شروع</label>
+                                    <input type="text" id="start_at" name="start_at" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ شروع">
                                     <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#start_date"
+                                       data-target="#start_at"
                                        style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
+                                @error('start_at')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="end_date" class="h6 d-flex">تاریخ پایان</label>
-                                    <input type="text" id="end_date" name="end_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ پایان">
+                                    <label for="end_at" class="h6 d-flex">تاریخ پایان</label>
+                                    <input type="text" id="end_at" name="end_at" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ پایان">
                                     <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#end_date"
+                                       data-target="#end_at"
                                        style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
+                                @error('end_at')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="status" class="h6">وضعیت</label>
+                                    <select name="status" id="status" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>

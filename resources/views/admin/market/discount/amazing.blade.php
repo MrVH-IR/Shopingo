@@ -25,7 +25,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-فروش شگفت انگیز
+            فروش شگفت انگیز
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
@@ -46,39 +46,20 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($amazingSales as $amazingSale)
                             <tr>
-                                <th>1</th>
-                                <th>Asus Vivobook Core i3 13th Gen 16GB DDR4</th>
-                                <td>11%</td>
-                                <td>11 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <th>{{ $amazingSale->product->name }}</th>
+                                <td>{{ $amazingSale->percentage }}%</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->start_at) }}</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->end_at) }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.market.discount.amazingSale.edit' , $amazingSale->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form class="d-none" method="POST" action="{{ route('admin.market.discount.amazingSale.destroy' , $amazingSale->id) }}" id="delete-form-{{ $amazingSale->id }}">@csrf @method('DELETE')</form>
+                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $amazingSale->id }}" data-id="{{ $amazingSale->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <th>Apple 16S Plus 512GB Rose Gold</th>
-                                <td>15%</td>
-                                <td>24 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <th>Samsung A23 Black 16GB Ram 256</th>
-                                <td>17%</td>
-                                <td>5 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -86,4 +67,10 @@
         </section>
     </section>
 
+    {{ $amazingSales->links() }}
+
+@endsection
+@section('script')
+
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection
