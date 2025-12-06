@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\AmazingSaleRequest;
+use App\Http\Requests\Admin\Market\CoupanRequest;
 use App\Models\Market\AmazingSale;
 use App\Models\Market\CommonDiscount;
+use App\Models\Market\Coupon;
 use App\Models\Market\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 
@@ -15,12 +18,35 @@ class DiscountController extends Controller
 
     public function copan()
     {
-        return view('admin.market.discount.copan');
+        $coupans = Coupon::simplePaginate(10);
+        return view('admin.market.discount.copan' , compact('coupans'));
     }
 
     public function copanCreate()
     {
         return view('admin.market.discount.copan-create');
+    }
+
+    public function ajaxUsers()
+    {
+        return response()->json(
+            User::select('id' , 'email')->get()
+        );
+    }
+
+    public function copanStore(CoupanRequest $request)
+    {
+        $validated = $request->validated();
+        if ($validated['type'] == 0) {
+            $validated['user_id'] = null;
+        }
+        $validated['start_date'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['start_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['end_date'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['end_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        Coupon::create($validated);
+        return redirect()->route('admin.market.discount.copan')
+            ->with('swal-success' , 'کد تخفیف شما با موفقیت ایجاد شد');
     }
 
     public function commonDiscount()

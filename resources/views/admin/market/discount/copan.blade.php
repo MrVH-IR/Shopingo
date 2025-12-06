@@ -40,7 +40,8 @@
                         <thead>
                             <th>#</th>
                             <th>کد کوپن</th>
-                            <th>درصد تخفیف</th>
+                            <th>میزان تخفیف</th>
+                            <th>نوع کوپن</th>
                             <th>سقف تخفیف</th>
                             <th>نوع کوپن</th>
                             <th>تاریخ شروع</th>
@@ -48,45 +49,22 @@
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
+                        @foreach($coupans as $coupan)
                             <tr>
-                                <th>1</th>
-                                <td>H85341SAS</td>
-                                <td>11%</td>
-                                <th>22.000 تومان</th>
-                                <td>عمومی</td>
-                                <td>11 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $coupan->code }}</td>
+                                <td>{{ $coupan->amount }}</td>
+                                <td>{{ $coupan->amount_type == 0 ? 'درصدی' : 'عددی' }}</td>
+                                <th>{{ $coupan->discount_ceiling ?? "ندارد"}}</th>
+                                <td>{{ $coupan->type == 0 ? 'عمومی' : 'خصوصی' }}</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($coupan->start_date) }}</td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($coupan->end_date) }}</td>
                                 <td class="width-16-rem text-left">
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>H85341SAS</td>
-                                <td>15%</td>
-                                <th>25.000 تومان</th>
-                                <td>عمومی</td>
-                                <td>24 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>H85341SAS</td>
-                                <td>17%</td>
-                                <th>50.000 تومان</th>
-                                <td>عمومی</td>
-                                <td>5 اردیبهشت 94</td>
-                                <td>31 اردیبهشت 94</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </section>
