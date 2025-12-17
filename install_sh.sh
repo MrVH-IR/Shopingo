@@ -117,6 +117,7 @@ Next steps:
    php artisan key:generate
    php artisan config:cache
    php artisan migrate --seed
+   php artisan storage:link
 
 3. Set file permissions:
    sudo chown -R www-data:www-data storage bootstrap/cache

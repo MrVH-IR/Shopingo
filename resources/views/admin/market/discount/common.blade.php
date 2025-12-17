@@ -50,14 +50,15 @@
                         @foreach($commonDiscounts as $commonDiscount)
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
-                                <td>{{ $commonDiscount->discount }}</td>
-                                <th>{{ $commonDiscount->discount_ceiling }}</th>
+                                <td>{{ $commonDiscount->discount }}%</td>
+                                <th>{{ $commonDiscount->discount_ceiling }}تومان </th>
                                 <td>{{ $commonDiscount->title }}</td>
                                 <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->start_at) }}</td>
                                 <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->end_at) }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.market.discount.commonDiscount.edit' , $commonDiscount->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form class="d-none" method="POST" action="{{ route('admin.market.discount.commonDiscount.destroy' , $commonDiscount->id) }}" id="delete-form-{{ $commonDiscount->id }}">@csrf @method('DELETE')</form>
+                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $commonDiscount->id }}" data-id="{{ $commonDiscount->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -68,4 +69,9 @@
         </section>
     </section>
 
+    {{ $commonDiscounts->links() }}
+
+@endsection
+@section('script')
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection

@@ -9,6 +9,8 @@ class CommonDiscount extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = ["title" , "discount" , "discount_ceiling" , "discount_floor" , "status" , "start_at" , "end_at"];
+
     protected function casts(): array
     {
         return [
@@ -16,6 +18,4 @@ class CommonDiscount extends Model
             "end_at" => "datetime",
         ];
     }
-
-    protected $fillable = ["title" , "discount" , "discount_ceiling" , "discount_floor" , "status" , "start_at" , "end_at"];
 }

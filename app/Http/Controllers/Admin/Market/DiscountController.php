@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\AmazingSaleRequest;
+use App\Http\Requests\Admin\Market\CommonDiscountRequest;
 use App\Http\Requests\Admin\Market\CoupanRequest;
 use App\Models\Market\AmazingSale;
 use App\Models\Market\CommonDiscount;
@@ -49,6 +50,34 @@ class DiscountController extends Controller
             ->with('swal-success' , 'کد تخفیف شما با موفقیت ایجاد شد');
     }
 
+    public function couponEdit(Coupon $coupon)
+    {
+        $users = User::select('id' , 'email')->get();
+        return view('admin.market.discount.coupon-edit' , compact('coupon' , 'users'));
+    }
+
+    public function couponUpdate(CoupanRequest $request, Coupon $coupon)
+    {
+        $validated = $request->validated();
+        if ($validated['type'] == 0) {
+            $validated['user_id'] = null;
+        }
+        $validated['start_date'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['start_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['end_date'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['end_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $coupon->update($validated);
+        return redirect()->route('admin.market.discount.copan')
+            ->with('swal-success' , 'کد تخفیف شما با موفقیت ویرایش شد');
+    }
+
+    public function couponDestroy(Coupon $coupon)
+    {
+        $coupon->delete();
+        return redirect()->route('admin.market.discount.copan')
+            ->with('swal-success' , 'کد تخفیف شما با موفقیت حذف شد');
+    }
+
     public function commonDiscount()
     {
         $commonDiscounts = CommonDiscount::simplePaginate(10);
@@ -60,24 +89,44 @@ class DiscountController extends Controller
         return view('admin.market.discount.common-create');
     }
 
-    public function commonDiscountStore()
+    public function commonDiscountStore(CommonDiscountRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['start_at'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['start_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['end_at'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['end_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['start_date'] = null;
+        $validated['end_date'] = null;
+        CommonDiscount::create($validated);
+        return redirect()->route('admin.market.discount.commonDiscount')
+            ->with('swal-success' , 'تخفیف عمومی شما با موفقیت ایجاد شد');
     }
 
-    public function commonDiscountEdit()
+    public function commonDiscountEdit(CommonDiscount $commonDiscount)
     {
-        //
+        return view('admin.market.discount.common-edit' , compact('commonDiscount'));
     }
 
-    public function commonDiscountUpdate()
+    public function commonDiscountUpdate(CommonDiscountRequest $request , CommonDiscount $commonDiscount)
     {
-        //
+        $validated = $request->validated();
+        $validated['start_at'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['start_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['end_at'] = Jalalian::fromFormat('Y/m/d H:i:s', $validated['end_date'])
+            ->toCarbon()->format('Y-m-d H:i:s');
+        $validated['start_date'] = null;
+        $validated['end_date'] = null;
+        $commonDiscount->update($validated);
+        return redirect()->route('admin.market.discount.commonDiscount')
+            ->with('swal-success' , 'تخفیف عمومی شما با موفقیت ویرایش شد');
     }
 
-    public function commonDiscountDestroy()
+    public function commonDiscountDestroy(CommonDiscount $commonDiscount)
     {
-        //
+        $commonDiscount->delete();
+        return redirect()->route('admin.market.discount.commonDiscount')
+            ->with('swal-success' , 'تخفیف عمومی شما با موفقیت حذف شد');
     }
 
     public function amazingSale()

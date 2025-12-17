@@ -38,25 +38,60 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.market.discount.commonDiscount.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">درصد تخفیف</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="discount" class="h6">درصد تخفیف</label>
+                                        <input type="text" name="discount" id="discount" class="form-control form-control-sm" value="{{ old('discount') }}">
                                 </div>
+                                @error('discount')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">حداکثر تخفیف</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="discount_ceiling" class="h6">حداکثر تخفیف</label>
+                                        <input type="text" name="discount_ceiling" id="discount_ceiling" class="form-control form-control-sm" value="{{ old('discount_ceiling') }}">
                                 </div>
+                                @error('discount_ceiling')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="Category" class="h6">عنوان مناسبت</label>
-                                        <input type="text" name="" id="" class="form-control form-control-sm">
+                                    <label for="discount_floor" class="h6">حداقل مبلغ خرید</label>
+                                    <input type="text" name="discount_floor" id="discount_floor" class="form-control form-control-sm" value="{{ old('discount_floor') }}">
                                 </div>
+                                @error('discount_floor')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="title" class="h6">عنوان مناسبت</label>
+                                        <input type="text" name="title" id="title" class="form-control form-control-sm" value="{{ old('title') }}">
+                                </div>
+                                @error('title')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
@@ -66,6 +101,13 @@
                                        data-target="#start_date"
                                        style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
+                                @error('start_date')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
@@ -75,6 +117,30 @@
                                        data-target="#end_date"
                                        style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
+                                @error('end_date')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+                            <section class="col-12">
+                                <div class="form-group">
+                                    <label for="status" class="h6">وضعیت</label>
+                                    <select name="status" id="status" class="form-control form-control-sm">
+                                        <option value="default">انتخاب کنید</option>
+                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <button class="btn btn-primary btn-sm">ثبت</button>

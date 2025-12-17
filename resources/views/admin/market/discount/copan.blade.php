@@ -60,8 +60,9 @@
                                 <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($coupan->start_date) }}</td>
                                 <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($coupan->end_date) }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i>  حذف</button>
+                                    <a href="{{ route('admin.market.discount.coupon.edit' , $coupan->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                    <form class="d-none" method="POST" action="{{ route('admin.market.discount.coupon.destroy' , $coupan->id) }}" id="delete-form-{{ $coupan->id }}">@csrf @method('DELETE')</form>
+                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $coupan->id }}" data-id="{{ $coupan->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -72,4 +73,8 @@
         </section>
     </section>
 
+@endsection
+@section('script')
+
+    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
 @endsection
