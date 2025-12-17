@@ -38,9 +38,9 @@ class DatabaseSeeder extends Seeder
 //        Comment::factory()->count(10)->forProduct()->create();
 //        Comment::factory()->count(10)->forPost()->create();
 //        Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
-        Payment::factory()->forOnlinePayments()->count(10)->create();
-        Payment::factory()->forOfflinePayments()->count(10)->create();
-        Payment::factory()->forCashPayments()->count(10)->create();
+//        Payment::factory()->forOnlinePayments()->count(10)->create();
+//        Payment::factory()->forOfflinePayments()->count(10)->create();
+//        Payment::factory()->forCashPayments()->count(10)->create();
         $this->call([
 //            SMSSeeder::class,
 //            EmailSeeder::class,
