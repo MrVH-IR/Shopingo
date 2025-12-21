@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -10,7 +11,8 @@ class OrderController extends Controller
 
     public function all()
     {
-        return view('admin.market.order.index');
+        $orders = Order::simplePaginate(10);
+        return view('admin.market.order.index' , compact('orders'));
     }
 
     public function newOrders()

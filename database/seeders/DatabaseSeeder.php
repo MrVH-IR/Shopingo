@@ -15,6 +15,8 @@ use App\Models\Notify\Email;
 use App\Models\Market\Product;
 use App\Models\Content\Comment;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\AppData\CitySeeder;
+use Database\Seeders\AppData\ProvinceSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use App\Models\Content\PostCategory;
@@ -49,6 +51,8 @@ class DatabaseSeeder extends Seeder
 //            TicketPrioritySeeder::class,
 //            RoleSeeder::class,
 //            DeliverySeeder::class,
+//            ProvinceSeeder::class,
+//            CitySeeder::class,
         ]);
     }
 }
