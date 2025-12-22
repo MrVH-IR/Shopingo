@@ -94,9 +94,12 @@
                                 <td>{{ $order->delivery?->name ?? '-' }}</td>
 
                                 <td>
-                                    @if($order->order_status == 0) در انتظار تایید
-                                    @elseif($order->order_status == 1) تایید نشده
-                                    @else تایید شده
+                                    @if($order->order_status == 0) بررسی نشده
+                                    @elseif($order->order_status == 1) در انتظار تایید
+                                    @elseif($order->order_status == 2) تایید نشده
+                                    @elseif($order->order_status == 3) تایید شده
+                                    @elseif($order->order_status == 4) باطل شده
+                                    @else مرجوع شده
                                     @endif
                                 </td>
                                 <td class="width-8-rem text-left">

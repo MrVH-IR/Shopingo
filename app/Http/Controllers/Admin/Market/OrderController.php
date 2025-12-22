@@ -17,23 +17,32 @@ class OrderController extends Controller
 
     public function newOrders()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status' , 0)->simplePaginate(10);
+        foreach ($orders as $order) {
+            $order->order_status = 1;
+            $order->save();
+        }
+        return view('admin.market.order.index' , compact('orders'));
     }
     public function sending()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('delivery_status' , 1)->simplePaginate(10);
+        return view('admin.market.order.index' , compact('orders'));
     }
     public function unpaid()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('payment_status' , 0)->simplePaginate(10);
+        return view('admin.market.order.index' , compact('orders'));
     }
     public function cancele()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status' , 4)->simplePaginate(10);
+        return view('admin.market.order.index' , compact('orders'));
     }
     public function returned()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status' , 5)->simplePaginate(10);
+        return view('admin.market.order.index' , compact('orders'));
     }
     public function show()
     {
