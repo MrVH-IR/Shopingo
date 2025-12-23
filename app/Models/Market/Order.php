@@ -3,6 +3,7 @@
 namespace App\Models\Market;
 
 use App\Models\User;
+use Common\Models\Address;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,6 +36,13 @@ class Order extends Model
         "order_status"
     ];
 
+    protected function casts()
+    {
+        return [
+            "delivery_date" => "datetime"
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,7 +50,7 @@ class Order extends Model
 
     public function address()
     {
-//        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class);
     }
 
     public function delivery()
@@ -53,5 +61,20 @@ class Order extends Model
     public function payment()
     {
         return $this->belongsTo(Payment::class);
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function commonDiscount()
+    {
+        return $this->belongsTo(CommonDiscount::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

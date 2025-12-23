@@ -44,20 +44,43 @@ class OrderController extends Controller
         $orders = Order::where('order_status' , 5)->simplePaginate(10);
         return view('admin.market.order.index' , compact('orders'));
     }
-    public function show()
+    public function show(Order $order)
     {
-        return view('admin.market.order.index');
+        return view('admin.market.order.show' , compact('order'));
     }
-    public function changeSendStatus()
+    public function changeSendStatus(Order $order)
     {
-        return view('admin.market.order.index');
+        $order->delivery_status = match ($order->delivery_status) {
+            0 => 1,
+            1 => 2,
+            2 => 3,
+            default => 0
+        };
+        $order->save();
+        return back();
     }
-    public function changeOrderStatus()
+    public function changeOrderStatus(Order $order)
     {
-        return view('admin.market.order.index');
+        $order->order_status = match ($order->order_status) {
+            1 => 2,
+            2 => 3,
+            3 => 4,
+            4 => 5,
+            5 => 6,
+            default => 1
+        };
+        $order->save();
+        return back();
     }
-    public function cancelOrder()
+    public function cancelOrder(Order $order)
     {
-        return view('admin.market.order.index');
+        $order->order_status = 4;
+        $order->save();
+        return back();
+    }
+
+    public function showDetail(Order $order)
+    {
+        return view('admin.market.order.detail' , compact('order'));
     }
 }

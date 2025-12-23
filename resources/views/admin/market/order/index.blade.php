@@ -108,10 +108,10 @@
                                             <i class="fa fa-tools"></i>عملیات
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-images"></i> مشاهده فاکتور</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-list-ul"></i> تغییر وضعیت ارسال</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-edit"></i> تغییر وضعیت سفارش</a>
-                                            <a class="dropdown-item text-right" href="#"><i class="fa fa-window-close"></i> باطل کردن سفارش</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.show' , $order->id) }}"><i class="fa fa-images"></i> مشاهده فاکتور</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.changeStatus' , $order->id) }}"><i class="fa fa-list-ul"></i> تغییر وضعیت ارسال</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.orderStatus' , $order->id) }}"><i class="fa fa-edit"></i> تغییر وضعیت سفارش</a>
+                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.cancelOrder' , $order->id) }}"><i class="fa fa-window-close"></i> باطل کردن سفارش</a>
                                         </div>
                                     </div>
                                 </td>
