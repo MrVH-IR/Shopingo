@@ -6,7 +6,24 @@
     <section class="top-header">
         <section class="container-xxl ">
             <section class="d-flex justify-content-between align-items-center py-3">
-                <section class=""><a class="text-decoration-none" href="index.html"><img src="assets/images/logo/8.png" alt="logo"></a></section>
+                <section>
+                    <a class="text-decoration-none" href="{{ route('customer.home') }}">
+
+                        <!-- Spinner -->
+                        <div id="logo-spinner" class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+
+                        <!-- Image -->
+                        <img
+                            id="logo-image"
+                            src="{{ asset('customer-assets/images/logo/shopingo_logo.png') }}"
+                            alt="logo"
+                            style="max-width: 5rem; display: none;"
+                        >
+                    </a>
+                </section>
+
                 <section class="search-wrapper">
                     <section class="search-box">
                         <section class="search-textbox">

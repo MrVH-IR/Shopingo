@@ -2,6 +2,7 @@
 
 namespace Feature\Admin;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,21 +21,21 @@ class CategoryRoutesTest extends TestCase
         $this->actingAs($this->admin);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_access_category_index(): void
     {
         $response = $this->get(route('admin.market.category.index'));
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_access_category_create_page(): void
     {
         $response = $this->get(route('admin.market.category.create'));
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_store_category(): void
     {
         $response = $this->post(route('admin.market.category.store'), [
@@ -45,15 +46,24 @@ class CategoryRoutesTest extends TestCase
         $response->assertStatus(302);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_edit_category(): void
     {
-        $category = \App\Models\Market\ProductCategory::factory()->create();
+        $category = \App\Models\Market\ProductCategory::factory()->create([
+            'image' => [
+                'indexArray' => [
+                    'img1' => 'images/a.jpg',
+                    'img2' => 'images/b.jpg',
+                ],
+                'currentImage' => 'img1',
+                'directory' => 'images/product_categories'
+            ],
+        ]);
         $response = $this->get(route('admin.market.category.edit', $category->id));
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_update_category(): void
     {
         $category = \App\Models\Market\ProductCategory::factory()->create();
@@ -66,7 +76,7 @@ class CategoryRoutesTest extends TestCase
         $response->assertStatus(302);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_destroy_category(): void
     {
         $category = \App\Models\Market\ProductCategory::factory()->create();

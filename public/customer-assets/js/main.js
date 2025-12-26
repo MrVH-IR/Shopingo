@@ -262,3 +262,42 @@ $(document).ready(function() {
     });
 });
 //end product introduction, features and comment
+
+//Spinner For Logo
+document.addEventListener('DOMContentLoaded', function () {
+    const img = document.getElementById('logo-image');
+    const spinner = document.getElementById('logo-spinner');
+
+    // وقتی تصویر کامل لود شد
+    img.addEventListener('load', function () {
+    spinner.style.display = 'none';
+    img.style.display = 'inline-block';
+});
+    // اگه تصویر کش بود و قبلاً لود شده
+    if (img.complete) {
+        spinner.style.display = 'none';
+        img.style.display = 'inline-block';
+    }
+});
+// End Spinner For Logo
+// Start Spinner For Products
+document.addEventListener('DOMContentLoaded', function () {
+    const productImages = document.querySelectorAll('.product-img');
+
+    productImages.forEach(function (img) {
+        const product = img.closest('.product');
+        const spinner = product.querySelector('.product-spinner');
+
+        const showImage = () => {
+        spinner.style.display = 'none';
+        img.style.display = 'block';
+    };
+
+        img.addEventListener('load', showImage);
+
+        if (img.complete) {
+            showImage();
+        }
+    });
+});
+// End Spinner For Products

@@ -20,7 +20,7 @@ class ProductCategory extends Model
         "parent_id",
     ];
 
-    public function casts()
+    protected function casts()
     {
         return [
           "image" => "array"

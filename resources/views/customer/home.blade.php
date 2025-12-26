@@ -1,5 +1,8 @@
 @extends('customer.layouts.master-one-col')
 
+@section('head-tag')
+    <title>خانه</title>
+@endsection
 
 @section('content')
     <!-- start slideshow -->
@@ -51,7 +54,7 @@
                                             <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
-                                                    <img class="" src="assets/images/products/21.jpg" alt="">
+                                                    <img class="" src="{{ asset('customer-assets/images/products/21.jpg') }}" alt="">
                                                 </section>
                                                 <section class="product-colors"></section>
                                                 <section class="product-name"><h3>گوشی موبایل شیائومی مدل POCO X3 Pro M2102J20SG دو ...</h3></section>
@@ -74,14 +77,36 @@
                                 <section class="item">
                                     <section class="lazyload-item-wrapper">
                                         <section class="product">
-                                            <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                            <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
+                                            <section class="product-add-to-cart">
+                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            </section>
+                                            <section class="product-add-to-favorite">
+                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی">
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                            </section>
                                             <a class="product-link" href="#">
+                                                <!-- Spinner -->
+                                                <div class="product-spinner text-center">
+                                                    <div class="spinner-border" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </div>
+                                                </div>
+                                                <!-- Image -->
                                                 <section class="product-image">
-                                                    <img class="" src="assets/images/products/22.jpg" alt="">
+                                                    <img
+                                                        class="product-img"
+                                                        src="{{ asset('customer-assets/images/products/22.jpg') }}"
+                                                        alt=""
+                                                        style="display:none;"
+                                                    >
                                                 </section>
                                                 <section class="product-colors"></section>
-                                                <section class="product-name"><h3>گوشی موبایل سامسونگ مدل Galaxy A32 SM-A325F/DS دو ...</h3></section>
+                                                <section class="product-name">
+                                                    <h3>گوشی موبایل سامسونگ مدل Galaxy A32 SM-A325F/DS دو ...</h3>
+                                                </section>
                                                 <section class="product-price-wrapper">
                                                     <section class="product-price">6,249,000 تومان</section>
                                                 </section>
