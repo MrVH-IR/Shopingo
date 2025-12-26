@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [HomeController::class , 'index']);
+Route::get('/', function () {
+    return view('customer.home');
+})->name('customer.home');
 
 Route::middleware([
     'auth:sanctum',

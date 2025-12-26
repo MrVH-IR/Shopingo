@@ -49,7 +49,6 @@ class CategoryRoutesTest extends TestCase
     public function admin_can_edit_category(): void
     {
         $category = \App\Models\Market\ProductCategory::factory()->create();
-
         $response = $this->get(route('admin.market.category.edit', $category->id));
         $response->assertStatus(200);
     }
