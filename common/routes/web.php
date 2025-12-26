@@ -373,6 +373,8 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::get('/edit/{setting}' , [SettingController::class , 'edit'])->name('admin.setting.edit');
             Route::put('/update/{setting}' , [SettingController::class , 'update'])->name('admin.setting.update');
     });
+
+    Route::post('notification/read-all' , [\App\Http\Controllers\Admin\NotificationController::class , 'readAll'])->name('admin.notification.readAll');
 });
 
 

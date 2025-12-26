@@ -67,40 +67,23 @@
                                 <td>{{ number_format($order->order_final_amount) }} تومان</td>
 
                                 <td>
-                                    @if($order->payment_status == 0) پرداخت نشده
-                                    @elseif($order->payment_status == 1) پرداخت شده
-                                    @elseif($order->payment_status == 2) باطل شده
-                                    @else برگشت داده شده
-                                    @endif
+                                    {{ $order->paymentStatusValue }}
                                 </td>
 
                                 <td>
-                                    @if($order->payment_type == 0) آنلاین
-                                    @elseif($order->payment_type == 1) آفلاین
-                                    @else در محل
-                                    @endif
+                                    {{ $order->paymentTypeValue }}
                                 </td>
 
                                 <td>{{ $order->payment?->paymentable?->gateway ?? '-' }}</td>
 
                                 <td>
-                                    @if($order->delivery_status == 0) ارسال نشده
-                                    @elseif($order->delivery_status == 1) درحال ارسال
-                                    @elseif($order->delivery_status == 2) ارسال شده
-                                    @else تحویل شده
-                                    @endif
+                                    {{ $order->deliveryStatusValue }}
                                 </td>
 
                                 <td>{{ $order->delivery?->name ?? '-' }}</td>
 
                                 <td>
-                                    @if($order->order_status == 0) بررسی نشده
-                                    @elseif($order->order_status == 1) در انتظار تایید
-                                    @elseif($order->order_status == 2) تایید نشده
-                                    @elseif($order->order_status == 3) تایید شده
-                                    @elseif($order->order_status == 4) باطل شده
-                                    @else مرجوع شده
-                                    @endif
+                                    {{ $order->orderStatusValue }}
                                 </td>
                                 <td class="width-8-rem text-left">
                                     <div class="dropdown">

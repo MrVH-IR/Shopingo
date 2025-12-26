@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\CustomerRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\User;
+use App\Notifications\NewUserRegister;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,12 @@ class CustomerController extends Controller
             $user = User::create($validated);
 
             DB::commit();
-
+            //Testing Notification
+            $details = [
+                "message" => "یک کاربر جدید با ایمیل $user->email در سایت ثبت نام کرد"
+            ];
+            $adminUser = User::find(279);
+            $adminUser->notify(new NewUserRegister($details));
             return redirect()->route('admin.user.customer.index')
                 ->with('swal-success', 'کاربر مشتری با موفقیت ایجاد شد: ' . $user->first_name);
 

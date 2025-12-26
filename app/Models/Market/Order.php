@@ -43,6 +43,51 @@ class Order extends Model
         ];
     }
 
+    public function getPaymentStatusValueAttribute()
+    {
+        return match ($this->payment_status) {
+            0 => "پرداخت نشده",
+            1 => "پرداخت شده",
+            2 => "باطل شده",
+            3 => "برگشت داده شده",
+            default => "نامعلوم"
+        };
+    }
+
+    public function getPaymentTypeValueAttribute()
+    {
+        return match ($this->payment_type) {
+            0 => "آنلاین",
+            1 => "آفلاین",
+            default => "در محل"
+        };
+    }
+
+    public function getDeliveryStatusValueAttribute()
+    {
+        return match ($this->delivery_status) {
+            0 => "ارسال نشده",
+            1 => "درحال ارسال",
+            2 => "ارسال شده",
+            3 => "تحویل شده",
+            default => "نامعلوم"
+        };
+    }
+
+    public function getOrderStatusValueAttribute()
+    {
+        return match ($this->order_status) {
+            0 => "بررسی نشده",
+            1 => "در انتظار تایید",
+            2 => "تایید نشده",
+            3 => "تایید شده",
+            4 => "باطل شده",
+            5 => "مرجوع شده",
+            6 => "بررسی نشده",
+            default => "نامعلوم"
+        };
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
