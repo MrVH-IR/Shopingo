@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamp('email_verified_at')->nullable();
+//            $table->timestamp('mobie_verified_at')->nullable(); Uncomment if you Remigrate
 
             $table->string('password');
 

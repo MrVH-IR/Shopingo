@@ -29,6 +29,8 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 ### 📦 Installation & Setup
 
 > Make sure you have PHP 8.4+, Composer, and a database (like MariaDB OR MySQL) ready.
+> Make sure you Own an API From kavenegar.com For OTP Logins
+> Make sure you Have an Email Set in .env
 
 ### 1. Clone the repository
 
@@ -48,6 +50,14 @@ cp .env.example .env
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
+APP_KAVENEGAR_API=your_kavenegar_api
+MAIL_MAILER=
+MAIL_SCHEME=
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_FROM_ADDRESS=
 ```
 
 ## Laravel Commands

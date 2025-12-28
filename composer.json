@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.4",
         "intervention/image-laravel": "^1.5",
+        "kavenegar/php": "^1.2",
         "laravel/framework": "^12.0",
         "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",

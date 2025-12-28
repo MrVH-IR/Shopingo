@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
+use App\Http\Services\OtpService\OtpService;
 use App\Models\User;
-use Common\Models\Otp;
-use Illuminate\Support\Str;
 
 class LoginRegisterController extends Controller
 {
@@ -15,7 +14,7 @@ class LoginRegisterController extends Controller
         return view('customer.auth.login-register');
     }
 
-    public function loginRegister(LoginRegisterRequest $request)
+    public function loginRegister(LoginRegisterRequest $request , OtpService $otpService)
     {
         $validated = $request->validated();
 
@@ -50,18 +49,16 @@ class LoginRegisterController extends Controller
             $newUser['password'] = bcrypt($validated['identify']) . bcrypt('ShopingoIsTheBest');
             $newUser['activation'] = 1;
             $newUser['activation_date'] = now();
+            $newUser['email'] = $validated['identify'] . '@shopingois.com';
             $user = User::create($newUser);
         }
-        // Create OTP Code
-        $otpCode = rand(1111111 , 999999);
-        $token = Str::random(64);
-        $otpInput = [
-            "token" => $token,
-            "user_id" => $user->id,
-            "otp_code" => $otpCode,
-            "login_id" => $validated['identify'],
-            "type" => $type
-        ];
-        Otp::create($otpInput);
+        // Create OTP Code & Send
+        $otpService->generateAndSave(
+            $validated['identify'],
+            $user->id,
+            $type
+        );
+
+        return redirect()->route('auth.customer.login-register-form');
     }
 }

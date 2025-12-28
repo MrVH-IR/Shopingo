@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'kavenegar_api' => env('APP_KAVENEGAR_API', null),
+    'kavenegar_number' => env('APP_KAVENEGAR_NUMBER', null),
+    'kavenegar_number_2' => env('APP_KAVENEGAR_NUMBER_2', null),
+
 ];
