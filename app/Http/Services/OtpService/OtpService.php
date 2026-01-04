@@ -3,14 +3,12 @@
 namespace App\Http\Services\OtpService;
 
 use Common\Models\Otp;
-use Illuminate\Support\Str;
 
 class OtpService {
 
-    public function generateAndSave(string $identify , int $userID , $type): void
+    public function generateAndSave(string $identify , int $userID , $type , $token): void
     {
         $code = rand(1111111 , 999999);
-        $token = Str::random(64);
         Otp::create([
             'token' => $token,
             'user_id' => $userID,

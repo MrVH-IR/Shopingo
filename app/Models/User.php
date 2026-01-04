@@ -45,6 +45,8 @@ class User extends Authenticatable
         'national_code',
         'slug',
         'profile_photo_path',
+        'email_verified_at',
+        'mobile_verified_at',
         'activation',
         'activation_date',
         'user_type',

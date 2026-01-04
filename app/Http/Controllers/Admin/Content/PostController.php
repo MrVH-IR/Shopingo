@@ -143,7 +143,7 @@ class PostController extends Controller
 
             if ($result === false) {
                 return redirect()->route('admin.content.post.edit' , $post->id)
-                    -with('swal-error' , "مشکلی در آپلود عکس پیش آمده است");
+                    ->with('swal-error' , "مشکلی در آپلود عکس پیش آمده است");
             }
 
             $validated['image'] = $result;

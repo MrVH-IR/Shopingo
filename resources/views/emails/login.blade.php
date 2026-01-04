@@ -7,7 +7,7 @@
 
     <section class="text-2xl border-3">
         <p>
-            سلام {{ $email }}
+            {{ $email }}
             کد ورود شما:
         </p>
         <div style="

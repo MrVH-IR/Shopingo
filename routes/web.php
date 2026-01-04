@@ -13,6 +13,8 @@ Route::get('/', function () {
 Route::namespace('Auth')->group(function () {
     Route::get('/login-register' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginRegisterForm'])->name('auth.customer.login-register-form');
     Route::post('/login-register' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginRegister'])->name('auth.customer.login-register');
+    Route::get('/login-confirm/{token}' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
+    Route::post('/login-confirm/{token}' ,  [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginConfirm'])->name('auth.customer.login-confirm');
 });
 
 Route::middleware([
