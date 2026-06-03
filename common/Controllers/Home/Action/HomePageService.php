@@ -38,7 +38,7 @@ class HomePageService
         return Cache::remember(
             'brands',
             now()->addHour(),
-            fn () => Brand::all()
+            fn () => Brand::where('status' , 1)->get()
         );
     }
 

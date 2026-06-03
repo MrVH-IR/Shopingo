@@ -12,7 +12,6 @@ class HomeController extends BaseController {
     {
         dispatch(new StoreUserCyberDataJob(request()->ip(), request()->headers->all(), auth()->id()))->onQueue('cyber_data');
         $homePage = $homePageService->getHomePage();
-//        dd($homePage['banners']);
         return view('customer.home' , compact('homePage'));
     }
 }

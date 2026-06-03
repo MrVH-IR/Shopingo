@@ -28,7 +28,7 @@ class BannerRequest extends FormRequest
                 'link' => 'required|url|max:600|min:5|regex:/^[\pL\pN\-\_\/:.?=&%#@!+\$]+$/u',
                 'status' => 'required|integer|between:0,1',
                 'position' => 'required|integer|between:0,3',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3048',
             ];
         } elseif ($this->isMethod('PATCH') || $this->isMethod('PUT')) {
             return [
@@ -36,7 +36,7 @@ class BannerRequest extends FormRequest
                 'link' => 'required|url|max:600|min:5|regex:/^[\pL\pN\-\_\/:.?=&%#@!+\$]+$/u',
                 'status' => 'required|integer|between:0,1',
                 'position' => 'required|integer|between:0,3',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:3048',
             ];
         } else {
             return Response::HTTP_BAD_REQUEST;

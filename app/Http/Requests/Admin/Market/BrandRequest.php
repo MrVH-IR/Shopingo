@@ -23,20 +23,22 @@ class BrandRequest extends FormRequest
     {
         if ($this->isMethod('POST')) {
             return [
-                "persian_name" => "required|string|min:3|max:255|regex:/^[a-zA-Zا-ی0-9\s]+$/u",
-                "original_name" => "required|string|min:3|max:255|regex:/^[a-zA-Z0-9\s]+$/u",
+                "persian_name" => "required|string|min:3|max:255|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
+                "original_name" => "required|string|min:3|max:255|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
                 "status" => "required|numeric:in:0,1",
                 "image" => "required|image|mimes:jpeg,png,jpg,webp,svg|max:2048",
                 "tags" => "required|min:1",
-                "tags.*" => "required|string|min:3|max:50|regex:/^[a-zA-Z0-9ا-ی\s]+$/u",            ];
+                "tags.*" => "required|string|min:3|max:50|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
+                ];
         } else {
             return [
-                "persian_name" => "required|string|min:3|max:255|regex:/^[a-zA-Zا-ی0-9\s]+$/u",
-                "original_name" => "required|string|min:3|max:255|regex:/^[a-zA-Z0-9\s]+$/u",
+                "persian_name" => "required|string|min:3|max:255|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
+                "original_name" => "required|string|min:3|max:255|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
                 "status" => "required|numeric:in:0,1",
                 "image" => "image|mimes:jpeg,png,jpg,webp,svg|max:2048",
                 "tags" => "required|min:1",
-                "tags.*" => "required|string|min:3|max:50|regex:/^[a-zA-Z0-9ا-ی\s]+$/u",            ];
+                "tags.*" => "required|string|min:3|max:50|regex:/^[\pL\pN\s\-\_\/() ]+$/u",
+                ];
         }
     }
 

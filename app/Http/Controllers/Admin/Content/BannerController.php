@@ -91,7 +91,7 @@ class BannerController extends Controller
                     isset($banner->image['directory']) &&
                     is_dir($banner->image['directory'])
                 ) {
-                    $imageService->deleteDirectoryAndFiles($banner->image['directory']);
+                    $imageService->deleteImage($banner->image);
                 }
                 $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'banners');
                 $result = $imageService->save($request->file('image'));

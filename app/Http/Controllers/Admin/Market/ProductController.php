@@ -82,10 +82,6 @@ class ProductController extends Controller
             $errorID = now()->format("YmdHis") . rand(1000 , 9999);
             Log::error("Exception {$errorID} " . $e->getMessage());
             return redirect()->route('admin.market.product.create')->with('swal-error' , 'مشکی در ذخیره داده پیش آمده است' . ' ' . $errorID);
-        } finally {
-            if (isset($e) && $result) {
-                $imageService->deleteDirectoryAndFiles($result);
-            }
         }
     }
 

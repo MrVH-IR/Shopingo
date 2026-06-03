@@ -9,12 +9,12 @@
         width: 100%;
     }
 
-    .file-input {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+    /*.file-input {*/
+    /*    position: absolute;*/
+    /*    opacity: 0;*/
+    /*    width: 0;*/
+    /*    height: 0;*/
+    /*}*/
 
     .file-label {
         display: flex;
