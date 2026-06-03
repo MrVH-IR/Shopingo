@@ -29,6 +29,13 @@ class ImageService extends ImageToolsService
             mkdir($dir, 0777, true);
         }
 
+        $extension = $image->getClientOriginalExtension();
+
+        if ($extension === 'gif') {
+            $image->move($dir, basename($fullPath));
+            return $imageAddress;
+        }
+
         $result = $manager->read($image->getRealPath())
             ->save(
                 $fullPath,
@@ -38,13 +45,13 @@ class ImageService extends ImageToolsService
 
         return $result ? $imageAddress : false;
     }
+
     /**
      * @param $image
      * @param $width
      * @param $height
      * @return bool|string
      */
-
     public function fitAndSave($image, $width, $height)
     {
         $this->setImage($image);
