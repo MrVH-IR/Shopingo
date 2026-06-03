@@ -59,12 +59,22 @@
                                 <td>{{ $banner->title }}</td>
                                 <td>{{ $banner->link }}</td>
                                 <td>
-                                    @if(is_array($banner->image) && isset($banner->image['indexArray'][$banner->image['currentImage']]))
-                                        <img src="{{ asset($banner->image['indexArray'][$banner->image['currentImage']]) }}"
-                                             data-large="{{ asset($banner->image['indexArray']['large']) }}"
+                                    @php
+                                        $image = $banner->image;
+                                    @endphp
+                                    @if(is_array($image) && isset($image['indexArray'][$image['currentImage']]))
+                                        <img src="{{ asset($image['indexArray'][$image['currentImage']]) }}"
+                                             data-large="{{ asset($image['indexArray']['large']) }}"
                                              alt="{{ $banner->name }}"
                                              class="preview-img"
-                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
+                                             style="max-width: 150px; max-height: 150px; cursor: pointer;"
+                                             loading="lazy">
+                                    @elseif(is_string($image) && !empty($image))
+                                        <img src="{{ asset($image) }}"
+                                             data-large="{{ asset($image) }}"
+                                             alt="{{ $banner->name }}"
+                                             class="preview-img"
+                                             style="max-width: 150px; max-height: 150px; cursor: pointer;"
                                              loading="lazy">
                                     @else
                                         <span class="text-muted">بدون تصویر</span>
@@ -84,7 +94,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{ $banner->position }}</td>
+                                <td>{{ $positions[$banner->position] }}</td>
                                 <td class="width-16-rem text-left">
                                     <a href="{{ route('admin.content.banner.edit' , $banner->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <form action="{{ route('admin.content.banner.destroy', $banner->id) }}" method="POST" id="delete-form-{{ $banner->id }}" class="d-none">

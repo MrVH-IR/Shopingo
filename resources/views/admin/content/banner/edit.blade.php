@@ -112,7 +112,7 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="position">موقعیت</label>
-                                    <select id="position" name="position">
+                                    <select id="position" name="position" class="form-control form-control-sm">
                                         <option value="0" @if(old('position' , $banner->position) == 0) selected @endif>اسلاید شو (صفحه اصلی)</option>
                                         <option value="1" @if(old('position' , $banner->position) == 1) selected @endif>کنار اسلاید شو (صفحه اصلی)</option>
                                         <option value="2" @if(old('position' , $banner->position) == 2) selected @endif>دو بنر تبلیغی بین دو اسلاید (صفحه اصلی)</option>
@@ -169,26 +169,15 @@
                             </section>
 
                             <section class="row">
-                                @php
-                                    $number = 1;
-                                @endphp
-                                @foreach($banner->image['indexArray'] as $key => $value)
-                                    <section class="col-md-{{ 6/ $number }}">
+                                    <section class="col-md-5">
                                         <div class="form-check">
-                                            <input type="radio" class="form-check-input d-flex align-items-center" name="currentImage"
-                                                   value="{{ $key }}" id="{{ $number }}" @if($banner->image['currentImage'] == $key)
-                                                       checked
-                                                @endif>
-                                            <label for="{{ $number }}" class="form-check-label mx-2">
-                                                <img src="{{ asset($value) }}" class="w-100 preview-img mt-4">
+                                            <label for="" class="form-check-label mx-2">
+                                                <img src="{{ asset($banner->image) }}" class="w-100 preview-img mt-4">
                                             </label>
                                         </div>
                                     </section>
-                                    @php
-                                        $number ++;
-                                    @endphp
-                                @endforeach
                             </section>
+
                             <section class="col-12 mt-2">
                                 <button class="btn btn-primary btn-sm">ثبت</button>
                                 @if(session('success'))

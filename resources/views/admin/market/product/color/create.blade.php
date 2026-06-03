@@ -54,6 +54,21 @@
                                 </div>
                                 @enderror
                             </section>
+
+                            <section class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="color" class="h6">رنگ</label>
+                                    <input type="color" name="color" value="{{ old('color' , '#000000') }}" class="form-control form-control-sm form-control-color">
+                                </div>
+                                @error('color')
+                                <div class="alert alert-danger">
+                                    <li>
+                                        {{ $message }}
+                                    </li>
+                                </div>
+                                @enderror
+                            </section>
+
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="price_increase" class="h6">افزایش قیمت کالا</label>

@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\{AdminDashboardController,
     Market\PropertyController,
     Market\PropertyValueController,
     Market\StoreController,
+    Market\GuaranteeController,
     Content\CategoryController as ContentCategoryController,
     Content\CommentController as ContentCommentController,
     Content\FAQController,
@@ -161,6 +162,12 @@ Route::prefix( '/admin')->namespace('Admin')->group(function() {
             Route::delete('/gallery/destroy/{product}/{productImage}' , [GalleryController::class , 'destroy'])->name('admin.market.gallery.destroy');
 
             Route::get('/gallery/change-size/{productImage}' , [GalleryController::class , 'changeSize'])->name('admin.market.gallery.changeSize');
+
+            // Guarantee
+            Route::get('guarantee/{product}' , [GuaranteeController::class , 'index'])->name('admin.market.guarantee.index');
+            Route::get('guarantee/create/{product}' , [GuaranteeController::class , 'create'])->name('admin.market.guarantee.create');
+            Route::post('guarantee/store/{product}' , [GuaranteeController::class , 'store'])->name('admin.market.guarantee.store');
+            Route::delete('guarantee/destroy/{product}/{guarantee}' , [GuaranteeController::class , 'destroy'])->name('admin.market.guarantee.destroy');
             // Route::resource('/' , ProductController::class); // Can Be used And Delete All Those Above For (Brand).
         });
         //Property

@@ -14,6 +14,7 @@ class UserCyberData extends Model {
         'ip_address',
         'header',
         'user_id',
+        'created_at',
         'updated_at'
     ];
 

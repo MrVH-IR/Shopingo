@@ -1,14 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\Market\ProductController;
-use Common\Controllers\Index\HomeController;
+use Common\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 
 
-Route::get('/', function () {
-    return view('customer.home');
-})->name('customer.home');
+Route::get('/', [HomeController::class , 'index'])->name('customer.home');
 
 Route::namespace('Auth')->middleware('throttle:5,1')->group(function () {
     Route::get('/login-register' , [LoginRegisterController::class , 'loginRegisterForm'])->name('auth.customer.login-register-form');

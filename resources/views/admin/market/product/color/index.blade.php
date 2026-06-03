@@ -14,6 +14,9 @@
             <li class="breadcrumb-item font-size-12">
                 <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
             </li>
+            <li class="breadcrumb-item font-size-12">
+                <a href="{{ route('admin.market.product.index') }}">بخش محصولات</a>
+            </li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page">
                 رنگ کالا
             </li>

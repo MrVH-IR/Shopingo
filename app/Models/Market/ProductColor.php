@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductColor extends Model
 {
-    protected $fillable = ["color_name", "product_id" , "price_increase" , "sold_out" , "frozen_number" , "marketable_number" , "status"];
+    protected $fillable = ["color_name", "color" , "product_id" , "price_increase" , "sold_out" , "frozen_number" , "marketable_number" , "status"];
 
     public function product()
     {

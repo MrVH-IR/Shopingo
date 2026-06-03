@@ -111,11 +111,10 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="position">موقعیت</label>
-                                    <select id="position" name="position">
-                                        <option value="0">اسلاید شو (صفحه اصلی)</option>
-                                        <option value="1">کنار اسلاید شو (صفحه اصلی)</option>
-                                        <option value="2">دو بنر تبلیغی بین دو اسلاید (صفحه اصلی)</option>
-                                        <option value="3">بنر تبلیغی بزرگ پایین دو اسلایدر (صفحه اصلی)</option>
+                                    <select id="position" name="position" class="form-control form-control-sm">
+                                        @foreach($positions as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 @error('position')

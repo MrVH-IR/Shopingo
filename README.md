@@ -88,4 +88,5 @@ docker exec -it laravel_app bash
 composer install
 php artisan key:generate
 php artisan migrate --seed
+composer run dev & php artisan queue:work --queue=cyber_data
 ```
