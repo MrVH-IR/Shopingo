@@ -16,7 +16,7 @@ function convertPersianToEnglish(int $number)
     return $number;
 }
 
-function convertEnglishToPersian(int $number)
+function convertEnglishToPersian($number)
 {
     $number = str_replace('1' , '۱' , $number);
     $number = str_replace('2' , '۲' , $number);
