@@ -16,6 +16,9 @@ class LoginRegisterController extends Controller
 {
     public function loginRegisterForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('customer.home');
+        }
         return view('customer.auth.login-register');
     }
 
@@ -110,6 +113,12 @@ class LoginRegisterController extends Controller
             $user->update(['email_verified_at' => now()]);
         }
         Auth::loginUsingId($user->id);
+        return redirect()->route('customer.home');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
         return redirect()->route('customer.home');
     }
 }

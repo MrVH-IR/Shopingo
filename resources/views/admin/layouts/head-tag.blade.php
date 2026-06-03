@@ -2,20 +2,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta name="author" content="MrVH">
-<meta name="description" content="توضیح کوتاه و جذاب درباره پروژه یا وبسایت شما، که کاربران و موتورهای جستجو را جذب کند.">
-<meta name="keywords" content="Laravel, PHP, Web Development, Post Categories, Tutorial, MrVH, وب اپلیکیشن، دسته بندی محتوا">
+<meta name="description" content="Shopingo is an Online shop that sells everything like Cloths , PC Parts , Furniture">
+<meta name="keywords" content="Shopingo,Jeans,Cloths,Online,لباس,قطعات,کامپیوتر,فروشگاه,بهترین">
 <meta name="robots" content="index, follow">
 
 <meta property="og:title" content="Shopingo">
 <meta property="og:description" content="فروشگاه شاپینگو ، بهترین فروشنده بازار آنلاین">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://example.com">
-<meta property="og:image" content="https://example.com/path-to-image.jpg">
+<meta property="og:url" content="https://shopingo.ir">
+<meta property="og:image" content="{{ asset('/admin-assets/images/shopingo_logo-3.png') }}">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="عنوان پروژه یا وبسایت شما">
 <meta name="twitter:description" content="توضیح کوتاه درباره پروژه شما برای توییتر.">
-<meta name="twitter:image" content="https://example.com/path-to-image.jpg">
+<meta name="twitter:image" content="{{ asset('/admin-assets/images/shopingo_logo-3.png') }}">
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="format-detection" content="telephone=no">

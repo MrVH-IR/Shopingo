@@ -29,30 +29,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        User::factory(10)->create();
-//        PostCategory::factory()->count(1)->state(['status' => 0])->create();
-//        Post::factory()->count(10)->state(['status' => 0])->create();
-//        FAQ::factory(10)->count(10)->state(['status' => 0])->create();
-//        Page::factory()->count(10)->state(['status' => 0])->create();
-//        Brand::factory()->count(10)->create();
-//        ProductCategory::factory()->count(10)->create();
-//        Product::factory()->count(10)->create();
-//        Comment::factory()->count(10)->forProduct()->create();
-//        Comment::factory()->count(10)->forPost()->create();
-//        Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
-//        Payment::factory()->forOnlinePayments()->count(10)->create();
-//        Payment::factory()->forOfflinePayments()->count(10)->create();
-//        Payment::factory()->forCashPayments()->count(10)->create();
+        User::factory(10)->create();
+        PostCategory::factory()->count(1)->state(['status' => 0])->create();
+        Post::factory()->count(10)->state(['status' => 0])->create();
+        FAQ::factory(10)->count(10)->state(['status' => 0])->create();
+        Page::factory()->count(10)->state(['status' => 0])->create();
+        Brand::factory()->count(10)->create();
+        ProductCategory::factory()->count(10)->create();
+        Product::factory()->count(10)->create();
+        Comment::factory()->count(10)->forProduct()->create();
+        Comment::factory()->count(10)->forPost()->create();
+        Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder
+        Payment::factory()->forOnlinePayments()->count(10)->create();
+        Payment::factory()->forOfflinePayments()->count(10)->create();
+        Payment::factory()->forCashPayments()->count(10)->create();
         $this->call([
-//            SMSSeeder::class,
-//            EmailSeeder::class,
-//            UserSeeder::class, // Password is shopingo
-//            TicketCategorySeeder::class,
-//            TicketPrioritySeeder::class,
-//            RoleSeeder::class,
-//            DeliverySeeder::class,
-//            ProvinceSeeder::class,
-//            CitySeeder::class,
+            SMSSeeder::class,
+            EmailSeeder::class,
+            UserSeeder::class, // Password is shopingo
+            TicketCategorySeeder::class,
+            TicketPrioritySeeder::class,
+            RoleSeeder::class,
+            DeliverySeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
         ]);
     }
 }

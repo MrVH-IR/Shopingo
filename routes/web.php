@@ -3,18 +3,19 @@
 use App\Http\Controllers\Admin\Market\ProductController;
 use Common\Controllers\Index\HomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 
 
 Route::get('/', function () {
     return view('customer.home');
 })->name('customer.home');
 
-Route::namespace('Auth')->group(function () {
-    Route::get('/login-register' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginRegisterForm'])->name('auth.customer.login-register-form');
-    Route::post('/login-register' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginRegister'])->name('auth.customer.login-register');
-    Route::get('/login-confirm/{token}' , [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
-    Route::post('/login-confirm/{token}' ,  [\App\Http\Controllers\Auth\Customer\LoginRegisterController::class , 'loginConfirm'])->name('auth.customer.login-confirm');
+Route::namespace('Auth')->middleware('throttle:5,1')->group(function () {
+    Route::get('/login-register' , [LoginRegisterController::class , 'loginRegisterForm'])->name('auth.customer.login-register-form');
+    Route::post('/login-register' , [LoginRegisterController::class , 'loginRegister'])->name('auth.customer.login-register');
+    Route::get('/login-confirm/{token}' , [LoginRegisterController::class , 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
+    Route::post('/login-confirm/{token}' ,  [LoginRegisterController::class , 'loginConfirm'])->name('auth.customer.login-confirm');
+    Route::post('/logout' , [LoginRegisterController::class , 'logout'])->name('auth.customer.logout');
 });
 
 Route::middleware([

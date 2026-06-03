@@ -20,4 +20,4 @@
 <link rel="stylesheet" href="{{ asset('customer-assets/css/product.css') }}">
 <link rel="stylesheet" href="{{ asset('customer-assets/css/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('customer-assets/css/login.css') }}">
-<title>فروشگاه آمازون</title>
+<title>فروشگاه شاپینگو</title>

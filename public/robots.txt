@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /admin
+Disallow: /login-register
+Disallow: /login-confirm
+Disallow: /logout
+
+Sitemap: https://shopingo.ir/sitemap.xml
+Crawl-delay: 1
