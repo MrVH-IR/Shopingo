@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\Market\ProductController;
 use Common\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
+use App\Http\Controllers\Customer\{
+    Market\ProductController,
+};
 
 
 Route::get('/', [HomeController::class , 'index'])->name('customer.home');
@@ -16,11 +18,7 @@ Route::namespace('Auth')->middleware('throttle:5,1')->group(function () {
     Route::post('/logout' , [LoginRegisterController::class , 'logout'])->name('auth.customer.logout');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -39,3 +37,10 @@ Route::get('/partnership', function() {
     return view('informations.partnership');
 });
 // End Information Route
+
+
+// Market
+Route::namespace('Market')->group(function () {
+    Route::get('/product/{product:slug}' , [ProductController::class , 'product'])->name('customer.market.product');
+    Route::post('/product/{product:slug}' , [ProductController::class , 'addComment'])->name('customer.market.add-comment');
+});
