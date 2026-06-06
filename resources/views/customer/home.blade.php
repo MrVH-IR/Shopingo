@@ -1,7 +1,7 @@
 @extends('customer.layouts.master-one-col')
 
 @section('head-tag')
-    <title>خانه</title>
+    <title>فروشگاه شاپینگو</title>
 @endsection
 
 @section('content')
