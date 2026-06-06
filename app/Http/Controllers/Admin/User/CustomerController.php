@@ -68,7 +68,7 @@ class CustomerController extends Controller
             $details = [
                 "message" => "یک کاربر جدید با ایمیل $user->email در سایت ثبت نام کرد"
             ];
-            $adminUser = User::find(279);
+            $adminUser = User::first();
             $adminUser->notify(new NewUserRegister($details));
             return redirect()->route('admin.user.customer.index')
                 ->with('swal-success', 'کاربر مشتری با موفقیت ایجاد شد: ' . $user->first_name);
@@ -139,7 +139,7 @@ class CustomerController extends Controller
     {
         $admin = User::findOrFail($id);
         $admin->forceDelete();
-        return redirect()->route('admin.user.admin-user.index')
+        return redirect()->route('admin.user.customer.index')
             ->with('swal-success' , 'کاربر ادمین با موفقیت حذف شد');
     }
 

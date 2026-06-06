@@ -98,6 +98,8 @@
         </section>
     </section>
 
+    {{ $users->links() }}
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
