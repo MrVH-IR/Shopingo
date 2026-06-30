@@ -42,5 +42,5 @@ Route::get('/partnership', function() {
 // Market
 Route::namespace('Market')->group(function () {
     Route::get('/product/{product:slug}' , [ProductController::class , 'product'])->name('customer.market.product');
-    Route::post('/product/{product:slug}' , [ProductController::class , 'addComment'])->name('customer.market.add-comment');
+    Route::post('/add-comment/product/{product:slug}' , [ProductController::class , 'addComment'])->name('customer.market.add-comment');
 });
