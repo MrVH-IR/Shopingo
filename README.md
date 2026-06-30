@@ -144,3 +144,132 @@ chmod -R 775 storage bootstrap/cache
 ```
 http://localhost:8080
 ```
+
+# Laravel Nginx Configuration
+
+This File is for running this application on Ubuntu/Debian PHP-FPM
+
+---
+
+## Requirements
+
+- Nginx
+- PHP 8.4 FPM
+- Composer
+- Laravel
+
+---
+
+## Project Structure
+
+If project exists here:
+
+```text
+/var/www/html/current
+```
+
+and `/public/index.php` is here:
+
+```text
+/var/www/html/current/public
+```
+
+---
+
+## Install Configuration
+
+Copy File
+
+```bash
+sudo cp nginx_nodocker.conf /etc/nginx/sites-available/shopingo
+```
+
+Create Symlink:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/nginx_nodocker.conf \
+/etc/nginx/sites-enabled/
+```
+
+Check settings
+
+```bash
+sudo nginx -t
+```
+
+Reload:
+
+```bash
+sudo systemctl reload nginx
+```
+
+---
+
+## PHP-FPM
+
+Ensure PHP-FPM is running
+
+```bash
+sudo systemctl status php8.4-fpm
+```
+
+Restart if down
+
+```bash
+sudo systemctl restart php8.4-fpm
+```
+
+---
+
+## Laravel Permissions
+
+```bash
+sudo chown -R www-data:www-data storage bootstrap/cache
+
+sudo chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## Laravel Commands
+
+```bash
+composer install
+
+cp .env.example .env
+
+php artisan key:generate
+
+php artisan migrate
+
+php artisan storage:link
+```
+
+---
+
+## Verify Configuration
+
+```bash
+sudo nginx -t
+```
+
+If you saw this STD-Output
+
+```
+syntax is ok
+test is successful
+```
+
+Configuration is correct.
+
+---
+
+## Notes
+
+- `root` Must Go to `public` Laravel Applications root are public/index.php.
+- Change `fastcgi_pass` if you are using a different PHP version
+- In any changes to Nginx configuration , Re-run this command:
+
+```bash
+sudo systemctl reload nginx
+```
