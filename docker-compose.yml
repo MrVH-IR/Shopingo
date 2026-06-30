@@ -1,41 +1,62 @@
-version: '3.8'
+version: "3.8"
 
 services:
+
     app:
         build:
             context: .
-            dockerfile: DOCKERFILE
+            dockerfile: Dockerfile
+
         container_name: shopingo_laravel
+
+        working_dir: /var/www
+
         volumes:
             - ./app:/var/www
-        working_dir: /var/www
+
         depends_on:
-            - db
+            db:
+                condition: service_healthy
 
     nginx:
         image: nginx:alpine
+
         container_name: shopingo_nginx
+
         ports:
             - "8080:80"
+
         volumes:
             - ./app:/var/www
-            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
         depends_on:
             - app
 
     db:
-        image: mysql:8
+        image: mysql:8.4
+
         container_name: shopingo_db
-        restart: always
+
+        restart: unless-stopped
+
         environment:
-            - MYSQL_DATABASE=shopingo
-            - MYSQL_ROOT_PASSWORD=rootpass
-            - MYSQL_USER=admin
-            - MYSQL_PASSWORD=secret
+            MYSQL_DATABASE: shopingo
+            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: secret
+
         ports:
             - "3306:3306"
+
         volumes:
             - dbdata:/var/lib/mysql
+
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+            interval: 5s
+            timeout: 5s
+            retries: 20
 
 volumes:
     dbdata:

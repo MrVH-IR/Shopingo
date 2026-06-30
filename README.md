@@ -47,9 +47,12 @@ cp .env.example .env
 
 ## Then edit .env and set your database credentials
 ```shell
-DB_DATABASE=your_database_name
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=shopingo
+DB_USERNAME=admin
+DB_PASSWORD=secret
 APP_KAVENEGAR_API=your_kavenegar_api
 MAIL_MAILER=
 MAIL_SCHEME=
@@ -69,20 +72,75 @@ php artisan storage:link
 php artisan serve
 ```
 
-### Docker WalkThrough
-```shell
+# Docker Installation
+
+## Install Docker
+
+```bash
 curl -fsSL https://get.docker.com | sudo sh
 
-sudo systemctl start docker
 sudo systemctl enable docker
+sudo systemctl start docker
 
 sudo usermod -aG docker $USER
 newgrp docker
+
 docker --version
+docker compose version
+```
 
-cp -r shopingo ./app
+---
 
-docker-compose up -d --build
+## Build Containers
 
-docker exec -it laravel_app bash
+```bash
+docker compose up -d --build
+```
+
+---
+
+## Enter PHP Container
+
+```bash
+docker exec -it shopingo_laravel bash
+```
+
+---
+
+## Install Dependencies
+
+```bash
+composer install
+```
+
+---
+
+## Laravel
+
+```bash
+cp .env.example .env
+
+php artisan key:generate
+
+php artisan migrate
+
+php artisan storage:link
+```
+
+---
+
+## Permission
+
+```bash
+chown -R www-data:www-data storage bootstrap/cache
+
+chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## Run
+
+```
+http://localhost:8080
 ```
