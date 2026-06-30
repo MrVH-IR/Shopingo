@@ -4,6 +4,8 @@ namespace App\Models\Market;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -22,38 +24,51 @@ class Product extends Model
         ];
     }
 
-    public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class, 'product_categories');
     }
 
-    public function metas(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function metas(): HasMany
     {
         return $this->hasMany(ProductMeta::class);
     }
 
-    public function colors()
+    public function colors(): Product|HasMany
     {
         return $this->hasMany(ProductColor::class);
     }
 
-    public function images()
+    public function images(): Product|HasMany
     {
         return $this->hasMany(ProductImage::class);
     }
 
-    public function values()
+    public function values(): Product|HasMany
     {
         return $this->hasMany(CategoryValue::class);
     }
 
-    public function guarantees()
+    public function guarantees(): Product|HasMany
     {
         return $this->hasMany(Guarantee::class);
+    }
+
+    public function amazingSales(): Product|HasMany
+    {
+        return $this->hasMany(AmazingSale::class);
+    }
+
+    public function activeAmazingSales(): object|null
+    {
+        return $this->amazingSales()->where('start_at', '<' , now())
+            ->where('end_at', '>' , now())
+            ->where('status' , '1')
+            ->first();
     }
 }

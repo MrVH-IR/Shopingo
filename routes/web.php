@@ -1,11 +1,9 @@
 <?php
 
-use Common\Controllers\Home\HomeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-use App\Http\Controllers\Customer\{
-    Market\ProductController,
-};
+use Common\Controllers\Home\HomeController;
+use Common\Controllers\Market\{ProductController,};
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class , 'index'])->name('customer.home');
