@@ -4,7 +4,6 @@ namespace Common\Controllers\Home;
 
 use Common\Controllers\Home\Action\HomePageService;
 use Common\Controllers\Home\Jobs\StoreUserCyberDataJob;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends BaseController {
 
