@@ -1,7 +1,7 @@
 <?php
 
 
-function convertPersianToEnglish(int $number)
+function convertPersianToEnglish(int $number): array|string
 {
     $number = str_replace('۰' , '0' , $number);
     $number = str_replace('۱' , '1' , $number);
@@ -16,7 +16,7 @@ function convertPersianToEnglish(int $number)
     return $number;
 }
 
-function convertEnglishToPersian($number)
+function convertEnglishToPersian($number): array|string
 {
     $number = str_replace('1' , '۱' , $number);
     $number = str_replace('2' , '۲' , $number);
@@ -31,8 +31,13 @@ function convertEnglishToPersian($number)
     return $number;
 }
 
-function priceFormat($price)
+function priceFormat($price): array|string
 {
     $price = number_format($price, 0 , '/' , ',');
     return convertEnglishToPersian($price);
+}
+
+function jalaliDate($date , $format = 'Y-m-d'): string
+{
+    return \Morilog\Jalali\Jalalian::fromCarbon($date)->format($format);
 }

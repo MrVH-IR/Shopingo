@@ -2,10 +2,12 @@
 
 namespace App\Models\Market;
 
+use App\Models\Content\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -59,6 +61,11 @@ class Product extends Model
         return $this->hasMany(Guarantee::class);
     }
 
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function amazingSales(): Product|HasMany
     {
         return $this->hasMany(AmazingSale::class);
@@ -70,5 +77,14 @@ class Product extends Model
             ->where('end_at', '>' , now())
             ->where('status' , '1')
             ->first();
+    }
+
+    public function getActiveComment(): object|null
+    {
+        return $this->comments()
+            ->where('approved' , 1)
+            ->where('status' , 1)
+            ->whereNull('parent_id')
+            ->get();
     }
 }

@@ -20,3 +20,4 @@
 <link rel="stylesheet" href="{{ asset('customer-assets/css/product.css') }}">
 <link rel="stylesheet" href="{{ asset('customer-assets/css/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('customer-assets/css/login.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
