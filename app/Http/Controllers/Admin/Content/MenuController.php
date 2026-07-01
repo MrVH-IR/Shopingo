@@ -148,26 +148,6 @@ class MenuController extends Controller
 
     public function status(Menu $menu)
     {
-        $menu->status = $menu->status == 0 ? 1 : 0;
-        $result = $menu->save();
-        if ($result) {
-            if ($menu->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($menu->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($menu);
     }
 }

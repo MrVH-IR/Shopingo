@@ -135,26 +135,6 @@ class FAQController extends Controller
 
     public function status(FAQ $faq)
     {
-        $faq->status = $faq->status == 0 ? 1 : 0;
-        $result = $faq->save();
-        if ($result) {
-            if ($faq->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($faq->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($faq);
     }
 }

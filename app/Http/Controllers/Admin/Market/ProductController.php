@@ -9,8 +9,10 @@ use App\Models\Market\Brand;
 use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\ProductMeta;
+use App\Traits\Market\HasStatus;
 use Exception;
 use http\Exception\InvalidArgumentException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,7 @@ use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
+    use HasStatus;
     /**
      * Display a listing of the resource.
      */
@@ -63,24 +66,29 @@ class ProductController extends Controller
             $validatedData["slug"] = Str::slug($validatedData["name"] . "-" . Str::random(5));
             $product = Product::create($validatedData);
 
-            $cleanKeys = array_filter($validatedData['meta_key'], fn($v) => !is_null($v) && $v !== '');
-            $cleanValues = array_filter($validatedData['meta_value'], fn($v) => !is_null($v) && $v !== '');
-            if(!empty($cleanKeys) && !empty($cleanValues)){
-                $metas = array_unique(array_combine($request->meta_key , $request->meta_value));
-                foreach($metas as $key => $value){
-                    $meta = ProductMeta::create([
-                        'meta_key' => $key,
-                        'meta_value' => $value,
-                        'product_id' => $product->id
+            collect($request->meta_key ?? [])
+                ->each(function ($key, $index) use ($request, $product) {
+                    $value = $request->meta_value[$index] ?? null;
+                    if (blank($key) || blank($value)) {
+                        return;
+                    }
+                    ProductMeta::create([
+                        'meta_key'   => trim($key),
+                        'meta_value' => trim($value),
+                        'product_id' => $product->id,
                     ]);
-                }
-            }
+                });
             DB::commit();
             return redirect()->route('admin.market.product.index')->with('swal-success' , 'محصول شما با موفقیت ساخته شد');
         } catch (HttpResponseException | Exception | ValidationException | ModelNotFoundException | InvalidArgumentException $e) {
             DB::rollBack();
             $errorID = now()->format("YmdHis") . rand(1000 , 9999);
             Log::error("Exception {$errorID} " . $e->getMessage());
+            return redirect()->route('admin.market.product.create')->with('swal-error' , 'مشکی در ذخیره داده پیش آمده است' . ' ' . $errorID);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            $errorID = now()->format("YmdHis") . rand(1000 , 9999);
+            Log::error("Thrown Exception {$errorID} " . $e->getMessage());
             return redirect()->route('admin.market.product.create')->with('swal-error' , 'مشکی در ذخیره داده پیش آمده است' . ' ' . $errorID);
         }
     }
@@ -176,24 +184,6 @@ class ProductController extends Controller
 
     public function status(Product $product)
     {
-        $product->status = $product->status == 1 ? 0 : 1;
-        $result = $product->save();
-        if ($result) {
-            if ($product->status == 1) {
-                return response()->json([
-                    "status" => true,
-                    "checked" => true,
-                ]);
-            } else {
-                return response()->json([
-                    "status" => true,
-                    "checked" => false,
-                ]);
-            }
-        } else {
-            return response()->json([
-                "status" => false,
-            ]);
-        }
+        return $this->changeStatus($product);
     }
 }

@@ -286,11 +286,10 @@
     <script type="text/javascript" src="{{ asset('admin-assets/js/select2.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
     <script>
-        $(function () {
-            $('#btn-copy').on('click' , function () {
-                var ele = $(this).parent().prev().clone(true);
-                $(this).before(ele);
-            })
-        })
+        $('#btn-copy').on('click', function () {
+            let ele = $(this).parent().prev().clone();
+            ele.find('input').val('');
+            $(this).parent().before(ele);
+        });
     </script>
 @endsection

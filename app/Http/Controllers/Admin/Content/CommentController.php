@@ -75,27 +75,7 @@ class CommentController extends Controller
 
     public function status(Comment $comment)
     {
-        $comment->status = $comment->status == 0 ? 1 : 0;
-        $result = $comment->save();
-        if ($result) {
-            if ($comment->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($comment->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($comment);
     }
 
     public function approved(Comment $comment)

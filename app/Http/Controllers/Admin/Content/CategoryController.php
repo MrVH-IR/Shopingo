@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Content\PostCategoryRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\Content\PostCategory;
 // use Facades\App\Repository\PostCategory;
+use App\Traits\Market\HasStatus;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -183,26 +184,6 @@ class CategoryController extends Controller
 
     public function status(PostCategory $postCategory)
     {
-        $postCategory->status = $postCategory->status == 0 ? 1 : 0;
-        $result = $postCategory->save();
-        if ($result) {
-            if ($postCategory->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($postCategory->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($postCategory);
     }
 }

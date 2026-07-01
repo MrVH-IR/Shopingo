@@ -169,28 +169,7 @@ class EmailController extends Controller
 
     public function status(Email $email)
     {
-        $email->status = $email->status == 0 ? 1 : 0;
-        $result = $email->save();
-        if ($result) {
-            if ($email->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($email->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
-
+        return $this->changeStatus($email);
     }
 
     public function viewFile(Email $email)

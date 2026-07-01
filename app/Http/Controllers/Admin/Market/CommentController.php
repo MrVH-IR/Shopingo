@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\CommentRequest;
 use App\Models\Content\Comment;
 use App\Models\Market\Product;
+use App\Traits\Market\HasStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
+    use HasStatus;
     /**
      * Display a listing of the resource.
      */
@@ -83,27 +85,7 @@ class CommentController extends Controller
 
     public function status(Comment $comment)
     {
-        $comment->status = $comment->status == 0 ? 1 : 0;
-        $result = $comment->save();
-        if ($result) {
-            if ($comment->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($comment->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($comment);
     }
 
     public function approved(Comment $comment)

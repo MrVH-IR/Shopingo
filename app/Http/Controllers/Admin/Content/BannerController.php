@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Content\BannerRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\Content\Banner;
+use App\Traits\Market\HasStatus;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -129,24 +130,6 @@ class BannerController extends Controller
 
     public function status(Banner $banner)
     {
-        $banner->status = $banner->status == 1 ? 0 : 1;
-        $result = $banner->save();
-        if ($result) {
-            if ($banner->status == 1) {
-                return response()->json([
-                    "status" => true,
-                    "checked" => true
-                ]);
-            } else {
-                return response()->json([
-                    "status" => true,
-                    "checked" => false
-                ]);
-            }
-        } else {
-            return response()->json([
-                "status" => false,
-            ]);
-        }
+        return $this->changeStatus($banner);
     }
 }

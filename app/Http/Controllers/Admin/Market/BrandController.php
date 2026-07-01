@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\BrandRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\Market\Brand;
+use App\Traits\Market\HasStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
+    use HasStatus;
     /**
      * Display a listing of the resource.
      */
@@ -139,24 +141,6 @@ class BrandController extends Controller
 
     public function status(Brand $brand)
     {
-        $brand->status = $brand->status == 1 ? 0 : 1;
-        $result = $brand->save();
-        if ($result) {
-            if ($brand->status == 1) {
-                return response()->json([
-                    "status" => true,
-                    "checked" => true,
-                ]);
-            } else {
-                return response()->json([
-                    "status" => true,
-                    "checked" => false,
-                ]);
-            }
-        } else {
-            return response()->json([
-                "status" => false,
-            ]);
-        }
+        return $this->changeStatus($brand);
     }
 }

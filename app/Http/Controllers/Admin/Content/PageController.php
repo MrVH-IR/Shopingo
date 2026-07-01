@@ -134,18 +134,6 @@ class PageController extends Controller
 
     public function status(Page $page)
     {
-        $page->status = $page->status ? 0 : 1;
-
-        if ($page->save()) {
-            return response()->json([
-                'status' => true,
-                'checked' => (bool) $page->status,
-            ]);
-        }
-
-        return response()->json([
-            'status' => false,
-            'message' => 'Failed to update status.',
-        ], 500);
+        return $this->changeStatus($page);
     }
 }

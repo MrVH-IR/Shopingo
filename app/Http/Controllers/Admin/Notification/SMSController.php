@@ -145,27 +145,6 @@ class SMSController extends Controller
 
     public function status(SMS $sms)
     {
-        $sms->status = $sms->status == 0 ? 1 : 0;
-        $result = $sms->save();
-        if ($result) {
-            if ($sms->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($sms->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
-        return null;
+        return $this->changeStatus($sms);
     }
 }

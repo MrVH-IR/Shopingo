@@ -105,26 +105,6 @@ class RoleController extends Controller
 
     public function status(Role $role)
     {
-        $role->status = $role->status == 1 ? 0 : 1;
-        $result = $role->save();
-        if ($result) {
-            if ($role->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($role->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($role);
     }
 }

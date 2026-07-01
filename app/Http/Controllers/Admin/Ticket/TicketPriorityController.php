@@ -73,18 +73,6 @@ class TicketPriorityController extends Controller
 
     public function status(TicketPriority $ticketPriority)
     {
-        $ticketPriority->status = $ticketPriority->status == 0 ? 1 : 0;
-        $result = $ticketPriority->save();
-        if($result){
-            if($ticketPriority->status == 0){
-                return response()->json(['status' => true, 'checked' => false]);
-            }
-            else{
-                return response()->json(['status' => true, 'checked' => true]);
-            }
-        }
-        else{
-            return response()->json(['status' => false]);
-        }
+        return $this->changeStatus($ticketPriority);
     }
 }

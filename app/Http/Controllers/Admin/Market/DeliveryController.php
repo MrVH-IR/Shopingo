@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin\Market;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Market\DeliveryRequest;
 use App\Models\Market\Delivery;
-use Illuminate\Http\Request;
+use App\Traits\Market\HasStatus;
 use Illuminate\Support\Facades\DB;
 
 class DeliveryController extends Controller
 {
+    use HasStatus;
     /**
      * Display a listing of the resource.
      */
@@ -104,26 +105,6 @@ class DeliveryController extends Controller
 
     public function status(Delivery $delivery)
     {
-        $delivery->status = $delivery->status == 0 ? 1 : 0;
-        $result = $delivery->save();
-        if ($result) {
-            if($delivery->status == 0){
-                return response()->json([
-                    'status' => true,
-                    'checked' => false
-                ]);
-            } else {
-                if ($delivery->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($delivery);
     }
 }

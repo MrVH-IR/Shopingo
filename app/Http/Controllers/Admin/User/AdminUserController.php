@@ -167,27 +167,7 @@ class AdminUserController extends Controller
 
     public function status(User $user)
     {
-        $user->status = $user->status == 0 ? 1 : 0;
-        $result = $user->save();
-        if ($result) {
-            if ($user->status == 0) {
-                return response()->json([
-                    'status' => true,
-                    'checked' => false,
-                ]);
-            } else {
-                if ($user->status == 1) {
-                    return response()->json([
-                        'status' => true,
-                        'checked' => true,
-                    ]);
-                }
-            }
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
+        return $this->changeStatus($user);
     }
 
 }
