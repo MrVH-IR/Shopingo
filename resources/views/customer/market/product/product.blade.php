@@ -62,24 +62,31 @@
                                     </section>
                                 </section>
                                 <section class="product-info">
+                                    <p>رنگ انتخاب شده: <span id="selected_color_name"></span></p>
                                     <p>
-                                        @forelse($product->colors as $color)
-                                            <span
-                                                style="background-color: {{ $color->color }};"
-                                                class="product-info-colors me-1"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom"
-                                                title="{{ $color->color_name }}">
-                                            </span>
+                                        @forelse($product->colors as $key => $color)
+                                            <label for="{{ 'color_' . $color->id }}" style="background-color: {{ $color->color }};"
+                                                    class="product-info-colors me-1"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    title="{{ $color->color_name }}"></label>
+                                            <input type="radio" name="color" id="{{ 'color_' . $color->id }}"
+                                                   class="d-none" value="{{ $color->id }}" data-color-name="{{ $color->color_name }}"
+                                                   data-color-price="{{ $color->price_increase }}"
+                                                    @if($key == 0) checked @endif>
                                         @empty
                                             <span class="text-muted">هیچ رنگی برای این محصول ثبت نشده است.</span>
                                         @endforelse
                                     </p>
-                                    @forelse($product->guarantees()->get() as $key => $guarantee)
-                                        <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span>{{ $guarantee->name }}</span></p>
-                                    @empty
-                                        <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span>این محصول گارانتی ندارد</span></p>
-                                    @endforelse
+                                        <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i>گارانتی :
+                                            <select name="guarantee" id="guarantee" class="p-1">
+                                                @forelse($product->guarantees()->get() as $key => $guarantee)
+                                                <option value="{{ $guarantee->id }}" data-guarantee-price="{{ $guarantee->price_increase }}" @if($key == 0) selected @endif>{{ $guarantee->name }}</option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                        </p>
+                                    <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span>این محصول گارانتی ندارد</span></p>
                                     <p>
                                         @if($product->marketable_number > 0)
                                             <i class="fa fa-store-alt cart-product-selected-store me-1">
@@ -97,9 +104,9 @@
                                     <p><a class="btn btn-light  btn-sm text-decoration-none" href="#"><i class="fa fa-heart text-danger"></i> افزودن به علاقه مندی</a></p>
                                     <section>
                                         <section class="cart-product-number d-inline-block ">
-                                            <button class="cart-number-down" type="button">-</button>
-                                            <input class="" type="number" min="1" max="5" step="1" value="1" readonly="readonly">
-                                            <button class="cart-number-up" type="button">+</button>
+                                            <button class="cart-number cart-number-down" type="button">-</button>
+                                            <input type="number" id="number" name="number" min="1" max="5" step="1" value="1" readonly="readonly">
+                                            <button class="cart-number cart-number-up" type="button">+</button>
                                         </section>
                                     </section>
                                     <p class="mb-3 mt-5">
@@ -115,12 +122,12 @@
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">قیمت کالا</p>
-                                    <p class="text-muted">{{ priceFormat($product->price) }} <span class="small">تومان</span></p>
+                                    <p class="text-muted"><span id="product_price" data-product-original-price="{{ $product->price }}">{{ priceFormat($product->price) }}</span> <span class="small">تومان</span></p>
                                 </section>
                                 @if($product->activeAmazingSales() !== null)
                                     <section class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted">تخفیف کالا</p>
-                                        <p class="text-danger fw-bolder">{{ priceFormat($product->price * ($product->activeAmazingSales()?->percentage / 100)) }} <span class="small">تومان</span></p>
+                                        <p class="text-danger fw-bolder" id="product-discount-price" data-product-discount-price="{{ $product->price * ($product->activeAmazingSales()?->percentage / 100) }}">{{ priceFormat($product->price * ($product->activeAmazingSales()?->percentage / 100)) }} <span class="small">تومان</span></p>
                                     </section>
                                 @else
                                 @endif
@@ -129,7 +136,7 @@
                                 <section class="border-bottom mb-3"></section>
 
                                 <section class="d-flex justify-content-end align-items-center">
-                                    <p class="fw-bolder">{{ priceFormat($product->price - ($product->price * ($product->activeAmazingSales()?->percentage / 100))) }} <span class="small">تومان</span></p>
+                                    <p class="fw-bolder" id="final_price">{{ priceFormat($product->price - ($product->price * ($product->activeAmazingSales()?->percentage / 100))) }} <span class="small">تومان</span></p>
                                 </section>
 
                                 <section class="">
@@ -386,4 +393,66 @@
     </section>
     <!-- end description, features and comments -->
 
+@endsection
+@section('script')
+    <script>
+    $(document).ready(() => {
+        bill();
+        // input color
+        $('input[name="color"]').change(function () {
+            bill();
+        });
+
+        // Guarantee
+        $('select[name="guarantee"]').change(function () {
+           bill();
+        });
+
+        // Number of product
+        $('.cart-number').click(function () {
+            bill();
+        });
+    });
+
+    function bill() {
+        if ($('input[name="color"]:checked').length !== 0) {
+            var selected_color = $('input[name="color"]:checked');
+            $("#selected_color_name").html(selected_color.attr('data-color-name'));
+        }
+
+        // Price Computing
+        var selected_color_price = 0;
+        var selected_guarantee_price = 0;
+        var number = 1;
+        var product_discount_price = 0;
+        var product_original_price = parseFloat($('#product_price').attr('data-product-original-price'));
+        if ($('input[name="color"]:checked').length !== 0) {
+            selected_color_price = parseFloat(selected_color.attr('data-color-price'));
+        }
+        if ($('#guarantee option:selected').length !== 0) {
+            selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee-price'));
+        }
+        if ($('#number').val() > 0) {
+            number = parseFloat($('#number').val());
+        }
+
+        if ($('#product-discount-price').length !== 0) {
+            product_discount_price = parseFloat($('#product-discount-price').attr('data-product-discount-price'));
+        }
+        // Final Price
+
+        var product_price = product_original_price + selected_color_price + selected_guarantee_price;
+        var final_price = number * (product_price - product_discount_price);
+        $('#product_price').html(toFarsiNumber(product_price));
+        $('#final_price').html(toFarsiNumber(final_price));
+    }
+
+    function toFarsiNumber(number) {
+        const farsiDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        // Add Comma
+        number = new Intl.NumberFormat().format(number);
+        // Convert To Persian
+        return number.toString().replace(/\d/g, x => farsiDigits[x]);
+    }
+    </script>
 @endsection
