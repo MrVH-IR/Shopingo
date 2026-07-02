@@ -17,12 +17,12 @@
 
             <div>
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full text-black" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full text-black" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="block mt-4">
@@ -45,11 +45,11 @@
             </div>
         </form>
 
-<div class="flex justify-end mt-2">
-    <a href="{{ url('/register') }}" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline transition-colors duration-150 ease-in-out">
-        Not registered?
-    </a>
-</div>
+        <div class="flex justify-end mt-2">
+            <a href="{{ url('/register') }}" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline transition-colors duration-150 ease-in-out">
+                Not registered?
+            </a>
+        </div>
 
 
     </x-authentication-card>
