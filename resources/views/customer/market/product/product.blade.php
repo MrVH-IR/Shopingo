@@ -185,7 +185,7 @@
                                         <section class="product">
                                             <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
                                             <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                            <a class="product-link" href="#">
+                                            <a class="product-link" href="{{ route('customer.market.product' , $relatedProduct->slug) }}">
                                                 <section class="product-image">
                                                     <img class="" src="{{ asset($relatedProduct->image['indexArray']['medium']) }}" alt="">
                                                 </section>
@@ -194,11 +194,9 @@
                                                     <section class="product-price">{{ priceFormat($relatedProduct->price) }} تومان</section>
                                                 </section>
                                                 <section class="product-colors">
-                                                    <section class="product-colors-item" style="background-color: yellow;"></section>
-                                                    <section class="product-colors-item" style="background-color: green;"></section>
-                                                    <section class="product-colors-item" style="background-color: white;"></section>
-                                                    <section class="product-colors-item" style="background-color: blue;"></section>
-                                                    <section class="product-colors-item" style="background-color: red;"></section>
+                                                    @foreach($relatedProduct->colors()->get() as $color)
+                                                    <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
+                                                    @endforeach
                                                 </section>
                                             </a>
                                         </section>

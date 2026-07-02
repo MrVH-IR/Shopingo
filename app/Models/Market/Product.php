@@ -3,9 +3,11 @@
 namespace App\Models\Market;
 
 use App\Models\Content\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -86,5 +88,10 @@ class Product extends Model
             ->where('status' , 1)
             ->whereNull('parent_id')
             ->get();
+    }
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 }

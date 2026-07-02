@@ -162,3 +162,44 @@
 .comment-add-wrapper .form-select-sm {
     font-size: 0.8rem;
 }
+
+.favorite-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s ease, color .2s ease;
+}
+
+.favorite-btn i {
+    font-size: 20px;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.15);
+}
+
+.favorite-btn:focus,
+.favorite-btn:active {
+    outline: none;
+    box-shadow: none;
+}
+.favorite-btn.active i {
+    animation: favorite-pop .3s ease;
+}
+
+@keyframes favorite-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
+
+.product-add-to-favorite {
+    margin-left: 5px;
+}

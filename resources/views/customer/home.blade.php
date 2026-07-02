@@ -10,15 +10,19 @@
             <section class="row">
                 <section class="col-md-8 pe-md-1 ">
                     <section id="slideshow" class="owl-carousel owl-theme">
-                    @foreach($homePage['banners']['0'] as $banner)
+                    @forelse(($homePage['banners']['0'] ?? []) as $banner)
                             <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="{{ urldecode($banner->link) }}"><img class="w-100 rounded-2 d-block h-auto" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
-                    @endforeach
+                    @empty
+                            <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img class="w-100 rounded-2 d-block h-auto" src="#" alt="">هیچ عکسی وجود ندارد</a></section>
+                    @endforelse
                     </section>
                 </section>
                 <section class="col-md-4 ps-md-1 mt-2 mt-md-0">
-                @foreach($homePage['banners']['1'] as $banner)
+                @forelse(($homePage['banners']['1'] ?? []) as $banner)
                         <section class="mb-2"><a href="{{ urldecode($banner->link) }}" class="d-block"><img class="w-100 rounded-2" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
-                @endforeach
+                @empty
+                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img class="w-100 rounded-2 d-block h-auto" src="#" alt="">هیچ عکسی وجود ندارد</a></section>
+                @endforelse
                 </section>
             </section>
         </section>
@@ -52,12 +56,51 @@
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
                                                 <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                                <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button
+                                                            type="button"
+                                                            class="favorite-btn"
+                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="left"
+                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
+                                                @auth
+                                                @if($product->user->contains(auth()->user()->id))
+                                                    <section class="product-add-to-favorite">
+                                                        <button
+                                                            type="button"
+                                                            class="favorite-btn"
+                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="left"
+                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                        </button>
+                                                    </section>
+                                                    @else
+                                                    <section class="product-add-to-favorite">
+                                                        <button
+                                                            type="button"
+                                                            class="favorite-btn"
+                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="left"
+                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                        </button>
+                                                    </section>
+                                                @endif
+                                                @endauth
                                                 <a class="product-link" href="{{ route('customer.market.product' , $product->slug) }}">
                                                     <section class="product-image">
                                                         <img class="" src="{{ asset($product->image['indexArray']['medium']) }}" alt="{{ $product->name }}">
                                                     </section>
-                                                    <section class="product-name"><h3>{{ Str::limit($product->name , 12) }}</h3></section>
+                                                    <section class="product-name"><h3>{{ Str::limit($product->name , 21) }}</h3></section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
                                                             <span class="product-old-price">165,000 </span>
@@ -66,11 +109,9 @@
                                                         <section class="product-price">{{ priceFormat($product->price) }} تومان </section>
                                                     </section>
                                                     <section class="product-colors">
-                                                        <section class="product-colors-item" style="background-color: yellow;"></section>
-                                                        <section class="product-colors-item" style="background-color: green;"></section>
-                                                        <section class="product-colors-item" style="background-color: white;"></section>
-                                                        <section class="product-colors-item" style="background-color: blue;"></section>
-                                                        <section class="product-colors-item" style="background-color: red;"></section>
+                                                        @foreach($product->colors()->get() as $color)
+                                                            <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
+                                                        @endforeach
                                                     </section>
                                                 </a>
                                             </section>
@@ -93,9 +134,11 @@
             <section class="container-xxl">
                 <!-- two column-->
                 <section class="row py-4">
-                    @foreach($homePage['banners']['2'] as $banner)
+                    @forelse(($homePage['banners']['2'] ?? []) as $banner)
                         <section class="col-12 col-md-6 mt-2 mt-md-0"><a href="{{ urldecode($banner->link) }}"><img class="d-block rounded-2 w-100" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
-                    @endforeach
+                    @empty
+                        <section class="col-12 col-md-6 mt-2 mt-md-0"><a href="#"><img class="d-block rounded-2 w-100" src="#" alt="#">هیچ عکسی وجود ندارد</a></section>
+                    @endforelse
                 </section>
 
             </section>
@@ -113,7 +156,7 @@
                             <section class="content-header">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <h2 class="content-header-title">
-                                        <span>پیشنهاد آمازون به شما</span>
+                                        <span>پیشنهاد شاپینگو به شما</span>
                                     </h2>
                                     <section class="content-header-link">
                                         <a href="#">مشاهده همه</a>
@@ -123,19 +166,57 @@
                             <!-- start vontent header -->
                             <section class="lazyload-wrapper" >
                                 <section class="lazyload light-owl-nav owl-carousel owl-theme">
-
                                     @foreach($homePage['getOfferProducts'] as $offerProduct)
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
                                                 <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                                <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                                <a class="product-link" href="#">
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button
+                                                            type="button"
+                                                            class="favorite-btn"
+                                                            data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="left"
+                                                            title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                            <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
+                                                @auth
+                                                    @if($offerProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button
+                                                                type="button"
+                                                                class="favorite-btn"
+                                                                data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="left"
+                                                                title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                                <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button
+                                                                type="button"
+                                                                class="favorite-btn"
+                                                                data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="left"
+                                                                title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                                <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
+                                                <a class="product-link" href="{{ route('customer.market.product' , $offerProduct->slug) }}">
                                                     <section class="product-image">
                                                         <img class="" src="{{ asset($offerProduct->image['indexArray']['medium']) }}" alt="{{ $offerProduct->name }}">
                                                     </section>
                                                     <section class="product-colors"></section>
-                                                    <section class="product-name"><h3>{{ Str::limit($offerProduct->name , 12) }}</h3></section>
+                                                    <section class="product-name"><h3>{{ Str::limit($offerProduct->name , 21) }}</h3></section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
                                                             <span class="product-old-price">342,000 </span>
@@ -144,9 +225,9 @@
                                                         <section class="product-price">{{ priceFormat($offerProduct->price) }} تومان</section>
                                                     </section>
                                                     <section class="product-colors">
-                                                        <section class="product-colors-item" style="background-color: white;"></section>
-                                                        <section class="product-colors-item" style="background-color: blue;"></section>
-                                                        <section class="product-colors-item" style="background-color: red;"></section>
+                                                        @foreach($offerProduct->colors()->get() as $color)
+                                                        <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
+                                                        @endforeach
                                                     </section>
                                                 </a>
                                             </section>
@@ -163,15 +244,17 @@
         </section>
         <!-- end product lazy load -->
 
-        @if($homePage['banners']['3'])
+        @if($homePage['banners']['3'] ?? [])
             <!-- start ads section -->
             <section class="mb-3">
                 <section class="container-xxl">
                     <!-- one column -->
                     <section class="row py-4">
-                        @foreach($homePage['banners']['3'] as $banner)
+                        @forelse(($homePage['banners']['3'] ?? []) as $banner)
                             <section class="col"><a href="{{ urldecode($banner->link) }}"><img class="d-block rounded-2 w-100" src="{{ asset($banner->image) }}" alt="{{ $banner->name }}"></a></section>
-                        @endforeach
+                        @empty
+                            <section class="col"><a href="#"><img class="d-block rounded-2 w-100" src="#" alt="#">هیچ عکسی وجود ندارد</a></section>
+                        @endforelse
                     </section>
 
                 </section>
@@ -211,4 +294,83 @@
                 </section>
             </section>
         </section>
+
+        <section class="position-fixed top-0 start-0 p-4"
+                 style="z-index:9999;max-width:420px">
+            <section class="toast border-0 shadow-lg rounded-3"
+                     data-delay="6000"
+                     role="alert"
+                     aria-live="assertive"
+                     aria-atomic="true">
+                <section class="toast-body d-flex align-items-start bg-white rounded-3">
+                    <i class="fa fa-heart text-danger fs-4 me-3 mt-1"></i>
+                    <section class="flex-grow-1">
+                        <h6 class="mb-2 fw-bold text-dark">
+                            ورود مورد نیاز است
+                        </h6>
+                        <p class="mb-3 text-muted">
+                            برای افزودن این محصول به لیست علاقه‌مندی‌ها ابتدا وارد حساب کاربری خود شوید.
+                        </p>
+                        <a href="{{ route('auth.customer.login-register') }}"
+                           class="btn btn-sm btn-primary">
+                            ورود / ثبت‌نام
+                        </a>
+                    </section>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close">
+                    </button>
+                </section>
+            </section>
+        </section>
+
+@endsection
+@section('script')
+    <script>
+        $(document).on('click', '.favorite-btn', function (e) {
+
+            e.preventDefault();
+
+            const button = $(this);
+            const icon = button.find('i');
+            const url = button.data('url');
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.action === 'added') {
+                        icon
+                            .removeClass('text-dark')
+                            .addClass('text-danger');
+
+                        button.attr(
+                            'data-bs-original-title',
+                            'حذف از علاقه مندی'
+                        );
+                    } else {
+                        icon
+                            .removeClass('text-danger')
+                            .addClass('text-dark');
+                        button.attr(
+                            'data-bs-original-title',
+                            'افزودن به علاقه مندی'
+                        );
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                        $('.toast').toast('show');
+                        return;
+                    }
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
 @endsection

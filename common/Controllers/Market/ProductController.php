@@ -43,4 +43,24 @@ class ProductController extends BaseController
         ]);
         return back()->with('swal-success' , 'نظر شما ثبت شد. بعد از تایید مدیریت در سایت قرار داده خواهد شد.');
     }
+
+    public function toggleFavorite(Product $product)
+    {
+        $user = Auth::user();
+
+        $product->users()->toggle($user->id);
+
+        $isFavorite = $product
+            ->users()
+            ->whereKey($user->id)
+            ->exists();
+
+        return response()->json([
+            'success' => true,
+            'action'  => $isFavorite ? 'added' : 'removed',
+            'message' => $isFavorite
+                ? 'محصول به علاقه‌مندی‌ها اضافه شد.'
+                : 'محصول از علاقه‌مندی‌ها حذف شد.',
+        ]);
+    }
 }
