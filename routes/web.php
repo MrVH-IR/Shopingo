@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-use Common\Controllers\Home\HomeController;
-use Common\Controllers\Market\{ProductController,};
+use Common\Controllers\{
+    Home\HomeController,
+    Market\ProductController,
+    SalesProcess\CartController,
+};
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,14 +18,14 @@ Route::get('/about-us', function () {
 
 Route::get('/contact-us', function () {
     return view('informations.contact');
-});
+})->name('contact-us');
 
 Route::get('/partnership', function() {
     return view('informations.partnership');
 });
 // End Information Route
 
-Route::namespace('Auth')->middleware('throttle:5,1')->group(function () {
+Route::namespace('Auth')->middleware('throttle:20,1')->group(function () {
     Route::get('/login-register' , [LoginRegisterController::class , 'loginRegisterForm'])->name('auth.customer.login-register-form');
     Route::post('/login-register' , [LoginRegisterController::class , 'loginRegister'])->name('auth.customer.login-register');
     Route::get('/login-confirm/{token}' , [LoginRegisterController::class , 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
@@ -47,4 +50,14 @@ Route::prefix('market')
         Route::middleware('auth')->group(function () {
             Route::post('/favorite/{product:slug}', [ProductController::class, 'toggleFavorite'])->name('product.favorite');
         });
+    });
+// Sales process
+Route::prefix('market')
+    ->name('customer.sales-process.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/cart' , [CartController::class , 'cart'])->name('cart');
+        Route::post('/cart' , [CartController::class , 'updateCart'])->name('update-cart');
+        Route::post('/add-to-cart/{product:slug}' , [CartController::class , 'addToCart'])->name('add-to-cart');
+        Route::delete('/remove-from-cart/{cartItem}' , [CartController::class, 'removeFromCart'])->name('remove-from-cart');
     });

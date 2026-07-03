@@ -81,7 +81,7 @@
                         <section class="header-cart-dropdown">
                             <section class="border-bottom d-flex justify-content-between p-2">
                                 <span class="text-muted">2 کالا</span>
-                                <a class="text-decoration-none text-info" href="cart.html">مشاهده سبد خرید </a>
+                                <a class="text-decoration-none text-info" href="{{ route('customer.sales-process.cart') }}">مشاهده سبد خرید </a>
                             </section>
                             <section class="header-cart-dropdown-body">
 
@@ -100,7 +100,7 @@
                             </section>
                             <section class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
                                 <section class=""><section>مبلغ قابل پرداخت</section><section> 1,326,000 تومان</section></section>
-                                <section class=""><a class="btn btn-danger btn-sm d-block" href="cart.html">ثبت سفارش</a></section>
+                                <section class=""><a class="btn btn-danger btn-sm d-block" href="{{ route('customer.sales-process.cart') }}">ثبت سفارش</a></section>
                             </section>
                         </section>
                     </section>
