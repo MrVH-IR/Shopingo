@@ -1,0 +1,133 @@
+<?php
+
+namespace Common\Controllers\SalesProcess;
+
+use App\Models\Market\CartItem;
+use App\Models\Market\Product;
+use HttpException;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Throwable;
+use function Symfony\Component\String\b;
+
+class CartController extends BaseController
+{
+
+    /**
+     * @param CartRequest $request
+     * @param Product $product
+     * @return RedirectResponse
+     */
+    public function addToCart(CartRequest $request, Product $product)
+    {
+        try {
+            $result = DB::transaction(function () use ($request, $product) {
+                $color = $request->input('color');
+                $guarantee = $request->input('guarantee');
+                $cartItem = CartItem::query()
+                    ->where('user_id', auth()->id())
+                    ->where('product_id', $product->id)
+                    ->where('color_id', $color)
+                    ->where('guarantee_id', $guarantee)
+                    ->lockForUpdate()
+                    ->first();
+
+                $currentQuantity = $cartItem?->numbers ?? 0;
+                $newQuantity = $currentQuantity + $request->number;
+
+                if ($newQuantity > $product->marketable_number) {
+                    return false;
+                }
+
+                if ($cartItem) {
+                    if ($cartItem->numbers !== $newQuantity) {
+                        $cartItem->update([
+                            'numbers' => $newQuantity,
+                        ]);
+                        $product->frozen_number += $newQuantity;
+                        $product->save();
+                    }
+
+                    return true;
+                }
+
+                CartItem::create([
+                    'user_id' => auth()->id(),
+                    'product_id' => $product->id,
+                    'color_id' => $color,
+                    'guarantee_id' => $guarantee,
+                    'numbers' => $request->number,
+                ]);
+                $product->frozen_number += $request->number;
+                $product->save();
+                return true;
+            });
+            if (!$result) {
+                return back()->with([
+                    'bootstrap-error' => [
+                        'status' => 'خطا',
+                        'message' => 'موجودی محصول مورد نظر به اتمام رسیده است.',
+                        'link' => route('customer.home')
+                    ]
+                ]);
+            }
+            return back()->with([
+                'bootstrap-success' => [
+                    'status' => 'موفق',
+                    'message' => 'محصول با موفقیت به سبد خرید شما اضافه شد. برای اتمام خرید به لینک زیر بروید',
+                    'link' => route('customer.home')
+                ]
+            ]);
+        } catch (HttpException | ValidationException | QueryException $e) {
+            $errorId = now()->format('YmdHis') . rand(1000, 9999);
+            Log::error(
+                "Exception During Cart Entry {$errorId}",
+                [
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ]
+            );
+            return back()->with([
+                'bootstrap-error' => [
+                    'status' => 'خطا',
+                    'message' => 'مشکلی در اضافه کردن محصول بوجود آمده است ' . $errorId . ' لطفا با ادمین تماس بگیرید.',
+                    'link' => route('contact-us')
+                ]
+            ]);
+        } catch (Throwable $e) {
+            $errorId = now()->format('YmdHis') . rand(1000, 9999);
+            Log::error(
+                "Throwable Exception During Cart Entry {$errorId}",
+                [
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ]
+            );
+            return back()->with([
+                'bootstrap-error' => [
+                    'status' => 'خطا',
+                    'message' => 'مشکلی در اضافه کردن محصول بوجود آمده است ' . $errorId . ' لطفا با ادمین تماس بگیرید.',
+                    'link' => route('contact-us')
+                ]
+            ]);
+        }
+    }
+
+    public function updateCart() {}
+
+    public function removeFromCart() {}
+
+    public function cart()
+    {
+        $cartItems = CartItem::query()
+            ->where('user_id', auth()->id())
+            ->get();
+        $relatedProducts = Product::all();
+        return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
+    }
+}

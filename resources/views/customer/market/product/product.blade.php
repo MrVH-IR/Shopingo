@@ -8,7 +8,9 @@
 
     <!-- start cart -->
     <section class="mb-4">
-        <section class="container-xxl" >
+        <section class="container-xxl">
+            <form id="add-to-cart" action="{{ route('customer.sales-process.add-to-cart', $product->slug) }}" method="POST" class="product-info">
+                @csrf
             <section class="row">
                 <section class="col">
                     <!-- start vontent header -->
@@ -22,7 +24,6 @@
                             </section>
                         </section>
                     </section>
-
                     <section class="row mt-4">
                         <!-- start image gallery -->
                         <section class="col-md-4">
@@ -79,15 +80,17 @@
                                     <p>رنگ انتخاب شده: <span id="selected_color_name"></span></p>
                                     <p>
                                         @forelse($product->colors as $key => $color)
-                                            <label for="{{ 'color_' . $color->id }}" style="background-color: {{ $color->color }};"
-                                                    class="product-info-colors me-1"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="bottom"
-                                                    title="{{ $color->color_name }}"></label>
+                                            <label for="{{ 'color_' . $color->id }}"
+                                                   style="background-color: {{ $color->color }};"
+                                                   class="product-info-colors me-1"
+                                                   data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   title="{{ $color->color_name }}"></label>
                                             <input type="radio" name="color" id="{{ 'color_' . $color->id }}"
-                                                   class="d-none" value="{{ $color->id }}" data-color-name="{{ $color->color_name }}"
+                                                   class="d-none" value="{{ $color->id }}"
+                                                   data-color-name="{{ $color->color_name }}"
                                                    data-color-price="{{ $color->price_increase }}"
-                                                    @if($key == 0) checked @endif>
+                                                   @if($key == 0) checked @endif>
                                         @empty
                                             <span class="text-muted">هیچ رنگی برای این محصول ثبت نشده است.</span>
                                         @endforelse
@@ -195,19 +198,15 @@
                                                 <small>
                                                     هزینه ارسال پس از انتخاب آدرس و روش ارسال محاسبه خواهد شد.
                                                     مبلغ نهایی در مرحله پرداخت نمایش داده می‌شود.
-
                                                 </small>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                             </section>
-
                         </section>
                         <!-- end product info -->
-
                         <section class="col-lg-3 col-md-4 mt-4 mt-md-0">
-
                             <section class="cart-total-price">
 
                                 {{-- Header --}}
@@ -218,109 +217,72 @@
 
                                 {{-- Product Price --}}
                                 <div class="price-row">
-
-            <span class="price-label">
-                قیمت کالا
-            </span>
-
+                                <span class="price-label">
+                                    قیمت کالا
+                                </span>
                                     <span class="price-value">
-
-                <span
-                    id="product_price"
-                    data-product-original-price="{{ $product->price }}"
-                >
-                    {{ priceFormat($product->price) }}
-                </span>
-
-                <small>تومان</small>
-
-            </span>
-
+                                    <span
+                                        id="product_price"
+                                        data-product-original-price="{{ $product->price }}"
+                                    >
+                                        {{ priceFormat($product->price) }}
+                                    </span>
+                                    <small>تومان</small>
+                                    </span>
                                 </div>
-
                                 {{-- Discount --}}
                                 @if($product->activeAmazingSales())
-
                                     <div class="price-row">
-
-                <span class="price-label">
-                    تخفیف
-                </span>
-
+                                    <span class="price-label">
+                                        تخفیف
+                                    </span>
                                         <span
                                             id="product-discount-price"
                                             class="price-discount"
                                             data-product-discount-price="{{ $product->price * ($product->activeAmazingSales()->percentage / 100) }}"
                                         >
-
-                    - {{ priceFormat($product->price * ($product->activeAmazingSales()->percentage / 100)) }}
-
-                    <small>تومان</small>
-
-                </span>
-
+                                    - {{ priceFormat($product->price * ($product->activeAmazingSales()->percentage / 100)) }}
+                                    <small>تومان</small>
+                                </span>
                                     </div>
-
                                 @endif
-
                                 <hr>
-
                                 {{-- Final Price --}}
                                 <div class="price-total">
-
                                     <small class="text-muted">
                                         مبلغ قابل پرداخت
                                     </small>
-
                                     <div class="price-total-value">
-
-                <span id="final_price">
-                    {{ priceFormat($product->price - ($product->price * ($product->activeAmazingSales()?->percentage / 100))) }}
-                </span>
-
+                                    <span id="final_price">
+                                        {{ priceFormat($product->price - ($product->price * ($product->activeAmazingSales()?->percentage / 100))) }}
+                                    </span>
                                         <small>تومان</small>
-
                                     </div>
-
                                 </div>
-
                                 {{-- Cart Button --}}
                                 @if($product->marketable_number > 0)
-
-                                    <a
-                                        href="#"
+                                    <button
+                                        type="submit"
+                                        onclick="document.getElementById('add-to-cart').submit();"
                                         id="next-level"
-                                        class="btn btn-success add-to-cart-btn w-100 mt-4"
-                                    >
-
+                                        class="btn btn-success add-to-cart-btn w-100 mt-4">
                                         <i class="fa fa-cart-plus me-2"></i>
-
                                         افزودن به سبد خرید
-
-                                    </a>
-
+                                    </button>
                                 @else
-
                                     <button
                                         class="btn btn-secondary w-100 mt-4"
-                                        disabled
-                                    >
-
+                                        disabled>
                                         <i class="fa fa-ban me-2"></i>
-
                                         این محصول موجود نیست
-
                                     </button>
-
                                 @endif
-
                             </section>
-
                         </section>
                     </section>
                 </section>
             </section>
-
+            </form>
         </section>
     </section>
     <!-- end cart -->
@@ -329,7 +291,7 @@
 
     <!-- start product lazy load -->
     <section class="mb-4">
-        <section class="container-xxl" >
+        <section class="container-xxl">
             <section class="row">
                 <section class="col">
                     <section class="content-wrapper bg-white p-3 rounded-2">
@@ -340,33 +302,24 @@
                                     <span>کالاهای مرتبط</span>
                                 </h2>
                                 <section class="content-header-link">
-                                    <!--<a href="#">مشاهده همه</a>-->
+                                    <a href="#">مشاهده همه</a>
                                 </section>
                             </section>
                         </section>
                         <!-- start vontent header -->
-                        <section class="lazyload-wrapper" >
+                        <section class="lazyload-wrapper">
                             <section class="lazyload light-owl-nav owl-carousel owl-theme">
                                 @foreach($relatedProducts as $relatedProduct)
-                                <section class="item">
-                                    <section class="lazyload-item-wrapper">
-                                        <section class="product">
-                                            <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                            @guest
-                                                <section class="product-add-to-favorite">
-                                                    <button
-                                                        type="button"
-                                                        class="favorite-btn"
-                                                        data-url="{{ route('customer.market.product.favorite', $relatedProduct) }}"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="left"
-                                                        title="{{ $relatedProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                        <i class="fa fa-heart {{ $relatedProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                    </button>
-                                                </section>
-                                            @endguest
-                                            @auth
-                                                @if($relatedProduct->user->contains(auth()->user()->id))
+                                    <section class="item">
+                                        <section class="lazyload-item-wrapper">
+                                            <section class="product">
+                                                <section class="product-add-to-cart">
+                                                    <button data-bs-toggle="tooltip"
+                                                            type="submit"
+                                                            data-bs-placement="left"
+                                                            title="افزودن به سبد خرید"><i
+                                                            class="fa fa-cart-plus"></i></button></section>
+                                                @guest
                                                     <section class="product-add-to-favorite">
                                                         <button
                                                             type="button"
@@ -378,37 +331,59 @@
                                                             <i class="fa fa-heart {{ $relatedProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
                                                         </button>
                                                     </section>
-                                                @else
-                                                    <section class="product-add-to-favorite">
-                                                        <button
-                                                            type="button"
-                                                            class="favorite-btn"
-                                                            data-url="{{ route('customer.market.product.favorite', $relatedProduct) }}"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="left"
-                                                            title="{{ $relatedProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                            <i class="fa fa-heart {{ $relatedProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                        </button>
+                                                @endguest
+                                                @auth
+                                                    @if($relatedProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button
+                                                                type="button"
+                                                                class="favorite-btn"
+                                                                data-url="{{ route('customer.market.product.favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="left"
+                                                                title="{{ $relatedProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                                <i class="fa fa-heart {{ $relatedProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button
+                                                                type="button"
+                                                                class="favorite-btn"
+                                                                data-url="{{ route('customer.market.product.favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="left"
+                                                                title="{{ $relatedProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                                                <i class="fa fa-heart {{ $relatedProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
+                                                <a class="product-link"
+                                                   href="{{ route('customer.market.product' , $relatedProduct->slug) }}">
+                                                    <section class="product-image">
+                                                        <img class=""
+                                                             src="{{ asset($relatedProduct->image['indexArray']['medium']) }}"
+                                                             alt="">
                                                     </section>
-                                                @endif
-                                            @endauth
-                                            <a class="product-link" href="{{ route('customer.market.product' , $relatedProduct->slug) }}">
-                                                <section class="product-image">
-                                                    <img class="" src="{{ asset($relatedProduct->image['indexArray']['medium']) }}" alt="">
-                                                </section>
-                                                <section class="product-name"><h3>{{ $relatedProduct->name }}</h3></section>
-                                                <section class="product-price-wrapper">
-                                                    <section class="product-price">{{ priceFormat($relatedProduct->price) }} تومان</section>
-                                                </section>
-                                                <section class="product-colors">
-                                                    @foreach($relatedProduct->colors()->get() as $color)
-                                                    <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
-                                                    @endforeach
-                                                </section>
-                                            </a>
+                                                    <section class="product-name"><h3>{{ $relatedProduct->name }}</h3>
+                                                    </section>
+                                                    <section class="product-price-wrapper">
+                                                        <section
+                                                            class="product-price">{{ priceFormat($relatedProduct->price) }}
+                                                            تومان
+                                                        </section>
+                                                    </section>
+                                                    <section class="product-colors">
+                                                        @foreach($relatedProduct->colors()->get() as $color)
+                                                            <section class="product-colors-item"
+                                                                     style="background-color: {{ $color->color }};"></section>
+                                                        @endforeach
+                                                    </section>
+                                                </a>
+                                            </section>
                                         </section>
                                     </section>
-                                </section>
                                 @endforeach
                             </section>
                         </section>
@@ -421,7 +396,7 @@
 
     <!-- start description, features and comments -->
     <section class="mb-4">
-        <section class="container-xxl" >
+        <section class="container-xxl">
             <section class="row">
                 <section class="col">
                     <section class="content-wrapper bg-white p-3 rounded-2">
@@ -538,69 +513,87 @@
 
                         </section>
 
-                            <!-- start vontent header -->
-                            <section id="comments" class="content-header mt-2 mb-4">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title content-header-title-small">
-                                        دیدگاه ها
-                                    </h2>
-                                    <section class="content-header-link">
-                                        <!--<a href="#">مشاهده همه</a>-->
-                                    </section>
+                        <!-- start vontent header -->
+                        <section id="comments" class="content-header mt-2 mb-4">
+                            <section class="d-flex justify-content-between align-items-center">
+                                <h2 class="content-header-title content-header-title-small">
+                                    دیدگاه ها
+                                </h2>
+                                <section class="content-header-link">
+                                    <!--<a href="#">مشاهده همه</a>-->
                                 </section>
                             </section>
-                            <section class="product-comments mb-4">
+                        </section>
+                        <section class="product-comments mb-4">
 
-                                <section class="comment-add-wrapper">
-                                    <button class="comment-add-button" type="button" data-bs-toggle="modal" data-bs-target="#add-comment" ><i class="fa fa-plus"></i> افزودن دیدگاه</button>
-                                    <!-- start add comment Modal -->
-                                    <section class="modal fade" id="add-comment" tabindex="-1" aria-labelledby="add-comment-label" aria-hidden="true">
-                                        <section class="modal-dialog">
-                                            <section class="modal-content">
-                                                <section class="modal-header">
-                                                    <h5 class="modal-title" id="add-comment-label"><i class="fa fa-plus"></i> افزودن دیدگاه</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </section>
-                                                @guest
-                                                    <section class="modal-body">
-                                                        <p>کاربر گرامی برای ثبت نظر ابتدا وارد حساب کاربری خود شوید <br>
-                                                            <a href="{{ route('auth.customer.login-register-form') }}">لینک ثبت نام یا ورود</a>
-                                                        </p>
-                                                    </section>
-                                                @endguest
-                                                @auth
-                                                    <form class="row" action="{{ route('customer.market.add-comment' , $product->slug) }}" method="POST">
-                                                        <section class="modal-body">
-                                                            @csrf
-                                                            <section class="col-12 mb-2">
-                                                                <label for="comment" class="form-label mb-1">دیدگاه شما</label>
-                                                                <textarea class="form-control form-control-sm" id="comment" placeholder="دیدگاه شما ..." rows="4" name="comment"></textarea>
-                                                            </section>
-                                                            @error('comment')
-                                                                <section>
-                                                                    <div class="alert alert-danger">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                </section>
-                                                            @enderror
-                                                    </section>
-                                                        <section class="modal-footer py-1">
-                                                            <button type="submit" class="btn btn-sm btn-primary">ثبت دیدگاه</button>
-                                                            <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">بستن</button>
-                                                        </section>
-                                                    </form>
-                                                @endauth
+                            <section class="comment-add-wrapper">
+                                <button class="comment-add-button" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#add-comment"><i class="fa fa-plus"></i> افزودن دیدگاه
+                                </button>
+                                <!-- start add comment Modal -->
+                                <section class="modal fade" id="add-comment" tabindex="-1"
+                                         aria-labelledby="add-comment-label" aria-hidden="true">
+                                    <section class="modal-dialog">
+                                        <section class="modal-content">
+                                            <section class="modal-header">
+                                                <h5 class="modal-title" id="add-comment-label"><i
+                                                        class="fa fa-plus"></i> افزودن دیدگاه</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </section>
+                                            @guest
+                                                <section class="modal-body">
+                                                    <p>کاربر گرامی برای ثبت نظر ابتدا وارد حساب کاربری خود شوید <br>
+                                                        <a href="{{ route('auth.customer.login-register-form') }}">لینک
+                                                            ثبت نام یا ورود</a>
+                                                    </p>
+                                                </section>
+                                            @endguest
+                                            @auth
+                                                <form class="row"
+                                                      action="{{ route('customer.market.add-comment' , $product->slug) }}"
+                                                      method="POST">
+                                                    <section class="modal-body">
+                                                        @csrf
+                                                        <section class="col-12 mb-2">
+                                                            <label for="comment" class="form-label mb-1">دیدگاه
+                                                                شما</label>
+                                                            <textarea class="form-control form-control-sm" id="comment"
+                                                                      placeholder="دیدگاه شما ..." rows="4"
+                                                                      name="comment"></textarea>
+                                                        </section>
+                                                        @error('comment')
+                                                        <section>
+                                                            <div class="alert alert-danger">
+                                                                {{ $message }}
+                                                            </div>
+                                                        </section>
+                                                        @enderror
+                                                    </section>
+                                                    <section class="modal-footer py-1">
+                                                        <button type="submit" class="btn btn-sm btn-primary">ثبت
+                                                            دیدگاه
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                                data-bs-dismiss="modal">بستن
+                                                        </button>
+                                                    </section>
+                                                </form>
+                                            @endauth
                                         </section>
                                     </section>
                                 </section>
-                                @foreach($product->getActiveComment() as $activeComment)
+                            </section>
+                            @foreach($product->getActiveComment() as $activeComment)
                                 <section class="product-comment">
                                     <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">{{ jalaliDate($activeComment->created_at , 'Y/m/d') }}</section>
-                                        <section class="product-comment-title">{{ $activeComment->author?->first_name}} {{ $activeComment->author?->last_name }}</section>
+                                        <section
+                                            class="product-comment-date">{{ jalaliDate($activeComment->created_at , 'Y/m/d') }}</section>
+                                        <section
+                                            class="product-comment-title">{{ $activeComment->author?->first_name}} {{ $activeComment->author?->last_name }}</section>
                                     </section>
-                                    <section class="product-comment-body @if($activeComment->answers()->count() > 0) border-bottom @endif">
+                                    <section
+                                        class="product-comment-body @if($activeComment->answers()->count() > 0) border-bottom @endif">
                                         {!! $activeComment->body !!}
                                     </section>
                                     <section class="comment-replies ms-5 ps-4 border-start">
@@ -622,19 +615,16 @@
                                                     {!! $answerComment->body !!}
                                                 </section>
                                             </section>
-
                                         @endforeach
                                     </section>
                                 </section>
-                                @endforeach
-
-                            </section>
+                            @endforeach
                         </section>
-
                     </section>
                 </section>
             </section>
         </section>
+    </section>
     <!-- end description, features and comments -->
 
     @include('customer.notifications.toast')
