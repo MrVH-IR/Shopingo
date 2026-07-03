@@ -295,82 +295,9 @@
             </section>
         </section>
 
-        <section class="position-fixed top-0 start-0 p-4"
-                 style="z-index:9999;max-width:420px">
-            <section class="toast border-0 shadow-lg rounded-3"
-                     data-delay="6000"
-                     role="alert"
-                     aria-live="assertive"
-                     aria-atomic="true">
-                <section class="toast-body d-flex align-items-start bg-white rounded-3">
-                    <i class="fa fa-heart text-danger fs-4 me-3 mt-1"></i>
-                    <section class="flex-grow-1">
-                        <h6 class="mb-2 fw-bold text-dark">
-                            ورود مورد نیاز است
-                        </h6>
-                        <p class="mb-3 text-muted">
-                            برای افزودن این محصول به لیست علاقه‌مندی‌ها ابتدا وارد حساب کاربری خود شوید.
-                        </p>
-                        <a href="{{ route('auth.customer.login-register') }}"
-                           class="btn btn-sm btn-primary">
-                            ورود / ثبت‌نام
-                        </a>
-                    </section>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close">
-                    </button>
-                </section>
-            </section>
-        </section>
+    @include('customer.notifications.toast')
 
 @endsection
 @section('script')
-    <script>
-        $(document).on('click', '.favorite-btn', function (e) {
-
-            e.preventDefault();
-
-            const button = $(this);
-            const icon = button.find('i');
-            const url = button.data('url');
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    if (response.action === 'added') {
-                        icon
-                            .removeClass('text-dark')
-                            .addClass('text-danger');
-
-                        button.attr(
-                            'data-bs-original-title',
-                            'حذف از علاقه مندی'
-                        );
-                    } else {
-                        icon
-                            .removeClass('text-danger')
-                            .addClass('text-dark');
-                        button.attr(
-                            'data-bs-original-title',
-                            'افزودن به علاقه مندی'
-                        );
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401) {
-                        $('.toast').toast('show');
-                        return;
-                    }
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('customer-assets/js/addToFavorite.js') }}" crossorigin="anonymous"></script>
 @endsection

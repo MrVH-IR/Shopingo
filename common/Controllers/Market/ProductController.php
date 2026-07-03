@@ -48,10 +48,10 @@ class ProductController extends BaseController
     {
         $user = Auth::user();
 
-        $product->users()->toggle($user->id);
+        $product->user()->toggle($user->id);
 
         $isFavorite = $product
-            ->users()
+            ->user()
             ->whereKey($user->id)
             ->exists();
 
