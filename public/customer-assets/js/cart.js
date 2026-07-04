@@ -47,5 +47,3 @@ function bill() {
     $('#total_discount').html(utils.toFarsiNumber(total_discount));
     $('#total_price').html(utils.toFarsiNumber(total_price));
 }
-
-

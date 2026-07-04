@@ -56,7 +56,7 @@
                                         <section>
                                             <section class="cart-product-number d-inline-block ">
                                                 <button class="cart-number cart-number-down" type="button">-</button>
-                                                <input class="number" data-product-price="{{ $cartItem->cartItemProductPrice() }}"
+                                                <input class="number" name="number[{{ $cartItem->id }}]" data-product-price="{{ $cartItem->cartItemProductPrice() }}"
                                                        data-product-discount="{{ $cartItem->cartItemProductDiscount() }}"
                                                        type="number" min="1" max="5" step="1" value="{{ $cartItem->numbers }}" readonly="readonly">
                                                 <button class="cart-number cart-number-up" type="button">+</button>
@@ -68,6 +68,29 @@
                                                 <i class="fa fa-trash-alt"></i>
                                                 حذف از سبد
                                             </button>
+                                            @if ($errors->any())
+                                                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="me-3">
+                                                                <i class="fa-solid fa-circle-exclamation text-danger fs-3"></i>
+                                                            </div>
+
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="fw-bold text-danger mb-2">
+                                                                    خطا در ثبت اطلاعات
+                                                                </h6>
+
+                                                                <ul class="mb-0 ps-3">
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li class="mb-1">{{ $error }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </section>
                                     </section>
                                     <section class="align-self-end flex-shrink-1">
@@ -103,15 +126,13 @@
 
 
                             <section class="">
-                                <a href="address.html" class="btn btn-danger d-block">تکمیل فرآیند خرید</a>
+                                <button type="submit" onclick="document.getElementById('cart_items').submit();" href="address.html" class="btn btn-danger d-block">تکمیل فرآیند خرید</button>
                             </section>
-
                         </section>
                     </section>
                 </section>
             </section>
         </section>
-
     </section>
 </section>
 <!-- end cart -->

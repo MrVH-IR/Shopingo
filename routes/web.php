@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-use Common\Controllers\{
-    Home\HomeController,
+use Common\Controllers\{Home\HomeController,
     Market\ProductController,
+    SalesProcess\AddressController,
     SalesProcess\CartController,
-};
+    SalesProcess\Middleware\CheckProfileMiddleware,
+    SalesProcess\ProfileController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -53,7 +54,7 @@ Route::prefix('market')
         Route::middleware('auth')->group(function () {
             Route::post('/favorite/{product:slug}', [ProductController::class, 'toggleFavorite'])->name('product.favorite');
         });
-    });
+});
 // Sales process
 Route::prefix('market')
     ->name('customer.sales-process.')
@@ -63,4 +64,8 @@ Route::prefix('market')
         Route::post('/cart' , [CartController::class , 'updateCart'])->name('update-cart');
         Route::post('/add-to-cart/{product:slug}' , [CartController::class , 'addToCart'])->name('add-to-cart');
         Route::delete('/remove-from-cart/{cartItem}' , [CartController::class, 'removeFromCart'])->name('remove-from-cart');
-    });
+        Route::middleware(CheckProfileMiddleware::class)->get('address-and-delivery', [AddressController::class , 'addressAndDelivery'])->name('address-and-delivery');
+        Route::post('/add-address', [AddressController::class , 'addAddress'])->name('add-address');
+        Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
+        Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');
+});

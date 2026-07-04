@@ -7,11 +7,12 @@ use App\Models\Market\Product;
 use HttpException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use function Symfony\Component\String\b;
 
 class CartController extends BaseController
 {
@@ -118,7 +119,42 @@ class CartController extends BaseController
         }
     }
 
-    public function updateCart() {}
+    public function updateCart(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'number' => ['required', 'array'],
+            'number.*' => ['required', 'integer', 'min:1', 'max:10'],
+        ], [
+            'number.required' => 'مقدار درخواستی محصول را وارد کنید.',
+            'number.array' => 'اطلاعات محصول نامعتبر است.',
+
+            'number.*.required' => 'تعداد محصول الزامی است.',
+            'number.*.integer' => 'تعداد محصول باید عدد صحیح باشد.',
+            'number.*.min' => 'حداقل تعداد محصول ۱ است.',
+            'number.*.max' => 'حداکثر تعداد محصول ۱۰ است.',
+            'number.*.exists' => 'سبد خرید مورد نظر پیدا نشد'
+        ]);
+        $validator->after(function ($validator) use ($request) {
+            foreach (array_keys($request->input('number', [])) as $id) {
+                if (!CartItem::whereKey($id)->exists()) {
+                    $validator->errors()->add("number.$id", 'سبد خرید نامعتبر است.');
+                }
+            }
+        });
+
+        $validated = $validator->validate();
+        $numbers = $validated['number'];
+
+        CartItem::where('user_id', auth()->id())
+            ->whereIn('id', array_keys($numbers))
+            ->get()
+            ->each(function (CartItem $item) use ($numbers) {
+                $item->update([
+                    'numbers' => $numbers[$item->id],
+                ]);
+            });
+        return redirect()->route('customer.sales-process.address-and-delivery');
+    }
 
     public function removeFromCart(CartItem $cartItem)
     {

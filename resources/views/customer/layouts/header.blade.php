@@ -74,36 +74,60 @@
                             <i class="fa fa-user-lock"></i>
                         </a>
                     @endguest
-                    <section class="header-cart d-inline ps-3 border-start position-relative">
-                        <a class="btn btn-link position-relative text-dark header-cart-link" href="javascript:void(0)">
-                            <i class="fa fa-shopping-cart"></i> <span style="top: 80%;" class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">2</span>
-                        </a>
-                        <section class="header-cart-dropdown">
-                            <section class="border-bottom d-flex justify-content-between p-2">
-                                <span class="text-muted">2 کالا</span>
-                                <a class="text-decoration-none text-info" href="{{ route('customer.sales-process.cart') }}">مشاهده سبد خرید </a>
+
+                    @auth
+                            <section class="header-cart d-inline ps-3 border-start position-relative">
+                                <a class="btn btn-link position-relative text-dark header-cart-link" href="javascript:void(0)">
+                                    <i class="fa fa-shopping-cart"></i> <span style="top: 80%;" class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">{{ $cartItem->count() }}</span>
+                                </a>
+                                @forelse($cartItems as $cartItem)
+                                    <section class="header-cart-dropdown">
+                                        <section class="border-bottom d-flex justify-content-between p-2">
+                                            <span class="text-muted">{{ $cartItem->count() }} کالا</span>
+                                            <a class="text-decoration-none text-info" href="{{ route('customer.sales-process.cart') }}">مشاهده سبد خرید </a>
+                                        </section>
+                                        <section class="header-cart-dropdown-body">
+
+                                            <section class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
+                                                <img class="flex-shrink-1" src="{{ asset($cartItem->product->image['indexArray']['medium']) }}" alt="عکس محصول">
+                                                <section class="w-100 text-truncate"><a class="text-decoration-none text-dark" href="{{ route('customer.market.product', $cartItem->product->slug) }}">{{ $cartItem->product->name }}</a></section>
+                                            </section>
+
+                                        </section>
+                                        <section class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
+                                            <section class=""><section>مبلغ قابل پرداخت</section><section> {{ priceFormat($cartItem->cartItemFinalPrice()) }} تومان</section></section>
+                                            <section class=""><a class="btn btn-danger btn-sm d-block" href="{{ route('customer.sales-process.cart') }}">ثبت سفارش</a></section>
+                                        </section>
+                                    </section>
+                                @empty
+                                    <section class="header-cart d-inline ps-3 border-start position-relative">
+                                        <a class="btn btn-link position-relative text-dark header-cart-link" href="{{ route('auth.customer.login-register') }}">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                        <section class="header-cart-dropdown">
+                                            <section class="border-bottm d-flex justify-content-between p-2">
+                                                <span class="text-muted">سبد خرید شما خالی می باشد.</span>
+                                            </section>
+                                        </section>
+                                    </section>
+                                @endforelse
                             </section>
-                            <section class="header-cart-dropdown-body">
-
-                                <section class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
-                                    <img class="flex-shrink-1" src="{{ asset('customer-assets/images/products/1.jpg') }}" alt="">
-                                    <section class="w-100 text-truncate"><a class="text-decoration-none text-dark" href="#">کتاب اثر مرکب اثر دارن هاردی انتشارات معیار علم</a></section>
-                                    <section class="flex-shrink-1"><a class="text-muted text-decoration-none p-1" href="#"><i class="fa fa-trash-alt"></i></a></section>
+                    @endauth
+                    @guest
+                        <section class="header-cart d-inline ps-3 border-start position-relative">
+                            <a class="btn btn-link position-relative text-dark header-cart-link" href="{{ route('auth.customer.login-register') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            <section class="header-cart-dropdown">
+                                <section class="border-bottm d-flex justify-content-between p-2">
+                                    <span class="text-muted">برای دیدن سبد خرید وارد حساب کاربری خود وارد شوید</span>
+                                    <a href="{{ route('auth.customer.login-register') }}">
+                                        <i class="fa fa-lock"></i>
+                                    </a>
                                 </section>
-
-                                <section class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
-                                    <img class="flex-shrink-1" src="{{ asset('customer-assets/images/products/2.jpg') }}" alt="">
-                                    <section class="w-100 text-truncate"><a class="text-decoration-none text-dark" href="#">دستگاه آبمیوه گیری دنویر با کد 1016</a></section>
-                                    <section class="flex-shrink-1"><a class="text-muted text-decoration-none p-1" href="#"><i class="fa fa-trash-alt"></i></a></section>
-                                </section>
-
-                            </section>
-                            <section class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
-                                <section class=""><section>مبلغ قابل پرداخت</section><section> 1,326,000 تومان</section></section>
-                                <section class=""><a class="btn btn-danger btn-sm d-block" href="{{ route('customer.sales-process.cart') }}">ثبت سفارش</a></section>
                             </section>
                         </section>
-                    </section>
+                    @endguest
                 </section>
             </section>
         </section>
