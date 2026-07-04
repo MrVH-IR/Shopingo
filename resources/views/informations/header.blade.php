@@ -27,7 +27,7 @@
                         <x-a-link href="{{ url('/partnership') }}">همکاری</x-a-link>
                     </li>
                     <li>
-                        <x-a-link href="#">خانه</x-a-link>
+                        <x-a-link href="{{ route('customer.home') }}">خانه</x-a-link>
                     </li>
                 </ul>
             </div>

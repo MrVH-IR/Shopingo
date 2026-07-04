@@ -631,6 +631,7 @@
 
 @endsection
 @section('script')
+    <script src="{{ asset('customer-assets/js/utils.js') }}"></script>
     <script src="{{ asset('customer-assets/js/product.js') }}"></script>
     <script src="{{ asset('customer-assets/js/addToFavorite.js') }}"></script>
 @endsection

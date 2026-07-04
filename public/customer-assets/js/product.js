@@ -45,6 +45,8 @@ function bill() {
     }
     // Final Price
 
+    let utils = new Utils();
+
     var product_price =
         product_original_price +
         selected_color_price +
@@ -55,11 +57,11 @@ function bill() {
         (product_price - product_discount_price);
 
     $('#product_price')
-        .html(toFarsiNumber(product_price))
+        .html(utils.toFarsiNumber(product_price))
         .addClass('price-updated');
 
     $('#final_price')
-        .html(toFarsiNumber(final_price))
+        .html(utils.toFarsiNumber(final_price))
         .addClass('price-updated');
 
     setTimeout(() => {
@@ -68,14 +70,6 @@ function bill() {
         $('#final_price').removeClass('price-updated');
 
     },250);
-}
-
-function toFarsiNumber(number) {
-    const farsiDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-    // Add Comma
-    number = new Intl.NumberFormat().format(number);
-    // Convert To Persian
-    return number.toString().replace(/\d/g, x => farsiDigits[x]);
 }
 
 $(document).on('click', '.product-gallery-thumb', function () {

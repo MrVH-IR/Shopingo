@@ -26,7 +26,7 @@
                     @enderror
                 </section>
                 <section class="login-btn d-grid g-2"><button class="btn btn-danger">ورود به شاپینگو</button></section>
-                <section class="login-terms-and-conditions"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام
+                <section class="login-terms-and-conditions"><a href="{{ url('/privacy-policy') }}">شرایط و قوانین</a> را خوانده ام و پذیرفته ام
                     <input class="form-check-input @error('confirmed') is-invalid @enderror" type="checkbox" value="confirmed" name="confirmed" id="flexCheckChecked">
                     @error('confirmed')
                     <li class="mt-5">

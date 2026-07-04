@@ -51,10 +51,10 @@
             </section>
 
             <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a></section>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/privacy-policy') }}">شرایط و قوانین</a></section>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/about-us') }}">درباره ما</a></section>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/contact-us') }}">تماس با ما</a></section>
+                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/partnership') }}">فرصت های شغلی</a></section>
                 <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a></section>
             </section>
 

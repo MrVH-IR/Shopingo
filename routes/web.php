@@ -23,6 +23,9 @@ Route::get('/contact-us', function () {
 Route::get('/partnership', function() {
     return view('informations.partnership');
 });
+Route::get('/privacy-policy', function() {
+    return view('informations.privacy');
+});
 // End Information Route
 
 Route::namespace('Auth')->middleware('throttle:20,1')->group(function () {

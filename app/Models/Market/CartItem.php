@@ -33,4 +33,36 @@ class CartItem extends Model
     {
         return $this->belongsTo(ProductColor::class);
     }
+
+    public function guarantee(): BelongsTo
+    {
+        return $this->belongsTo(Guarantee::class);
+    }
+
+    public function cartItemProductPrice()
+    {
+        return
+            $this->product->price +
+            ($this->color?->price_increase ?? 0) +
+            ($this->guarantee?->price_increase ?? 0);
+    }
+
+    public function cartItemProductDiscount()
+    {
+        return $this->cartItemProductPrice()
+            * (($this->product->activeAmazingSales()?->percentage ?? 0) / 100);
+    }
+
+    public function cartItemFinalPrice()
+    {
+        return (
+                $this->cartItemProductPrice() -
+                $this->cartItemProductDiscount()
+            ) * $this->numbers;
+    }
+
+    public function cartItemFinalDiscount()
+    {
+        return $this->cartItemProductDiscount() * $this->numbers;
+    }
 }
