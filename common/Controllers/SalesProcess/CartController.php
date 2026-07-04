@@ -77,8 +77,8 @@ class CartController extends BaseController
             return back()->with([
                 'bootstrap-success' => [
                     'status' => 'موفق',
-                    'message' => 'محصول با موفقیت به سبد خرید شما اضافه شد. برای اتمام خرید به لینک زیر بروید',
-                    'link' => route('customer.home')
+                    'message' => 'محصول با موفقیت به سبد خرید شما اضافه شد. برای اتمام خرید به سبد خود بروید',
+                    'link' => route('customer.sales-process.cart')
                 ]
             ]);
         } catch (HttpException | ValidationException | QueryException $e) {
@@ -120,7 +120,19 @@ class CartController extends BaseController
 
     public function updateCart() {}
 
-    public function removeFromCart() {}
+    public function removeFromCart(CartItem $cartItem)
+    {
+        abort_if($cartItem->user_id !== auth()->id(), 403);
+
+        $cartItem->forceDelete();
+
+        return back()->with([
+            'bootstrap-success' => [
+                'status' => 'موفق',
+                'message' => 'محصول با موفقیت حذف شد.',
+            ]
+        ]);
+    }
 
     public function cart()
     {

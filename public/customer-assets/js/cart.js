@@ -4,6 +4,25 @@ $(document).ready(function() {
     $('.cart-number').click(function() {
         bill();
     });
+
+    $('.cart-delete').click(function (e) {
+        e.preventDefault();
+
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: `/market/remove-from-cart/${id}`,
+            type: 'DELETE',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+            },
+            error: function (xhr) {
+            }
+        });
+        window.location.reload();
+    });
 });
 
 function bill() {
@@ -28,3 +47,5 @@ function bill() {
     $('#total_discount').html(utils.toFarsiNumber(total_discount));
     $('#total_price').html(utils.toFarsiNumber(total_price));
 }
+
+

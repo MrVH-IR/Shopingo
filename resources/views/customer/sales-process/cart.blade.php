@@ -61,7 +61,13 @@
                                                        type="number" min="1" max="5" step="1" value="{{ $cartItem->numbers }}" readonly="readonly">
                                                 <button class="cart-number cart-number-up" type="button">+</button>
                                             </section>
-                                            <a class="text-decoration-none ms-4 cart-delete" href="#"><i class="fa fa-trash-alt"></i> حذف از سبد</a>
+                                            <button
+                                                type="button"
+                                                data-id="{{ $cartItem->id }}"
+                                                class="btn btn-link text-decoration-none ms-4 cart-delete p-0 border-0">
+                                                <i class="fa fa-trash-alt"></i>
+                                                حذف از سبد
+                                            </button>
                                         </section>
                                     </section>
                                     <section class="align-self-end flex-shrink-1">
@@ -77,7 +83,7 @@
                     <section class="col-md-3">
                         <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                             <section class="d-flex justify-content-between align-items-center">
-                                <p class="text-muted">قیمت کالاها ({{ $cartItem->count() }})</p>
+                                <p class="text-muted">قیمت کالاها ({{ $cartItems->count() }})</p>
                                 <p class="text-muted" id="total_product_price">{{ priceFormat($totalProductPrice) }} تومان</p>
                             </section>
 
