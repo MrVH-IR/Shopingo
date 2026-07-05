@@ -7,7 +7,7 @@ class AddressController extends BaseController
 
     public function addressAndDelivery()
     {
-        dd(request()->all());
+        return view('customer.sales-process.address-and-delivery');
     }
 
     public function addAddress() {}

@@ -1,12 +1,13 @@
 <?php
 
-namespace Common\Controllers\SalesProcess\Middleware;
+namespace Common\Controllers\SalesProcess;
 
+use App\Models\Market\CartItem;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckProfileMiddleware
+class CheckProfile
 {
     /**
      * Handle an incoming request.
@@ -18,6 +19,7 @@ class CheckProfileMiddleware
         $user = auth()->user();
         if (
             collect([
+                $user->email,
                 $user->mobile,
                 $user->national_code,
                 $user->first_name,
@@ -29,6 +31,12 @@ class CheckProfileMiddleware
                 ->withErrors([
                     'message' => 'لطفاً پروفایل کاربری خود را تکمیل کنید.',
                 ]);
+        } elseif (
+            CartItem::query()->where('user_id', $user->id)->count() === 0
+        ) {
+            return redirect()->route('customer.home')->withErrors([
+                'message' => 'سبد خرید شما خالی می باشد'
+            ]);
         }
         return $next($request);
     }

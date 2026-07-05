@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Common\Controllers\SalesProcess\CheckProfile;
+use App\Http\Middleware\Common\BlockedUsersMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append([\App\Http\Middleware\Common\BlockedUsersMiddleware::class]);
+        $middleware->append([
+            BlockedUsersMiddleware::class
+        ]);
+        $middleware->alias([
+            'profile-complete' => CheckProfile::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

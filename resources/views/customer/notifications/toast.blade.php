@@ -28,3 +28,37 @@
         </section>
     </section>
 </section>
+
+@if($errors->any())
+    <section class="position-fixed top-0 start-0 p-4"
+             style="z-index: 1000000; max-width:420px; margin-top: 120px">
+        <section id="validationErrorToast" class="toast border-0 shadow-lg rounded-3"
+                 data-delay="6000"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true">
+            <section class="toast-body d-flex align-items-start bg-white rounded-3">
+                <i class="fa fa-exclamation-circle text-danger fs-4 me-3 mt-1"></i>
+                <section class="flex-grow-1">
+                    <h6 class="mb-2 fw-bold text-dark">مشکلی پیش آمده است</h6>
+                    <ul class="mb-3 text-muted ps-3">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </section>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </section>
+        </section>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastEl = document.getElementById('validationErrorToast');
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
+        });
+    </script>
+@endif

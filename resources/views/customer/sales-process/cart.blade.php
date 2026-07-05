@@ -4,7 +4,6 @@
 <title>سبد خرید شما</title>
 @endsection
 
-
 @section('content')
 
 <!-- start cart -->
@@ -126,7 +125,7 @@
 
 
                             <section class="">
-                                <button type="submit" onclick="document.getElementById('cart_items').submit();" href="address.html" class="btn btn-danger d-block">تکمیل فرآیند خرید</button>
+                                <button type="submit" onclick="document.getElementById('cart_items').submit();" class="btn btn-danger d-block">تکمیل فرآیند خرید</button>
                             </section>
                         </section>
                     </section>
