@@ -1,88 +1,71 @@
 <!-- start footer -->
-<footer class="footer">
-    <section class="container-xxl my-4">
-        <section class="row">
-            <section class="col">
-                <section class="footer-shop-features d-md-flex justify-content-md-around align-items-md-center">
+<footer class="bg-white border-t border-gray-100">
+    <section class="max-w-screen-xl mx-auto px-4 py-10">
 
-                    <section class="footer-shop-features-item">
-                        <img src="{{ asset('customer-assets/images/footer/1.png') }}" alt="">
-                        <section class="text-center">امکان تحویل اکسپرس</section>
-                    </section>
+        {{-- Trust / service features --}}
+        <section class="grid grid-cols-2 md:grid-cols-5 gap-6 pb-10 border-b border-gray-100">
+            <section class="flex flex-col items-center text-center gap-2">
+                <img src="{{ asset('customer-assets/images/footer/1.png') }}" alt="تحویل اکسپرس" class="h-10 w-10 object-contain">
+                <span class="text-sm text-gray-600">امکان تحویل اکسپرس</span>
+            </section>
+            <section class="flex flex-col items-center text-center gap-2">
+                <img src="{{ asset('customer-assets/images/footer/2.png') }}" alt="پرداخت در محل" class="h-10 w-10 object-contain">
+                <span class="text-sm text-gray-600">امکان پرداخت در محل</span>
+            </section>
+            <section class="flex flex-col items-center text-center gap-2">
+                <img src="{{ asset('customer-assets/images/footer/3.png') }}" alt="پشتیبانی ۲۴ ساعته" class="h-10 w-10 object-contain">
+                <span class="text-sm text-gray-600">۷ روز هفته، ۲۴ ساعته</span>
+            </section>
+            <section class="flex flex-col items-center text-center gap-2">
+                <img src="{{ asset('customer-assets/images/footer/4.png') }}" alt="ضمانت بازگشت" class="h-10 w-10 object-contain">
+                <span class="text-sm text-gray-600">۷ روز ضمانت بازگشت کالا</span>
+            </section>
+            <section class="flex flex-col items-center text-center gap-2 col-span-2 md:col-span-1">
+                <img src="{{ asset('customer-assets/images/footer/5.png') }}" alt="ضمانت اصالت کالا" class="h-10 w-10 object-contain">
+                <span class="text-sm text-gray-600">ضمانت اصل بودن کالا</span>
+            </section>
+        </section>
 
-                    <section class="footer-shop-features-item">
-                        <img src="{{ asset('customer-assets/images/footer/2.png') }}" alt="">
-                        <section class="text-center">امکان پرداخت در محل</section>
-                    </section>
+        {{-- Links + social --}}
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 py-10">
 
-                    <section class="footer-shop-features-item">
-                        <img src="{{ asset('customer-assets/images/footer/3.png') }}" alt="">
-                        <section class="text-center">7 روز هفته، 24 ساعته</section>
-                    </section>
+            <section>
+                <h3 class="text-gray-900 font-bold mb-3">راهنما و پشتیبانی</h3>
+                <ul class="space-y-2">
+                    <li><a href="{{ url('/privacy-policy') }}" class="text-gray-500 hover:text-gray-800 transition-colors">شرایط و قوانین</a></li>
+                    <li><a href="{{ url('/about-us') }}" class="text-gray-500 hover:text-gray-800 transition-colors">درباره ما</a></li>
+                    <li><a href="{{ url('/contact-us') }}" class="text-gray-500 hover:text-gray-800 transition-colors">تماس با ما</a></li>
+                    <li><a href="{{ url('/partnership') }}" class="text-gray-500 hover:text-gray-800 transition-colors">فرصت‌های شغلی</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-gray-800 transition-colors">سوالات متداول</a></li>
+                </ul>
+            </section>
 
-                    <section class="footer-shop-features-item">
-                        <img src="{{ asset('customer-assets/images/footer/4.png') }}" alt="">
-                        <section class="text-center">7 روز ضمانت بازگشت کالا</section>
-                    </section>
-
-                    <section class="footer-shop-features-item">
-                        <img src="{{ asset('customer-assets/images/footer/5.png') }}" alt="">
-                        <section class="text-center">ضمانت اصل بودن کالا</section>
-                    </section>
-
+            <section class="md:col-span-2">
+                <h3 class="text-gray-900 font-bold mb-3">با ما همراه باشید</h3>
+                <section class="flex items-center gap-5 text-xl">
+                    <a href="#" aria-label="اینستاگرام" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="تلگرام" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fab fa-telegram"></i></a>
+                    <a href="#" aria-label="واتساپ" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="توییتر" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="لینکدین" class="text-gray-400 hover:text-gray-700 transition-colors"><i class="fab fa-linkedin"></i></a>
                 </section>
             </section>
-        </section>
-        <section class="row">
-            <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a></section>
-            </section>
 
-            <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">شرایط و قوانین</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">تماس با ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">فرصت های شغلی</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a></section>
-            </section>
-
-            <section class="col-md">
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/privacy-policy') }}">شرایط و قوانین</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/about-us') }}">درباره ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/contact-us') }}">تماس با ما</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="{{ url('/partnership') }}">فرصت های شغلی</a></section>
-                <section><a class="text-decoration-none text-muted d-inline-block my-2" href="#">سوالات متداول</a></section>
-            </section>
-
-            <section class="col-md-5">
-                <section>
-                    <section class="text-dark fw-bold">با ما همراه باشید</section>
-                    <section class="my-3">
-                        <a href="#" class="text-muted text-decoration-none me-5"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-muted text-decoration-none me-5"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="text-muted text-decoration-none me-5"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="text-muted text-decoration-none me-5"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-muted text-decoration-none me-5"><i class="fab fa-linkedin"></i></a>
-                    </section>
-                </section>
-            </section>
-        </section>
-        <section class="row my-5">
-            <section class="col">
-                <section class="fw-bold">شرکت شاپینگو</section>
-                <section class="text-muted footer-intro">ما همواره تلاش می کنیم بهترین خدمات را به مشتریان آمازون ارائه کنیم. به شما کمک می کنیم بهترین انتخاب را داشته باشید و با اطمینان خاطر خرید را انجام بدهید و در کوتاه ترین زمان ممکن کالای خود را دریافت کنید. همچنین ما 24 ساعته در هفت روز هفته به مشتریان مان خدمات ارائه می دهیم. و 7 روز ضمانت برگشت برای تمامی کالاها داریم.</section>
-            </section>
         </section>
 
-        <section class="row border-top pt-4">
-            <section class="col">
-                <section class="text-muted footer-intro text-center">کلیه حقوق این وبسایت متعلق به شرکت شاپینگو می باشد.</section>
-            </section>
+        {{-- Company blurb --}}
+        <section class="py-6 border-t border-gray-100">
+            <h3 class="text-gray-900 font-bold mb-2">شرکت شاپینگو</h3>
+            <p class="text-gray-500 leading-7 text-sm max-w-3xl">
+                ما همواره تلاش می‌کنیم بهترین خدمات را به مشتریان آمازون ارائه کنیم. به شما کمک می‌کنیم بهترین انتخاب را داشته باشید و با اطمینان خاطر خرید را انجام بدهید و در کوتاه‌ترین زمان ممکن کالای خود را دریافت کنید. همچنین ما ۲۴ ساعته در هفت روز هفته به مشتریان‌مان خدمات ارائه می‌دهیم و ۷ روز ضمانت برگشت برای تمامی کالاها داریم.
+            </p>
         </section>
+
+        {{-- Copyright --}}
+        <section class="pt-6 border-t border-gray-100">
+            <p class="text-center text-sm text-gray-400">کلیه حقوق این وبسایت متعلق به شرکت شاپینگو می‌باشد.</p>
+        </section>
+
     </section>
 </footer>
 <!-- end footer -->

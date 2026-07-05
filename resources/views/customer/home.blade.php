@@ -6,298 +6,257 @@
 
 @section('content')
 
-        <section class="container-xxl my-4">
-            <section class="row">
-                <section class="col-md-8 pe-md-1 ">
-                    <section id="slideshow" class="owl-carousel owl-theme">
+    <section class="max-w-screen-xl mx-auto px-4 my-6">
+
+        {{-- Hero banners --}}
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <section class="md:col-span-2">
+                <section id="slideshow" class="owl-carousel owl-theme rounded-2xl overflow-hidden">
                     @forelse(($homePage['banners']['0'] ?? []) as $banner)
-                            <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="{{ urldecode($banner->link) }}"><img class="w-100 rounded-2 d-block h-auto" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
+                        <section class="item">
+                            <a class="block" href="{{ urldecode($banner->link) }}">
+                                <img class="w-full h-auto rounded-2xl" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}">
+                            </a>
+                        </section>
                     @empty
-                            <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img class="w-100 rounded-2 d-block h-auto" src="#" alt="">هیچ عکسی وجود ندارد</a></section>
+                        <section class="item flex items-center justify-center h-56 bg-gray-100 rounded-2xl text-gray-400 text-sm">
+                            هیچ عکسی وجود ندارد
+                        </section>
                     @endforelse
-                    </section>
                 </section>
-                <section class="col-md-4 ps-md-1 mt-2 mt-md-0">
+            </section>
+
+            <section class="flex flex-col gap-4">
                 @forelse(($homePage['banners']['1'] ?? []) as $banner)
-                        <section class="mb-2"><a href="{{ urldecode($banner->link) }}" class="d-block"><img class="w-100 rounded-2" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
+                    <a href="{{ urldecode($banner->link) }}" class="block rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <img class="w-full rounded-2xl" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}">
+                    </a>
                 @empty
-                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img class="w-100 rounded-2 d-block h-auto" src="#" alt="">هیچ عکسی وجود ندارد</a></section>
+                    <section class="flex items-center justify-center h-full min-h-[10rem] bg-gray-100 rounded-2xl text-gray-400 text-sm">
+                        هیچ عکسی وجود ندارد
+                    </section>
                 @endforelse
-                </section>
             </section>
         </section>
-        <!-- end slideshow -->
+    </section>
+    {{-- end slideshow --}}
 
 
+    {{-- Most viewed products --}}
+    <section class="max-w-screen-xl mx-auto px-4 mb-6">
+        <section class="bg-white rounded-2xl shadow-sm p-5 md:p-6">
+            <section class="flex justify-between items-center mb-5">
+                <h2 class="flex items-center gap-2 text-lg font-bold text-gray-900">
+                    <span class="w-1.5 h-5 rounded-full bg-indigo-500 inline-block"></span>
+                    پربازدیدترین کالاها
+                </h2>
+                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                    مشاهده همه <i class="fa fa-angle-left text-xs"></i>
+                </a>
+            </section>
 
-        <!-- start product lazy load -->
-        <section class="mb-3">
-            <section class="container-xxl" >
-                <section class="row">
-                    <section class="col">
-                        <section class="content-wrapper bg-white p-3 rounded-2">
-                            <!-- start vontent header -->
-                            <section class="content-header">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title">
-                                        <span>پربازدیدترین کالاها</span>
-                                    </h2>
-                                    <section class="content-header-link">
-                                        <a href="#">مشاهده همه</a>
+            <section class="lazyload-wrapper">
+                <section class="lazyload light-owl-nav owl-carousel owl-theme">
+                    @foreach($homePage['products'] as $product)
+                        <section class="item">
+                            <section class="lazyload-item-wrapper">
+                                <section class="group relative border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white">
+
+                                    {{-- Add to cart --}}
+                                    <a href="#"
+                                       class="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-600 hover:text-indigo-600 transition-colors"
+                                       data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید">
+                                        <i class="fa fa-cart-plus text-sm"></i>
+                                    </a>
+
+                                    {{-- Favorite --}}
+                                    @php $isFavorite = auth()->check() && $product->user->contains(auth()->id()); @endphp
+                                    <section class="absolute top-3 right-3 z-10">
+                                        <button
+                                            type="button"
+                                            class="favorite-btn w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center transition-colors"
+                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="left"
+                                            title="{{ $isFavorite ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                            <i class="fa fa-heart text-sm {{ $isFavorite ? 'text-rose-500' : 'text-gray-400' }}"></i>
+                                        </button>
                                     </section>
-                                </section>
-                            </section>
-                            <!-- start vontent header -->
-                            <section class="lazyload-wrapper" >
-                                <section class="lazyload light-owl-nav owl-carousel owl-theme">
 
-                                    @foreach($homePage['products'] as $product)
-                                    <section class="item">
-                                        <section class="lazyload-item-wrapper">
-                                            <section class="product">
-                                                <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                                @guest
-                                                    <section class="product-add-to-favorite">
-                                                        <button
-                                                            type="button"
-                                                            class="favorite-btn"
-                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="left"
-                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                        </button>
-                                                    </section>
-                                                @endguest
-                                                @auth
-                                                @if($product->user->contains(auth()->user()->id))
-                                                    <section class="product-add-to-favorite">
-                                                        <button
-                                                            type="button"
-                                                            class="favorite-btn"
-                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="left"
-                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                        </button>
-                                                    </section>
-                                                    @else
-                                                    <section class="product-add-to-favorite">
-                                                        <button
-                                                            type="button"
-                                                            class="favorite-btn"
-                                                            data-url="{{ route('customer.market.product.favorite', $product) }}"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="left"
-                                                            title="{{ $product->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                            <i class="fa fa-heart {{ $product->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                        </button>
-                                                    </section>
-                                                @endif
-                                                @endauth
-                                                <a class="product-link" href="{{ route('customer.market.product' , $product->slug) }}">
-                                                    <section class="product-image">
-                                                        <img class="" src="{{ asset($product->image['indexArray']['medium']) }}" alt="{{ $product->name }}">
-                                                    </section>
-                                                    <section class="product-name"><h3>{{ Str::limit($product->name , 21) }}</h3></section>
-                                                    <section class="product-price-wrapper">
-                                                        <section class="product-discount">
-                                                            <span class="product-old-price">165,000 </span>
-                                                            <span class="product-discount-amount">46%</span>
-                                                        </section>
-                                                        <section class="product-price">{{ priceFormat($product->price) }} تومان </section>
-                                                    </section>
-                                                    <section class="product-colors">
-                                                        @foreach($product->colors()->get() as $color)
-                                                            <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
-                                                        @endforeach
-                                                    </section>
-                                                </a>
+                                    <a class="block" href="{{ route('customer.market.product', $product->slug) }}">
+                                        <section class="bg-gray-50 p-6 flex items-center justify-center h-40">
+                                            <img class="max-h-full object-contain" src="{{ asset($product->image['indexArray']['medium']) }}" alt="{{ $product->name }}">
+                                        </section>
+
+                                        <section class="p-3">
+                                            <h3 class="text-sm text-gray-800 font-medium mb-2 truncate">{{ Str::limit($product->name, 21) }}</h3>
+                                            @if($product->activeAmazingSales())
+                                            <section class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs text-gray-400 line-through">{{ priceFormat($product->price) }}</span>
+                                                <span class="text-xs text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded-full">{{ priceFormat($product->activeAmazingSales()->percentage) }} %</span>
+                                            </section>
+                                            <section class="text-sm font-bold text-gray-900">{{ priceFormat($product->price - $product->price * ($product->activeAmazingSales()->percentage / 100)) }} تومان</section>
+                                            @else
+                                                <section class="text-sm font-bold text-gray-900">{{ priceFormat($product->price)}} تومان</section>
+                                            @endif
+                                            <section class="flex items-center gap-1 mt-2">
+                                                @foreach($product->colors()->get() as $color)
+                                                    <span class="w-3.5 h-3.5 rounded-full border border-gray-200" style="background-color: {{ $color->color }};"></span>
+                                                @endforeach
                                             </section>
                                         </section>
-                                    </section>
-                                    @endforeach
+                                    </a>
                                 </section>
                             </section>
                         </section>
-                    </section>
+                    @endforeach
                 </section>
             </section>
         </section>
-        <!-- end product lazy load -->
+    </section>
+    {{-- end product lazy load --}}
 
 
-
-        <!-- start ads section -->
-        <section class="mb-3">
-            <section class="container-xxl">
-                <!-- two column-->
-                <section class="row py-4">
-                    @forelse(($homePage['banners']['2'] ?? []) as $banner)
-                        <section class="col-12 col-md-6 mt-2 mt-md-0"><a href="{{ urldecode($banner->link) }}"><img class="d-block rounded-2 w-100" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}"></a></section>
-                    @empty
-                        <section class="col-12 col-md-6 mt-2 mt-md-0"><a href="#"><img class="d-block rounded-2 w-100" src="#" alt="#">هیچ عکسی وجود ندارد</a></section>
-                    @endforelse
+    {{-- Ads: two-column --}}
+    <section class="max-w-screen-xl mx-auto px-4 mb-6">
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @forelse(($homePage['banners']['2'] ?? []) as $banner)
+                <a href="{{ urldecode($banner->link) }}" class="block rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    <img class="w-full" src="{{ asset($banner->image) }}" alt="{{ $banner->title }}">
+                </a>
+            @empty
+                <section class="col-span-2 flex items-center justify-center h-40 bg-gray-100 rounded-2xl text-gray-400 text-sm">
+                    هیچ عکسی وجود ندارد
                 </section>
-
-            </section>
+            @endforelse
         </section>
-        <!-- end ads section -->
+    </section>
+    {{-- end ads section --}}
 
 
-        <!-- start product lazy load -->
-        <section class="mb-3">
-            <section class="container-xxl" >
-                <section class="row">
-                    <section class="col">
-                        <section class="content-wrapper bg-white p-3 rounded-2">
-                            <!-- start vontent header -->
-                            <section class="content-header">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title">
-                                        <span>پیشنهاد شاپینگو به شما</span>
-                                    </h2>
-                                    <section class="content-header-link">
-                                        <a href="#">مشاهده همه</a>
+    {{-- Offer products --}}
+    <section class="max-w-screen-xl mx-auto px-4 mb-6">
+        <section class="bg-white rounded-2xl shadow-sm p-5 md:p-6">
+            <section class="flex justify-between items-center mb-5">
+                <h2 class="flex items-center gap-2 text-lg font-bold text-gray-900">
+                    <span class="w-1.5 h-5 rounded-full bg-amber-500 inline-block"></span>
+                    پیشنهاد شاپینگو به شما
+                </h2>
+                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                    مشاهده همه <i class="fa fa-angle-left text-xs"></i>
+                </a>
+            </section>
+
+            <section class="lazyload-wrapper">
+                <section class="lazyload light-owl-nav owl-carousel owl-theme">
+                    @foreach($homePage['getOfferProducts'] as $offerProduct)
+                        <section class="item">
+                            <section class="lazyload-item-wrapper">
+                                <section class="group relative border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white">
+
+                                    <a href="#"
+                                       class="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-600 hover:text-indigo-600 transition-colors"
+                                       data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید">
+                                        <i class="fa fa-cart-plus text-sm"></i>
+                                    </a>
+
+                                    @php $isOfferFavorite = auth()->check() && $offerProduct->user->contains(auth()->id()); @endphp
+                                    <section class="absolute top-3 right-3 z-10">
+                                        <button
+                                            type="button"
+                                            class="favorite-btn w-8 h-8 rounded-full bg-white/90 shadow flex items-center justify-center transition-colors"
+                                            data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="left"
+                                            title="{{ $isOfferFavorite ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
+                                            <i class="fa fa-heart text-sm {{ $isOfferFavorite ? 'text-rose-500' : 'text-gray-400' }}"></i>
+                                        </button>
                                     </section>
-                                </section>
-                            </section>
-                            <!-- start vontent header -->
-                            <section class="lazyload-wrapper" >
-                                <section class="lazyload light-owl-nav owl-carousel owl-theme">
-                                    @foreach($homePage['getOfferProducts'] as $offerProduct)
-                                    <section class="item">
-                                        <section class="lazyload-item-wrapper">
-                                            <section class="product">
-                                                <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                                @guest
-                                                    <section class="product-add-to-favorite">
-                                                        <button
-                                                            type="button"
-                                                            class="favorite-btn"
-                                                            data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="left"
-                                                            title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                            <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                        </button>
-                                                    </section>
-                                                @endguest
-                                                @auth
-                                                    @if($offerProduct->user->contains(auth()->user()->id))
-                                                        <section class="product-add-to-favorite">
-                                                            <button
-                                                                type="button"
-                                                                class="favorite-btn"
-                                                                data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="left"
-                                                                title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                                <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                            </button>
-                                                        </section>
-                                                    @else
-                                                        <section class="product-add-to-favorite">
-                                                            <button
-                                                                type="button"
-                                                                class="favorite-btn"
-                                                                data-url="{{ route('customer.market.product.favorite', $offerProduct) }}"
-                                                                data-bs-toggle="tooltip"
-                                                                data-bs-placement="left"
-                                                                title="{{ $offerProduct->user->contains(auth()->id()) ? 'حذف از علاقه مندی' : 'افزودن به علاقه مندی' }}">
-                                                                <i class="fa fa-heart {{ $offerProduct->user->contains(auth()->id()) ? 'text-danger' : 'text-dark' }}"></i>
-                                                            </button>
-                                                        </section>
-                                                    @endif
-                                                @endauth
-                                                <a class="product-link" href="{{ route('customer.market.product' , $offerProduct->slug) }}">
-                                                    <section class="product-image">
-                                                        <img class="" src="{{ asset($offerProduct->image['indexArray']['medium']) }}" alt="{{ $offerProduct->name }}">
-                                                    </section>
-                                                    <section class="product-colors"></section>
-                                                    <section class="product-name"><h3>{{ Str::limit($offerProduct->name , 21) }}</h3></section>
-                                                    <section class="product-price-wrapper">
-                                                        <section class="product-discount">
-                                                            <span class="product-old-price">342,000 </span>
-                                                            <span class="product-discount-amount">22%</span>
-                                                        </section>
-                                                        <section class="product-price">{{ priceFormat($offerProduct->price) }} تومان</section>
-                                                    </section>
-                                                    <section class="product-colors">
-                                                        @foreach($offerProduct->colors()->get() as $color)
-                                                        <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
-                                                        @endforeach
-                                                    </section>
-                                                </a>
+
+                                    <a class="block" href="{{ route('customer.market.product', $offerProduct->slug) }}">
+                                        <section class="bg-gray-50 p-6 flex items-center justify-center h-40">
+                                            <img class="max-h-full object-contain" src="{{ asset($offerProduct->image['indexArray']['medium']) }}" alt="{{ $offerProduct->name }}">
+                                        </section>
+
+                                        <section class="p-3">
+                                            <h3 class="text-sm text-gray-800 font-medium mb-2 truncate">{{ Str::limit($offerProduct->name, 21) }}</h3>
+
+                                            @if($offerProduct->activeAmazingSales())
+                                                <section class="flex items-center gap-2 mb-1">
+                                                    <span class="text-xs text-gray-400 line-through">{{ priceFormat($offerProduct->price) }}</span>
+                                                    <span class="text-xs text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded-full">{{ priceFormat($offerProduct->activeAmazingSales()->percentage) }} %</span>
+                                                </section>
+                                                <section class="text-sm font-bold text-gray-900">{{ priceFormat($offerProduct->price - $offerProduct->price * ($offerProduct->activeAmazingSales()->percentage / 100)) }} تومان</section>
+                                            @else
+                                                <section class="text-sm font-bold text-gray-900">{{ priceFormat($offerProduct->price)}} تومان</section>
+                                            @endif
+
+                                            <section class="flex items-center gap-1 mt-2">
+                                                @foreach($offerProduct->colors()->get() as $color)
+                                                    <span class="w-3.5 h-3.5 rounded-full border border-gray-200" style="background-color: {{ $color->color }};"></span>
+                                                @endforeach
                                             </section>
                                         </section>
-                                    </section>
-                                    @endforeach
-
+                                    </a>
                                 </section>
                             </section>
+                        </section>
+                    @endforeach
+                </section>
+            </section>
+        </section>
+    </section>
+    {{-- end product lazy load --}}
+
+
+    @if($homePage['banners']['3'] ?? [])
+        {{-- Ads: one-column --}}
+        <section class="max-w-screen-xl mx-auto px-4 mb-6">
+            <section class="grid grid-cols-1 gap-4">
+                @forelse(($homePage['banners']['3'] ?? []) as $banner)
+                    <a href="{{ urldecode($banner->link) }}" class="block rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <img class="w-full" src="{{ asset($banner->image) }}" alt="{{ $banner->name }}">
+                    </a>
+                @empty
+                    <section class="flex items-center justify-center h-40 bg-gray-100 rounded-2xl text-gray-400 text-sm">
+                        هیچ عکسی وجود ندارد
+                    </section>
+                @endforelse
+            </section>
+        </section>
+        {{-- end ads section --}}
+    @endif
+
+
+    {{-- Featured brands --}}
+    <section class="max-w-screen-xl mx-auto px-4 mb-6">
+        <section class="bg-gray-900 rounded-2xl py-8 px-5 md:px-6">
+            <h2 class="flex items-center gap-2 text-lg font-bold text-white mb-6">
+                <span class="w-1.5 h-5 rounded-full bg-amber-400 inline-block"></span>
+                برندهای ویژه
+            </h2>
+
+            <section class="brands-wrapper">
+                <section class="brands dark-owl-nav owl-carousel owl-theme">
+                    <section class="item">
+                        <section class="flex items-center gap-4">
+                            @foreach($homePage['brands'] as $brand)
+                                <a href="#" class="flex-shrink-0 bg-white rounded-xl p-3 hover:opacity-90 transition-opacity">
+                                    <img class="h-12 w-auto object-contain" src="{{ asset($brand->image['indexArray']['large']) }}" alt="{{ $brand->persian_name }}">
+                                </a>
+                            @endforeach
                         </section>
                     </section>
                 </section>
             </section>
         </section>
-        <!-- end product lazy load -->
-
-        @if($homePage['banners']['3'] ?? [])
-            <!-- start ads section -->
-            <section class="mb-3">
-                <section class="container-xxl">
-                    <!-- one column -->
-                    <section class="row py-4">
-                        @forelse(($homePage['banners']['3'] ?? []) as $banner)
-                            <section class="col"><a href="{{ urldecode($banner->link) }}"><img class="d-block rounded-2 w-100" src="{{ asset($banner->image) }}" alt="{{ $banner->name }}"></a></section>
-                        @empty
-                            <section class="col"><a href="#"><img class="d-block rounded-2 w-100" src="#" alt="#">هیچ عکسی وجود ندارد</a></section>
-                        @endforelse
-                    </section>
-
-                </section>
-            </section>
-            <!-- end ads section -->
-        @endif
-
-
-
-
-        <!-- start brand part-->
-        <section class="brand-part mb-4 py-4">
-            <section class="container-xxl">
-                <section class="row">
-                    <section class="col">
-                        <!-- start vontent header -->
-                        <section class="content-header">
-                            <section class="d-flex align-items-center">
-                                <h2 class="content-header-title">
-                                    <span>برندهای ویژه</span>
-                                </h2>
-                            </section>
-                        </section>
-                        <!-- start vontent header -->
-                        <section class="brands-wrapper py-4" >
-                            <section class="brands dark-owl-nav owl-carousel owl-theme">
-                                <section class="item">
-                                    <section class="brand-item">
-                                        @foreach($homePage['brands'] as $brand)
-                                            <a href="#"><img class="rounded-2" src="{{ asset($brand->image['indexArray']['large']) }}" alt="{{ $brand->persian_name }}"></a>
-                                        @endforeach
-                                    </section>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-            </section>
-        </section>
+    </section>
+    {{-- end brand part --}}
 
     @include('customer.notifications.toast')
 
 @endsection
+
 @section('script')
     <script src="{{ asset('customer-assets/js/addToFavorite.js') }}" crossorigin="anonymous"></script>
 @endsection
