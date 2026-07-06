@@ -57,7 +57,7 @@
 
             <section class="lazyload-wrapper">
                 <section class="lazyload light-owl-nav owl-carousel owl-theme">
-                    @foreach($homePage['products'] as $product)
+                    @forelse($homePage['products'] as $product)
                         <section class="item">
                             <section class="lazyload-item-wrapper">
                                 <section class="group relative border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow bg-white">
@@ -109,7 +109,13 @@
                                 </section>
                             </section>
                         </section>
-                    @endforeach
+                    @empty
+                        <section>
+                            <div class="alert alert-info">
+                                <p>هیچ محصولی برای نمایش وجود ندارد</p>
+                            </div>
+                        </section>
+                    @endforelse
                 </section>
             </section>
         </section>

@@ -21,7 +21,7 @@ class CustomerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('customer.layouts.header', function ($view) {
+        View::composer(['customer.layouts.header' , 'customer.sales-process.cart-modal'], function ($view) {
            $view->with('cartItems', CartItem::where('user_id', auth()->id())->get());
         });
     }

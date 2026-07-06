@@ -69,6 +69,7 @@ Route::prefix('market')
         Route::middleware('profile-complete')->group(function () {
             Route::get('address-and-delivery', [AddressController::class , 'addressAndDelivery'])->name('address-and-delivery');
             Route::post('/add-address', [AddressController::class , 'addAddress'])->name('add-address');
+            Route::get('/get-cities/{province}', [AddressController::class , 'getCities'])->name('get-cities');
         });
         Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
         Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');

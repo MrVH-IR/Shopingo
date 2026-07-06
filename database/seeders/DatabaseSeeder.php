@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
         Post::factory()->count(10)->state(['status' => 0])->create();
         FAQ::factory(10)->count(10)->state(['status' => 0])->create();
         Page::factory()->count(10)->state(['status' => 0])->create();
-        Brand::factory()->count(10)->create();
+//        Brand::factory()->count(10)->create(); // Results in Error Bc of Image
         ProductCategory::factory()->count(10)->create();
-        Product::factory()->count(10)->create();
+//        Product::factory()->count(10)->create(); // Results in Error Bc of Image
         Comment::factory()->count(10)->forProduct()->create();
         Comment::factory()->count(10)->forPost()->create();
         Email::factory()->count(10)->create(); // You Can Activate This Instead Of Seeder

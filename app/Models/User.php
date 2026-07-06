@@ -9,6 +9,7 @@ use App\Models\User\Role;
 use App\Models\Content\Comment;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketAdmin;
+use Common\Models\Address;
 use Common\Models\BlockedUser;
 use Common\Models\UserCyberData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,9 +73,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-//    protected $appends = [
-//        'profile_photo_path',
-//    ];
+    protected $appends = [
+        'profile_photo_path',
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -132,5 +133,10 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 }
