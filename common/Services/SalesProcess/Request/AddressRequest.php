@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess\Request;
 
+use Common\Controllers\SalesProcess\Rule\PostalCode;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,18 +24,24 @@ class AddressRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'province_id' => 'required|exists:provinces,id',
             'city_id' => 'required|exists:cities,id',
             'address' => 'required|string|min:3|max:1500',
-            'postal_code' => ['required' , new PostalCode(), 'min:7' , 'max:22'],
+            'postal_code' => ['required', new PostalCode(), 'min:7', 'max:22'],
             'no' => 'required|numeric',
             'unit' => 'required|numeric',
             'receiver' => 'sometimes|in:on,off',
             'recipient_first_name' => 'required_if:receiver,off',
             'recipient_last_name' => 'required_if:receiver,off',
-            'mobile' => 'required_if:receiver,off|numeric|min:11|max:11',
+            'mobile' => 'required_if:receiver,off',
         ];
+
+        if ($this->isMethod('put') || $this->isMethod('patch')) {
+            $rules['id'] = 'required|exists:addresses,id';
+        }
+
+        return $rules;
     }
 
     public function messages(): array
@@ -66,9 +73,6 @@ class AddressRequest extends FormRequest
             'recipient_last_name.required_if' => 'وارد کردن نام خانوادگی گیرنده هنگام فعال بودن گزینه "گیرنده" الزامی است',
 
             'mobile.required_if' => 'وارد کردن شماره موبایل گیرنده هنگام فعال بودن گزینه "گیرنده" الزامی است',
-            'mobile.numeric' => 'شماره موبایل باید عدد باشد',
-            'mobile.min' => 'شماره موبایل باید ۱۱ رقم باشد',
-            'mobile.max' => 'شماره موبایل باید ۱۱ رقم باشد',
         ];
     }
 }

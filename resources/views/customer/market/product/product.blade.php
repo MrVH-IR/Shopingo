@@ -25,40 +25,57 @@
                         </section>
                     </section>
                     <section class="row mt-4">
-                        <!-- start image gallery -->
-                        <section class="col-md-4">
-                            <section class="content-wrapper bg-white rounded-4 shadow-sm p-4">
-                                <section class="product-gallery">
+                        <!-- Product Gallery -->
+                        <section class="col-lg-4 mb-4">
+                            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5">
+                                {{-- Main Image --}}
+                                <div
+                                    class="relative flex items-center justify-center rounded-2xl bg-gray-50 h-[420px] overflow-hidden group">
+                                    <img
+                                        id="mainProductImage"
+                                        src="{{ asset($product->image['indexArray']['medium']) }}"
+                                        alt="{{ $product->name }}"
+                                        class="max-h-[340px] max-w-full object-contain transition duration-300 group-hover:scale-105">
+                                    {{-- Zoom Icon --}}
+                                    <button
+                                        id="zoomImage"
+                                        type="button"
+                                        class="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition">
+
+                                        <i class="fas fa-search-plus"></i>
+                                    </button>
+                                </div>
+                                {{-- Divider --}}
+                                <div class="border-t border-gray-100 my-5"></div>
+                                {{-- Thumbnails --}}
+                                <div class="grid grid-cols-4 sm:grid-cols-5 gap-3">
+
                                     {{-- Main Image --}}
-                                    <div class="product-gallery-selected-image">
+                                    <button
+                                        type="button"
+                                        class="gallery-thumb border-2 border-blue-500 rounded-xl bg-gray-50 p-2 transition hover:border-blue-500">
                                         <img
-                                            id="mainProductImage"
-                                            src="{{ asset($product->image['indexArray']['medium']) }}"
-                                            alt="{{ $product->name }}"
-                                        >
-                                    </div>
-                                    {{-- Thumbnails --}}
-                                    <div class="product-gallery-thumbs">
-                                        {{-- Product Image --}}
-                                        <img
-                                            class="product-gallery-thumb active"
                                             src="{{ asset($product->image['indexArray']['medium']) }}"
                                             data-image="{{ asset($product->image['indexArray']['medium']) }}"
-                                            alt="{{ $product->name }}"
-                                        >
-                                        @foreach($product->images as $image)
+                                            class="w-full h-16 object-contain"
+                                            alt="{{ $product->name }}">
+                                    </button>
+                                    @foreach($product->images as $image)
+                                        <button
+                                            type="button"
+                                            class="gallery-thumb border-2 border-transparent rounded-xl bg-gray-50 p-2 transition hover:border-blue-500">
                                             <img
-                                                class="product-gallery-thumb"
                                                 src="{{ asset($image->image['indexArray']['medium']) }}"
                                                 data-image="{{ asset($image->image['indexArray']['medium']) }}"
-                                                alt="{{ $product->name }}"
-                                            >
-                                        @endforeach
-                                    </div>
-                                </section>
-                            </section>
+                                                class="w-full h-16 object-contain"
+                                                alt="{{ $product->name }}">
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </section>
-                        <!-- end image gallery -->
+                        <!-- END Product Gallery -->
+
 
                         <!-- start product info -->
                         <section class="col-md-5">
@@ -627,6 +644,7 @@
     </section>
     <!-- end description, features and comments -->
 
+    @include('customer.market.product.zoom-modal')
     @include('customer.notifications.toast')
 
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\Market;
+namespace Common\Services\Market;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content\Comment;

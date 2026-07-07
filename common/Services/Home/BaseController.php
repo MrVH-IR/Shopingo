@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\Home;
+namespace Common\Services\Home;
 
 abstract class BaseController {
     //

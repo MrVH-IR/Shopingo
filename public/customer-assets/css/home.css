@@ -1,0 +1,39 @@
+.brands .owl-nav{
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+}
+
+.brands .owl-nav button{
+    width:46px;
+    height:46px;
+    border-radius:9999px !important;
+    background:#2563eb !important;
+    color:white !important;
+    font-size:18px !important;
+    transition:.25s;
+    box-shadow:0 6px 18px rgba(37,99,235,.25);
+}
+
+.brands .owl-nav button:hover{
+    background:#1d4ed8 !important;
+    transform:translateY(-2px);
+}
+
+.brands .owl-nav button span{
+    line-height:46px;
+}
+
+.brands .owl-stage{
+    display:flex;
+    align-items:stretch;
+}
+
+.brands .owl-item{
+    display:flex;
+}
+
+.brands .item{
+    width:100%;
+}

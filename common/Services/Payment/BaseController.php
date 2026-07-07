@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\Payment;
 
 abstract class BaseController
 {

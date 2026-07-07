@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-use Common\Controllers\{
+use Common\Services\{
     Home\HomeController,
     Market\ProductController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
-    SalesProcess\CheckProfile,
-    SalesProcess\ProfileController
+    SalesProcess\ProfileController,
+    Payment\PaymentController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +70,8 @@ Route::prefix('market')
             Route::get('address-and-delivery', [AddressController::class , 'addressAndDelivery'])->name('address-and-delivery');
             Route::post('/add-address', [AddressController::class , 'addAddress'])->name('add-address');
             Route::get('/get-cities/{province}', [AddressController::class , 'getCities'])->name('get-cities');
+            Route::put('/update-address', [AddressController::class , 'updateAddress'])->name('update-address');
+            Route::get('/payment', [PaymentController::class , 'payment'])->name('payment');
         });
         Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
         Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');

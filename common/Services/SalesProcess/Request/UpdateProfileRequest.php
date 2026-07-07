@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess\Request;
 
+use Common\Controllers\SalesProcess\Rule\CheckNationalCode;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class UpdateProfileRequest extends FormRequest
 {

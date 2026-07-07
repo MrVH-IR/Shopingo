@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess;
 
 
 use App\Models\Market\CartItem;
-use Illuminate\Http\Request;
+use Common\Services\SalesProcess\Request\UpdateProfileRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends BaseController

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\Market;
+namespace Common\Services\Market;
 
 abstract class BaseController
 {

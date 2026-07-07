@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\Home\Action;
+namespace Common\Services\Home\Action;
 
 use App\Models\Content\Banner;
 use App\Models\Market\Brand;

@@ -12,7 +12,7 @@
                 <a href="{{ route('admin.home') }}">خانه</a>
             </li>
             <li class="breadcrumb-item font-size-12">
-                <a href="{{ route('admin.market.product.index') }}">بخش ویترین</a>
+                <a href="{{ route('admin.market.product.index') }}">بخش کالا ها</a>
             </li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page">
                 گارانتی

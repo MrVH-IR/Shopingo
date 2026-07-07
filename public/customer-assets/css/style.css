@@ -185,71 +185,54 @@ body {
 /* end header profile link part */
 
 /* start cart */
-.header-cart-link {
-    font-size: 1.2rem;
-    border: none;
-    box-shadow: none;
+.header-cart{
+    position:relative;
 }
 
-.header-cart-link  span{
-    font-size: 0.5rem;
-    padding-top: 0.4rem;
+.header-cart-dropdown{
+
+    position:absolute;
+    top:calc(100% + 12px);
+    left:0;
+
+    width:380px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.25s;
+
+    z-index:1000;
+
 }
 
-.header-cart:hover .header-cart-link, .header-cart-link:focus, .header-cart-link:hover {
-    outline: none;
-    background-color: #f7f7f7;
-    border: none;
-    box-shadow: none;
-}
+/* این قسمت مهمه */
+.header-cart-dropdown::before{
 
-.header-cart-dropdown {
-    position: absolute;
-    top: 125%;
-    left: 0;
-    width: 240px;
-    max-height: 320px;
-    overflow: auto;
-    background-color: #FFFFFF;
-    visibility: hidden;
-    z-index: 9999;
-    padding: 0.3rem;
-    font-size: 0.8rem;
-}
+    content:"";
 
-.header-cart {
+    position:absolute;
+
+    top:-18px;
+
+    left:0;
+
+    width:100%;
+
+    height:18px;
 
 }
 
 .header-cart:hover .header-cart-dropdown{
-    visibility: visible;
-    box-shadow: 0rem 0rem 0.2rem 0.1rem rgba(0,0,0,0.1);
-    border-radius: 0.25rem;
-}
 
+    opacity:1;
 
+    visibility:visible;
 
-.header-cart-dropdown-body {
-    padding: 0.6rem 0.3rem;
-}
+    transform:translateY(0);
 
-.header-cart-dropdown-body-item {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #efefef;
-}
-
-.header-cart-dropdown-body-item:last-of-type {
-    border: none;
-}
-
-.header-cart-dropdown-body-item img{
-    max-width: 2rem;
-    max-height: 2rem;
-    margin-left: 0.4rem;
-}
-
-.header-cart-dropdown-footer {
-    font-size: 0.7rem;
 }
 
 /* end cart */

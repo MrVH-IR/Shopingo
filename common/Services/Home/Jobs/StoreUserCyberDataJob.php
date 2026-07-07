@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\Home\Jobs;
+namespace Common\Services\Home\Jobs;
 
 use Common\Controllers\Home\Action\GetUserController;
 use Common\Models\UserCyberData;

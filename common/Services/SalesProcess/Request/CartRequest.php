@@ -1,8 +1,7 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess\Request;
 
-use AllowDynamicProperties;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CartRequest extends FormRequest
@@ -12,9 +11,8 @@ class CartRequest extends FormRequest
      */
     public function authorize(): bool
     {
-//        if (auth()->check()) return true;
-//        else return false;
-        return true;
+        if (auth()->check()) return true;
+        else return false;
     }
 
     /**

@@ -38,7 +38,11 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 git clone https://github.com/MrVH-IR/Shopingo.git
 cd Shopingo
 ```
-
+##
+Change The timezone if you are not Inside Iran
+```php
+    'timezone' => 'Asia/Tehran',
+```
 ## Install dependencies
 ```shell
 composer install

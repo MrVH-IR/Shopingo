@@ -1,9 +1,10 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess;
 
 use App\Models\Market\CartItem;
 use App\Models\Market\Product;
+use Common\Services\SalesProcess\Request\CartRequest;
 use HttpException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;

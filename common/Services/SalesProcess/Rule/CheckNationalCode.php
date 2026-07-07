@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess\Rule;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;

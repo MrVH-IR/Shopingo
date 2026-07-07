@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Middleware\Common\BlockedUsersMiddleware;
+use Common\Services\SalesProcess\Middleware\CheckProfile;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Common\Controllers\SalesProcess\CheckProfile;
-use App\Http\Middleware\Common\BlockedUsersMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(

@@ -5,153 +5,32 @@
         <section class="container-xxl">
             <section class="d-md-flex justify-content-md-between align-items-md-center py-3">
 
-                {{-- Logo + mobile menu toggle --}}
-                <section class="d-flex justify-content-between align-items-center d-md-block">
-                    <a class="text-decoration-none" href="{{ route('customer.home') }}">
-                        <div id="logo-spinner" class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <img
-                            id="logo-image"
-                            src="{{ asset('customer-assets/images/logo/android-chrome-512x512.png') }}"
-                            alt="logo"
-                            class="d-none logo-img"
-                        >
-                    </a>
-                </section>
+                @include('customer.layouts.header.logo')
 
                 {{-- Search box --}}
-                <section class="mt-3 mt-md-auto search-wrapper">
-                    <section class="search-box">
-                        <section class="search-textbox">
-                            <span><i class="fa fa-search"></i></span>
-                            <input id="search" type="text" placeholder="جستجو ..." autocomplete="off">
-                        </section>
-
-                        <section class="search-result visually-hidden">
-                            <section class="search-result-title">
-                                نتایج جستجو برای <span class="search-words">"موبایل شیا"</span>
-                                <span class="search-result-type">در دسته بندی ها</span>
-                            </section>
-                            <section class="search-result-item">
-                                <a class="text-decoration-none" href="#"><i class="fa fa-link"></i> دسته موبایل و وسایل جانبی</a>
-                            </section>
-
-                            <section class="search-result-title">
-                                نتایج جستجو برای <span class="search-words">"موبایل شیا"</span>
-                                <span class="search-result-type">در برندها</span>
-                            </section>
-                            <section class="search-result-item">
-                                <a class="text-decoration-none" href="#"><i class="fa fa-link"></i> برند شیائومی</a>
-                            </section>
-                            <section class="search-result-item">
-                                <a class="text-decoration-none" href="#"><i class="fa fa-link"></i> برند توشیبا</a>
-                            </section>
-                            <section class="search-result-item">
-                                <a class="text-decoration-none" href="#"><i class="fa fa-link"></i> برند شیانگ پینگ</a>
-                            </section>
-
-                            <section class="search-result-title">
-                                نتایج جستجو برای <span class="search-words">"موبایل شیا"</span>
-                                <span class="search-result-type">در کالاها</span>
-                            </section>
-                            <section class="search-result-item">
-                                <span class="search-no-result">موردی یافت نشد</span>
-                            </section>
-                        </section>
-                    </section>
-                </section>
+                @include('customer.layouts.header.search-box')
 
                 {{-- User menu + cart --}}
                 <section class="mt-3 mt-md-auto text-end">
 
                     {{-- User account --}}
-                    @auth
-                        <section class="d-inline px-3">
-                            <button class="btn btn-link text-decoration-none text-dark dropdown-toggle profile-button"
-                                    type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                            </button>
-                            <section class="dropdown-menu dropdown-menu-end custom-drop-down" aria-labelledby="dropdownMenuButton1">
-                                <section><a class="dropdown-item" href="my-profile.html"><i class="fa fa-user-circle"></i> پروفایل کاربری</a></section>
-                                <section><a class="dropdown-item" href="my-orders.html"><i class="fa fa-newspaper"></i> سفارشات</a></section>
-                                <section><a class="dropdown-item" href="my-favorites.html"><i class="fa fa-heart"></i> لیست علاقه مندی</a></section>
-                                <section><hr class="dropdown-divider"></section>
-                                <section>
-                                    <button class="dropdown-item" form="logout-form"><i class="fa fa-sign-out-alt"></i> خروج</button>
-                                </section>
-                                <form action="{{ route('auth.customer.logout') }}" id="logout-form" method="POST">
-                                    @csrf
-                                </form>
-                            </section>
-                        </section>
-                    @endauth
-
-                    @guest
-                        <a href="{{ route('auth.customer.login-register-form') }}" class="btn-link text-decoration-none text-dark profile-button">
-                            <i class="fa fa-user-lock"></i>
-                        </a>
-                    @endguest
-
+                    @include('customer.layouts.header.account-box')
                     {{-- Cart --}}
-                    <section class="header-cart d-inline ps-3 border-start position-relative">
-                        <a class="btn btn-link position-relative text-dark header-cart-link"
-                           href="{{ auth()->check() ? 'javascript:void(0)' : route('auth.customer.login-register') }}">
-                            <i class="fa fa-shopping-cart"></i>
+                    <section class="header-cart position-relative d-inline-block">
+                        <a
+                            href="{{ auth()->check() ? 'javascript:void(0)' : route('auth.customer.login-register-form') }}"
+                            class="header-cart-link position-relative">
+                            <i class="fas fa-shopping-cart"></i>
                             @auth
-                                <span style="top: 80%;" class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">
-                                    {{ $cartItems->count() }}
-                                </span>
+                                @if($cartItems->count())
+                                    <span class="badge rounded-pill bg-danger">
+                                        {{ $cartItems->count() }}
+                                    </span>
+                                @endif
                             @endauth
+
                         </a>
-
-                        @auth
-                            @forelse($cartItems as $cartItem)
-                                <section class="header-cart-dropdown">
-                                    <section class="border-bottom d-flex justify-content-between p-2">
-                                        <span class="text-muted">{{ $cartItem->count() }} کالا</span>
-                                        <a class="text-decoration-none text-info" href="{{ route('customer.sales-process.cart') }}">مشاهده سبد خرید</a>
-                                    </section>
-                                    <section class="header-cart-dropdown-body">
-                                        <section class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
-                                            <img class="flex-shrink-1" src="{{ asset($cartItem->product->image['indexArray']['medium']) }}" alt="عکس محصول">
-                                            <section class="w-100 text-truncate">
-                                                <a class="text-decoration-none text-dark" href="{{ route('customer.market.product', $cartItem->product->slug) }}">
-                                                    {{ $cartItem->product->name }}
-                                                </a>
-                                            </section>
-                                        </section>
-                                    </section>
-                                    <section class="header-cart-dropdown-footer border-top d-flex justify-content-between align-items-center p-2">
-                                        <section>
-                                            <section>مبلغ قابل پرداخت</section>
-                                            <section>{{ priceFormat($cartItem->cartItemFinalPrice()) }} تومان</section>
-                                        </section>
-                                        <section>
-                                            <a class="btn btn-danger btn-sm d-block" href="{{ route('customer.sales-process.cart') }}">ثبت سفارش</a>
-                                        </section>
-                                    </section>
-                                </section>
-                            @empty
-                                <section class="header-cart-dropdown">
-                                    <section class="border-bottom d-flex justify-content-between p-2">
-                                        <span class="text-muted">سبد خرید شما خالی می‌باشد.</span>
-                                    </section>
-                                </section>
-                            @endforelse
-                        @endauth
-
-                        @guest
-                            <section class="header-cart-dropdown">
-                                <section class="border-bottom d-flex justify-content-between p-2">
-                                    <span class="text-muted">برای دیدن سبد خرید وارد حساب کاربری خود شوید</span>
-                                    <a href="{{ route('auth.customer.login-register') }}">
-                                        <i class="fa fa-lock"></i>
-                                    </a>
-                                </section>
-                            </section>
-                        @endguest
+                        @include('customer.layouts.header.cart-dropdown')
                     </section>
 
                 </section>

@@ -106,3 +106,44 @@ $(document).ready(function() {
     });
 });
 //end product introduction, features and comment
+const mainImage = document.getElementById("mainProductImage");
+
+const imageModal = document.getElementById("imageModal");
+
+const modal = new bootstrap.Modal(imageModal);
+
+document.getElementById("zoomImage").addEventListener("click", function () {
+
+    document.getElementById("modalImage").src = mainImage.src;
+
+    modal.show();
+
+});
+document.querySelectorAll('.gallery-thumb').forEach(function (button) {
+
+    button.addEventListener('click', function () {
+
+        document.querySelectorAll('.gallery-thumb').forEach(function (item) {
+
+            item.classList.remove(
+                'border-blue-500',
+                'shadow-lg'
+            );
+
+            item.classList.add('border-transparent');
+
+        });
+
+        this.classList.remove('border-transparent');
+
+        this.classList.add(
+            'border-blue-500',
+            'shadow-lg'
+        );
+
+        document.getElementById('mainProductImage').src =
+            this.querySelector('img').dataset.image;
+
+    });
+
+});

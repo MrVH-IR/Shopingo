@@ -2,367 +2,203 @@
 
 @section('head-tag')
     <title>مدیریت آدرس ها</title>
-    <style>
-        /* استایل‌های اضافی برای Tailwind */
-        .address-add-button {
-            @apply w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2 border-0;
-        }
-
-        .address-add-button i {
-            @apply text-lg;
-        }
-
-        .form-control:focus, .form-select:focus {
-            @apply shadow-none;
-        }
-
-        /* انیمیشن برای چک‌باکس */
-        .form-switch .form-check-input {
-            width: 2.5rem;
-            height: 1.3rem;
-            cursor: pointer;
-        }
-
-        .form-switch .form-check-input:checked {
-            background-color: #22c55e;
-            border-color: #22c55e;
-        }
-
-        /* استایل خطاها */
-        .text-danger {
-            @apply text-red-500 text-xs mt-1;
-        }
-
-        /* انیمیشن مودال */
-        .modal.fade .modal-dialog {
-            transform: scale(0.8) translateY(-20px);
-            transition: all 0.3s ease;
-        }
-
-        .modal.show .modal-dialog {
-            transform: scale(1) translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('customer-assets/css/address-and-delivery.css') }}"></link>
 @endsection
 
 @section('content')
-    <!-- start cart -->
     <section class="mb-4">
-        <section class="container-xxl" >
+        <section class="container-xxl">
             <section class="row">
                 <section class="col">
-                    <!-- start vontent header -->
-                    <section class="content-header">
-                        <section class="d-flex justify-content-between align-items-center">
-                            <h2 class="content-header-title">
-                                <span>تکمیل اطلاعات ارسال کالا (آدرس گیرنده، مشخصات گیرنده، نحوه ارسال) </span>
-                            </h2>
-                            <section class="content-header-link">
-                                <!--<a href="#">مشاهده همه</a>-->
-                            </section>
-                        </section>
+
+                    <!-- هدر صفحه -->
+                    <section class="mb-4">
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fas fa-truck-fast text-blue-600"></i>
+                            تکمیل اطلاعات ارسال کالا
+                        </h2>
+                        <p class="text-sm text-gray-500 mt-1">آدرس گیرنده، مشخصات گیرنده و نحوه‌ی ارسال را مشخص کنید</p>
                     </section>
 
                     <section class="row mt-4">
                         <section class="col-md-9">
-                            <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
-                                <!-- start vontent header -->
-                                <section class="content-header mb-3">
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <h2 class="content-header-title content-header-title-small">
-                                            انتخاب آدرس و مشخصات گیرنده
-                                        </h2>
-                                        <section class="content-header-link">
-                                            <!--<a href="#">مشاهده همه</a>-->
-                                        </section>
-                                    </section>
-                                </section>
+                            <!-- ============ بخش انتخاب آدرس ============ -->
+                            <section class="bg-white p-4 md:p-5 rounded-2xl shadow-sm mb-4">
 
-                                <section class="address-alert alert alert-primary d-flex align-items-center p-2" role="alert">
-                                    <i class="fa fa-info-circle flex-shrink-0 me-2"></i>
-                                    <secrion>
-                                        پس از ایجاد آدرس، آدرس را انتخاب کنید.
-                                    </secrion>
-                                </section>
+                                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-location-dot text-blue-600"></i>
+                                    انتخاب آدرس و مشخصات گیرنده
+                                </h3>
 
+                                <div class="flex items-start gap-2 bg-blue-50 text-blue-800 text-sm rounded-xl p-3 mb-4 border border-blue-100">
+                                    <i class="fa fa-info-circle mt-0.5"></i>
+                                    <span>پس از ایجاد آدرس، آدرس را انتخاب کنید.</span>
+                                </div>
 
-                                <section class="address-select">
-                                    @foreach(auth()->user()->addresses()->get() as $address)
-                                        <input type="radio" name="address" value="2" id="a2"/>
-                                        <label for="a2" class="address-wrapper mb-2 p-2">
-                                            <section class="mb-2">
-                                                <i class="fa fa-map-marker-alt mx-1"></i>
-                                                آدرس : {{ $address->address }}
-                                            </section>
-                                            <section class="mb-2">
-                                                <i class="fa fa-user-tag mx-1"></i>
-                                                گیرنده : {{ $address->fullName }}
-                                            </section>
-                                            <section class="mb-2">
-                                                <i class="fa fa-mobile-alt mx-1"></i>
-                                                موبایل گیرنده : {{ $address->mobile }}
-                                            </section>
-                                            <a class="" href="#"><i class="fa fa-edit"></i> ویرایش آدرس</a>
-                                            <span class="address-selected">کالاها به این آدرس ارسال می شوند</span>
-                                        </label>
-                                    @endforeach
-                                    @if($errors->any())
+                                @if($errors->any())
+                                    <div class="mb-4 space-y-2">
                                         @foreach($errors->all() as $error)
-                                            <ul>
-                                                <li>
-                                                    <div class="alert alert-danger">
-                                                        {{ $error }}
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <div class="flex items-center gap-2 bg-red-50 text-red-700 text-sm rounded-xl p-3 border border-red-100">
+                                                <i class="fa fa-circle-exclamation"></i>
+                                                <span>{{ $error }}</span>
+                                            </div>
                                         @endforeach
-                                    @else
+                                    </div>
+                                @endif
 
-                                    @endif
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                    @foreach(auth()->user()->addresses as $address)
 
-                                        <section class="address-add-wrapper">
-                                            <!-- دکمه ایجاد آدرس جدید -->
-                                            <button class="address-add-button" type="button" data-bs-toggle="modal" data-bs-target="#add-address">
-                                                <i class="fas fa-plus-circle"></i> ایجاد آدرس جدید
-                                            </button>
+                                        <input
+                                            type="radio"
+                                            name="address"
+                                            id="address-{{ $address->id }}"
+                                            value="{{ $address->id }}"
+                                            form="checkout-form"
+                                            class="address-radio"
+                                        >
 
-                                            <!-- مودال ایجاد آدرس جدید -->
-                                            <section class="modal fade" id="add-address" tabindex="-1" aria-labelledby="add-address-label" aria-hidden="true">
-                                                <section class="modal-dialog modal-dialog-centered modal-lg">
-                                                    <section class="modal-content border-0 shadow-lg rounded-4">
-                                                        <!-- هدر مودال -->
-                                                        <section class="modal-header bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-4 px-5 py-3 border-0">
-                                                            <h5 class="modal-title fw-bold" id="add-address-label">
-                                                                <i class="fas fa-map-marker-alt me-2"></i> ایجاد آدرس جدید
-                                                            </h5>
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </section>
+                                        <label
+                                            for="address-{{ $address->id }}"
+                                            class="address-card">
 
-                                                        <!-- فرم -->
-                                                        <form class="row g-3 p-4" action="{{ route('customer.sales-process.add-address') }}" method="POST">
-                                                            @csrf
+                                        <span class="check-icon">
+                                            <i class="fa fa-check"></i>
+                                        </span>
 
-                                                            <!-- بدنه مودال -->
-                                                            <section class="modal-body p-0">
-                                                                <!-- کارت اطلاعات آدرس -->
-                                                                <div class="bg-blue-50/50 rounded-3 p-4 mb-4 border border-blue-100">
-                                                                    <h6 class="text-blue-800 fw-bold mb-3">
-                                                                        <i class="fas fa-location-dot me-2"></i> اطلاعات آدرس
-                                                                    </h6>
+                                            <div class="mb-2">
+                                                <strong>آدرس:</strong>
+                                                {{ $address->address }}
+                                            </div>
 
-                                                                    <div class="row g-3">
-                                                                        <!-- استان -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="province" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-map me-1 text-blue-600"></i> استان
-                                                                            </label>
-                                                                            <select name="province_id" class="form-select form-select-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="province">
-                                                                                <option value="" selected>استان را انتخاب کنید</option>
-                                                                                @foreach($provinces as $province)
-                                                                                    <option value="{{ $province->id }}" data-url="{{ route('customer.sales-process.get-cities', $province->id) }}">{{ $province->name }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            @error('province_id')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                            <div class="mb-2">
+                                                <strong>گیرنده:</strong>
+                                                {{ $address->fullName }}
+                                            </div>
 
-                                                                        <!-- شهر -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="city" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-city me-1 text-blue-600"></i> شهر
-                                                                            </label>
-                                                                            <select name="city_id" class="form-select form-select-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="city">
-                                                                                <option value="" selected>شهر را انتخاب کنید</option>
-                                                                            </select>
-                                                                            @error('city_id')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                            <div>
+                                                <strong>موبایل:</strong>
+                                                {{ $address->mobile }}
+                                            </div>
 
-                                                                        <!-- آدرس -->
-                                                                        <div class="col-12">
-                                                                            <label for="address" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-home me-1 text-blue-600"></i> نشانی
-                                                                            </label>
-                                                                            <input name="address" type="text" class="form-control form-control-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="address" placeholder="نشانی کامل" value="{{ old('address') }}">
-                                                                            @error('address')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                        </label>
 
-                                                                        <!-- کد پستی -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="postal_code" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-mailbox me-1 text-blue-600"></i> کد پستی
-                                                                            </label>
-                                                                            <input name="postal_code" type="text" class="form-control form-control-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="postal_code" placeholder="کد پستی ۱۰ رقمی" value="{{ old('postal_code') }}">
-                                                                            @error('postal_code')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                    @endforeach
+                                </div>
 
-                                                                        <!-- پلاک و واحد -->
-                                                                        <div class="col-md-3">
-                                                                            <label for="no" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-hashtag me-1 text-blue-600"></i> پلاک
-                                                                            </label>
-                                                                            <input name="no" type="text" class="form-control form-control-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="no" placeholder="پلاک" value="{{ old('no') }}">
-                                                                            @error('no')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                <!-- دکمه ایجاد آدرس جدید -->
+                                <button type="button"
+                                        class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
+                                        data-bs-toggle="modal" data-bs-target="#add-address">
+                                    <i class="fas fa-plus-circle"></i> ایجاد آدرس جدید
+                                </button>
 
-                                                                        <div class="col-md-3">
-                                                                            <label for="unit" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-layer-group me-1 text-blue-600"></i> واحد
-                                                                            </label>
-                                                                            <input name="unit" type="text" class="form-control form-control-sm border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg" id="unit" placeholder="واحد" value="{{ old('unit') }}">
-                                                                            @error('unit')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- خط جداکننده -->
-                                                                <div class="border-t-2 border-dashed border-gray-200 my-4"></div>
-
-                                                                <!-- کارت اطلاعات گیرنده -->
-                                                                <div class="bg-green-50/50 rounded-3 p-4 border border-green-100">
-                                                                    <div class="d-flex align-items-center justify-content-between mb-3">
-                                                                        <h6 class="text-green-800 fw-bold mb-0">
-                                                                            <i class="fas fa-user me-2"></i> اطلاعات گیرنده
-                                                                        </h6>
-                                                                        <div class="form-check form-switch">
-                                                                            <!-- فیلد مخفی برای ارسال مقدار false وقتی چک‌باکس تیک ندارد -->
-                                                                            <input type="hidden" name="receiver" value="off">
-                                                                            <input name="receiver" class="form-check-input border-2 border-green-400 focus:ring-green-500" type="checkbox" id="receiver" value="on" onchange="toggleReceiverFields(this)">
-                                                                            <label class="form-check-label fw-semibold text-gray-700" for="receiver">
-                                                                                <i class="fas fa-check-circle text-green-600"></i> گیرنده سفارش خودم هستم
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row g-3" id="receiver-fields">
-                                                                        <!-- نام گیرنده -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="first_name" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-user-pen me-1 text-green-600"></i> نام گیرنده
-                                                                            </label>
-                                                                            <input name="recipient_first_name" type="text" class="form-control form-control-sm border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 rounded-lg" id="first_name" placeholder="نام گیرنده" value="{{ old('recipient_first_name') }}">
-                                                                            @error('recipient_first_name')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-
-                                                                        <!-- نام خانوادگی گیرنده -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="last_name" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-user-pen me-1 text-green-600"></i> نام خانوادگی گیرنده
-                                                                            </label>
-                                                                            <input name="recipient_last_name" type="text" class="form-control form-control-sm border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 rounded-lg" id="last_name" placeholder="نام خانوادگی گیرنده" value="{{ old('recipient_last_name') }}">
-                                                                            @error('recipient_last_name')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-
-                                                                        <!-- شماره موبایل -->
-                                                                        <div class="col-md-6">
-                                                                            <label for="mobile" class="form-label fw-semibold text-gray-700">
-                                                                                <i class="fas fa-phone me-1 text-green-600"></i> شماره موبایل
-                                                                            </label>
-                                                                            <input name="mobile" type="text" class="form-control form-control-sm border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 rounded-lg" id="mobile" placeholder="۰۹۱۲۱۲۳۴۵۶۷" value="{{ old('mobile') }}">
-                                                                            @error('mobile')
-                                                                            <small class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </section>
-
-                                                            <!-- فوتر مودال -->
-                                                            <section class="modal-footer border-0 px-0 pt-3 pb-0 d-flex gap-2">
-                                                                <button type="submit" class="btn btn-primary px-5 py-2 fw-bold rounded-lg shadow-md hover:shadow-lg transition-all">
-                                                                    <i class="fas fa-check me-2"></i> ثبت آدرس
-                                                                </button>
-                                                                <button type="button" class="btn btn-outline-danger px-4 py-2 fw-bold rounded-lg hover:bg-red-50 transition-all" data-bs-dismiss="modal">
-                                                                    <i class="fas fa-times me-2"></i> انصراف
-                                                                </button>
-                                                            </section>
-                                                        </form>
-                                                    </section>
-                                                </section>
-                                            </section>
-                                        </section>
-
-                                </section>
+                                @include('customer.sales-process.add-address-modal')
                             </section>
 
+                            <!-- ============ بخش انتخاب نحوه ارسال ============ -->
+                            <section class="bg-white p-4 md:p-5 rounded-2xl shadow-sm mb-4">
 
-                            <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
+                                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-truck text-blue-600"></i>
+                                    انتخاب نحوه ارسال
+                                </h3>
 
-                                <!-- start vontent header -->
-                                <section class="content-header mb-3">
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <h2 class="content-header-title content-header-title-small">
-                                            انتخاب نحوه ارسال
-                                        </h2>
-                                        <section class="content-header-link">
-                                            <!--<a href="#">مشاهده همه</a>-->
-                                        </section>
-                                    </section>
-                                </section>
-                                <section class="delivery-select ">
+                                <div class="flex items-start gap-2 bg-blue-50 text-blue-800 text-sm rounded-xl p-3 mb-4 border border-blue-100">
+                                    <i class="fa fa-info-circle mt-0.5"></i>
+                                    <span>نحوه ارسال کالا را انتخاب کنید. هنگام انتخاب لطفاً مدت زمان ارسال را در نظر بگیرید.</span>
+                                </div>
 
-                                    <section class="address-alert alert alert-primary d-flex align-items-center p-2" role="alert">
-                                        <i class="fa fa-info-circle flex-shrink-0 me-2"></i>
-                                        <secrion>
-                                            نحوه ارسال کالا را انتخاب کنید. هنگام انتخاب لطفا مدت زمان ارسال را در نظر بگیرید.
-                                        </secrion>
-                                    </section>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="delivery-options">
+                                    @foreach($deliveries as $delivery)
 
-                                    <input type="radio" name="delivery_type" value="1" id="d1"/>
-                                    <label for="d1" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-shipping-fast mx-1"></i>
-                                            پست پیشتاز
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            تامین کالا از 4 روز کاری آینده
-                                        </section>
-                                    </label>
+                                        <input
+                                            type="radio"
+                                            name="delivery_type"
+                                            id="delivery-{{ $delivery->id }}"
+                                            value="{{ $delivery->id }}"
+                                            data-amount="{{ $delivery->amount }}"
+                                            form="checkout-form"
+                                            class="delivery-radio"
+                                        >
 
-                                    <input type="radio" name="delivery_type" value="2" id="d2"/>
-                                    <label for="d2" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-shipping-fast mx-1"></i>
-                                            تیپاکس
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            تامین کالا از 2 روز کاری آینده
-                                        </section>
-                                    </label>
+                                        <label
+                                            for="delivery-{{ $delivery->id }}"
+                                            class="delivery-card">
 
+                                            <span class="check-icon">
+                                                <i class="fa fa-check"></i>
+                                            </span>
 
-                                </section>
+                                            <div class="fw-bold">
+                                                {{ $delivery->name }}
+                                            </div>
+
+                                            <div class="text-muted small">
+                                                {{ $delivery->delivery_time }} روز کاری
+                                            </div>
+
+                                            <div class="fw-bold text-primary">
+                                                {{ number_format($delivery->amount) }} تومان
+                                            </div>
+
+                                        </label>
+
+                                    @endforeach
+                                </div>
                             </section>
-
 
                         </section>
-                        @include('customer.sales-process.cart-modal')
+
+                        <!-- ============ خلاصه سفارش / مبلغ نهایی ============ -->
+                            @include('customer.sales-process.cart-modal')
                     </section>
+
                 </section>
             </section>
-
         </section>
     </section>
-    <!-- end cart -->
+
+    @include('customer.sales-process.edit-adress-and-delivery')
 @endsection
 
 @section('script')
     <script src="{{ asset('customer-assets/js/address-and-delivery.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            function format(number){
+                return new Intl.NumberFormat('fa-IR').format(number) + " تومان";
+            }
+
+            function updateSummary(){
+
+                const subtotal =
+                    Number(document.getElementById("subtotal-amount").dataset.amount);
+
+                const delivery =
+                    document.querySelector("input[name='delivery_type']:checked");
+
+                const shipping =
+                    delivery ? Number(delivery.dataset.amount) : 0;
+
+                document.getElementById("shipping-amount").textContent =
+                    format(shipping);
+
+                document.getElementById("final-amount").textContent =
+                    format(subtotal + shipping);
+
+            }
+
+            document
+                .querySelectorAll("input[name='delivery_type']")
+                .forEach(radio=>{
+                    radio.addEventListener("change",updateSummary);
+                });
+
+            updateSummary();
+
+        });
+    </script>
 @endsection

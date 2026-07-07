@@ -2,6 +2,7 @@
 
 @section('head-tag')
     <title>فروشگاه شاپینگو</title>
+    <link rel="stylesheet" href="{{ asset('customer-assets/css/home.css') }}">
 @endsection
 
 @section('content')
@@ -234,30 +235,76 @@
     @endif
 
 
-    {{-- Featured brands --}}
-    <section class="max-w-screen-xl mx-auto px-4 mb-6">
-        <section class="bg-gray-900 rounded-2xl py-8 px-5 md:px-6">
-            <h2 class="flex items-center gap-2 text-lg font-bold text-white mb-6">
-                <span class="w-1.5 h-5 rounded-full bg-amber-400 inline-block"></span>
-                برندهای ویژه
-            </h2>
+    {{-- Featured Brands --}}
+    <section class="max-w-7xl mx-auto px-4 my-10">
 
-            <section class="brands-wrapper">
-                <section class="brands dark-owl-nav owl-carousel owl-theme">
-                    <section class="item">
-                        <section class="flex items-center gap-4">
-                            @foreach($homePage['brands'] as $brand)
-                                <a href="#" class="flex-shrink-0 bg-white rounded-xl p-3 hover:opacity-90 transition-opacity">
-                                    <img class="h-12 w-auto object-contain" src="{{ asset($brand->image['indexArray']['large']) }}" alt="{{ $brand->persian_name }}">
-                                </a>
-                            @endforeach
-                        </section>
-                    </section>
-                </section>
-            </section>
+        <div class="flex items-center justify-between mb-6">
+
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-8 rounded-full bg-blue-600"></div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        برندهای ویژه
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        محبوب‌ترین برندهای فروشگاه
+                    </p>
+                </div>
+            </div>
+
+            <i class="fa-solid fa-award text-4xl text-amber-400 hidden md:block"></i>
+
+        </div>
+
+        <section class="brands owl-carousel owl-theme">
+
+            @foreach($homePage['brands'] as $brand)
+
+                <div class="item py-2">
+
+                    <a href="#"
+                       class="group block">
+
+                        <div
+                            class="bg-white
+                               rounded-2xl
+                               h-32
+                               flex
+                               items-center
+                               justify-center
+                               border
+                               border-gray-200
+                               shadow-sm
+                               transition-all
+                               duration-300
+                               hover:-translate-y-1
+                               hover:shadow-xl
+                               hover:border-blue-500">
+
+                            <img
+                                src="{{ asset($brand->image['indexArray']['large']) }}"
+                                alt="{{ $brand->persian_name }}"
+                                class="h-16
+                                   w-36
+                                   object-contain
+                                   grayscale
+                                   group-hover:grayscale-0
+                                   transition-all
+                                   duration-300">
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            @endforeach
+
         </section>
+
     </section>
-    {{-- end brand part --}}
 
     @include('customer.notifications.toast')
 
@@ -265,4 +312,5 @@
 
 @section('script')
     <script src="{{ asset('customer-assets/js/addToFavorite.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ asset('customer-assets/js/home.js') }}" crossorigin="anonymous"></script>
 @endsection

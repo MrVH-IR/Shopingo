@@ -1,9 +1,9 @@
 <?php
 
-namespace Common\Controllers\Home;
+namespace Common\Services\Home;
 
-use Common\Controllers\Home\Action\HomePageService;
-use Common\Controllers\Home\Jobs\StoreUserCyberDataJob;
+use Common\Services\Home\Action\HomePageService;
+use Common\Services\Home\Jobs\StoreUserCyberDataJob;
 
 class HomeController extends BaseController {
 

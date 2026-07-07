@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Controllers\SalesProcess;
+namespace Common\Services\SalesProcess\Middleware;
 
 use App\Models\Market\CartItem;
 use Closure;

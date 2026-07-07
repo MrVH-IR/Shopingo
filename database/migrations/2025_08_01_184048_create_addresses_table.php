@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('unit');
             $table->string('recipient_first_name')->nullable();
             $table->string('recipient_last_name')->nullable();
-            $table->string('mobile');
+            $table->string('mobile')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0 => Inactive, 1 => Active');
             $table->timestamps();
             $table->softDeletes();
