@@ -18,4 +18,12 @@ class CommonDiscount extends Model
             "end_at" => "datetime",
         ];
     }
+
+    public function scopeActive($query)
+    {
+        return $query
+            ->where('status',1)
+            ->where('start_at','<',now())
+            ->where('end_at','>',now());
+    }
 }

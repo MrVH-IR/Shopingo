@@ -122,4 +122,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function scopeCouponlessOrders($query)
+    {
+        return $query->where('order_status' , 0)
+                     ->whereNull('coupon_id');
+    }
 }

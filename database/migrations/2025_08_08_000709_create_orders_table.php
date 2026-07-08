@@ -25,8 +25,8 @@ return new class extends Migration
             $table->decimal('delivery_amount', 20,3)->default(0);
             $table->tinyInteger('delivery_status')->default(0);
             $table->timestamp('delivery_date')->nullable();
-            $table->decimal('order_final_amount', 20,3);
-            $table->decimal('order_discount_amount', 20,3);
+            $table->decimal('order_final_amount', 20,3)->nullable();
+            $table->decimal('order_discount_amount', 20,3)->nullable();
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->cascadeOnUpdate()->cascadeOnDelete();
             $table->longText('coupon_object')->nullable();
             $table->decimal('order_coupon_discount_amount', 20,3)->default(0);

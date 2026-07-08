@@ -2,14 +2,26 @@
 
 namespace Common\Services\SalesProcess;
 
+use App\Models\Market\CartItem;
+use App\Models\Market\CommonDiscount;
 use App\Models\Market\Delivery;
+use App\Models\Market\Order;
+use Common\Services\Payment\Requests\ChooseAddressAndDeliveryRequest;
 use Common\Services\SalesProcess\Request\AddressRequest;
 use Common\Models\Address;
 use Common\Models\Province;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class AddressController extends BaseController
 {
+
+    public function __construct(
+        protected OrderService $orderService
+    ) {}
 
     public function addressAndDelivery()
     {
@@ -67,5 +79,24 @@ class AddressController extends BaseController
                 'message' => 'آدرس شما با موفقیت ویرایش شد.'
             ]
         ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request): RedirectResponse
+    {
+        $user = auth()->id();
+        $data = $this->orderService->createPendingOrder($user , $request->address , $request->delivery_type);
+        if ($data['status'] !== true) {
+            return redirect()->back()->with([
+                'bootstrap-error' => [
+                    'status' => 'خطا',
+                    'message' => 'مشکلی در ثبت سفارش پیش آمده است. لطفا با مدیریت تماس حاصل فرمایید'
+                ]
+            ]);
+        }
+
+        return redirect()->route('customer.sales-process.payment');
     }
 }
