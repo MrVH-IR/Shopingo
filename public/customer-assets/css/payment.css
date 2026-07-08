@@ -35,3 +35,47 @@
     color: #00b3c3;
     font-size: 0.7rem;
 }
+
+.payment-card{
+
+    transition:.25s;
+
+}
+
+.payment-card:hover{
+
+    transform:translateY(-2px);
+
+}
+
+input[type=radio]:checked + .payment-card{
+
+    border-width:2px;
+
+    border-color:#2563eb;
+
+    background:#eff6ff;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.12);
+
+}
+
+input[type=radio]:checked + .payment-card i:last-child{
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+}
+
+#payment-button{
+
+    transition:.3s;
+
+}
+
+#payment-button:hover{
+
+    transform:translateY(-2px);
+
+}

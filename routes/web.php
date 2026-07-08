@@ -72,6 +72,8 @@ Route::prefix('market')
             Route::get('/get-cities/{province}', [AddressController::class , 'getCities'])->name('get-cities');
             Route::put('/update-address', [AddressController::class , 'updateAddress'])->name('update-address');
             Route::get('/payment', [PaymentController::class , 'payment'])->name('payment');
+            Route::post('/choose-address-and-delivery', [AddressController::class , 'chooseAddressAndDelivery'])->name('choose-address-and-delivery');
+            Route::post('/coupon-discount', [PaymentController::class , 'couponDiscount'])->name('coupon-discount');
         });
         Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
         Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');
