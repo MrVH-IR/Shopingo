@@ -77,26 +77,7 @@
 </section>
 @endauth
 @guest
-<a
-    href="{{ route('auth.customer.login-register-form') }}"
-    class="text-decoration-none px-3">
-    <section
-        class="d-flex justify-content-center align-items-center"
-        style="
-                                width:42px;
-                                height:42px;
-                                border-radius:14px;
-                                background:#fff;
-                                border:1px solid #e5e7eb;
-                                color:#374151;
-                                box-shadow:0 4px 12px rgba(0,0,0,.08);
-                            ">
-        <i class="fas fa-user-lock"></i>
-    </section>
-</a>
-@endguest
-@guest
-<a href="{{ route('auth.customer.login-register-form') }}" class="btn-link text-decoration-none text-dark profile-button">
+<a href="{{ route('auth.customer.login-register-form') }}" class="btn-link text-decoration-none text-dark profile-button mr-5">
     <i class="fa fa-user-lock"></i>
 </a>
 @endguest

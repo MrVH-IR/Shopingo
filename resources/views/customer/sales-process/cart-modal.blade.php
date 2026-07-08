@@ -94,10 +94,10 @@
 
             <form
                 id="checkout-form"
-                action="{{ route('customer.sales-process.payment') }}"
-                method="GET"
+                action="{{ route('customer.sales-process.choose-address-and-delivery') }}"
+                method="POST"
                 class="d-none"
-            ></form>
+            >@csrf</form>
 
             <button
                 type="submit"

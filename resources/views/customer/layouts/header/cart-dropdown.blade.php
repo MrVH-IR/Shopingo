@@ -3,7 +3,7 @@
     {{-- Header --}}
     <section class="d-flex justify-content-between align-items-center p-3 border-bottom bg-light">
         <strong>
-            <i class="fas fa-shopping-cart text-danger me-2"></i>
+            <i class="fas fa-shopping-cart text-danger me-2 mr-5"></i>
             {{ $cartItems->count() }}
             کالا
         </strong>
