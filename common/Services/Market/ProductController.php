@@ -7,6 +7,7 @@ use App\Models\Content\Comment;
 use App\Models\Market\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends BaseController
 {
@@ -14,7 +15,9 @@ class ProductController extends BaseController
     public function product(Product $product)
     {
         // TO-DO Related Post
-        $relatedProducts = Product::get()->take(10);
+        $relatedProducts = Cache::remember('relatedProducts', now()->addHours(2), function () {
+            return Product::get()->take(10);
+        });
         return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts]);
     }
 
