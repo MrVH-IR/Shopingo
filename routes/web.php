@@ -52,7 +52,7 @@ Route::prefix('market')
     ->middleware('throttle:50,5')
     ->group(function () {
         Route::get('/product/{product:slug}', [ProductController::class, 'product'])->name('product');
-        Route::post('/add-comment/product/{product:slug}', [ProductController::class, 'add-comment'])->name('add-comment');
+        Route::post('/add-comment/product/{product:slug}', [ProductController::class, 'addComment'])->name('add-comment');
         Route::middleware('auth')->group(function () {
             Route::post('/favorite/{product:slug}', [ProductController::class, 'toggleFavorite'])->name('product.favorite');
         });
