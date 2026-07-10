@@ -12,7 +12,7 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 - Dynamic behaviors powered by jQuery
 - Product category management
 - Secure and extendable Laravel architecture
-- RTL-friendly layout for Persian/Arabic support
+- RTL-friendly layout for Persian support
 
 ## 🛠️ Technologies Used
 
@@ -21,10 +21,12 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 - jQuery
 - Bootstrap 5
 - FontAwesome 6
-- MySQL (or any Laravel-supported database)
+- MariaDB 12+ Is Default (Use Other DBs With Caution)
 - SweetAlert
 - ToastAlert
 - CKEditor
+- Default Payment Gateway (Zarinpal)
+- Default SMS Login Gateway (Kavenegar)
 
 ### 📦 Installation & Setup
 
