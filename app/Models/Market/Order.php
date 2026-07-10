@@ -128,4 +128,9 @@ class Order extends Model
         return $query->where('order_status' , 0)
                      ->whereNull('coupon_id');
     }
+
+    public function productAmountWithDelivery()
+    {
+        return $this->order_final_amount + $this->delivery->amount;
+    }
 }

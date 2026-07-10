@@ -1,31 +1,21 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
     const radios = document.querySelectorAll("input[name='payment_type']");
-    const button = document.getElementById("payment-button");
+
+    const infoButton = document.getElementById("payment-button");
+    const submitButton = document.getElementById("payment-button-redirect");
+    const hiddenInput = document.getElementById("payment_type_hidden");
 
     radios.forEach(radio => {
 
-        radio.addEventListener("change", function () {
+        radio.addEventListener("change", () => {
 
-            button.disabled = false;
+            hiddenInput.value = radio.id;
 
-            button.classList.remove(
-                "bg-gray-300",
-                "text-gray-600"
-            );
+            infoButton.classList.add("d-none");
 
-            button.classList.add(
-                "bg-gradient-to-r",
-                "from-blue-600",
-                "to-indigo-600",
-                "hover:scale-[1.02]",
-                "hover:shadow-xl",
-                "text-white"
-            );
-
-            button.innerHTML =
-                `<i class="fa-solid fa-lock mr-2"></i>
-                 ثبت سفارش و انتقال به درگاه`;
+            submitButton.classList.remove("d-none");
+            submitButton.disabled = false;
 
         });
 

@@ -3,15 +3,16 @@
 namespace Common\Services\Payment;
 
 use App\Models\Market\CartItem;
-use App\Models\Market\Coupon;
+use Common\Services\Response\Responses;
+use App\Models\Market\OnlinePayment;
 use App\Models\Market\Order;
-use Common\Services\Payment\Requests\ChooseAddressAndDeliveryRequest;
 use Common\Services\SalesProcess\OrderService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PaymentController extends BaseController
 {
-    public function __construct(protected OrderService $orderService) {}
+    public function __construct(protected OrderService $orderService , protected PaymentService $paymentService, protected Zarinpal $zarinpal) {}
 
     public function payment()
     {
@@ -27,40 +28,97 @@ class PaymentController extends BaseController
             'coupon.required' => 'لطفا کد تخفیف را وارد کنید.'
         ]);
         $status = $this->orderService->couponDiscount($request->coupon , auth()->id());
-        if ($status === "USED_BEFORE") {
-            return redirect()->back()->with([
-                'bootstrap-info' => [
-                    'status' => 'پیغام',
-                    'message' => 'شما قبلا روی این سفارش کد تخفیف اعمال کرده اید.'
-                ]
-            ]);
-        } elseif ($status === "NOT_YOURS") {
-            return redirect()->back()->with([
-                'bootstrap-info' => [
-                    'status' => 'پیغام',
-                    'message' => 'این کد تخفیف مختص شما نمی باشد'
-                ]
-            ]);
-        } elseif ($status === "SUCCESS") {
-            return redirect()->back()->with([
-                'bootstrap-success' => [
-                    'status' => 'موفق',
-                    'message' => 'کد تخفیف روی سفارش شما اعمال شد.'
-                ]
-            ]);
-        } elseif ($status === "FAILED") {
-            return redirect()->back()->with([
-                'bootstrap-warning' => [
-                    'status' => 'پیغام',
-                    'message' => 'کد تخفیف وجود ندارد.'
-                ]
-            ]);
-        }
-        return redirect()->back()->with([
-            'bootstrap-warning' => [
-                'status' => 'خطا در پردازش',
-                'message' => 'خطایی در پردازش مد تخفیف بوجود آمده است'
-            ]
+        return match ($status) {
+            'USED_BEFORE' => Responses::redirectToWithBack(
+                'info',
+                'اطلاع رسانی',
+                'شما قبلاً روی این سفارش کد تخفیف اعمال کرده‌اید.'
+            ),
+
+            'NOT_YOURS' => Responses::redirectToWithBack(
+                'info',
+                'اطلاع رسانی',
+                'این کد تخفیف مختص شما نیست.'
+            ),
+
+            'SUCCESS' => Responses::redirectToWithBack(
+                'success',
+                'موفق',
+                'کد تخفیف روی سفارش شما اعمال شد.'
+            ),
+
+            'FAILED' => Responses::redirectToWithBack(
+                'warning',
+                'هشدار',
+                'کد تخفیف وجود ندارد.'
+            ),
+
+            default => Responses::redirectToWithBack(
+                'warning',
+                'هشدار',
+                'خطایی در پردازش کد تخفیف به وجود آمده است.'
+            ),
+        };
+    }
+
+    public function paymentType(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'payment_type' => 'required|in:online,offline,cod'
+        ], [
+            'payment_type.required' => 'نحوه پرداخت را انتخاب کنید',
+            'payment_type.in'       => 'نحوه پرداخت اشتباه می باشد',
         ]);
+
+        $order = Order::where('user_id', auth()->id())
+            ->where('order_status', 0)
+            ->firstOrFail();
+
+        $cartItems = CartItem::where('user_id', auth()->id())->get();
+
+        $payment = $this->paymentService->createPayment(
+            $request->payment_type,
+            $order,
+            $cartItems
+        );
+
+        if ($payment instanceof OnlinePayment) {
+            return $this->redirectToGateway($payment);
+        }
+
+        if (! $payment) {
+            return Responses::redirectToWith('customer.home', 'error','خطا', 'در ثبت سفارش خطایی رخ داد. لطفا دوباره تلاش کنید. لطفا سبد خود را خالی کنید و دوباره امتحان کنید');
+        }
+
+        return Responses::redirectToWith('customer.home', 'success','موفق', 'سفارش شما ثبت شد.');
+    }
+
+    public function redirectToGateway(mixed $payment): RedirectResponse
+    {
+        return redirect()->to(config('payment.zarinpal.sandboxGate').'/'.$payment->bank_first_response['data']['authority']);
+    }
+
+    public function callback(Order $order, Request $request): RedirectResponse
+    {
+        $authority = $request->input('Authority');
+        $check = $this->zarinpal->verify($order, $authority);
+        if ($request->input('Status') === 'OK') {
+            if ($check['data']['code'] === 100) {
+                $assesment = $this->paymentService->registerSuccessfulOrder($order, $check, $authority);
+                if ($assesment) {
+                    return Responses::redirectToWith('customer.home','success','موفق',Zarinpal::getErrorMessage($check['data']['code']));
+                }
+            } elseif ($check['data']['code'] === 101) {
+                $assesment = $this->paymentService->checkForSuccessfulOrder($order, $check, $authority);
+                if ($assesment) {
+                    return Responses::redirectToWith('customer.home','info','اطلاع رسانی',Zarinpal::getErrorMessage($check['data']['code']));
+                }
+            }
+        } else {
+            $order->delete();
+            return Responses::redirectToWith('customer.home','warning','هشدار','پرداخت کنسل شد');
+        }
+        $order->delete();
+        return Responses::redirectToWith('customer.home','warning','هشدار','پرداخت کنسل شد');
     }
 }

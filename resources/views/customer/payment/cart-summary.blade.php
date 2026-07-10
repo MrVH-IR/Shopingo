@@ -63,6 +63,18 @@
             @endif
             </div>
             <div class="flex justify-between">
+                @if($order->commonDiscount()->get() !== null)
+                    <span class="text-gray-500">حداکثر میزان تخفیف عمومی</span>
+                    <span class="font-bold text-sky-500">{{ priceFormat($order->commonDiscount->discount_ceiling) }} تومان</span>
+                @endif
+            </div>
+            <div class="flex justify-between">
+                @if($order->commonDiscount()->get() !== null)
+                    <span class="text-gray-500">حداقل موجودی سبد برای تخفیف عمومی</span>
+                    <span class="font-bold text-sky-500">{{ priceFormat($order->commonDiscount->discount_floor) }} تومان</span>
+                @endif
+            </div>
+            <div class="flex justify-between">
                 <span class="text-gray-500">
                     هزینه ارسال
                 </span>
@@ -96,7 +108,7 @@
                         مبلغ نهایی
                     </span>
                     <span class="text-2xl font-black text-blue-600">
-                        {{ priceFormat($order->order_final_amount) }} تومان
+                        {{ priceFormat($order->productAmountWithDelivery()) }} تومان
                     </span>
                 </div>
             </div>
@@ -124,6 +136,27 @@
                 <i class="fa-solid fa-circle-info ml-2"></i>
                 ابتدا روش پرداخت را انتخاب کنید
             </button>
+
+            {{-- Payment Button --}}
+            <button
+                id="payment-button-redirect"
+                disabled
+                type="submit"
+                form="payment-page-form"
+                class="w-full rounded-2xl bg-blue-500 text-white font-bold py-4 transition-all duration-300 d-none">
+                <i class="fa-solid fa-circle-info ml-2"></i>
+                انتقال به صفحه پرداخت
+            </button>
+
+            <form
+                id="payment-page-form"
+                action="{{ route('customer.sales-process.payment-type') }}" method="POST">
+                @csrf
+                <input
+                    type="hidden"
+                    name="payment_type"
+                    id="payment_type_hidden">
+            </form>
         </div>
     </div>
 </div>

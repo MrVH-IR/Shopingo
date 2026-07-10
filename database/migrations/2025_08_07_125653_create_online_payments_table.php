@@ -17,9 +17,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('gateway')->nullable();
             $table->string('transaction_id')->nullable();
-            $table->text('bank_first_response');
-            $table->text('bank_second_response');
+            $table->text('bank_first_response')->nullable();
+            $table->text('bank_second_response')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->string('authority')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
         });

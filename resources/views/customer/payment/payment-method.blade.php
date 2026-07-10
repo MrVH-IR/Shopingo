@@ -46,7 +46,7 @@
             </label>
 
             <!-- Wallet -->
-            <input hidden type="radio" id="wallet" name="payment_type">
+            <input hidden type="radio" id="wallet" name="payment_type" disabled>
             <label
                 for="wallet"
                 class="payment-card flex items-center justify-between rounded-2xl border border-gray-200 p-5 cursor-pointer hover:border-green-500 hover:shadow-lg transition">
@@ -60,6 +60,9 @@
                         </h3>
                         <p class="text-gray-500 text-sm">
                             پرداخت از موجودی کیف پول
+                        </p>
+                        <p class="text-gray-500 text-sm">
+                            در حال حاظر فعال نمی باشد
                         </p>
                     </div>
                 </div>
@@ -81,6 +84,26 @@
                         </h3>
                         <p class="text-gray-500 text-sm">
                             پرداخت هنگام تحویل سفارش
+                        </p>
+                    </div>
+                </div>
+                <i class="fa-regular fa-circle-check text-2xl text-gray-300"></i>
+            </label>
+
+            <input hidden type="radio" id="offline" name="payment_type">
+            <label
+                for="offline"
+                class="payment-card flex items-center justify-between rounded-2xl border border-gray-200 p-5 cursor-pointer hover:border-teal-500 hover:shadow-lg transition">
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center">
+                        <i class="fa-solid fa-truck text-red-500 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">
+                            پرداخت آفلاین
+                        </h3>
+                        <p class="text-gray-500 text-sm">
+                            پرداخت آفلاین (موارد خاص)
                         </p>
                     </div>
                 </div>

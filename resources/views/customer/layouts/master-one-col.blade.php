@@ -7,7 +7,10 @@
     <body>
 
         @include('customer.layouts.header')
-
+        @include('customer.alerts.bootstrap-alert-success')
+        @include('customer.alerts.bootstrap-alert-info')
+        @include('customer.alerts.bootstrap-alert-warning')
+        @include('customer.alerts.bootstrap-alert-error')
         <main id="main-body-one-col" class="main-body">
             @yield('content')
         </main>

@@ -12,7 +12,12 @@ class OnlinePayment extends Model
     use SoftDeletes , HasFactory;
 
     protected $fillable = ["amount" , "user_id" , "gateway" , "transaction_id" ,
-        "bank_first_response" , "bank_second_response" , "status"];
+        "bank_first_response" , "bank_second_response" , "status", "authority"];
+
+    protected $casts = [
+        'bank_first_response' => 'array',
+        'bank_second_response' => 'array',
+    ];
 
     public function user()
     {
