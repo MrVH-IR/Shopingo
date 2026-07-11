@@ -13,6 +13,19 @@ class OrderItem extends Model
         "amazing_sale_object" , "amazing_discount_amount" , "number" , "final_product_price",
         "final_total_price" , "guarantee_id" , "color_id"];
 
+    protected function casts(): array
+    {
+        return [
+            "amazing_sale_object" => "array",
+            "product" => "array",
+        ];
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);

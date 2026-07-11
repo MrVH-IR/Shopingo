@@ -48,7 +48,7 @@
             <i class="far fa-user-circle text-primary me-2"></i>
             پروفایل کاربری
         </a>
-        <a href="#"
+        <a href="{{ route('customer.profile.orders') }}"
            class="dropdown-item py-2">
             <i class="fas fa-shopping-bag text-success me-2"></i>
             سفارشات

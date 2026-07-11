@@ -35,14 +35,15 @@ class Zarinpal implements PaymentGateway
                         'amount'        => (int) $order->productAmountWithDelivery(),
                         'callback_url'  => route('customer.sales-process.zarinpal-callback', $order),
                         'referrer_id'   => config('payment.zarinpal.referrer_id', ''),
+                        'currency'      => "IRT",
                         'description'   => sprintf(
                             'خرید آنلاین با شماره سفارش %d توسط کاربر %d',
                             $order->id,
                             $order->user_id
                         ),
                         'metadata' => [
-                            'mobile' => $order->user?->mobile,
-                            'email' => $order->user?->email,
+                            'mobile' => (string) $order->user?->mobile,
+                            'email' => (string) $order->user?->email,
                         ],
                     ]
                 )

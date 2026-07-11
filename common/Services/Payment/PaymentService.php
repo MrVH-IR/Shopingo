@@ -2,16 +2,17 @@
 
 namespace Common\Services\Payment;
 
-use App\Models\Market\CartItem;
 use App\Models\Market\CashPayment;
 use App\Models\Market\Delivery;
 use App\Models\Market\OfflinePayment;
 use App\Models\Market\OnlinePayment;
 use App\Models\Market\Order;
+use App\Models\Market\OrderItem;
 use App\Models\Market\Payment;
+use Common\Services\Exception\ExceptionLogger;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 use Throwable;
 
 class PaymentService
@@ -26,7 +27,6 @@ class PaymentService
                 'cod'     => $this->codPayment($order),
                 default   => false,
             };
-
             if (! $result) {
                 return false;
             }
@@ -36,30 +36,24 @@ class PaymentService
                 'order_status' => 1,
             ]);
 
-            $this->payment($order, $type, $result, $order->delivery()->first());
-
+            $this->payment($order, $type, $result, $order->delivery);
+            $this->createOrderItem($cartItems, $order);
+            $cartItems->each->delete();
             return $result;
         } catch (Throwable $th) {
-            $errorId = now()->format('YmdHis') . rand(1000, 9999);
-            Log::error('Error in making Payment:', [
-                'type'    => $type,
-                'errorId' => $errorId,
-                'message' => $th->getMessage(),
-            ]);
+            ExceptionLogger::error($th, "Error in making Payment:");
             return false;
-        } finally {
-            $cartItems->each->delete();
         }
     }
 
     protected function paymentTypeCode(string $type): int
     {
         return match ($type) {
-            'online'     => 0,
-            'offline'    => 1,
-            'cod'        => 2,
-            'wallet'     => 3,
-            default      => false,
+            'online'  => 0,
+            'offline' => 1,
+            'cod'     => 2,
+            'wallet'  => 3,
+            default   => throw new InvalidArgumentException("Invalid payment type: {$type}"),
         };
     }
 
@@ -131,20 +125,47 @@ class PaymentService
         return true;
     }
 
-    public function checkForSuccessfulOrder(Order $order, array $zarinResponse, $authority): bool
+    public function checkForSuccessfulOrder(Order $order, array $zarinResponse, string $authority): bool
     {
-        if ($order->payment_status === 0 || $order->order_status === 0) {
-            OnlinePayment::where('user_id', $order->user_id)->where('authority' , $authority)->update([
-                'status' => 1,
-                'bank_second_response' => $zarinResponse,
-                'transaction_id' => $zarinResponse['data']['ref_id']
-            ]);
-            $order->update([
-                'payment_status' => 1,
-                'order_status' => 1,
-            ]);
+        if ($order->payment_status === 1 && $order->order_status === 1) {
             return true;
         }
+
+        OnlinePayment::where('user_id', $order->user_id)
+            ->where('authority', $authority)
+            ->update([
+                'status' => 1,
+                'bank_second_response' => $zarinResponse,
+                'transaction_id' => $zarinResponse['data']['ref_id'],
+            ]);
+        $order->update([
+            'payment_status' => 1,
+            'order_status' => 1,
+        ]);
         return true;
+    }
+
+    protected function createOrderItem(Collection $cartItems, Order $order): void
+    {
+        foreach ($cartItems as $cartItem) {
+            $sale = $cartItem->product->activeAmazingSales();
+            $discount = $sale
+                ? $cartItem->cartItemProductPrice() * ($sale->percentage / 100)
+                : 0;
+            $finalPrice = $cartItem->cartItemProductPrice() - $discount;
+            OrderItem::create([
+                'order_id'                => $order->id,
+                'product_id'              => $cartItem->product_id,
+                'product'                 => $cartItem->product->toArray(),
+                'amazing_sale_id'         => $sale?->id,
+                'amazing_sale_object'     => $sale?->toArray(),
+                'amazing_discount_amount' => $discount,
+                'number'                  => $cartItem->numbers,
+                'final_product_price'     => $finalPrice,
+                'final_total_price'       => $finalPrice * $cartItem->numbers,
+                'guarantee_id'            => $cartItem->guarantee_id,
+                'color_id'                => $cartItem->color_id,
+            ]);
+        }
     }
 }

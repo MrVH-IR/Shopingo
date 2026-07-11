@@ -36,14 +36,14 @@ class Order extends Model
         "order_status"
     ];
 
-    protected function casts()
+    protected function casts(): array
     {
         return [
             "delivery_date" => "datetime"
         ];
     }
 
-    public function getPaymentStatusValueAttribute()
+    public function getPaymentStatusValueAttribute(): string
     {
         return match ($this->payment_status) {
             0 => "پرداخت نشده",
@@ -54,7 +54,7 @@ class Order extends Model
         };
     }
 
-    public function getPaymentTypeValueAttribute()
+    public function getPaymentTypeValueAttribute(): string
     {
         return match ($this->payment_type) {
             0 => "آنلاین",
@@ -63,7 +63,7 @@ class Order extends Model
         };
     }
 
-    public function getDeliveryStatusValueAttribute()
+    public function getDeliveryStatusValueAttribute(): string
     {
         return match ($this->delivery_status) {
             0 => "ارسال نشده",
@@ -74,7 +74,7 @@ class Order extends Model
         };
     }
 
-    public function getOrderStatusValueAttribute()
+    public function getOrderStatusValueAttribute(): string
     {
         return match ($this->order_status) {
             0 => "بررسی نشده",
@@ -83,7 +83,6 @@ class Order extends Model
             3 => "تایید شده",
             4 => "باطل شده",
             5 => "مرجوع شده",
-            6 => "بررسی نشده",
             default => "نامعلوم"
         };
     }

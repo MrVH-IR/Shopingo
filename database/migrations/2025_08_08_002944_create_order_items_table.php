@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->cascadeOnUpdate()->cascadeOnDelete();
             $table->longText('product');
             $table->foreignId('amazing_sale_id')->nullable()->constrained('amazing_sales')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->longText('amazing_sale_object');
+            $table->longText('amazing_sale_object')->nullable();
             $table->decimal('amazing_discount_amount', 20,3)->nullable();
             $table->integer('number')->default(1);
             $table->decimal('final_product_price', 20,3);

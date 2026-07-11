@@ -3,12 +3,15 @@
 namespace Common\Services\Payment;
 
 use App\Models\Market\CartItem;
+use Common\Services\Exception\ExceptionLogger;
 use Common\Services\Response\Responses;
 use App\Models\Market\OnlinePayment;
 use App\Models\Market\Order;
 use Common\Services\SalesProcess\OrderService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends BaseController
 {
@@ -34,25 +37,21 @@ class PaymentController extends BaseController
                 'اطلاع رسانی',
                 'شما قبلاً روی این سفارش کد تخفیف اعمال کرده‌اید.'
             ),
-
             'NOT_YOURS' => Responses::redirectToWithBack(
                 'info',
                 'اطلاع رسانی',
                 'این کد تخفیف مختص شما نیست.'
             ),
-
             'SUCCESS' => Responses::redirectToWithBack(
                 'success',
                 'موفق',
                 'کد تخفیف روی سفارش شما اعمال شد.'
             ),
-
             'FAILED' => Responses::redirectToWithBack(
                 'warning',
                 'هشدار',
                 'کد تخفیف وجود ندارد.'
             ),
-
             default => Responses::redirectToWithBack(
                 'warning',
                 'هشدار',
@@ -75,12 +74,18 @@ class PaymentController extends BaseController
             ->firstOrFail();
 
         $cartItems = CartItem::where('user_id', auth()->id())->get();
-
-        $payment = $this->paymentService->createPayment(
-            $request->payment_type,
-            $order,
-            $cartItems
-        );
+        try {
+            DB::beginTransaction();
+            $payment = $this->paymentService->createPayment(
+                $request->payment_type,
+                $order,
+                $cartItems
+            );
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            ExceptionLogger::error($e, "Error in Payment Service");
+        }
 
         if ($payment instanceof OnlinePayment) {
             return $this->redirectToGateway($payment);

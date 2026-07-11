@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-use Common\Services\{
-    Home\HomeController,
+use Common\Services\{Home\HomeController,
     Market\ProductController,
+    Profile\OrderController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
     SalesProcess\ProfileController,
-    Payment\PaymentController,
-};
+    Payment\PaymentController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -80,3 +79,10 @@ Route::prefix('market')
         Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
         Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');
 });
+
+Route::prefix('profile')
+    ->name('customer.profile.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    });
