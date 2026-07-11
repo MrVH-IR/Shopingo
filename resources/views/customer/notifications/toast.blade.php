@@ -1,6 +1,6 @@
 <section class="position-fixed top-0 start-0 p-4"
          style="z-index: 1000000 ;max-width:420px; margin-top: 120px">
-    <section class="toast border-0 shadow-lg rounded-3"
+    <section class="toast fade border-0 shadow-lg rounded-3"
              data-delay="6000"
              role="alert"
              aria-live="assertive"
