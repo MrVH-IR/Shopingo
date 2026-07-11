@@ -5,64 +5,64 @@
 @endsection
 
 @section('content')
+    <section class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row gap-4">
 
-    <!-- start body -->
-    <section class="">
-        <section id="main-body-two-col" class="container-xxl body-container">
-            <section class="row">
-                @include('customer.layouts.aside')
-                <main id="main-body" class="main-body col-md-9">
-                    <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
+            @include('customer.layouts.aside')
 
-                        <!-- start vontent header -->
-                        <section class="content-header mb-4">
-                            <section class="d-flex justify-content-between align-items-center">
-                                <h2 class="content-header-title">
-                                    <span>لیست علاقه های من</span>
-                                </h2>
-                                <section class="content-header-link">
-                                    <!--<a href="#">مشاهده همه</a>-->
-                                </section>
-                            </section>
-                        </section>
-                        <!-- end vontent header -->
+            <main class="w-full md:w-3/4">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
 
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fa-solid fa-heart text-orange-500"></i>
+                            لیست علاقه‌های من
+                        </h2>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
                         @forelse(auth()->user()->favoriteProducts as $favorites)
-                        <section class="cart-item d-flex py-3">
-                            <section class="cart-img align-self-start flex-shrink-1"><img src="{{ asset($favorites->image['indexArray']['medium']) }}" alt=""></section>
-                            <section class="align-self-end w-100">
-                                <section>
-                                    <a href="#" class="text-decoration-none cart-delete" data-url="{{ route('customer.profile.favorite-delete', $favorites) }}">
-                                        <i class="fa fa-trash-alt"></i>
-                                        حذف از لیست علاقه‌ها
-                                    </a>
-                                </section>
-                            </section>
-                            <section class="align-self-end flex-shrink-1">
-                                <section class="text-nowrap fw-bold">{{ priceFormat($favorites->price) }} تومان</section>
-                            </section>
-                        </section>
-                        @empty
-                            <section class="order-item">
-                                <p class="text-center text-black">محصولی یافت نشد.</p>
-                            </section>
-                        @endforelse
+                            <div class="flex flex-col sm:flex-row items-center gap-4 border border-gray-100 rounded-xl p-4 hover:shadow-md transition-shadow duration-200">
 
-                    </section>
-                </main>
-            </section>
-        </section>
+                                <img src="{{ asset($favorites->image['indexArray']['medium']) }}"
+                                     alt=""
+                                     class="w-20 h-20 rounded-lg object-cover flex-shrink-0 bg-gray-50">
+
+                                <div class="flex-1 w-full text-center sm:text-right">
+                                    <button type="button"
+                                            class="cart-delete inline-flex items-center gap-2 text-red-500 hover:text-red-600 text-sm font-medium transition-colors duration-200"
+                                            data-url="{{ route('customer.profile.favorite-delete', $favorites) }}">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        حذف از لیست علاقه‌ها
+                                    </button>
+                                </div>
+
+                                <div class="flex-shrink-0 text-nowrap font-bold text-gray-700">
+                                    {{ priceFormat($favorites->price) }} تومان
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-10 text-gray-400">
+                                <i class="fa-solid fa-heart-crack text-3xl mb-3"></i>
+                                <p>محصولی یافت نشد.</p>
+                            </div>
+                        @endforelse
+                    </div>
+
+                </div>
+            </main>
+        </div>
     </section>
-    <!-- end body -->
 
     <form id="delete_form" method="POST">@csrf @method('DELETE')</form>
 @endsection
+
 @section('script')
     <script>
         document.querySelectorAll('.cart-delete').forEach(button => {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
-
                 const form = document.getElementById('delete_form');
                 form.action = this.dataset.url;
                 form.submit();
