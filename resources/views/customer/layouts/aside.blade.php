@@ -15,7 +15,7 @@
                 </span>
                 <span>سفارش‌های من</span>
             </a>
-            <a href=""
+            <a href="{{ route('customer.profile.my-addresses') }}"
                class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
                       {{ request()->routeIs('customer.profile.my-addresses')
                           ? 'bg-orange-50 text-orange-600 font-semibold'

@@ -2,7 +2,7 @@
 
 namespace Common\Services\SalesProcess\Request;
 
-use Common\Controllers\SalesProcess\Rule\CheckNationalCode;
+use Common\Services\SalesProcess\Rule\CheckNationalCode;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 

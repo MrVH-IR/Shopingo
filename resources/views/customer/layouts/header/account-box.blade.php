@@ -43,7 +43,7 @@
                 حساب کاربری
             </small>
         </section>
-        <a href="#"
+        <a href="{{ route('customer.profile.profile') }}"
            class="dropdown-item py-2">
             <i class="far fa-user-circle text-primary me-2"></i>
             پروفایل کاربری

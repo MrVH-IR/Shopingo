@@ -5,6 +5,8 @@ use Common\Services\{Home\HomeController,
     Market\ProductController,
     Profile\FavoriteController,
     Profile\OrderController,
+    Profile\ProfileController as UserProfileController,
+    Profile\AddressController as UserProfileAddressController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
     SalesProcess\ProfileController,
@@ -88,4 +90,7 @@ Route::prefix('profile')
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
         Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('my-favorites');
         Route::delete('/favorite-delete/{product}', [FavoriteController::class, 'delete'])->name('favorite-delete');
+        Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
+        Route::put('/profile/update', [UserProfileController::class, 'update'])->name('profile.update');
+        Route::get('/my-addresses', [UserProfileAddressController::class, 'index'])->name('my-addresses');
     });
