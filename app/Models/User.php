@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Market\Order;
 use App\Models\Market\Payment;
+use App\Models\Market\Product;
 use App\Models\User\Role;
 use App\Models\Content\Comment;
 use App\Models\Ticket\Ticket;
@@ -138,5 +139,10 @@ class User extends Authenticatable
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function favoriteProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_user');
     }
 }

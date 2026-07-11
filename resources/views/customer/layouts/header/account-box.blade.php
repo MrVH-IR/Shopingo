@@ -53,7 +53,7 @@
             <i class="fas fa-shopping-bag text-success me-2"></i>
             سفارشات
         </a>
-        <a href="#"
+        <a href="{{ route('customer.profile.my-favorites') }}"
            class="dropdown-item py-2">
             <i class="far fa-heart text-danger me-2"></i>
             علاقه‌مندی‌ها

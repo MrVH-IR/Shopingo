@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use Common\Services\{Home\HomeController,
     Market\ProductController,
+    Profile\FavoriteController,
     Profile\OrderController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
@@ -85,4 +86,6 @@ Route::prefix('profile')
     ->middleware('auth')
     ->group(function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+        Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('my-favorites');
+        Route::delete('/favorite-delete/{product}', [FavoriteController::class, 'delete'])->name('favorite-delete');
     });
