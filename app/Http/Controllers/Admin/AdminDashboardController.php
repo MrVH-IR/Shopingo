@@ -10,6 +10,7 @@ class AdminDashboardController extends Controller
 
     public function index() : View
     {
+        dd(auth()->user()->permissions());
         return view('admin.index');
     }
 }
