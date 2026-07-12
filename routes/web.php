@@ -70,14 +70,14 @@ Route::prefix('market')
         Route::delete('/remove-from-cart/{cartItem}' , [CartController::class, 'removeFromCart'])->name('remove-from-cart');
         Route::middleware('profile-complete')->group(function () {
             Route::get('address-and-delivery', [AddressController::class , 'addressAndDelivery'])->name('address-and-delivery');
-            Route::post('/add-address', [AddressController::class , 'addAddress'])->name('add-address');
-            Route::get('/get-cities/{province}', [AddressController::class , 'getCities'])->name('get-cities');
-            Route::put('/update-address', [AddressController::class , 'updateAddress'])->name('update-address');
             Route::get('/payment', [PaymentController::class , 'payment'])->name('payment');
             Route::post('/payment-type', [PaymentController::class , 'paymentType'])->name('payment-type');
             Route::post('/choose-address-and-delivery', [AddressController::class , 'chooseAddressAndDelivery'])->name('choose-address-and-delivery');
             Route::post('/coupon-discount', [PaymentController::class , 'couponDiscount'])->name('coupon-discount');
         });
+        Route::post('/add-address', [AddressController::class , 'addAddress'])->name('add-address');
+        Route::put('/update-address', [AddressController::class , 'updateAddress'])->name('update-address');
+        Route::get('/get-cities/{province}', [AddressController::class , 'getCities'])->name('get-cities');
         Route::any('/zarinpal-callback/{order}/', [PaymentController::class , 'callback'])->name('zarinpal-callback');
         Route::get('/complete-profile' , [ProfileController::class , 'profile'])->name('profile-complete');
         Route::post('complete-profile' , [ProfileController::class , 'updateProfile'])->name('profile.update');
@@ -93,4 +93,5 @@ Route::prefix('profile')
         Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
         Route::put('/profile/update', [UserProfileController::class, 'update'])->name('profile.update');
         Route::get('/my-addresses', [UserProfileAddressController::class, 'index'])->name('my-addresses');
+        Route::delete('/delete-address/{address}', [UserProfileAddressController::class, 'deleteAddress'])->name('delete-address');
     });

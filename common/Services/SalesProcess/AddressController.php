@@ -7,6 +7,7 @@ use App\Models\Market\CommonDiscount;
 use App\Models\Market\Delivery;
 use App\Models\Market\Order;
 use Common\Services\Payment\Requests\ChooseAddressAndDeliveryRequest;
+use Common\Services\Response\Responses;
 use Common\Services\SalesProcess\Request\AddressRequest;
 use Common\Models\Address;
 use Common\Models\Province;
@@ -55,12 +56,7 @@ class AddressController extends BaseController
         $validated = $request->validated();
         $validated['user_id'] = auth()->id();
         Address::create($validated);
-        return redirect()->back()->with([
-            'bootstrap-success' => [
-                'status' => 'موفق',
-                'message' => 'آدرس شما با موفقیت ثبت شد.'
-            ]
-        ]);
+        return Responses::redirectToWithBack('success', 'موفق', 'آدرس شما با موفقیت ثبت شد.');
     }
 
     public function updateAddress(AddressRequest $request)

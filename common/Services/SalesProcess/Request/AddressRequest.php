@@ -2,7 +2,7 @@
 
 namespace Common\Services\SalesProcess\Request;
 
-use Common\Controllers\SalesProcess\Rule\PostalCode;
+use Common\Services\SalesProcess\Rule\PostalCode;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
