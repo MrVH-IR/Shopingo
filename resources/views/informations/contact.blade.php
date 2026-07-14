@@ -16,7 +16,7 @@
                     </form>
                 </div>
             </div>
-            <div class="lg:max-w-xl w-full h-[600px] flex items-center justify-center bg-cover bg-no-repeat rounded-2xl" 
+            <div class="lg:max-w-xl w-full h-[600px] flex items-center justify-center bg-cover bg-no-repeat rounded-2xl"
                 style="background-image: url('{{ asset('admin-assets/images/contact-us-backgroundImage.png') }}')">
                 <div class="">
                     <div class="lg:w-96 w-auto h-auto bg-white shadow-xl lg:p-6 p-4">

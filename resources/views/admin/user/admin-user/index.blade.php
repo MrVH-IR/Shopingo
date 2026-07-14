@@ -77,7 +77,7 @@
                                 </td>
                                 <td>{{ $admin->user_type == 1 ? "ادمین" : "کاربر" }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
+                                    <a href="{{ route('admin.user.permission.index', $admin->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>   نقش</a>
                                     <a href="{{ route('admin.user.admin-user.edit' , $admin->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                     <form action="{{ route('admin.user.admin-user.destroy', $admin->id) }}" method="POST" id="delete-form-{{ $admin->id }}" class="d-none">
                                         @csrf

@@ -41,36 +41,36 @@ use App\Http\Controllers\Admin\{AdminDashboardController,
  * -------------------------------------------------------------
  */
 
-Route::middleware(['auth:sanctum' , config('jetstream.auth_session') , 'verified'])->prefix( '/admin')->group(function() {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified', 'admin'])->prefix( '/admin')->group(function() {
     Route::get('/' , [AdminDashboardController::class , 'index'])->name('admin.home');
 
     Route::prefix('market')->namespace('Market')->group(function() {
         //Category
         Route::prefix('category')->group(function() {
-            Route::get('/' , [CategoryController::class , 'index'])->name('admin.market.category.index');
-            Route::get('/create' , [CategoryController::class , 'create'])->name('admin.market.category.create');
-            Route::post('/store' , [CategoryController::class , 'store'])->name('admin.market.category.store');
-            Route::get('/edit/{productCategory}' , [CategoryController::class , 'edit'])->name('admin.market.category.edit');
-            Route::put('/update/{productCategory}' , [CategoryController::class , 'update'])->name('admin.market.category.update');
-            Route::delete('/destroy/{productCategory}' , [CategoryController::class , 'destroy'])->name('admin.market.category.destroy');
+            Route::get('/' , [CategoryController::class , 'index'])->name('admin.market.category.index')->can('categories.view');
+            Route::get('/create' , [CategoryController::class , 'create'])->name('admin.market.category.create')->can('categories.create');
+            Route::post('/store' , [CategoryController::class , 'store'])->name('admin.market.category.store')->can('categories.create');
+            Route::get('/edit/{productCategory}' , [CategoryController::class , 'edit'])->name('admin.market.category.edit')->can('categories.edit');
+            Route::put('/update/{productCategory}' , [CategoryController::class , 'update'])->name('admin.market.category.update')->can('categories.edit');
+            Route::delete('/destroy/{productCategory}' , [CategoryController::class , 'destroy'])->name('admin.market.category.destroy')->can('categories.destroy');
             // Route::resource('/' , CategoryController::class); // Can Be used And Delete All Those Above For (Category).
         });
         //Brand
         Route::prefix('brand')->group(function() {
-            Route::get('/' , [BrandController::class , 'index'])->name('admin.market.brand.index');
-            Route::get('/create' , [BrandController::class , 'create'])->name('admin.market.brand.create');
-            Route::post('/store' , [BrandController::class , 'store'])->name('admin.market.brand.store');
-            Route::get('/edit/{brand}' , [BrandController::class , 'edit'])->name('admin.market.brand.edit');
-            Route::put('/update/{brand}' , [BrandController::class , 'update'])->name('admin.market.brand.update');
-            Route::delete('/destroy/{brand}' , [BrandController::class , 'destroy'])->name('admin.market.brand.destroy');
-            Route::get('/status/{brand}' , [BrandController::class , 'status'])->name('admin.market.brand.status');
+            Route::get('/' , [BrandController::class , 'index'])->name('admin.market.brand.index')->can('brands.view');
+            Route::get('/create' , [BrandController::class , 'create'])->name('admin.market.brand.create')->can('brands.create');
+            Route::post('/store' , [BrandController::class , 'store'])->name('admin.market.brand.store')->can('brands.create');
+            Route::get('/edit/{brand}' , [BrandController::class , 'edit'])->name('admin.market.brand.edit')->can('brands.edit');
+            Route::put('/update/{brand}' , [BrandController::class , 'update'])->name('admin.market.brand.update')->can('brands.edit');
+            Route::delete('/destroy/{brand}' , [BrandController::class , 'destroy'])->name('admin.market.brand.destroy')->can('brands.destroy');
+            Route::get('/status/{brand}' , [BrandController::class , 'status'])->name('admin.market.brand.status')->can('brands.status');
             // Route::resource('/' , BrandController::class); // Can Be used And Delete All Those Above For (Brand).
         });
         //Comment
         Route::prefix('comment')->group(function() {
             Route::get('/' , [CommentController::class , 'index'])->name('admin.market.comment.index');
             Route::get('/show/{comment}' , [CommentController::class , 'show'])->name('admin.market.comment.show');
-//            Route::post('/store' , [CommentController::class , 'store'])->name('admin.market.comment.store');
+            // Route::post('/store' , [CommentController::class , 'store'])->name('admin.market.comment.store');
             // Route::get('/edit/{id}' , [CommentController::class , 'edit'])->name('admin.market.comment.edit');
             // Route::put('/update/{id}' , [CommentController::class , 'update'])->name('admin.market.comment.update');
             Route::delete('/destroy/{id}' , [CommentController::class , 'destroy'])->name('admin.market.comment.destroy');
@@ -312,12 +312,12 @@ Route::middleware(['auth:sanctum' , config('jetstream.auth_session') , 'verified
         });
         //Permission
         Route::prefix('permission')->group(function() {
-            Route::get('/' , [PermissionController::class , 'index'])->name('admin.user.permission.index');
+            Route::get('/{user}' , [PermissionController::class , 'index'])->name('admin.user.permission.index');
             Route::get('/create' , [PermissionController::class , 'create'])->name('admin.user.permission.create');
-            Route::post('/store' , [PermissionController::class , 'store'])->name('admin.user.permission.store');
+            Route::post('/store/{user}' , [PermissionController::class , 'store'])->name('admin.user.permission.store');
             Route::get('/edit/{id}' , [PermissionController::class , 'edit'])->name('admin.user.permission.edit');
             Route::put('/update/{id}' , [PermissionController::class , 'update'])->name('admin.user.permission.update');
-            Route::delete('/destroy/{id}' , [PermissionController::class , 'destroy'])->name('admin.user.permission.destroy');
+            Route::delete('/destroy/{user}' , [PermissionController::class , 'destroy'])->name('admin.user.permission.destroy');
             // Route::resource('/' , PermissionController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });
@@ -325,27 +325,27 @@ Route::middleware(['auth:sanctum' , config('jetstream.auth_session') , 'verified
     Route::prefix('notification')->namespace('Notification')->group(function () {
         Route::prefix('email')->group(function () {
             //Email
-            Route::get('/' , [EmailController::class , 'index'])->name('admin.email.index');
-            Route::get('/create' , [EmailController::class , 'create'])->name('admin.email.create');
-            Route::post('/store' , [EmailController::class , 'store'])->name('admin.email.store');
-            Route::get('/edit/{email}' , [EmailController::class , 'edit'])->name('admin.email.edit');
-            Route::put('/update/{email}' , [EmailController::class , 'update'])->name('admin.email.update');
-            Route::delete('/destroy/{email}' , [EmailController::class , 'destroy'])->name('admin.email.destroy');
-            Route::get('/status/{email}' , [EmailController::class , 'status'])->name('admin.email.status');
-            Route::get('/file/{file}' , [EmailController::class , 'downloadFile'])->name('admin.email.file.download');
-            Route::get('/file/view/{email}' , [EmailController::class , 'viewFile'])->name('admin.email.file.view');
-            Route::delete('/email/file/delete/{emailFile}', [EmailController::class, 'deleteFile'])->name('admin.email.file.delete');
+            Route::get('/' , [EmailController::class , 'index'])->name('admin.email.index')->can('notifications.view');
+            Route::get('/create' , [EmailController::class , 'create'])->name('admin.email.create')->can('notifications.create');
+            Route::post('/store' , [EmailController::class , 'store'])->name('admin.email.store')->can('notifications.create');
+            Route::get('/edit/{email}' , [EmailController::class , 'edit'])->name('admin.email.edit')->can('notifications.create');
+            Route::put('/update/{email}' , [EmailController::class , 'update'])->name('admin.email.update')->can('notifications.create');
+            Route::delete('/destroy/{email}' , [EmailController::class , 'destroy'])->name('admin.email.destroy')->can('notifications.create');
+            Route::get('/status/{email}' , [EmailController::class , 'status'])->name('admin.email.status')->can('notifications.create');
+            Route::get('/file/{file}' , [EmailController::class , 'downloadFile'])->name('admin.email.file.download')->can('notifications.create');
+            Route::get('/file/view/{email}' , [EmailController::class , 'viewFile'])->name('admin.email.file.view')->can('notifications.create');
+            Route::delete('/email/file/delete/{emailFile}', [EmailController::class, 'deleteFile'])->name('admin.email.file.delete')->can('notifications.create');
             // Route::resource('/' , EmailController::class); // Can Be used And Delete All Those Above For (Comment).
         });
         //SMS
         Route::prefix('sms')->group(function () {
-            Route::get('/' , [SMSController::class , 'index'])->name('admin.sms.index');
-            Route::get('/create' , [SMSController::class , 'create'])->name('admin.sms.create');
-            Route::post('/store' , [SMSController::class , 'store'])->name('admin.sms.store');
-            Route::get('/edit/{sms}' , [SMSController::class , 'edit'])->name('admin.sms.edit');
-            Route::put('/update/{sms}' , [SMSController::class , 'update'])->name('admin.sms.update');
-            Route::delete('/destroy/{sms}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy');
-            Route::get('/status/{sms}' , [SMSController::class , 'status'])->name('admin.sms.status');
+            Route::get('/' , [SMSController::class , 'index'])->name('admin.sms.index')->can('notifications.view');
+            Route::get('/create' , [SMSController::class , 'create'])->name('admin.sms.create')->can('notifications.create');
+            Route::post('/store' , [SMSController::class , 'store'])->name('admin.sms.store')->can('notifications.create');
+            Route::get('/edit/{sms}' , [SMSController::class , 'edit'])->name('admin.sms.edit')->can('notifications.create');
+            Route::put('/update/{sms}' , [SMSController::class , 'update'])->name('admin.sms.update')->can('notifications.create');
+            Route::delete('/destroy/{sms}' , [SMSController::class , 'destroy'])->name('admin.sms.destroy')->can('notifications.create');
+            Route::get('/status/{sms}' , [SMSController::class , 'status'])->name('admin.sms.status')->can('notifications.create');
             // Route::resource('/' , SmsController::class); // Can Be used And Delete All Those Above For (Comment).
         });
     });
@@ -387,15 +387,10 @@ Route::middleware(['auth:sanctum' , config('jetstream.auth_session') , 'verified
     });
 
     Route::prefix('setting')->namespace('Setting')->group(function() {
-            Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index');
-            Route::get('/edit/{setting}' , [SettingController::class , 'edit'])->name('admin.setting.edit');
-            Route::put('/update/{setting}' , [SettingController::class , 'update'])->name('admin.setting.update');
+            Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index')->can('settings.view');
+            Route::get('/edit/{setting}' , [SettingController::class , 'edit'])->name('admin.setting.edit')->can('settings.edit');
+            Route::put('/update/{setting}' , [SettingController::class , 'update'])->name('admin.setting.update')->can('settings.edit');
     });
 
     Route::post('notification/read-all' , [\App\Http\Controllers\Admin\NotificationController::class , 'readAll'])->name('admin.notification.readAll');
 });
-
-
-
-
-

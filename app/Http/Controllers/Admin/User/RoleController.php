@@ -47,7 +47,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             $errorID = now()->format('YmdHis') . rand(1000 , 9999);
-            \Log::error("Exception $errorID" , $e->getMessage());
+            \Log::error("Exception $errorID" , (array)$e->getMessage());
             return redirect()->back()->with('swal-error', $errorID);
         }
     }
@@ -88,7 +88,7 @@ class RoleController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             $errorID = now()->format('YmdHis') . rand(1000 , 9999);
-            \Log::error("Exception: $errorID" , $e->getMessage());
+            \Log::error("Exception: $errorID" , (array)$e->getMessage());
             return redirect()->route('admin.user.role.edit' , $errorID);
         }
     }

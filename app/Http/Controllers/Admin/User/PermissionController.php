@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\PermissionRequest;
+use App\Models\User;
+use App\Models\User\Permission;
+use App\Models\User\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -10,9 +14,11 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        $roles = Role::all();
+        $userRoles = $user->roles;
+        return view('admin.user.role.permission', compact('roles', 'user', 'userRoles'));
     }
 
     /**
@@ -26,9 +32,11 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request, User $user)
     {
-        //
+        $user->roles()->sync($request->role_id);
+        return redirect()->route('admin.user.admin-user.index')
+            ->with('swal-success', 'نقش مورد نظر به کاربر داده شد.');
     }
 
     /**
@@ -58,8 +66,10 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PermissionRequest $request, User $user)
     {
-        //
+        $user->roles()->detach($request->role_id);
+        return redirect()->route('admin.user.admin-user.index')
+            ->with('swal-success', 'کاربر نقش مورد نظر را از دست داد');
     }
 }

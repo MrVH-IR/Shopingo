@@ -35,6 +35,9 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    public const USER = 0;
+    public const ADMIN = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -102,7 +105,7 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function roles(): belongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
@@ -110,6 +113,32 @@ class User extends Authenticatable
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->roles()
+            ->where('name', $role)
+            ->exists();
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->hasRole('سوپر ادمین')) {
+            return true;
+        }
+
+        if ($this->permissions()
+            ->where('name', $permission)
+            ->exists()) {
+            return true;
+        }
+
+        return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permission) {
+                $query->where('name', $permission);
+            })
+            ->exists();
     }
 
     public function ticketAdmin(): HasOne
