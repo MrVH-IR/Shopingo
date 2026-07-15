@@ -3,6 +3,7 @@
 namespace Common\Services\Payment;
 
 use App\Models\Market\CartItem;
+use App\Models\Market\Product;
 use Common\Services\Exception\ExceptionLogger;
 use Common\Services\Response\Responses;
 use App\Models\Market\OnlinePayment;
@@ -82,6 +83,9 @@ class PaymentController extends BaseController
                 $cartItems
             );
             DB::commit();
+//            $cartItems->map(function ($cartItem) {
+//               $this->changeProductStatus($cartItem->product_id, $cartItem->quantity);
+//            });
         } catch (Exception $e) {
             DB::rollBack();
             ExceptionLogger::error($e, "Error in Payment Service");
@@ -126,4 +130,12 @@ class PaymentController extends BaseController
         $order->delete();
         return Responses::redirectToWith('customer.home','warning','هشدار','پرداخت کنسل شد');
     }
+
+//    protected function changeProductStatus($product_id, $cartNumbers)
+//    {
+//        return Product::whereKey($product_id)
+//            ->update([
+//                'sold_out' => $cartNumbers,
+//            ]);
+//    }
 }

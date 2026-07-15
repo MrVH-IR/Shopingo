@@ -161,13 +161,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
             Route::post('/gallery/store/{product}' , [GalleryController::class , 'store'])->name('admin.market.gallery.store')->can('gallery.create');
             Route::delete('/gallery/destroy/{product}/{productImage}' , [GalleryController::class , 'destroy'])->name('admin.market.gallery.destroy')->can('gallery.destroy');
 
-            Route::get('/gallery/change-size/{productImage}' , [GalleryController::class , 'changeSize'])->name('admin.market.gallery.changeSize')->can('gallery-change-size');
+            Route::get('/gallery/change-size/{productImage}' , [GalleryController::class , 'changeSize'])->name('admin.market.gallery.changeSize')->can('gallery.change-size');
 
             // Guarantee
-            Route::get('guarantee/{product}' , [GuaranteeController::class , 'index'])->name('admin.market.guarantee.index')->can('guarantee.view');
-            Route::get('guarantee/create/{product}' , [GuaranteeController::class , 'create'])->name('admin.market.guarantee.create')->can('guarantee.create');
-            Route::post('guarantee/store/{product}' , [GuaranteeController::class , 'store'])->name('admin.market.guarantee.store')->can('guarantee.create');
-            Route::delete('guarantee/destroy/{product}/{guarantee}' , [GuaranteeController::class , 'destroy'])->name('admin.market.guarantee.destroy')->can('guarantee.destroy');
+            Route::get('guarantee/{product}' , [GuaranteeController::class , 'index'])->name('admin.market.guarantee.index')->can('guarantees.view');
+            Route::get('guarantee/create/{product}' , [GuaranteeController::class , 'create'])->name('admin.market.guarantee.create')->can('guarantees.create');
+            Route::post('guarantee/store/{product}' , [GuaranteeController::class , 'store'])->name('admin.market.guarantee.store')->can('guarantees.create');
+            Route::delete('guarantee/destroy/{product}/{guarantee}' , [GuaranteeController::class , 'destroy'])->name('admin.market.guarantee.destroy')->can('guarantees.destroy');
             // Route::resource('/' , ProductController::class); // Can Be used And Delete All Those Above For (Brand).
         });
         //Property
