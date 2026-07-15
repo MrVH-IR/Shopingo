@@ -21,13 +21,13 @@ class TicketController extends Controller
 
     public function openTickets()
     {
-        $tickets = Ticket::where('status', 0)->simplePaginate(15);
+        $tickets = Ticket::where('status', 1)->simplePaginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
     public function closeTickets()
     {
-        $tickets = Ticket::where('status', 1)->simplePaginate(15);
+        $tickets = Ticket::where('status', 0)->simplePaginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
@@ -66,15 +66,16 @@ class TicketController extends Controller
 
         $validated['subject'] = $ticket->subject;
         $validated['seen'] = 1;
-        $validated['status'] = 0;
+        $validated['status'] = 1;
         $validated['reference_id'] = $ticket->reference_id;
         $validated['category_id'] = $ticket->category_id;
         $validated['priority_id'] = $ticket->priority_id;
         $validated['description'] = $request->answer;
-        $validated['user_id'] = 159;
+        $validated['user_id'] = auth()->user()->id;
         $validated['ticket_id'] = $ticket->id;
 
         $result = Ticket::create($validated);
+        $ticket->update(['seen' => 1, 'status' => 0]);
         return redirect()->back()->with('swal-success' , 'جواب تیکت با موفقیت ارسال شد');
     }
 }

@@ -7,6 +7,7 @@ use Common\Services\{Home\HomeController,
     Profile\OrderController,
     Profile\ProfileController as UserProfileController,
     Profile\AddressController as UserProfileAddressController,
+    Profile\TicketController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
     SalesProcess\ProfileController,
@@ -94,4 +95,6 @@ Route::prefix('profile')
         Route::put('/profile/update', [UserProfileController::class, 'update'])->name('profile.update');
         Route::get('/my-addresses', [UserProfileAddressController::class, 'index'])->name('my-addresses');
         Route::delete('/delete-address/{address}', [UserProfileAddressController::class, 'deleteAddress'])->name('delete-address');
+        Route::get('/my-tickets', [TicketController::class, 'index'])->name('my-tickets');
+        Route::post('/send-ticket', [TicketController::class, 'sendTicket'])->name('send-ticket');
     });

@@ -62,7 +62,7 @@
                             </td>
                             <td class="width-16-rem text-left">
                                 <a href="{{ route('admin.ticket.change' , $ticket->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-check"></i> {{ $ticket->status == 1 ? "باز کردن" : "بستن" }}
+                                    <i class="fa fa-check"></i> {{ $ticket->status == 1 ? "بستن" : "باز کردن" }}
                                 </a>
                             </td>
                         </tr>

@@ -23,7 +23,8 @@ class Ticket extends Model
         "user_id" ,
         "category_id" ,
         "priority_id" ,
-        "ticket_id"];
+        "ticket_id"
+    ];
 
     public function user(): BelongsTo
     {

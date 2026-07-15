@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Common\BlockedUsersMiddleware;
+use App\Http\Middleware\LockScreenMiddleware;
 use Common\Services\SalesProcess\Middleware\CheckProfile;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,11 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append([
-            BlockedUsersMiddleware::class
+            BlockedUsersMiddleware::class,
         ]);
         $middleware->alias([
             'profile-complete' => CheckProfile::class,
             'admin' => AdminMiddleware::class,
+            'lock-screen' => LockScreenMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -2,6 +2,14 @@
     <section class="sidebar-container">
         <section class="sidebar-wrapper">
 
+            <a href="{{ route('customer.home') }}"
+               target="_blank"
+               class="sidebar-link border-bottom"
+               style="border-color: #0aefca !important;">
+                <i class="fas fa-shopping-cart"></i>
+                <span>فروشگاه</span>
+            </a>
+
             <a href="{{ route('admin.home') }}" class="sidebar-link">
                 <i class="fas fa-home"></i>
                 <span>خانه</span>

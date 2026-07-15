@@ -3,7 +3,7 @@
         <section class="d-flex justify-content-between flex-md-row-reverse px-2">
             <span id="sidebar-toggle-show" class="d-inline d-md-none pointer"><i class="fas fa-toggle-off"></i></span>
             <span id="sidebar-toggle-hide" class="d-none d-md-inline pointer"><i class="fas fa-toggle-on"></i></span>
-            <span><img class="logo rounded-lg" src="{{ asset('admin-assets/images/shopingo_logo-3.png') }}" alt="Logo"></span>
+            <span><a href="{{ route('customer.home') }}"><img class="logo rounded-lg" src="{{ asset('admin-assets/images/shopingo_logo-3.png') }}" alt="Logo"></a></span>
             <span class="d-md-none" id="menu-toggle"><i class="fas fa-ellipsis-h"></i></span>
         </section>
     </section>
@@ -117,18 +117,18 @@
                     </span>
                     <section id="header-profile" class="header-profile rounded">
                         <section class="list-group rounded">
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
+                            <a href="{{ route('admin.setting.index') }}" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-cog"></i>تنظیمات
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
+                            <a href="{{ route('admin.user.admin-user.index') }}" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-user"></i>کاربر
                             </a>
                             <a href="#" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="far fa-envelope"></i>پیام ها
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
+                            <button form="lock_form" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-lock"></i>قفل صفحه
-                            </a>
+                            </button>
                             <button form="logout_form" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-sign-out-alt"></i>خروج
                             </button>
@@ -141,3 +141,4 @@
 </header>
 
 <form class="d-none" action="{{ route('auth.customer.logout') }}" method="POST" id="logout_form">@csrf</form>
+<form action="{{ route('lock-screen.lock') }}" method="POST" class="d-none" id="lock_form">@csrf</form>

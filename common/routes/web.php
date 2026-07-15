@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{AdminDashboardController,
+    LockScreenController,
     Market\CategoryController,
     Market\BrandController,
     Market\CommentController,
@@ -41,7 +42,7 @@ use App\Http\Controllers\Admin\{AdminDashboardController,
  * -------------------------------------------------------------
  */
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified', 'admin'])->prefix( '/admin')->group(function() {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified', 'admin', 'lock-screen'])->prefix( '/admin')->group(function() {
     Route::get('/' , [AdminDashboardController::class , 'index'])->name('admin.home');
 
     Route::prefix('market')->namespace('Market')->group(function() {
@@ -381,7 +382,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
         Route::get('/open-tickets' , [TicketController::class , 'openTickets'])->name('admin.ticket.opentickets')->can('tickets.view');
         Route::get('/close-tickets' , [TicketController::class , 'closeTickets'])->name('admin.ticket.closetickets')->can('tickets.view');
         Route::get('/create' , [TicketController::class , 'create'])->name('admin.ticket.create')->can('tickets.create');
-        Route::get('/show{ticket}' , [TicketController::class , 'show'])->name('admin.ticket.show')->can('tickets.view');
+        Route::get('/show/{ticket}' , [TicketController::class , 'show'])->name('admin.ticket.show')->can('tickets.view');
         Route::post('/answer/{ticket}' , [TicketController::class , 'answer'])->name('admin.ticket.answer')->can('tickets.answer');
         Route::get('/change/{ticket}' , [TicketController::class , 'change'])->name('admin.ticket.change')->can('tickets.change');
     });
@@ -393,4 +394,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
     });
 
     Route::post('notification/read-all' , [\App\Http\Controllers\Admin\NotificationController::class , 'readAll'])->name('admin.notification.readAll');
+    Route::prefix('lock-screen')
+        ->name('lock-screen.')
+        ->group(function () {
+            Route::post('/', [LockScreenController::class, 'lock'])->name('lock');
+            Route::get('/', [LockScreenController::class, 'show'])->name('show');
+            Route::post('/unlock', [LockScreenController::class, 'unlock'])->name('unlock');
+        });
 });

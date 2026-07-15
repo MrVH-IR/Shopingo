@@ -12,8 +12,8 @@ $('.brands').owlCarousel({
 
     onInitialized: function () {
 
-        $('.brands .owl-prev span').html('<i class="fas fa-chevron-right"></i>');
-        $('.brands .owl-next span').html('<i class="fas fa-chevron-left"></i>');
+        $('.brands .owl-prev span').html('<i class="fas fa-chevron-right mr-3 mt-2"></i>');
+        $('.brands .owl-next span').html('<i class="fas fa-chevron-left mr-5"></i>');
 
     },
 

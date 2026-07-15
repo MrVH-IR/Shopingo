@@ -284,7 +284,7 @@
                                hover:border-blue-500">
 
                             <img
-                                src="{{ asset($brand->image['indexArray']['large']) }}"
+                                src="{{ asset($brand->image['indexArray']['medium']) }}"
                                 alt="{{ $brand->persian_name }}"
                                 class="h-16
                                    w-36
