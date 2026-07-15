@@ -23,6 +23,7 @@ class PaymentFactory extends Factory
         return [
             "amount" => $this->faker->randomFloat(2, 10, 100000),
             "user_id" => User::factory()->create()->id,
+            "transaction_id" => $this->faker->uuid(),
             "status" => $this->faker->randomElement([1 , 0]),
             "type" => null
         ];

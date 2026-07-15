@@ -50,12 +50,12 @@
                         @foreach($allPayments as $payment)
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
-                                <td>{{ $payment->paymentable->transaction_id }}</td>
+                                <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
                                 <td>{{ $payment->paymentable->gateway ?? "-" }}</td>
                                 <td>{{ $payment->user->mobile }} - {{ $payment->user->fullName }}</td>
-                                <td>@if($payment->status == 0)
-                                        پرداخت نشده@elseif( $payment->status == 1)
-                                        پرداخت شده@elseif($payment->status == 2) پرداخت کنسل شده
+                                <td>@if($payment->status == 0)پرداخت نشده
+                                    @elseif( $payment->status == 1)پرداخت شده
+                                    @elseif($payment->status == 2) پرداخت کنسل شده
                                     @elseif($payment->status == 3) برگشت داده شده
                                     @endif</td>
                                 <td>@if( $payment->type == 0) آنلاین @elseif($payment->type == 1) آفلاین @else در محل @endif</td>

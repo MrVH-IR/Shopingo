@@ -129,9 +129,9 @@
                             <a href="#" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-lock"></i>قفل صفحه
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action header-profile-link">
+                            <button form="logout_form" class="list-group-item list-group-item-action header-profile-link">
                                 <i class="fas fa-sign-out-alt"></i>خروج
-                            </a>
+                            </button>
                         </section>
                     </section>
                     </span>
@@ -139,3 +139,5 @@
         </section>
     </section>
 </header>
+
+<form class="d-none" action="{{ route('auth.customer.logout') }}" method="POST" id="logout_form">@csrf</form>

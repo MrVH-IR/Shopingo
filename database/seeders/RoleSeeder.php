@@ -169,6 +169,13 @@ class RoleSeeder extends Seeder
             ["name" => "property-values.edit", "description" => "ویرایش مقدار ویژگی", "status" => 1],
             ["name" => "property-values.destroy", "description" => "حذف مقدار ویژگی", "status" => 1],
 
+            ["name" => "category-content.view", "description" => "نمایش دسته بندی محتوا", "status" => 1],
+            ["name" => "category-content.create", "description" => "نمایش صفحه ساخت دسته بندی محتوا", "status" => 1],
+            ["name" => "category-content.store", "description" => "اضافه کردن دسته بندی محتوا", "status" => 1],
+            ["name" => "category-content.edit", "description" => "نمایش صفحه تغییر دسته بندی محتوا", "status" => 1],
+            ["name" => "category-content.destroy", "description" => "حذف دسته بندی محتوا", "status" => 1],
+            ["name" => "category-content.status", "description" => "تغییر وضعیت دسته بندی محتوا", "status" => 1],
+
             // Store
             ["name" => "store.view", "description" => "مشاهده انبار", "status" => 1],
             ["name" => "store.create", "description" => "افزودن موجودی", "status" => 1],
