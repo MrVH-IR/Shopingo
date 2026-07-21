@@ -5,23 +5,23 @@
         {{-- Trust / service features --}}
         <section class="grid grid-cols-2 md:grid-cols-5 gap-6 pb-10 border-b border-gray-100">
             <section class="flex flex-col items-center text-center gap-2">
-                <img src="{{ asset('customer-assets/images/footer/1.png') }}" alt="تحویل اکسپرس" class="h-10 w-10 object-contain">
+                <img src="{{ asset('customer-assets/images/footer/Express.png') }}" alt="تحویل اکسپرس" class="h-10 w-10 object-contain">
                 <span class="text-sm text-gray-600">امکان تحویل اکسپرس</span>
             </section>
             <section class="flex flex-col items-center text-center gap-2">
-                <img src="{{ asset('customer-assets/images/footer/2.png') }}" alt="پرداخت در محل" class="h-10 w-10 object-contain">
+                <img src="{{ asset('customer-assets/images/footer/PayOnReceive.png') }}" alt="پرداخت در محل" class="h-10 w-10 object-contain">
                 <span class="text-sm text-gray-600">امکان پرداخت در محل</span>
             </section>
             <section class="flex flex-col items-center text-center gap-2">
-                <img src="{{ asset('customer-assets/images/footer/3.png') }}" alt="پشتیبانی ۲۴ ساعته" class="h-10 w-10 object-contain">
+                <img src="{{ asset('customer-assets/images/footer/Support24x7.png') }}" alt="پشتیبانی ۲۴ ساعته" class="h-10 w-10 object-contain">
                 <span class="text-sm text-gray-600">۷ روز هفته، ۲۴ ساعته</span>
             </section>
             <section class="flex flex-col items-center text-center gap-2">
-                <img src="{{ asset('customer-assets/images/footer/4.png') }}" alt="ضمانت بازگشت" class="h-10 w-10 object-contain">
+                <img src="{{ asset('customer-assets/images/footer/7DayGuarantee.png') }}" alt="ضمانت بازگشت" class="h-10 w-10 object-contain">
                 <span class="text-sm text-gray-600">۷ روز ضمانت بازگشت کالا</span>
             </section>
             <section class="flex flex-col items-center text-center gap-2 col-span-2 md:col-span-1">
-                <img src="{{ asset('customer-assets/images/footer/5.png') }}" alt="ضمانت اصالت کالا" class="h-10 w-10 object-contain">
+                <img src="{{ asset('customer-assets/images/footer/OriginalProductGuarantee.png') }}" alt="ضمانت اصالت کالا" class="h-10 w-10 object-contain">
                 <span class="text-sm text-gray-600">ضمانت اصل بودن کالا</span>
             </section>
         </section>
