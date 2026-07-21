@@ -219,7 +219,7 @@
     @if($homePage['banners']['3'] ?? [])
         {{-- Ads: one-column --}}
         <section class="max-w-screen-xl mx-auto px-4 mb-6">
-            <section class="grid grid-cols-1 gap-4">
+            <section class="grid grid-cols-4 gap-4">
                 @forelse(($homePage['banners']['3'] ?? []) as $banner)
                     <a href="{{ urldecode($banner->link) }}" class="block rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <img class="w-full" src="{{ asset($banner->image) }}" alt="{{ $banner->name }}">

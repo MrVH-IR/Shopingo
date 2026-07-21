@@ -1,9 +1,7 @@
-
 ## About Shopingo - Laravel E-Commerce Project
 
 A modern Laravel-based e-commerce application with a powerful admin panel.  
 Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Bootstrap**, and **FontAwesome** to provide a clean and responsive UI for both the admin and customer sides.
-
 
 ## 🚀 Features
 
@@ -16,7 +14,7 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 
 ## 🛠️ Technologies Used
 
-- [Laravel 12](https://laravel.com/)
+- [Laravel 13](https://laravel.com/)
 - PHP 8.4+
 - jQuery
 - Bootstrap 5
@@ -40,18 +38,24 @@ Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Boots
 git clone https://github.com/MrVH-IR/Shopingo.git
 cd Shopingo
 ```
+
 ##
+
 Change The timezone if you are not Inside Iran
+
 ```php
     'timezone' => 'Asia/Tehran',
 ```
+
 ## Install dependencies
+
 ```shell
 composer install
 cp .env.example .env
 ```
 
 ## Then edit .env and set your database credentials
+
 ```shell
 DB_CONNECTION=mysql
 DB_HOST=db
@@ -70,6 +74,7 @@ MAIL_FROM_ADDRESS=
 ```
 
 ## Laravel Commands
+
 ```shell
 php artisan key:generate
 php artisan migrate

@@ -391,6 +391,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
             Route::get('/' , [SettingController::class , 'index'])->name('admin.setting.index')->can('settings.view');
             Route::get('/edit/{setting}' , [SettingController::class , 'edit'])->name('admin.setting.edit')->can('settings.edit');
             Route::put('/update/{setting}' , [SettingController::class , 'update'])->name('admin.setting.update')->can('settings.edit');
+            Route::post('/optimization', [SettingController::class, 'optimizeApp'])->name('admin.setting.optimization')->can('settings.edit');
     });
 
     Route::post('notification/read-all' , [\App\Http\Controllers\Admin\NotificationController::class , 'readAll'])->name('admin.notification.readAll');

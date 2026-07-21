@@ -1,106 +1,107 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>نظرات</title>
+    <title>نمایش نظر</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.content.category.index') }}">بخش محتوا</a>
-        </li>
-        <li class="breadcrumb-item font-size-12" aria-current="page">
-            نظرات
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            نمایش نظر
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div class="relative isolate overflow-hidden px-6 py-7 sm:px-8">
+                <div class="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-900"></div>
+                <div class="absolute right-0 top-0 -z-10 h-40 w-40 rounded-full bg-cyan-400/20 blur-3xl"></div>
+                <div class="absolute bottom-0 left-1/3 -z-10 h-32 w-32 rounded-full bg-fuchsia-400/10 blur-3xl"></div>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        نمایش نظر
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.content.comment.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
+                <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                    <div class="max-w-2xl">
+                        <nav class="mb-3 text-sm text-slate-300">
+                            <a href="{{ route('admin.home') }}" class="transition hover:text-white">خانه</a>
+                            <span class="mx-2 text-slate-500">/</span>
+                            <a href="{{ route('admin.content.comment.index') }}" class="transition hover:text-white">نظرات</a>
+                            <span class="mx-2 text-slate-500">/</span>
+                            <span class="text-slate-100">نمایش</span>
+                        </nav>
+                        <h1 class="text-3xl font-black tracking-tight text-white sm:text-4xl">نمایش نظر</h1>
+                        <p class="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
+                            جزئیات کامل نظر، نویسنده، پست و پاسخ مدیریتی را از اینجا بررسی کنید.
+                        </p>
+                    </div>
 
-                <section class="card mb-3">
-                    <section class="card-header text-white bg-primary">
-                        <p>{{ $comment->author->fullName }} - {{ $comment->author_id }}</p>
-                    </section>
-                    <section class="card-body">
-                        <h5 class="card-title">{{ $comment->commentable->title ?? '' }}</h5>
-                        <div class="card-text">
-                            <span class="text-preview">
-                                {{ substr(strip_tags($comment->body), 0, 50) }}...
-                            </span>
-                            <span class="text-full" style="display: none;">
-                                {{ strip_tags($comment->body) }}
-                            </span>
-                            @if (strlen($comment->body) > 50)
-                                <a href="#" class="read-more text-primary small" style="font-size: 0.9em;">
-                                    نمایش بیشتر
-                                </a>
-                            @endif
-                        </div>
-                    </section>
-                </section>
-                <section>
-                    @if($comment->parent == null)
-                    <form action="{{ route('admin.content.comment.answer' , $comment->id )}}" method="POST">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">پاسخ ادمین</label>
-                                       <textarea name="body" id="body" class="form-control form-control-sm" rows="4">{{ old('body') }}</textarea>
-                                </div>
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                    @endif
-                </section>
-            </section>
+                    <a href="{{ route('admin.content.comment.index') }}" class="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-black/10 transition hover:bg-cyan-50">
+                        <i class="fas fa-arrow-right text-cyan-700"></i>
+                        بازگشت
+                    </a>
+                </div>
+            </div>
         </section>
-    </section>
 
-@endsection
-@section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const readMoreLinks = document.querySelectorAll('.read-more');
+        <section class="grid gap-6 xl:grid-cols-3">
+            <div class="xl:col-span-2 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">{{ $comment->author->fullName ?? 'کاربر ناشناس' }}</h2>
+                        <p class="mt-1 text-sm text-slate-500">شناسه نویسنده: {{ $comment->author_id }}</p>
+                    </div>
 
-            readMoreLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const fullText = this.previousElementSibling;
-                    const previewText = fullText.previousElementSibling;
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{{ $comment->approved_label }}</span>
+                        <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{{ $comment->seen_label }}</span>
+                        <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">کد نظر: {{ $comment->id }}</span>
+                    </div>
+                </div>
 
-                    if (fullText.style.display === 'inline') {
-                        fullText.style.display = 'none';
-                        previewText.style.display = 'inline';
-                        this.textContent = 'نمایش بیشتر';
-                    } else {
-                        fullText.style.display = 'inline';
-                        previewText.style.display = 'none';
-                        this.textContent = 'نمایش کمتر';
-                    }
-                });
-            });
-        });
-    </script>
+                <div class="mt-6 rounded-3xl bg-slate-50 p-5">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-cyan-600 shadow-sm">
+                            <i class="fas fa-file-lines"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-slate-900">پست مرتبط</p>
+                            <p class="text-xs text-slate-500">{{ $comment->commentable?->title ?? 'بدون عنوان' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 rounded-3xl border border-slate-200 bg-white p-5">
+                    <div class="prose prose-slate max-w-none text-sm leading-7 text-slate-700">
+                        {!! nl2br(e($comment->body)) !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-sm font-semibold text-slate-900">پاسخ مدیریتی</p>
+                        <p class="mt-1 text-sm text-slate-500">فقط برای کامنت‌های اصلی فعال است.</p>
+                    </div>
+                    <i class="fas fa-reply text-cyan-600"></i>
+                </div>
+
+                @if($comment->parent == null)
+                    <form action="{{ route('admin.content.comment.answer', $comment->id) }}" method="POST" class="mt-6 space-y-4">
+                        @csrf
+                        <div class="space-y-2">
+                            <label for="body" class="text-sm font-semibold text-slate-700">متن پاسخ</label>
+                            <textarea name="body" id="body" rows="8" class="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white">{{ old('body') }}</textarea>
+                            @error('body')
+                                <p class="text-sm text-rose-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                            <i class="fas fa-paper-plane"></i>
+                            ثبت پاسخ
+                        </button>
+                    </form>
+                @else
+                    <div class="mt-6 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5">
+                        <p class="text-sm leading-7 text-slate-600">
+                            این نظر خودش پاسخ به یک نظر دیگر است و فرم پاسخ مدیریتی برای آن نمایش داده نمی‌شود.
+                        </p>
+                    </div>
+                @endif
+            </div>
+        </section>
+    </div>
 @endsection

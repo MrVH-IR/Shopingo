@@ -159,6 +159,7 @@
     flex: 0 0 14rem;
     background-color: #404E67;
     color: #dcdcdc;
+    transition: all .3s ease;
 }
 
 .sidebar-container {
@@ -168,6 +169,7 @@
     top: 3.5rem;
     z-index: 10000;
     width: 14rem;
+    transition: transform .3s ease, opacity .3s ease;
 }
 
 .sidebar-wrapper {
@@ -280,6 +282,22 @@ button:hover {
     background-color: #f3f3f3;
 }
 
+body.sidebar-collapsed .sidebar {
+    flex-basis: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+body.sidebar-collapsed .sidebar-container {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.sidebar-collapsed .main-body {
+    width: 100%;
+}
+
 @media only screen and (max-width: 767.98px) {
     .sidebar {
         display: none;
@@ -299,6 +317,10 @@ button:hover {
     .main-body {
         width: 100%;
         z-index: 1;
+    }
+
+    body.sidebar-collapsed .sidebar {
+        display: none;
     }
 }
 

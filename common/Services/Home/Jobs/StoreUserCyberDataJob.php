@@ -2,7 +2,6 @@
 
 namespace Common\Services\Home\Jobs;
 
-use Common\Controllers\Home\Action\GetUserController;
 use Common\Models\UserCyberData;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;

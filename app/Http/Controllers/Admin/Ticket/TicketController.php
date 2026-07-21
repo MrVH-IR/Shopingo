@@ -12,10 +12,6 @@ class TicketController extends Controller
     public function newTickets()
     {
         $tickets = Ticket::where('seen', 0)->simplePaginate(15);
-//        foreach($tickets as $newTicket){
-//            $newTicket->seen = 1;
-//            $newTicket->save();
-//        }
         return view('admin.ticket.index', compact('tickets'));
     }
 
@@ -42,6 +38,8 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
+        $ticket->seen = 1;
+        $ticket->save();
         return view('admin.ticket.show' , compact('ticket'));
     }
 

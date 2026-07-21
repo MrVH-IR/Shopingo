@@ -11,7 +11,9 @@ use Common\Services\{Home\HomeController,
     SalesProcess\AddressController,
     SalesProcess\CartController,
     SalesProcess\ProfileController,
-    Payment\PaymentController};
+    Payment\PaymentController,
+    Products\ProductController as CustomerProductContoller
+};
 use Illuminate\Support\Facades\Route;
 
 
@@ -97,4 +99,11 @@ Route::prefix('profile')
         Route::delete('/delete-address/{address}', [UserProfileAddressController::class, 'deleteAddress'])->name('delete-address');
         Route::get('/my-tickets', [TicketController::class, 'index'])->name('my-tickets');
         Route::post('/send-ticket', [TicketController::class, 'sendTicket'])->name('send-ticket');
+    });
+
+Route::prefix('products')
+    ->name('products.')
+    ->group(function () {
+        Route::get('/', [CustomerProductContoller::class, 'index'])->name('products');
+        Route::get('/search', [CustomerProductContoller::class, 'search'])->name('search');
     });

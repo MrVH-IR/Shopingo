@@ -18,7 +18,7 @@ class BlockedUsersMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $ip = $request->ip();
-        $blockedIps = Cache::remember('blocked_ips', 30, function () {
+        $blockedIps = Cache::remember('blocked_ips', now()->addMinutes(90), function () {
             return BlockedUser::on("sqlite")->pluck('ip_address')->toArray();
         });
 

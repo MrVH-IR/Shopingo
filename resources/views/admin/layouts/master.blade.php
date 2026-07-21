@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" dir="rtl">
 <head>
     @include('admin.layouts.head-tag')
     @yield('head-tag')
 </head>
+<body id="admin-body" class="min-h-screen bg-slate-100 text-slate-900 antialiased">
+    @include('admin.layouts.header')
 
-    <body dir="rtl">
-        @include('admin.layouts.header')
+    <div class="body-container flex min-h-[calc(100vh-5rem)]">
+        @include('admin.layouts.sidebar')
 
-        <section class="body-container">
-            @include('admin.layouts.sidebar')
-
-            <section id="main-body" class="main-body">
-
+        <main id="main-body" class="min-h-[calc(100vh-5rem)] flex-1 bg-slate-100 px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mx-auto w-full max-w-7xl">
                 @yield('content')
+            </div>
+        </main>
+    </div>
 
-            </section>
+    @include('admin.layouts.scripts')
+    @yield('script')
 
-        </section>
-
-        @include('admin.layouts.scripts')
-        @yield('script')
-
-        <section class="toast-wrapper flex-row-reverse">
-            @include('admin.alerts.toast.success')
-            @include('admin.alerts.toast.error')
-        </section>
-        @include('admin.alerts.sweetalert.success')
-        @include('admin.alerts.sweetalert.error')
-
-    </body>
-
+    @include('admin.layouts.notifications')
+</body>
 </html>

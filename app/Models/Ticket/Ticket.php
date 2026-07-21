@@ -55,4 +55,9 @@ class Ticket extends Model
     {
         return $this->hasMany(Ticket::class , 'ticket_id');
     }
+
+    public function ticketFile()
+    {
+        return $this->hasOne(TicketFile::class, 'ticket_id');
+    }
 }

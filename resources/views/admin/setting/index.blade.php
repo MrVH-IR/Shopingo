@@ -39,6 +39,7 @@
                             <th>کلمات کلیدی</th>
                             <th>لوگو</th>
                             <th>آیکون</th>
+                            <th>Optimization</th>
                             <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </thead>
                         <tbody>
@@ -71,6 +72,9 @@
                                         <span class="text-muted">بدون تصویر</span>
                                     @endif
                                 </td>
+                                <td>
+                                    <button type="submit" form="optimization_form" class="bg-info">Optimize</button>
+                                </td>
                                 <td class="width-16-rem text-left">
                                     <a href="{{ route('admin.setting.edit' , $setting->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
                                 </td>
@@ -86,6 +90,8 @@
     <span class="close-btn">&times;</span>
     <img class="modal-content" id="modalImage">
 </div>
+
+    <form class="d-none" action="{{ route('admin.setting.optimization') }}" method="POST" id="optimization_form">@csrf</form>
 
 @endsection
 @section('script')

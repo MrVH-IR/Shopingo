@@ -28,6 +28,7 @@ class TicketRequest extends FormRequest
             'category_id' => 'required|exists:ticket_categories,id',
             'priority_id' => 'required|exists:ticket_priorities,id',
             'description' => 'required|string|max:3000',
+            'file'        => 'nullable|image|mimetypes:image/jpg,image/jpeg,image/png,image/webp|extensions:jpg,jpeg,png,webp|max:1024'
         ];
     }
 
@@ -47,6 +48,11 @@ class TicketRequest extends FormRequest
             'description.required' => 'متن تیکت الزامی است.',
             'description.string' => 'متن تیکت باید یک رشته متنی باشد.',
             'description.max' => 'متن تیکت نباید بیشتر از ۳۰۰۰ کاراکتر باشد.',
+
+            'file.image' => 'فایل انتخاب‌شده باید یک تصویر باشد.',
+            'file.max' => 'حداکثر حجم تصویر ۱ مگابایت است.',
+            'file.mimetypes' => 'فرمت تصویر باید یکی از jpg، jpeg، png یا webp باشد.',
+            'file.extensions' => 'فرمت تصویر باید یکی از jpg، jpeg، png یا webp باشد.'
         ];
     }
 }

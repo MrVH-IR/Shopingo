@@ -38,6 +38,14 @@
                     </h5>
                     <p class="card-text">{{ $ticket->description }}
                     </p>
+                    @if($ticket->ticketFile)
+                        <img
+                            src="{{ asset($ticket->ticketFile->file_path) }}"
+                            class="w-80 h-80 object-contain rounded border"
+                            alt="user_send_photo">
+                    @else
+                        <p class="cart-text text-info">پیام سیستم: هیچ عکسی توسط کاربر ارسال نشده است</p>
+                    @endif
                 </section>
             </section>
 

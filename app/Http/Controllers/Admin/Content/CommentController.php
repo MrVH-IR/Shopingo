@@ -18,17 +18,6 @@ class CommentController extends Controller
     {
         $comments = Comment::where('commentable_type' , Post::class)
             ->orderBy('created_at' , 'DESC')
-            ->where('seen' , 0)
-            ->get();
-        foreach ($comments as $comment) {
-            if ($comment->seen == 0) {
-                $comment->seen = 1;
-                $comment->save();
-            }
-        }
-        $comments = null;
-        $comments = Comment::where('commentable_type' , Post::class)
-            ->orderBy('created_at' , 'DESC')
             ->simplePaginate(15);
         return view('admin.content.comment.index' , compact('comments'));
     }
@@ -54,6 +43,10 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
+        if ($comment->seen === 0) {
+            $comment->seen = 1;
+            $comment->save();
+        }
         return view('admin.content.comment.show' , compact('comment'));
     }
 
@@ -102,7 +95,7 @@ class CommentController extends Controller
             DB::beginTransaction();
             try {
                 $validated = $request->validated();
-                $validated['author_id'] = 41;
+                $validated['author_id'] = auth()->id();
                 $validated['parent_id'] = $comment->id;
                 $validated['commentable_id'] = $comment->commentable_id;
                 $validated['commentable_type'] = $comment->commentable_type;

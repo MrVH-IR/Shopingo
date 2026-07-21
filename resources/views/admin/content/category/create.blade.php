@@ -1,134 +1,91 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>ایجاد دسته بندی</title>
+    <title>ایجاد دسته بندی محتوا</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش محتوا</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.category.index') }}">دسته بندی</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ایجاد دسته بندی
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.content.category.index') }}" class="hover:text-slate-900">دسته بندی</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">ایجاد</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">ایجاد دسته بندی محتوا</h1>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">اطلاعات دسته بندی جدید را وارد کنید. تصویر، برچسب‌ها و وضعیت هم از همینجا تنظیم می‌شوند.</p>
+                </div>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        دسته بندی
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.content.category.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.content.category.store') }}" method="POST" enctype="multipart/form-data" id="form">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">نام دسته</label>
-                                        <input type="text" name="name" id="Category" class="form-control form-control-sm" value="{{ old('name') }}">
-                                </div>
-                                @error('name')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="tags" class="h6">نام تگ ها</label>
-                                    <input type="hidden" name="tags" id="tags" class="form-control form-control-sm d-none" value="{{ old('tags') }}">
-                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple>
-
-                                    </select>
-                                </div>
-                                @error('tags')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category-Select" class="h6">وضعیت</label>
-                                        <select name="status" id="Category-Select" class="form-control form-control-sm">
-                                            <option value="default">انتخاب کنید</option>
-                                            <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
-                                            <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                        </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="image" class="h6">تصویر</label>
-                                    <input type="file" name="image" id="image" class="form-control form-control-sm" accept="image/png , image/jpg ,
-                                    image/jpeg , image/webp , image/svg">
-                                </div>
-                                @error('image')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="description" class="h6">توضیحات</label>
-                                    <textarea class="form-control form-control-sm ckeditor" rows="6" name="description" id="description">
-                                        {{ old('description') }}
-                                    </textarea>
-                                </div>
-                                @error('description')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                                @if(session('success'))
-                                    <div class="ring-offset-emerald-400">
-                                        <span>{{ $message }}</span>
-                                    </div>
-                                @endif
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+                <a href="{{ route('admin.content.category.index') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form id="form" action="{{ route('admin.content.category.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="Category" class="text-sm font-semibold text-slate-700">نام دسته</label>
+                        <input type="text" name="name" id="Category" value="{{ old('name') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white">
+                        @error('name')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="Category-Select" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="Category-Select" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                            <option value="default">انتخاب کنید</option>
+                            <option value="0" @selected(old('status') == 0)>غیر فعال</option>
+                            <option value="1" @selected(old('status') == 1)>فعال</option>
+                        </select>
+                        @error('status')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="tags" class="text-sm font-semibold text-slate-700">برچسب‌ها</label>
+                        <input type="hidden" name="tags" id="tags" value="{{ old('tags') }}">
+                        <select class="select2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white" id="select_tags" multiple></select>
+                        @error('tags')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="image" class="text-sm font-semibold text-slate-700">تصویر</label>
+                        <input type="file" name="image" id="image" accept="image/png,image/jpg,image/jpeg,image/webp,image/svg+xml" class="w-full rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 file:mr-4 file:rounded-xl file:border-0 file:bg-cyan-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-cyan-700">
+                        @error('image')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="description" class="text-sm font-semibold text-slate-700">توضیحات</label>
+                    <textarea name="description" id="description" rows="7" class="ckeditor w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="text-sm text-rose-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت دسته بندی
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection
 
 @section('script')

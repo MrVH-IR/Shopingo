@@ -8,6 +8,7 @@ use App\Http\Services\Image\ImageService;
 use App\Models\Setting\Setting;
 use Database\Seeders\SettingSeeder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
@@ -129,5 +130,13 @@ class SettingController extends Controller
                 ->with("swal-error", "خطای داخلی: " . $errorID)
                 ->withInput();
         }
+    }
+
+    public function optimizeApp()
+    {
+        Artisan::call('optimize:clear');
+        return redirect()
+            ->route('admin.setting.index')
+            ->with('swal-success', 'Config,Cache,Compiled,Events,Routes,Views Cleared Successfully');
     }
 }

@@ -91,7 +91,7 @@
                         <i class="fa-solid fa-ticket text-amber-500 ml-2"></i>
                         ثبت تیکت جدید
                     </h3>
-                    <form action="{{ route('customer.profile.send-ticket') }}" method="POST" class="space-y-4">
+                    <form action="{{ route('customer.profile.send-ticket') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <label class="block text-sm font-medium text-gray-600 mb-1">موضوع</label>
@@ -131,6 +131,10 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">فایل (اختیاری)</label>
+                            <input type="file" name="file" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
                         <div class="flex justify-end gap-2 pt-2">
                             <button type="button" @click="showModal = false" class="px-4 py-2 rounded-lg text-sm text-gray-500 hover:bg-gray-100">انصراف</button>
                             <button type="submit" class="px-4 py-2 rounded-lg text-sm bg-amber-500 hover:bg-amber-600 text-white">ثبت تیکت</button>
@@ -139,12 +143,6 @@
                 </div>
             </div>
         </div>
-
-        @if ($tickets->hasPages())
-            <div class="mt-4">
-                {{ $tickets->links() }}
-            </div>
-        @endif
 
         <div x-show="showViewModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" style="display: none;">
             <div @click.outside="showViewModal = false" x-show="showViewModal" x-transition class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
@@ -199,6 +197,30 @@
                             <span class="block text-gray-400 text-xs mb-1">توضیحات</span>
                             <p class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed" x-text="selectedTicket.description ?? 'توضیحی ثبت نشده'"></p>
                         </div>
+                        <template x-if="selectedTicket.children && selectedTicket.children.length">
+                            <div>
+                                <span class="block text-gray-400 text-xs mb-1">
+                                    پاسخ ادمین
+                                </span>
+
+                                <div class="bg-blue-50 border-r-4 border-blue-500 rounded-lg p-3">
+                                    <p
+                                        class="text-sm text-gray-700 leading-relaxed"
+                                        x-text="selectedTicket.children[0].description">
+                                    </p>
+                                </div>
+                            </div>
+                        </template>
+                        <template x-if="!selectedTicket.children || !selectedTicket.children.length">
+                            <div>
+                                <span class="block text-gray-400 text-xs mb-1">
+                                    پاسخ
+                                </span>
+                                <p class="bg-gray-50 rounded-lg p-3 text-sm text-gray-500">
+                                    هنوز پاسخی ثبت نشده است.
+                                </p>
+                            </div>
+                        </template>
                         <div class="flex justify-end pt-2">
                             <button @click="showViewModal = false" class="px-4 py-2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 text-gray-600">بستن</button>
                         </div>
@@ -207,6 +229,12 @@
             </div>
         </div>
     </div>
+
+    @if ($tickets->hasPages())
+        <div class="mt-4 mb-4 ml-10">
+            {{ $tickets->links() }}
+        </div>
+    @endif
 @endsection
 
 @section('script')
