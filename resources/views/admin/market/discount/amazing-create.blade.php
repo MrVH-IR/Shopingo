@@ -1,150 +1,88 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-<title>افزودن به فروش شگفت انگیز</title>
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <title>افزودن به فروش شگفت انگیز</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.discount.amazingSale') }}">فروش شگفت انگیز</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            افزودن به فروش شگفت انگیز
-        </li>
-    </ol>
-</nav>
-
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                       افزودن به فروش شگفت انگیز
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.discount.amazingSale') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.market.discount.amazingSale.store') }}" method="POST">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="product" class="h6">نام کالا</label>
-                                    <select name="product_id" id="product" class="form-control form-control-sm">
-                                        <option>نام کالا را انتخاب کنید...</option>
-                                        @foreach($products as $product)
-                                            <option value="{{ $product->id }}" @if(old('product_id') == $product->id) selected @endif>{{ $product->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @error('product_id')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="percentage" class="h6">درصد تخفیف</label>
-                                        <input type="text" name="percentage" id="percentage" class="form-control form-control-sm">
-                                </div>
-                                @error('percentage')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="start_at" class="h6 d-flex">تاریخ شروع</label>
-                                    <input type="text" id="start_at" name="start_at" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ شروع">
-                                    <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#start_at"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                @error('start_at')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="end_at" class="h6 d-flex">تاریخ پایان</label>
-                                    <input type="text" id="end_at" name="end_at" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ پایان">
-                                    <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#end_at"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                @error('end_at')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="status" class="h6">وضعیت</label>
-                                    <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.category.index') }}" class="hover:text-slate-900">بخش فروش</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.discount.amazingSale') }}" class="hover:text-slate-900">فروش شگفت انگیز</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">افزودن</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">افزودن به فروش شگفت انگیز</h1>
+                </div>
+                <a href="{{ route('admin.market.discount.amazingSale') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700"><i class="fas fa-arrow-right"></i> بازگشت</a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.market.discount.amazingSale.store') }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="product" class="text-sm font-semibold text-slate-700">نام کالا</label>
+                        <select name="product_id" id="product" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                            <option value="">نام کالا را انتخاب کنید...</option>
+                            @foreach($products as $product)
+                                <option value="{{ $product->id }}" @selected(old('product_id') == $product->id)>{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product_id')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="space-y-2">
+                        <label for="percentage" class="text-sm font-semibold text-slate-700">درصد تخفیف</label>
+                        <input type="text" name="percentage" id="percentage" value="{{ old('percentage') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                        @error('percentage')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="space-y-2">
+                        <label for="start_at" class="text-sm font-semibold text-slate-700">تاریخ شروع</label>
+                        <input type="text" id="start_at" name="start_at" value="{{ old('start_at') }}" class="jalali-input w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                        @error('start_at')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="space-y-2">
+                        <label for="end_at" class="text-sm font-semibold text-slate-700">تاریخ پایان</label>
+                        <input type="text" id="end_at" name="end_at" value="{{ old('end_at') }}" class="jalali-input w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                        @error('end_at')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                            <option value="">انتخاب کنید</option>
+                            <option value="0" @selected(old('status') == 0)>غیرفعال</option>
+                            <option value="1" @selected(old('status') == 1)>فعال</option>
+                        </select>
+                        @error('status')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white">ثبت</button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection
 
 @section('script')
-<script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
-<script>
-    function randomDiscount(length = 10)
-    {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        for (let i = 0 ; i < length ; i++){
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-
-        document.getElementsByName('discount')[0].value = result;
-    }
-</script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
 @endsection

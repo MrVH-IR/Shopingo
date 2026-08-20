@@ -1,96 +1,76 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>اضافه کردن به انبار</title>
+    <title>اضافه کردن به انبار</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.store.index') }}">انبار</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            اضافه کردن موجودی به انبار
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.store.index') }}" class="hover:text-slate-900">انبار</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">افزودن موجودی</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">افزودن موجودی به انبار</h1>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">یک ورودی انبار جدید برای ثبت تحویل، تعداد و توضیحات اضافه کنید.</p>
+                </div>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-            اضافه کردن موجودی به انبار
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.store.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.market.store.store' , $product->id) }}" method="POST">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="receiver" class="h6">نام تحویل گیرنده</label>
-                                        <input type="text" name="receiver" id="receiver" class="form-control form-control-sm" value="{{ old('receiver') }}">
-                                </div>
-                                @error('receiver')
-                                <div class="alert alert-danger">
-                                    <li>{{ $message }}</li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="deliverer" class="h6">نام تحویل دهنده</label>
-                                        <input type="text" name="deliverer" id="deliverer" class="form-control form-control-sm" value="{{ old('deliverer') }}">
-                                </div>
-                                @error('deliverer')
-                                <div class="alert alert-danger">
-                                    <li>{{ $message }}</li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="marketable_number" class="h6">تعداد</label>
-                                        <input type="text" name="marketable_number" id="marketable_number" class="form-control form-control-sm" value="{{ old('marketable_number') }}">
-                                </div>
-                                @error('marketable_number')
-                                <div class="alert alert-danger">
-                                    <li>{{ $message }}</li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="description" class="h6">توضیحات</label>
-                                    <textarea name="description" id="description" role="4" class="form-control form-control-sm">{{ old('description') }}</textarea>
-                                </div>
-                                @error('description')
-                                <div class="alert alert-danger">
-                                    <li>{{ $message }}</li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+                <a href="{{ route('admin.market.store.index') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.market.store.store', $product->id) }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="receiver" class="text-sm font-semibold text-slate-700">نام تحویل گیرنده</label>
+                        <input type="text" name="receiver" id="receiver" value="{{ old('receiver') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('receiver')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="deliverer" class="text-sm font-semibold text-slate-700">نام تحویل دهنده</label>
+                        <input type="text" name="deliverer" id="deliverer" value="{{ old('deliverer') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('deliverer')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="marketable_number" class="text-sm font-semibold text-slate-700">تعداد</label>
+                        <input type="text" name="marketable_number" id="marketable_number" value="{{ old('marketable_number') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('marketable_number')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="description" class="text-sm font-semibold text-slate-700">توضیحات</label>
+                        <textarea name="description" id="description" rows="5" class="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection

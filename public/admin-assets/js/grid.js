@@ -58,19 +58,25 @@ $(document).ready(function(){
 
 
 
-    $('.sidebar-group-link').click(function () {
-        const isActive = $(this).hasClass('sidebar-group-link-active');
+    $('.sidebar-dropdown-toggle').click(function (event) {
+        event.preventDefault();
 
-        $('.sidebar-group-link').removeClass('sidebar-group-link-active');
+        const $group = $(this).closest('.sidebar-group-link');
+        const $dropdown = $group.find('.sidebar-dropdown').first();
+        const $angle = $(this).find('.angle').first();
+        const isOpen = !$dropdown.hasClass('hidden');
+
+        $('.sidebar-dropdown').not($dropdown).addClass('hidden');
         $('.sidebar-group-link .angle')
             .removeClass('fa-angle-down')
             .addClass('fa-angle-left');
 
-        if (!isActive) {
-            $(this).addClass('sidebar-group-link-active');
-            $(this).find('.angle')
-                .removeClass('fa-angle-left')
-                .addClass('fa-angle-down');
+        if (isOpen) {
+            $dropdown.addClass('hidden');
+            $angle.removeClass('fa-angle-down').addClass('fa-angle-left');
+        } else {
+            $dropdown.removeClass('hidden');
+            $angle.removeClass('fa-angle-left').addClass('fa-angle-down');
         }
     });
 

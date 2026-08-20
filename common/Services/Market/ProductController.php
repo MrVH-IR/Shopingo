@@ -5,23 +5,29 @@ namespace Common\Services\Market;
 use App\Http\Controllers\Controller;
 use App\Models\Content\Comment;
 use App\Models\Market\Product;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 
 class ProductController extends BaseController
 {
 
-    public function product(Product $product)
+    use ProductService;
+
+    public function product(Product $product): View
     {
         // TO-DO Related Post
         $relatedProducts = Cache::remember('relatedProducts', now()->addHours(2), function () {
             return Product::get()->take(10);
         });
+        $this->incrementView($product);
         return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts]);
     }
 
-    public function addComment(Product $product , Request $request)
+    public function addComment(Product $product , Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'comment' => 'required|string|min:5|max:255',
@@ -47,7 +53,7 @@ class ProductController extends BaseController
         return back()->with('swal-success' , 'نظر شما ثبت شد. بعد از تایید مدیریت در سایت قرار داده خواهد شد.');
     }
 
-    public function toggleFavorite(Product $product)
+    public function toggleFavorite(Product $product): JsonResponse
     {
         $user = Auth::user();
 

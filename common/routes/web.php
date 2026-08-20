@@ -142,7 +142,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
             Route::get('/show/{payment}' , [PaymentController::class , 'show'])->name('admin.market.payment.show')->can('payments.view');
         });
         //Product
-        Route::prefix('Product')->group(function() {
+        Route::prefix('product')->group(function() {
             Route::get('/' , [ProductController::class , 'index'])->name('admin.market.product.index')->can('products.view');
             Route::get('/create' , [ProductController::class , 'create'])->name('admin.market.product.create')->can('products.create');
             Route::post('/store' , [ProductController::class , 'store'])->name('admin.market.product.store')->can('products.create');

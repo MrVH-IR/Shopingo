@@ -54,7 +54,7 @@
                 @endif
             </div>
             <div class="flex justify-between">
-            @if($order->commonDiscount()->get() !== null)
+            @if($order->commonDiscount()->exists())
                 <span class="text-gray-500">میزان تخفیف عمومی</span>
                 <span class="font-bold text-red-500">{{ priceFormat($order->commonDiscount->discount) }} %</span>
             @else
@@ -63,13 +63,13 @@
             @endif
             </div>
             <div class="flex justify-between">
-                @if($order->commonDiscount()->get() !== null)
+                @if($order->commonDiscount()->exists())
                     <span class="text-gray-500">حداکثر میزان تخفیف عمومی</span>
                     <span class="font-bold text-sky-500">{{ priceFormat($order->commonDiscount->discount_ceiling) }} تومان</span>
                 @endif
             </div>
             <div class="flex justify-between">
-                @if($order->commonDiscount()->get() !== null)
+                @if($order->commonDiscount()->exists())
                     <span class="text-gray-500">حداقل موجودی سبد برای تخفیف عمومی</span>
                     <span class="font-bold text-sky-500">{{ priceFormat($order->commonDiscount->discount_floor) }} تومان</span>
                 @endif

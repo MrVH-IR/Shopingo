@@ -1,93 +1,82 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>ویرایش انبار</title>
+    <title>ویرایش انبار</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.store.index') }}">انبار</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ویرایش انبار
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.store.index') }}" class="hover:text-slate-900">انبار</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">ویرایش</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">ویرایش انبار</h1>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">موجودی فعلی کالا را به‌روزرسانی کنید. مقدار فروش و رزرو فقط برای مشاهده نمایش داده می‌شوند.</p>
+                </div>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-            ویرایش انبار
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.store.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.market.store.update' , $product->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="marketable_number" class="h6">تعداد موجودی</label>
-                                        <input type="text" name="marketable_number" id="marketable_number" class="form-control form-control-sm" value="{{ old('marketable_number' , $product->marketable_number) }}">
-                                </div>
-                                @error('marketable_number')
-                                <div class="alert alert-danger">
-                                    <li>{{ $message }}</li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="sold_out" class="h6">تعداد فروخته شده</label>
-                                        <input type="text" name="sold_out" id="sold_out" class="form-control form-control-sm" value="{{ old('sold_out' , $product->sold_out) }}" disabled>
-                                </div>
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="frozen_number" class="h6">تعداد رزرو شده</label>
-                                        <input type="text" name="frozen_number" id="frozen_number" class="form-control form-control-sm" value="{{ old('frozen_number' , $product->frozen_number) }}" disabled>
-                                </div>
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-
-                    <section>
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    @foreach($storageEnteries as $storageEntry)
-                                        <li>---------{{ $loop->iteration }}---------</li>
-                                        <li>تحویل دهنده : {{ $storageEntry->deliverer }}</li>
-                                        <li>گیرنده : {{ $storageEntry->receiver }}</li>
-                                        <li> توضیحات : {{ $storageEntry->description }}</li>
-                                        <li> تاریخ تحویل : {{ $storageEntry->created_at }}</li>
-                                    @endforeach
-                                </div>
-                            </section>
-                        </section>
-                    </section>
-
-                </section>
-            </section>
+                <a href="{{ route('admin.market.store.index') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.market.store.update', $product->id) }}" method="POST" class="space-y-6">
+                @csrf
+                @method('PUT')
+
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="marketable_number" class="text-sm font-semibold text-slate-700">تعداد موجودی</label>
+                        <input type="text" name="marketable_number" id="marketable_number" value="{{ old('marketable_number', $product->marketable_number) }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('marketable_number')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="sold_out" class="text-sm font-semibold text-slate-700">تعداد فروخته شده</label>
+                        <input type="text" name="sold_out" id="sold_out" value="{{ old('sold_out', $product->sold_out) }}" disabled class="w-full rounded-2xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-500">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="frozen_number" class="text-sm font-semibold text-slate-700">تعداد رزرو شده</label>
+                        <input type="text" name="frozen_number" id="frozen_number" value="{{ old('frozen_number', $product->frozen_number) }}" disabled class="w-full rounded-2xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-500">
+                    </div>
+                </div>
+
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-bold text-slate-900">سوابق انبار</h2>
+            <div class="mt-4 space-y-4">
+                @forelse($storageEnteries as $storageEntry)
+                    <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+                            <div><span class="font-semibold text-slate-900">تحویل دهنده:</span> {{ $storageEntry->deliverer }}</div>
+                            <div><span class="font-semibold text-slate-900">گیرنده:</span> {{ $storageEntry->receiver }}</div>
+                            <div class="sm:col-span-2"><span class="font-semibold text-slate-900">توضیحات:</span> {{ $storageEntry->description }}</div>
+                            <div class="sm:col-span-2"><span class="font-semibold text-slate-900">تاریخ تحویل:</span> {{ $storageEntry->created_at }}</div>
+                        </div>
+                    </article>
+                @empty
+                    <p class="text-sm text-slate-500">برای این کالا هنوز سابقه‌ای ثبت نشده است.</p>
+                @endforelse
+            </div>
+        </section>
+    </div>
 @endsection

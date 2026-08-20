@@ -17,7 +17,7 @@ class CategoryRoutesTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->admin = User::factory()->create();
+        $this->admin = User::factory()->admin()->create();
         $this->actingAs($this->admin);
     }
 

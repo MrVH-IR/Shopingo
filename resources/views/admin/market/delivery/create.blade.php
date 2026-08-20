@@ -1,121 +1,88 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>ایجاد روش ارسال جدید</title>
+    <title>ایجاد روش ارسال جدید</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.brand.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.delivery.index') }}">روش های ارسال</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ایجاد روش ارسال جدید
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.delivery.index') }}" class="hover:text-slate-900">روش های ارسال</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">ایجاد</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">ایجاد روش ارسال</h1>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">نام، هزینه، زمان و وضعیت روش ارسال را مشخص کنید.</p>
+                </div>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                       ایجاد روش ارسال
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.delivery.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.market.delivery.store') }}" method="POST">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">نام روش ارسال</label>
-                                        <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
-                                </div>
-                                @error('name')
-                                <div class="alert alert-dange">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">هزینه روش ارسال</label>
-                                        <input type="text" name="amount" value="{{ old('amount') }}" class="form-control form-control-sm">
-                                </div>
-                                @error('name')
-                                <div class="alert alert-dange">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">مقدار زمان ارسال</label>
-                                        <input type="text" placeholder="2" name="delivery_time" value="{{ old('delivery_time') }}" class="form-control form-control-sm">
-                                </div>
-                                @error('name')
-                                <div class="alert alert-dange">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">واجد زمان ارسال</label>
-                                    <input type="text" placeholder="روز" name="delivery_time_unit" value="{{ old('delivery_time_unit') }}" class="form-control form-control-sm">
-                                </div>
-                                @error('name')
-                                <div class="alert alert-dange">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="Category-Select" class="h6">وضعیت</label>
-                                    <select name="status" id="Category-Select" class="form-control form-control-sm">
-                                        <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+                <a href="{{ route('admin.market.delivery.index') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.market.delivery.store') }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="name" class="text-sm font-semibold text-slate-700">نام روش ارسال</label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('name')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="amount" class="text-sm font-semibold text-slate-700">هزینه روش ارسال</label>
+                        <input type="text" name="amount" id="amount" value="{{ old('amount') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('amount')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="delivery_time" class="text-sm font-semibold text-slate-700">مقدار زمان ارسال</label>
+                        <input type="text" name="delivery_time" id="delivery_time" placeholder="2" value="{{ old('delivery_time') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('delivery_time')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="delivery_time_unit" class="text-sm font-semibold text-slate-700">واحد زمان ارسال</label>
+                        <input type="text" name="delivery_time_unit" id="delivery_time_unit" placeholder="روز" value="{{ old('delivery_time_unit') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                        @error('delivery_time_unit')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white">
+                            <option value="default">انتخاب کنید</option>
+                            <option value="0" @selected(old('status') == 0)>غیر فعال</option>
+                            <option value="1" @selected(old('status') == 1)>فعال</option>
+                        </select>
+                        @error('status')
+                            <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection

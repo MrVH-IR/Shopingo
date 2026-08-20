@@ -12,7 +12,7 @@ use Common\Services\{Home\HomeController,
     SalesProcess\CartController,
     SalesProcess\ProfileController,
     Payment\PaymentController,
-    Products\ProductController as CustomerProductContoller
+    Products\ProductController as CustomerProductController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +104,7 @@ Route::prefix('profile')
 Route::prefix('products')
     ->name('products.')
     ->group(function () {
-        Route::get('/', [CustomerProductContoller::class, 'index'])->name('products');
-        Route::get('/search', [CustomerProductContoller::class, 'search'])->name('search');
+        Route::get('/', [CustomerProductController::class, 'index'])->name('products');
+        Route::get('/sort', [CustomerProductController::class, 'sort'])->name('products');
+        Route::get('/search', [CustomerProductController::class, 'search'])->name('search');
     });

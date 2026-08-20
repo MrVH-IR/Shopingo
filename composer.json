@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "ext-http": "*",
         "intervention/image-laravel": "^1.5",
         "kavenegar/php": "^1.2",
         "laravel/framework": "^13.0",
@@ -17,8 +18,8 @@
         "livewire/livewire": "^4.3",
         "monolog/monolog": "^3.7",
         "morilog/jalali": "^3.4",
-        "psr/log": "^3.0",
-        "ext-http": "*"
+        "predis/predis": "^3.6",
+        "psr/log": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.2",

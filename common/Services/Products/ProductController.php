@@ -8,16 +8,33 @@ use Illuminate\Http\Request;
 class ProductController extends BaseController
 {
 
+    use ProductTrait;
+
     public function index()
     {
-        $products = Product::query()
+        if (is_numeric(request()->has('sort'))) {
+            $orderBy = $this->sortOrder((int) request()->query('sort'));
+        }
+
+//        dd(is_numeric(request()->query('sort')));
+
+        $query = Product::query();
+
+        if (request()->filled('sort')) {
+            [$column, $direction] = $this->sortOrder((int) request('sort'));
+
+            $query->orderBy($column, $direction);
+        }
+
+        $products = $query
             ->when(request('search'), function ($query) {
                 $search = request('search');
 
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
                         ->orWhere('slug', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('tags', 'like', "%{$search}%");
                 });
             })
             ->paginate(20)
@@ -45,7 +62,8 @@ class ProductController extends BaseController
             ->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('slug', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('tags', 'like', "%{$search}%");
             })
             ->limit(5)
             ->get()
@@ -62,5 +80,10 @@ class ProductController extends BaseController
             });
 
         return response()->json($products);
+    }
+
+    public function sort(Request $request)
+    {
+
     }
 }

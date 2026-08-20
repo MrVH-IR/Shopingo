@@ -24,10 +24,10 @@
                 cancelButtonText: 'خیر درخواست لغو شود',
                 reverseButtons: true
             }).then((result) => {
-                if (result.value == true) {
-                    $('#delete-form-' + $(this).data('id')).submit();
-                }
-                else if(result.dismiss === Swal.DismissReason.cancel) {
+                if (result.isConfirmed) {
+                    const formId = $(this).data('id') ? '#delete-form-' + $(this).data('id') : '#' + $(this).attr('form');
+                    $(formId).trigger('submit');
+                } else if(result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire({
                         title: "لغو درخواست",
                         text: "درخواست شما لغو شد",

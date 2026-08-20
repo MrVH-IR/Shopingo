@@ -92,7 +92,7 @@
                                     $imageArrays = $brand->image && is_array($brand->image) && isset($brand->image['indexArray']) ? $brand->image['indexArray'] : [];
                                     $number = 1;
                                 @endphp
-                                @foreach($imageArrays as $key => $value)
+                                @forelse($imageArrays as $key => $value)
                                     <label class="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 transition hover:border-cyan-300\">
                                         <input type="radio" class="sr-only" name="currentImage" value="{{ $key }}" @checked(($brand->image['currentImage'] ?? null) == $key)>
                                         <img src="{{ asset($value) }}" alt="تصویر {{ $number }}" class="h-24 w-full object-cover transition group-hover:scale-[1.02]\">
@@ -101,7 +101,9 @@
                                     @php
                                         $number++;
                                     @endphp
-                                @endforeach
+                                @empty
+                                    <label>هیچ عکسی وجود ندارد.</label>
+                                @endforelse
                             </div>
                         </div>
                     </div>

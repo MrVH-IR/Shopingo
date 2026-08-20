@@ -1,172 +1,77 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-<title>ویرایش تخفیف عمومی</title>
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <title>ویرایش تخفیف عمومی</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.market.discount.commonDiscount') }}">تخفیف عمومی</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ویرایش تخفیف عمومی
-        </li>
-    </ol>
-</nav>
-
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        ویرایش تخفیف عمومی
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.discount.commonDiscount') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.market.discount.commonDiscount.update' , $commonDiscount->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="discount" class="h6">درصد تخفیف</label>
-                                        <input type="text" name="discount" id="discount" class="form-control form-control-sm" value="{{ old('discount' , $commonDiscount->discount) }}">
-                                </div>
-                                @error('discount')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="discount_ceiling" class="h6">حداکثر تخفیف</label>
-                                        <input type="text" name="discount_ceiling" id="discount_ceiling" class="form-control form-control-sm" value="{{ old('discount_ceiling' , $commonDiscount->discount_ceiling) }}">
-                                </div>
-                                @error('discount_ceiling')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="discount_floor" class="h6">حداقل مبلغ خرید</label>
-                                    <input type="text" name="discount_floor" id="discount_floor" class="form-control form-control-sm" value="{{ old('discount_floor' , $commonDiscount->discount_floor) }}">
-                                </div>
-                                @error('discount_floor')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="title" class="h6">عنوان مناسبت</label>
-                                        <input type="text" name="title" id="title" class="form-control form-control-sm" value="{{ old('title' , $commonDiscount->title) }}">
-                                </div>
-                                @error('title')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="start_date" class="h6 d-flex">تاریخ شروع</label>
-                                    <input type="text" id="start_date" name="start_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ شروع">
-                                    <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#start_date"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                @error('start_date')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="end_date" class="h6 d-flex">تاریخ پایان</label>
-                                    <input type="text" id="end_date" name="end_date" class="form-control form-control-sm jalali-input" placeholder="انتخاب تاریخ پایان">
-                                    <i class="fa fa-calendar calendar-icon position-absolute"
-                                       data-target="#end_date"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                @error('end_date')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <div class="form-group">
-                                    <label for="status" class="h6">وضعیت</label>
-                                    <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status' , $commonDiscount->status) == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status' , $commonDiscount->status) == 1) selected @endif>فعال</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.category.index') }}" class="hover:text-slate-900">بخش فروش</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.discount.commonDiscount') }}" class="hover:text-slate-900">تخفیف عمومی</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">ویرایش</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">ویرایش تخفیف عمومی</h1>
+                </div>
+                <a href="{{ route('admin.market.discount.commonDiscount') }}" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700"><i class="fas fa-arrow-right"></i> بازگشت</a>
+            </div>
         </section>
-    </section>
 
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.market.discount.commonDiscount.update', $commonDiscount->id) }}" method="POST" class="space-y-6">
+                @csrf
+                @method('PUT')
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="discount" class="text-sm font-semibold text-slate-700">درصد تخفیف</label>
+                        <input type="text" name="discount" id="discount" value="{{ old('discount', $commonDiscount->discount) }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="discount_ceiling" class="text-sm font-semibold text-slate-700">حداکثر تخفیف</label>
+                        <input type="text" name="discount_ceiling" id="discount_ceiling" value="{{ old('discount_ceiling', $commonDiscount->discount_ceiling) }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="discount_floor" class="text-sm font-semibold text-slate-700">حداقل مبلغ خرید</label>
+                        <input type="text" name="discount_floor" id="discount_floor" value="{{ old('discount_floor', $commonDiscount->discount_floor) }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="title" class="text-sm font-semibold text-slate-700">عنوان مناسبت</label>
+                        <input type="text" name="title" id="title" value="{{ old('title', $commonDiscount->title) }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="start_date" class="text-sm font-semibold text-slate-700">تاریخ شروع</label>
+                        <input type="text" id="start_date" name="start_date" value="{{ old('start_date', \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->start_at)->format('Y/m/d H:i:s')) }}" class="jalali-input w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="end_date" class="text-sm font-semibold text-slate-700">تاریخ پایان</label>
+                        <input type="text" id="end_date" name="end_date" value="{{ old('end_date', \Morilog\Jalali\Jalalian::fromCarbon($commonDiscount->end_at)->format('Y/m/d H:i:s')) }}" class="jalali-input w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                    </div>
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white">
+                            <option value="">انتخاب کنید</option>
+                            <option value="0" @selected(old('status', $commonDiscount->status) == 0)>غیرفعال</option>
+                            <option value="1" @selected(old('status', $commonDiscount->status) == 1)>فعال</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white">ثبت</button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection
 
 @section('script')
-<script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
-<script>
-    function randomDiscount(length = 10)
-    {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        for (let i = 0 ; i < length ; i++){
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-
-        document.getElementsByName('discount')[0].value = result;
-    }
-</script>
+    <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
 @endsection

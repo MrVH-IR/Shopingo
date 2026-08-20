@@ -22,7 +22,8 @@ class OrderController extends Controller
             $order->order_status = 1;
             $order->save();
         }
-        return view('admin.market.order.index' , compact('orders'));
+        return view('admin.market.order.index' , compact('orders'))
+            ->with('swal-success', 'سفارش‌های جدید با موفقیت بررسی شدند.');
     }
     public function sending()
     {
@@ -57,7 +58,7 @@ class OrderController extends Controller
             default => 0
         };
         $order->save();
-        return back();
+        return back()->with('swal-success', 'وضعیت ارسال سفارش با موفقیت تغییر کرد.');
     }
     public function changeOrderStatus(Order $order)
     {
@@ -70,13 +71,13 @@ class OrderController extends Controller
             default => 1
         };
         $order->save();
-        return back();
+        return back()->with('swal-success', 'وضعیت سفارش با موفقیت تغییر کرد.');
     }
     public function cancelOrder(Order $order)
     {
         $order->order_status = 4;
         $order->save();
-        return back();
+        return back()->with('swal-success', 'سفارش با موفقیت باطل شد.');
     }
 
     public function showDetail(Order $order)

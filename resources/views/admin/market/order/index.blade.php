@@ -1,112 +1,81 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>سفارشات</title>
+    <title>سفارشات</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-           سفارشات
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.category.index') }}" class="hover:text-slate-900">بخش فروش</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.order.all') }}" class="text-slate-900">سفارشات</a>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">سفارشات</h1>
+                </div>
+                <button disabled class="inline-flex items-center gap-2 rounded-2xl bg-slate-200 px-4 py-3 text-sm font-semibold text-slate-500">ایجاد سفارش</button>
+            </div>
+        </section>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        سفارشات
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="#" class="btn btn-info btn-sm disabled">ایجاد سفارش</a>
-                    <div class="max-width-16-rem">
-                        <input type="text" placeholder="جستجو" name="search" id="search" class="form-control form-control-sm form-text">
-                    </div>
-                </section>
-
-                <section class="table-responsive">
-                    <table class="table table-striped table-hover h-150px">
-                        <thead>
-                            <th>#</th>
-                            <th>کد سفارش</th>
-                            <th>مجموع مبلغ سفارش (بدون تخفیف)</th>
-                            <th>مجموع تمامی مبالغ تخفیف</th>
-                            <th>مبلغ تخفیف همه محصولات</th>
-                            <th>مبلغ نهایی</th>
-                            <th>وضعیت پرداخت</th>
-                            <th>شیوه پرداخت</th>
-                            <th>بانک</th>
-                            <th>وضعیت ارسال</th>
-                            <th>شیوه ارسال</th>
-                            <th>وضعیت سفارش</th>
-                            <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </thead>
-                        <tbody>
+        <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div class="border-b border-slate-100 p-4">
+                <input type="text" placeholder="جستجو" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white lg:max-w-sm">
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 text-right">
+                    <thead class="bg-slate-50 text-xs font-bold uppercase tracking-wider text-slate-500">
+                        <tr>
+                            <th class="px-6 py-4">#</th>
+                            <th class="px-6 py-4">کد سفارش</th>
+                            <th class="px-6 py-4">مجموع مبلغ سفارش</th>
+                            <th class="px-6 py-4">مجموع تخفیف</th>
+                            <th class="px-6 py-4">مبلغ تخفیف کالاها</th>
+                            <th class="px-6 py-4">مبلغ نهایی</th>
+                            <th class="px-6 py-4">وضعیت پرداخت</th>
+                            <th class="px-6 py-4">شیوه پرداخت</th>
+                            <th class="px-6 py-4">بانک</th>
+                            <th class="px-6 py-4">وضعیت ارسال</th>
+                            <th class="px-6 py-4">شیوه ارسال</th>
+                            <th class="px-6 py-4">وضعیت سفارش</th>
+                            <th class="px-6 py-4">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
                         @foreach($orders as $order)
-                            <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <td>{{ $order->id }}</td>
-
-                                <td>{{ number_format($order->order_final_amount - $order->order_discount_amount) }} تومان</td>
-
-                                <td>{{ number_format($order->order_discount_amount) }} تومان</td>
-
-                                <td>{{ number_format($order->order_total_products_discounts_amount ?? 0) }} تومان</td>
-
-                                <td>{{ number_format($order->order_final_amount) }} تومان</td>
-
-                                <td>
-                                    {{ $order->paymentStatusValue }}
-                                </td>
-
-                                <td>
-                                    {{ $order->paymentTypeValue }}
-                                </td>
-
-                                <td>{{ $order->payment?->paymentable?->gateway ?? '-' }}</td>
-
-                                <td>
-                                    {{ $order->deliveryStatusValue }}
-                                </td>
-
-                                <td>{{ $order->delivery?->name ?? '-' }}</td>
-
-                                <td>
-                                    {{ $order->orderStatusValue }}
-                                </td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-tools"></i>عملیات
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.show' , $order->id) }}"><i class="fa fa-images"></i> مشاهده فاکتور</a>
-                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.changeStatus' , $order->id) }}"><i class="fa fa-list-ul"></i> تغییر وضعیت ارسال</a>
-                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.orderStatus' , $order->id) }}"><i class="fa fa-edit"></i> تغییر وضعیت سفارش</a>
-                                            <a class="dropdown-item text-right" href="{{ route('admin.market.order.cancelOrder' , $order->id) }}"><i class="fa fa-window-close"></i> باطل کردن سفارش</a>
-                                        </div>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="px-6 py-4 text-sm font-semibold text-slate-600">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->id }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ number_format($order->order_final_amount - $order->order_discount_amount) }} تومان</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ number_format($order->order_discount_amount) }} تومان</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ number_format($order->order_total_products_discounts_amount ?? 0) }} تومان</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ number_format($order->order_final_amount) }} تومان</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->paymentStatusValue }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->paymentTypeValue }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->payment?->paymentable?->gateway ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->deliveryStatusValue }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->delivery?->name ?? '-' }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $order->orderStatusValue }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex flex-wrap gap-2 min-w-[20rem]">
+                                        <a class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700" href="{{ route('admin.market.order.show', $order->id) }}">مشاهده فاکتور</a>
+                                        <a class="inline-flex items-center gap-2 rounded-xl bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-700" href="{{ route('admin.market.order.changeStatus', $order->id) }}">تغییر ارسال</a>
+                                        <a class="inline-flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700" href="{{ route('admin.market.order.orderStatus', $order->id) }}">تغییر سفارش</a>
+                                        <a class="inline-flex items-center gap-2 rounded-xl bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700" href="{{ route('admin.market.order.cancelOrder', $order->id) }}">باطل</a>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+                    </tbody>
+                </table>
+            </div>
+            <div class="border-t border-slate-100 p-4">
+                {{ $orders->links() }}
+            </div>
         </section>
-    </section>
-
-    {{ $orders->links() }}
-
+    </div>
 @endsection

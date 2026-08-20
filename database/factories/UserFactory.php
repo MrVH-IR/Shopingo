@@ -73,4 +73,11 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+    public function admin(): static
+    {
+        return $this->state([fn (array $attributes) => [
+            'user_type' => 1
+        ]]);
+    }
 }

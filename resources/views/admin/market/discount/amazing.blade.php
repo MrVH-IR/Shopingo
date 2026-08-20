@@ -1,76 +1,70 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>فروش شگفت انگیز</title>
+    <title>فروش شگفت انگیز</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            فروش شگفت انگیز
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <nav class="mb-3 text-sm text-slate-500">
+                        <a href="{{ route('admin.home') }}" class="hover:text-slate-900">خانه</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <a href="{{ route('admin.market.category.index') }}" class="hover:text-slate-900">بخش فروش</a>
+                        <span class="mx-2 text-slate-300">/</span>
+                        <span class="text-slate-900">فروش شگفت انگیز</span>
+                    </nav>
+                    <h1 class="text-2xl font-black tracking-tight text-slate-900">فروش شگفت انگیز</h1>
+                </div>
+                <a href="{{ route('admin.market.discount.amazingSale.create') }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-sm"><i class="fas fa-plus"></i> افزودن کالا</a>
+            </div>
+        </section>
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-            فروش شگفت انگیز
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.discount.amazingSale.create') }}" class="btn btn-info btn-sm">افزودن کالا به لیست شگفت انگیز</a>
-                    <div class="max-width-16-rem">
-                        <input type="text" placeholder="جستجو" name="search" id="search" class="form-control form-control-sm form-text">
-                    </div>
-                </section>
-
-                <section class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <th>#</th>
-                            <th>نام کالا</th>
-                            <th>درصد تخفیف</th>
-                            <th>تاریخ شروع</th>
-                            <th>تاریخ پایان</th>
-                            <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </thead>
-                        <tbody>
+        <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div class="border-b border-slate-100 p-4">
+                <input type="text" placeholder="جستجو" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-cyan-500 focus:bg-white lg:max-w-sm">
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 text-right">
+                    <thead class="bg-slate-50 text-xs font-bold uppercase tracking-wider text-slate-500">
+                        <tr>
+                            <th class="px-6 py-4">#</th>
+                            <th class="px-6 py-4">نام کالا</th>
+                            <th class="px-6 py-4">درصد تخفیف</th>
+                            <th class="px-6 py-4">تاریخ شروع</th>
+                            <th class="px-6 py-4">تاریخ پایان</th>
+                            <th class="px-6 py-4">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
                         @foreach($amazingSales as $amazingSale)
-                            <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <th>{{ $amazingSale->product->name }}</th>
-                                <td>{{ $amazingSale->percentage }}%</td>
-                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->start_at) }}</td>
-                                <td>{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->end_at) }}</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.discount.amazingSale.edit' , $amazingSale->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
-                                    <form class="d-none" method="POST" action="{{ route('admin.market.discount.amazingSale.destroy' , $amazingSale->id) }}" id="delete-form-{{ $amazingSale->id }}">@csrf @method('DELETE')</form>
-                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $amazingSale->id }}" data-id="{{ $amazingSale->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="px-6 py-4 text-sm font-semibold text-slate-600">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $amazingSale->product->name }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ $amazingSale->percentage }}%</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->start_at)->format('Y/m/d H:i:s') }}</td>
+                                <td class="px-6 py-4 text-sm text-slate-700">{{ \Morilog\Jalali\Jalalian::fromCarbon($amazingSale->end_at)->format('Y/m/d H:i:s') }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2">
+                                        <a href="{{ route('admin.market.discount.amazingSale.edit', $amazingSale->id) }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700"><i class="fas fa-pen"></i> ویرایش</a>
+                                        <form class="d-none" method="POST" action="{{ route('admin.market.discount.amazingSale.destroy', $amazingSale->id) }}" id="delete-form-{{ $amazingSale->id }}">@csrf @method('DELETE')</form>
+                                        <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white delete" form="delete-form-{{ $amazingSale->id }}"><i class="fas fa-trash"></i> حذف</button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
-                </section>
-            </section>
+                    </tbody>
+                </table>
+            </div>
+            <div class="border-t border-slate-100 p-4">
+                {{ $amazingSales->links() }}
+            </div>
         </section>
-    </section>
-
-    {{ $amazingSales->links() }}
-
+    </div>
 @endsection
-@section('script')
 
-    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
+@section('script')
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection
