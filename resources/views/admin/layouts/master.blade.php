@@ -17,7 +17,7 @@
 
         <main
             id="main-body"
-            class="min-w-0 flex-1 bg-slate-100 px-4 py-6 sm:px-6 lg:px-8"
+            class="font-sans min-w-0 flex-1 bg-slate-100 px-4 py-6 sm:px-6 lg:px-8"
         >
             <div class="mx-auto w-full max-w-[1600px]">
                 @yield('content')

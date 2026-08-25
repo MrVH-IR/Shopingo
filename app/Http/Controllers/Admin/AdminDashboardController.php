@@ -12,6 +12,8 @@ class AdminDashboardController extends Controller
     {
         $stats = $adminDashboardService->stats();
 
-        return view('admin.index', compact('stats'));
+        $infos = $adminDashboardService->getRequiredInfo();
+
+        return view('admin.index', compact('stats', 'infos'));
     }
 }

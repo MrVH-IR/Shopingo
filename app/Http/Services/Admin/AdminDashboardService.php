@@ -2,7 +2,10 @@
 
 namespace App\Http\Services\Admin;
 
+use App\Models\Content\Comment;
 use App\Models\Market\Order;
+use App\Models\Notification;
+use App\Models\Ticket\Ticket;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
@@ -101,5 +104,19 @@ class AdminDashboardService
         }
 
         return ($delta > 0 ? '+' : '') . number_format($delta);
+    }
+
+    public function getRequiredInfo(): array
+    {
+        return Cache::remember('admin.dashboard.info', 60, function () {
+            $notifs = Notification::where('read_at', null)->count();
+            $comments = Comment::where('seen', 0)->count();
+            $tickets = Ticket::where('seen', 0)->count();
+            return [
+                'notifs' => $notifs,
+                'comments' => $comments,
+                'tickets' => $tickets,
+            ];
+        });
     }
 }

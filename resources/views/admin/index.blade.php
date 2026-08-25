@@ -189,15 +189,15 @@
                 <div class="mt-6 space-y-3">
                     <div class="flex items-start gap-3 rounded-2xl bg-amber-50 px-4 py-3">
                         <i class="fas fa-circle-info mt-1 text-amber-500"></i>
-                        <p class="text-sm leading-6 text-amber-800">شما می‌توانید این کارت‌ها را بعداً به داده‌های واقعی وصل کنید.</p>
+                        <p class="text-sm leading-6 text-amber-800">شما {{ $infos['notifs'] }} پیام خوانده نشده دارید !</p>
                     </div>
                     <div class="flex items-start gap-3 rounded-2xl bg-sky-50 px-4 py-3">
                         <i class="fas fa-palette mt-1 text-sky-500"></i>
-                        <p class="text-sm leading-6 text-sky-800">الان ساختار اصلی تمیز و مدرن است و برای توسعه‌های بعدی آماده‌تر شده.</p>
+                        <p class="text-sm leading-6 text-sky-800">الان {{ $infos['comments'] }} تا کامنت خوانده نشده دارید!</p>
                     </div>
                     <div class="flex items-start gap-3 rounded-2xl bg-emerald-50 px-4 py-3">
                         <i class="fas fa-check-circle mt-1 text-emerald-500"></i>
-                        <p class="text-sm leading-6 text-emerald-800">بدون تغییر در منطق بک‌اند، فقط UI/UX به‌روز شده است.</p>
+                        <p class="text-sm leading-6 text-emerald-800">{{ $infos['tickets'] }} تا تیکت دیده نشده دارید!</p>
                     </div>
                 </div>
             </div>
