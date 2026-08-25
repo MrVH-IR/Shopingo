@@ -1,9 +1,9 @@
-@extends('views.admin.layouts.master')
+@extends('admin.layouts.master')
 @section('head-tag')
     <title>ویرایش نقش</title>
 @endsection
 @section('content')
-    <div class="space-y-6">@include('admin.components.ui.page-header',['title'=>'ویرایش نقش','description'=>'نقش و دسترسی‌های سیستم را مدیریت کنید.','breadcrumbs'=>[['label'=>'خانه','url'=>route('admin.home')],['label'=>'بخش کاربران'],['label'=>'نقش ها','url'=>route('views.admin.user.role.index')],['label'=>'ویرایش']], 'actionUrl'=>route('views.admin.user.role.index'),'actionLabel'=>'بازگشت','actionIcon'=>'fas fa-arrow-right'])
+    <div class="space-y-6">@include('admin.components.ui.page-header',['title'=>'ویرایش نقش','description'=>'نقش و دسترسی‌های سیستم را مدیریت کنید.','breadcrumbs'=>[['label'=>'خانه','url'=>route('admin.home')],['label'=>'بخش کاربران'],['label'=>'نقش ها','url'=>route('admin.user.role.index')],['label'=>'ویرایش']], 'actionUrl'=>route('admin.user.role.index'),'actionLabel'=>'بازگشت','actionIcon'=>'fas fa-arrow-right'])
         <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <form action="{{ route('admin.user.role.update', $role->id) }}" method="POST"
                   class="space-y-6">@csrf @method('PUT')
