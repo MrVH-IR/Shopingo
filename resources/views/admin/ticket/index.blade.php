@@ -1,80 +1,84 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>تیکت</title>
+    <title>تیکت ها</title>
 @endsection
 
 @section('content')
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'تیکت ها',
+            'description' => 'مدیریت تیکت‌های کاربران، وضعیت و ارجاعات آن‌ها.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'بخش تیکت ها', 'url' => route('admin.ticket.index')],
+                ['label' => 'تیکت ها'],
+            ],
+            'actionLabel' => 'ایجاد تیکت',
+            'actionDisabled' => true,
+            'actionIcon' => 'fas fa-plus',
+        ])
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item font-size-12"> <a href="#"> خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#"> بخش تیکت ها</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> تیکت</li>
-    </ol>
-  </nav>
-
-
-  <section class="row">
-    <section class="col-12">
-        <section class="main-body-container">
-            <section class="main-body-container-header">
-                <h5>
-                 تیکت
-                </h5>
-            </section>
-
-            <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="#" class="btn btn-info btn-sm disabled">ایجاد تیکت </a>
-                <div class="max-width-16-rem">
-                    <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">فهرست تیکت ها</h2>
+                    <p class="mt-1 text-sm text-slate-500">برای مشاهده جزئیات و پاسخ‌گویی، روی مشاهده کلیک کنید.</p>
                 </div>
-            </section>
+                <div class="w-full max-w-sm">
+                    <label for="search" class="sr-only">جستجو</label>
+                    <div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <i class="fas fa-search text-slate-400"></i>
+                        <input id="search" type="text" placeholder="جستجو" class="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400">
+                    </div>
+                </div>
+            </div>
 
-            <section class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>نویسنده تیکت</th>
-                        <th>عنوان تیکت</th>
-                        <th>دسته تیکت</th>
-                        <th>اولویت تیکت</th>
-                        <th>ارجاع شده از</th>
-                        <th>تیکت والد</th>
-                        <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($tickets as $ticket)
-                        <tr>
-                            <th>{{ $loop->iteration }}</th>
-                            <td>{{ $ticket->user?->full_name }}</td>
-                            <td>{{ $ticket->subject }}</td>
-                            <td>{{ $ticket->category?->name }}</td>
-                            <td>{{ $ticket->priority?->name }}</td>
-                            <td>{{ $ticket->admin?->user?->full_name }}</td>
-                            <td>{{ $ticket->parent?->subject ?? '-' }}</td>
-                            <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.ticket.show' , $ticket->id) }}" class="btn btn-info btn-sm">
-                                    <i class="fa fa-eye"></i> مشاهده
-                                </a>
-                            </td>
-                            <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.ticket.change' , $ticket->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-check"></i> {{ $ticket->status == 1 ? "بستن" : "باز کردن" }}
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </section>
+            <div class="overflow-hidden rounded-2xl border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">#</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">نویسنده تیکت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">عنوان تیکت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">دسته تیکت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">اولویت تیکت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">ارجاع شده از</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">تیکت والد</th>
+                                <th class="px-5 py-3 text-center text-xs font-semibold text-slate-500">تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            @foreach($tickets as $ticket)
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="whitespace-nowrap px-5 py-4 text-sm font-semibold text-slate-900">{{ $loop->iteration }}</td>
+                                    <td class="px-5 py-4 text-sm text-slate-600">{{ $ticket->user?->full_name }}</td>
+                                    <td class="max-w-xs px-5 py-4 text-sm font-medium text-slate-700">{{ $ticket->subject }}</td>
+                                    <td class="px-5 py-4 text-sm text-slate-600">{{ $ticket->category?->name }}</td>
+                                    <td class="px-5 py-4 text-sm text-slate-600">{{ $ticket->priority?->name }}</td>
+                                    <td class="px-5 py-4 text-sm text-slate-600">{{ $ticket->admin?->user?->full_name }}</td>
+                                    <td class="max-w-xs px-5 py-4 text-sm text-slate-600">{{ $ticket->parent?->subject ?? '-' }}</td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex flex-wrap items-center justify-center gap-2">
+                                            <a href="{{ route('admin.ticket.show', $ticket->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-100">
+                                                <i class="fas fa-eye"></i>
+                                                مشاهده
+                                            </a>
+                                            <a href="{{ route('admin.ticket.change', $ticket->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-100">
+                                                <i class="fas fa-check"></i>
+                                                {{ $ticket->status == 1 ? 'بستن' : 'باز کردن' }}
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
+            <div class="mt-6 border-t border-slate-100 pt-4">{{ $tickets->links() }}</div>
         </section>
-    </section>
-</section>
-
-    {{ $tickets->links() }}
-
+    </div>
 @endsection

@@ -1,85 +1,61 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>دسته بندی</title>
+    <title>ایجاد اولویت</title>
 @endsection
 
 @section('content')
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'ایجاد اولویت',
+            'description' => 'فیلدهای اولویت را ثبت یا ویرایش کنید.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'بخش تیکت ها', 'url' => route('admin.ticket.index')],
+                ['label' => 'اولویت', 'url' => route('admin.ticket.priority.index')],
+                ['label' => 'ایجاد'],
+            ],
+        ])
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">بخش تیکت ها</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">دسته بندی</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> ایجاد دسته بندی</li>
-    </ol>
-  </nav>
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">اطلاعات اولویت</h2>
+                    <p class="mt-1 text-sm text-slate-500">مقادیر را وارد کنید و فرم را ثبت کنید.</p>
+                </div>
+                <a href="{{ route('admin.ticket.priority.index') }}" class="inline-flex items-center gap-2 rounded-2xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
 
+            <form action="{{ route('admin.ticket.priority.store') }}" method="POST" class="space-y-6">
+                @csrf
+                
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="name" class="text-sm font-semibold text-slate-700">نام اولویت</label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
+                        @include('admin.components.ui.field-error', ['name' => 'name'])
+                    </div>
 
-  <section class="row">
-    <section class="col-12">
-        <section class="main-body-container">
-            <section class="main-body-container-header">
-                <h5>
-                  ایجاد دسته بندی
-                </h5>
-            </section>
+                    <div class="space-y-2">
+                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
+                            <option value="0" @selected(old('status') == 0)>غیرفعال</option>
+                            <option value="1" @selected(old('status') == 1)>فعال</option>
+                        </select>
+                        @include('admin.components.ui.field-error', ['name' => 'status'])
+                    </div>
+                </div>
 
-            <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.ticket.priority.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-            </section>
-
-            <section>
-                <form action="{{ route('admin.ticket.priority.store') }}" method="post" enctype="multipart/form-data" id="form">
-                    @csrf
-                    <section class="row">
-
-                        <section class="col-12 col-md-6 my-2">
-                            <div class="form-group">
-                                <label for="name">نام دسته</label>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name" value="{{ old('name') }}">
-                            </div>
-                            @error('name')
-                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                    <strong>
-                                        {{ $message }}
-                                    </strong>
-                                </span>
-                            @enderror
-                        </section>
-
-
-
-                        <section class="col-12 col-md-6 my-2">
-                            <div class="form-group">
-                                <label for="status">وضعیت</label>
-                                <select name="status" id="" class="form-control form-control-sm" id="status">
-                                    <option value="0" @if(old('status') == 0) selected @endif>غیرفعال</option>
-                                    <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                </select>
-                            </div>
-                            @error('status')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
-                        </section>
-
-
-
-
-                        <section class="col-12 my-3">
-                            <button class="btn btn-primary btn-sm">ثبت</button>
-                        </section>
-                    </section>
-                </form>
-            </section>
-
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت اولویت
+                    </button>
+                </div>
+            </form>
         </section>
-    </section>
-</section>
-
+    </div>
 @endsection
-

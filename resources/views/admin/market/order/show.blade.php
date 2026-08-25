@@ -2,25 +2,6 @@
 
 @section('head-tag')
     <title>فاکتور سفارش</title>
-    <style>
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable, #printable * {
-                visibility: visible;
-            }
-            #printable {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -46,7 +27,7 @@
             </div>
         </section>
 
-        <section id="printable" class="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section id="printable" class="print:hidden space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <div class="flex items-center justify-between border-b border-dashed border-slate-200 pb-4">
                 <div>
                     <h2 class="text-xl font-black text-slate-900">فاکتور سفارش #{{ $order->id }}</h2>

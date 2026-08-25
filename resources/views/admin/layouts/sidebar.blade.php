@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar hidden lg:block" style="width: 250px">
+<aside id="sidebar" class="print:hidden sidebar hidden w-[250px] shrink-0 lg:block">
     @php
         $marketGroups = [
             [

@@ -1,43 +1,34 @@
 <script>
     $(document).ready(function () {
-        var className = '{{ $className }}'
+        const className = @json($className);
 
-        var element = $('.' + className);
+        $('.' + className).on('click', function (event) {
+            event.preventDefault();
 
-        element.on('click' , function (e) {
-            e.preventDefault();
+            const trigger = this;
+            const formId = $(trigger).data('id')
+                ? '#delete-form-' + $(trigger).data('id')
+                : '#' + $(trigger).attr('form');
 
-            const swalWithBootstrapButtons = Swal.mixin({
-               customClass : {
-                   confirmButton: 'btn btn-success mx-2',
-                   cancelButton: 'btn btn-danger mx-2',
-               },
-                buttnStyling: false
-            });
-
-            swalWithBootstrapButtons.fire({
-                title: "آیا مطمئن هستی؟",
-                text: "شما میتوانید درخواست خود را لغو نمایید",
-                icon: "warning",
+            Swal.fire({
+                title: 'آیا مطمئن هستید؟',
+                text: 'این عملیات قابل بازگشت نیست.',
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: "بله پاک شود!",
-                cancelButtonText: 'خیر درخواست لغو شود',
-                reverseButtons: true
+                confirmButtonText: 'بله، حذف شود',
+                cancelButtonText: 'انصراف',
+                reverseButtons: true,
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'mx-2 rounded-2xl bg-rose-600 px-5 py-3 text-sm font-semibold text-white',
+                    cancelButton: 'mx-2 rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700',
+                    popup: 'rounded-3xl',
+                },
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const formId = $(this).data('id') ? '#delete-form-' + $(this).data('id') : '#' + $(this).attr('form');
                     $(formId).trigger('submit');
-                } else if(result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire({
-                        title: "لغو درخواست",
-                        text: "درخواست شما لغو شد",
-                        icon: "error",
-                        confirmButtonText: "باشه"
-                    });
                 }
             });
         });
-    })
-
-
+    });
 </script>

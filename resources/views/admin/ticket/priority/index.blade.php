@@ -1,91 +1,90 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>اولویت</title>
-<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
+    <title>اولویت تیکت</title>
 @endsection
 
 @section('content')
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'اولویت تیکت',
+            'description' => 'مدیریت اولویت‌های تیکت و وضعیت فعال بودن آن‌ها.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'بخش تیکت ها', 'url' => route('admin.ticket.index')],
+                ['label' => 'اولویت'],
+            ],
+            'actionUrl' => route('admin.ticket.priority.create'),
+            'actionLabel' => 'ایجاد اولویت',
+        ])
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">بخش تیکت ها</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page">اولویت</li>
-    </ol>
-  </nav>
+        @include('admin.alerts.alertsection.success')
 
-
-  <section class="row">
-    <section class="col-12">
-        <section class="main-body-container">
-            <section class="main-body-container-header">
-                <h5>
-                    اولویت
-                </h5>
-            </section>
-
-            @include('admin.alerts.alertsection.success')
-
-            <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.ticket.priority.create') }}" class="btn btn-info btn-sm">ایجاد اولویت</a>
-                <div class="max-width-16-rem">
-                    <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">فهرست اولویت ها</h2>
+                    <p class="mt-1 text-sm text-slate-500">وضعیت اولویت‌ها را مستقیم از همین جدول مدیریت کنید.</p>
                 </div>
-            </section>
+                <div class="w-full max-w-sm">
+                    <label for="search" class="sr-only">جستجو</label>
+                    <div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <i class="fas fa-search text-slate-400"></i>
+                        <input id="search" type="text" placeholder="جستجو" class="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400">
+                    </div>
+                </div>
+            </div>
 
-            <section class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نام اولویت</th>
-                            <th>وضعیت</th>
-                            <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($ticketPriorities as $key => $ticketPriority)
-
-                        <tr>
-                            <th>{{ $key += 1 }}</th>
-                            <td>{{ $ticketPriority->name }}</td>
-                            <td>
-                                <div class="status-wrapper" style="position: relative;">
-                                    <label>
-                                        <input id="{{ $ticketPriority->id }}" onchange="changeStatus({{ $ticketPriority->id }})" type="checkbox"
-                                               @if($ticketPriority->status == 1) checked @endif
-                                               data-url="{{ route('admin.ticket.priority.status', $ticketPriority->id) }}">
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.ticket.priority.edit', $ticketPriority->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form action="{{ route('admin.ticket.priority.destroy', $ticketPriority->id) }}" method="POST" id="delete-form-{{ $ticketPriority->id }}" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                <button type="submit" form="delete-form-{{ $ticketPriority->id }}"
-                                        class="btn btn-danger btn-sm delete"
-                                        data-id="{{ $ticketPriority->id }}" >
-                                    <i class="fa fa-trash-alt"></i> حذف
-                                </button>
-                            </td>
-                        </tr>
-
-                        @endforeach
-
-
-                    </tbody>
-                </table>
-            </section>
-
+            <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">#</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">نام اولویت</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">وضعیت</th>
+                                <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500"><i class="fas fa-gears ml-1"></i> تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            @foreach ($ticketPriorities as $key => $ticketPriority)
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">{{ $key + 1 }}</td>
+                                    <td class="px-6 py-4 text-sm font-medium text-slate-700">{{ $ticketPriority->name }}</td>
+                                    <td class="px-6 py-4">
+                                        @include('admin.components.ui.status-toggle', [
+                                            'id' => $ticketPriority->id,
+                                            'checked' => $ticketPriority->status == 1,
+                                            'url' => route('admin.ticket.priority.status', $ticketPriority->id),
+                                            'onChange' => 'changeStatus(' . $ticketPriority->id . ')',
+                                        ])
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-wrap items-center justify-center gap-2">
+                                            <a href="{{ route('admin.ticket.priority.edit', $ticketPriority->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-100">
+                                                <i class="fas fa-pen"></i>
+                                                ویرایش
+                                            </a>
+                                            <form action="{{ route('admin.ticket.priority.destroy', $ticketPriority->id) }}" method="POST" id="delete-form-{{ $ticketPriority->id }}" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" form="delete-form-{{ $ticketPriority->id }}" class="delete inline-flex items-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100" data-id="{{ $ticketPriority->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                    حذف
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
-    </section>
-</section>
-
+    </div>
 @endsection
+
 @section('script')
     <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
     @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])

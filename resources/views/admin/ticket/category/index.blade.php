@@ -1,90 +1,89 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>دسته بندی</title>
-<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
+    <title>دسته بندی تیکت</title>
 @endsection
 
 @section('content')
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'دسته بندی تیکت',
+            'description' => 'مدیریت دسته‌بندی‌های تیکت و وضعیت فعال بودن آن‌ها.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'بخش تیکت ها', 'url' => route('admin.ticket.index')],
+                ['label' => 'دسته بندی'],
+            ],
+            'actionUrl' => route('admin.ticket.category.create'),
+            'actionLabel' => 'ایجاد دسته بندی',
+        ])
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">بخش تیکت ها</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> دسته بندی</li>
-    </ol>
-  </nav>
-
-
-  <section class="row">
-    <section class="col-12">
-        <section class="main-body-container">
-            <section class="main-body-container-header">
-                <h5>
-                  دسته بندی
-                </h5>
-            </section>
-
-            <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.ticket.category.create') }}" class="btn btn-info btn-sm">ایجاد دسته بندی</a>
-                <div class="max-width-16-rem">
-                    <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">فهرست دسته بندی ها</h2>
+                    <p class="mt-1 text-sm text-slate-500">وضعیت دسته‌ها را مستقیم از همین جدول مدیریت کنید.</p>
                 </div>
-            </section>
+                <div class="w-full max-w-sm">
+                    <label for="search" class="sr-only">جستجو</label>
+                    <div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <i class="fas fa-search text-slate-400"></i>
+                        <input id="search" type="text" placeholder="جستجو" class="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400">
+                    </div>
+                </div>
+            </div>
 
-            <section class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نام دسته بندی</th>
-                            <th>وضعیت</th>
-                            <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($ticketCategories as $key => $ticketCategory)
-
-                        <tr>
-                            <th>{{ $key += 1 }}</th>
-                            <td>{{ $ticketCategory->name }}</td>
-                            <td>
-                                <div class="status-wrapper" style="position: relative;">
-                                    <label>
-                                        <input id="{{ $ticketCategory->id }}" onchange="changeStatus({{ $ticketCategory->id }})" type="checkbox"
-                                               @if($ticketCategory->status == 1) checked @endif
-                                               data-url="{{ route('admin.ticket.category.status', $ticketCategory->id) }}">
-                                    </label>
-                                </div>
-                            </td>
-                            <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.ticket.category.edit', $ticketCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form action="{{ route('admin.ticket.category.destroy', $ticketCategory->id) }}" method="POST" id="delete-form-{{ $ticketCategory->id }}" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                <button type="submit" form="delete-form-{{ $ticketCategory->id }}"
-                                        class="btn btn-danger btn-sm delete"
-                                        data-id="{{ $ticketCategory->id }}" >
-                                    <i class="fa fa-trash-alt"></i> حذف
-                                </button>
-                            </td>
-                        </tr>
-
-                        @endforeach
-
-
-                    </tbody>
-                </table>
-            </section>
-
+            <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">#</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">نام دسته بندی</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">وضعیت</th>
+                                <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500"><i class="fas fa-gears ml-1"></i> تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            @foreach ($ticketCategories as $key => $ticketCategory)
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">{{ $key + 1 }}</td>
+                                    <td class="px-6 py-4 text-sm font-medium text-slate-700">{{ $ticketCategory->name }}</td>
+                                    <td class="px-6 py-4">
+                                        @include('admin.components.ui.status-toggle', [
+                                            'id' => $ticketCategory->id,
+                                            'checked' => $ticketCategory->status == 1,
+                                            'url' => route('admin.ticket.category.status', $ticketCategory->id),
+                                            'onChange' => 'changeStatus(' . $ticketCategory->id . ')',
+                                        ])
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-wrap items-center justify-center gap-2">
+                                            <a href="{{ route('admin.ticket.category.edit', $ticketCategory->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-100">
+                                                <i class="fas fa-pen"></i>
+                                                ویرایش
+                                            </a>
+                                            <form action="{ route('admin.ticket.category.destroy', $ticketCategory->id) }" method="POST" id="delete-form-{{ $ticketCategory->id }}" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" form="delete-form-{{ $ticketCategory->id }}" class="delete inline-flex items-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100" data-id="{{ $ticketCategory->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                    حذف
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
-    </section>
-</section>
-
+    </div>
 @endsection
+
 @section('script')
-    <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
+    <script type="text/javascript" src="{ asset('admin-assets/js/status.js') }"></script>
     @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection

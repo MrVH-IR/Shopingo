@@ -49,7 +49,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('admin.market.discount.amazingSale.edit', $amazingSale->id) }}" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700"><i class="fas fa-pen"></i> ویرایش</a>
-                                        <form class="d-none" method="POST" action="{{ route('admin.market.discount.amazingSale.destroy', $amazingSale->id) }}" id="delete-form-{{ $amazingSale->id }}">@csrf @method('DELETE')</form>
+                                        <form class="hidden" method="POST" action="{{ route('admin.market.discount.amazingSale.destroy', $amazingSale->id) }}" id="delete-form-{{ $amazingSale->id }}">@csrf @method('DELETE')</form>
                                         <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white delete" form="delete-form-{{ $amazingSale->id }}"><i class="fas fa-trash"></i> حذف</button>
                                     </div>
                                 </td>

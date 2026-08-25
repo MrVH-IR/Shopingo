@@ -1,151 +1,46 @@
-@extends('admin.layouts.master')
-
-
+@extends('views.admin.layouts.master')
 @section('head-tag')
-<title>تغییر نقش</title>
-<style>
-    .permission-card {
-        background: #f8f9fa;
-        border: 1px solid #e1e5ea;
-        border-radius: 10px;
-        padding: 12px;
-        cursor: pointer;
-        transition: all .2s ease-in-out;
-    }
-    .permission-card:hover {
-        background: #e9ecef;
-    }
-    .permission-card input {
-        display: none;
-    }
-    .permission-card label {
-        display: block;
-        margin: 0;
-        cursor: pointer;
-        font-weight: 500;
-    }
-    .permission-card input:checked + label {
-        background: #0d6efd;
-        color: #fff;
-        border-radius: 8px;
-        padding: 5px 10px;
-    }
-</style>
+    <title>ویرایش نقش</title>
 @endsection
-
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="#">بخش کاربران</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.user.role.index') }}">نقش ها</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            تغییر نقش
-        </li>
-    </ol>
-</nav>
-
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        تغییر نقش
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.user.role.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
-
-                <section>
-                    <form action="{{ route('admin.user.role.update' , $role->id) }}" method="POST">
-                        @method("PUT")
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-5">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">عنوان نقش</label>
-                                        <input type="text" name="name" id="" class="form-control form-control-sm" value="{{ old('name', $role->name) }}">
-                                </div>
-                                @error('name')
-                                    <div class="alert alert-danger">
-                                        <li>
-                                            {{ $message }}
-                                        </li>
-                                    </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-5">
-                                <div class="form-group">
-                                    <label for="Category" class="h6">توضیح نقش</label>
-                                        <input type="text" name="description" id="" class="form-control form-control-sm" value="{{ old('description', $role->description) }}">
-                                </div>
-                                @error('description')
-                                    <div class="alert alert-danger">
-                                        <li>
-                                            {{ $message }}
-                                        </li>
-                                    </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Status-Select" class="h6">وضعیت</label>
-                                    <select name="status" id="Status-Select" class="form-control form-control-sm">
-                                        <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status' , $role->status) == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status' , $role->status) == 1) selected @endif>فعال</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-2 mt-md-4">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                            <section class="col-12">
-                                <section class="row border-top mt-3 py-3">
-                                    <section class="col-12">
-                                        <div class="d-flex flex-wrap gap-3">
-                                            @foreach($permissions as $permission)
-                                                <div class="permission-card" style="flex: 1 1 calc(25% - 1rem); min-width:220px;">
-                                                    <input type="checkbox"
-                                                           name="permissions[]"
-                                                           value="{{ $permission->id }}"
-                                                           id="perm-{{ $permission->id }}"
-                                                           @if($role->permissions->contains($permission->id)) checked @endif>
-                                                    <label for="perm-{{ $permission->id }}">
-                                                        {{ $permission->description }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                        @error('permissions')
-                                            <div class="alert alert-danger">
-                                                <li>
-                                                    {{ $message }}
-                                                </li>
-                                            </div>
-                                        @enderror
-                                    </section>
-                                </section>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
+    <div class="space-y-6">@include('admin.components.ui.page-header',['title'=>'ویرایش نقش','description'=>'نقش و دسترسی‌های سیستم را مدیریت کنید.','breadcrumbs'=>[['label'=>'خانه','url'=>route('admin.home')],['label'=>'بخش کاربران'],['label'=>'نقش ها','url'=>route('views.admin.user.role.index')],['label'=>'ویرایش']], 'actionUrl'=>route('views.admin.user.role.index'),'actionLabel'=>'بازگشت','actionIcon'=>'fas fa-arrow-right'])
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <form action="{{ route('admin.user.role.update', $role->id) }}" method="POST"
+                  class="space-y-6">@csrf @method('PUT')
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2"><label class="text-sm font-semibold text-slate-700">عنوان نقش</label><input
+                                type="text" name="name" value="{{ old('name', $role->name) }}"
+                                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">@include('admin.components.ui.field-error',['name'=>'name'])
+                    </div>
+                    <div class="space-y-2"><label class="text-sm font-semibold text-slate-700">توضیح نقش</label><input
+                                type="text" name="description" value="{{ old('description', $role->description) }}"
+                                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">@include('admin.components.ui.field-error',['name'=>'description'])
+                    </div>
+                    <div class="space-y-2"><label class="text-sm font-semibold text-slate-700">وضعیت</label><select
+                                name="status"
+                                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
+                            <option value="default">انتخاب کنید</option>
+                            <option value="0" @selected(old('status', $role->status)==0)>غیرفعال</option>
+                            <option value="1" @selected(old('status', $role->status)==1)>فعال</option>
+                        </select>@include('admin.components.ui.field-error',['name'=>'status'])</div>
+                </div>
+                <div class="border-t border-slate-100 pt-6">
+                    <div class="mb-4"><h3 class="text-base font-bold text-slate-900">دسترسی‌ها</h3>
+                        <p class="mt-1 text-sm text-slate-500">دسترسی‌های مورد نیاز این نقش را انتخاب کنید.</p></div>
+                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">@foreach($permissions as $permission)
+                            <label class="group cursor-pointer"><input type="checkbox" name="permissions[]"
+                                                                       value="{{ $permission->id }}"
+                                                                       id="perm-{{ $permission->id }}"
+                                                                       class="peer sr-only"
+                                                                       @if($role->permissions->contains($permission->id)) checked @endif><span
+                                        class="block rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-200 hover:bg-cyan-50 peer-checked:border-cyan-500 peer-checked:bg-cyan-600 peer-checked:text-white">{{ $permission->description }}</span></label>
+                        @endforeach</div>@include('admin.components.ui.field-error',['name'=>'permissions'])</div>
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white">
+                        <i class="fas fa-save"></i>ثبت نقش
+                    </button>
+                </div>
+            </form>
         </section>
-    </section>
-
+    </div>
 @endsection

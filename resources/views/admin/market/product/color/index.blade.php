@@ -1,73 +1,35 @@
 @extends('admin.layouts.master')
-
-
-@section('head-tag')
-    <title>رنگ کالا</title>
-@endsection
-
+@section('head-tag')<title>رنگ‌های کالا</title>@endsection
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12">
-                <a href="{{ route('admin.home') }}">خانه</a>
-            </li>
-            <li class="breadcrumb-item font-size-12">
-                <a href="{{ route('admin.market.category.index') }}">بخش فروش</a>
-            </li>
-            <li class="breadcrumb-item font-size-12">
-                <a href="{{ route('admin.market.product.index') }}">بخش محصولات</a>
-            </li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page">
-                رنگ کالا
-            </li>
-        </ol>
-    </nav>
-
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        رنگ کالا
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.color.create' , $product->id) }}" class="btn btn-info btn-sm">ایجاد رنگ جدید</a>
-                    <div class="max-width-16-rem">
-                        <input type="text" placeholder="جستجو" name="search" id="search" class="form-control form-control-sm form-text">
-                    </div>
-                </section>
-
-                <section class="table-responsive">
-                    <table class="table table-striped table-hover h-150px">
-                        <thead>
-                        <th>#</th>
-                        <th>نام کالا</th>
-                        <th>رنگ کالا</th>
-                        <th>افزایش قیمت </th>
-                        <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </thead>
-                        <tbody>
-                        @foreach($product->colors as $color)
-                            <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $color->color_name }}</td>
-                                <td>{{ $color->price_increase }}</td>
-                                <td class="width-8-rem text-left">
-                                    <form class="d-none" method="POST" action="{{ route('admin.market.color.destroy', ['product' => $product->id , 'color' => $color->id]) }}" id="delete-form-{{ $color->id }}">@csrf @method('DELETE')</form>
-                                    <button type="submit" class="btn btn-danger btn-sm delete" form="delete-form-{{ $color->id }}" data-id="{{ $color->id }}"><i class="fa fa-trash-alt"></i>  حذف</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        @endforeach
-                    </table>
-                </section>
-            </section>
-        </section>
+<div class="space-y-6">
+    @include('admin.components.ui.page-header', [
+        'title'=>'رنگ‌های کالا',
+        'description'=>'مدیریت رنگ‌ها و افزایش قیمت مربوط به این کالا.',
+        'breadcrumbs'=>[
+            ['label'=>'خانه','url'=>route('admin.home')],
+            ['label'=>'بخش فروش','url'=>route('admin.market.category.index')],
+            ['label'=>'محصولات','url'=>route('admin.market.product.index')],
+            ['label'=>'رنگ‌ها'],
+        ],
+        'actionUrl'=>route('admin.market.color.create', $product->id),
+        'actionLabel'=>'ایجاد رنگ جدید',
+        'actionIcon'=>'fas fa-palette',
+    ])
+    <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div><h2 class="text-lg font-bold text-slate-900">رنگ‌های {{ $product->name }}</h2><p class="mt-1 text-sm text-slate-500">رنگ‌های تعریف‌شده برای این کالا.</p></div>
+            <div class="w-full max-w-sm"><div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"><i class="fas fa-search text-slate-400"></i><input type="text" placeholder="جستجو" name="search" id="search" class="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"></div></div>
+        </div>
+        <div class="overflow-hidden rounded-2xl border border-slate-200"><div class="overflow-x-auto"><table class="min-w-full divide-y divide-slate-200"><thead class="bg-slate-50"><tr>
+            <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">#</th><th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">نام کالا</th><th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">رنگ کالا</th><th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">افزایش قیمت</th><th class="px-6 py-3 text-center text-xs font-semibold text-slate-500">تنظیمات</th>
+        </tr></thead><tbody class="divide-y divide-slate-200 bg-white">
+        @foreach($product->colors as $color)
+            <tr class="transition hover:bg-slate-50"><td class="px-6 py-4 text-sm font-semibold text-slate-900">{{ $loop->iteration }}</td><td class="px-6 py-4 text-sm text-slate-600">{{ $product->name }}</td><td class="px-6 py-4 text-sm font-medium text-slate-700">{{ $color->color_name }}</td><td class="px-6 py-4 text-sm text-slate-600">{{ $color->price_increase }}</td><td class="px-6 py-4 text-center">
+                <form method="POST" action="{{ route('admin.market.color.destroy', ['product'=>$product->id,'color'=>$color->id]) }}" id="delete-form-{{ $color->id }}" class="inline">@csrf @method('DELETE')<button type="submit" class="delete inline-flex items-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100" form="delete-form-{{ $color->id }}" data-id="{{ $color->id }}"><i class="fas fa-trash"></i> حذف</button></form>
+            </td></tr>
+        @endforeach
+        </tbody></table></div></div>
     </section>
+</div>
 @endsection
-
-@section('script')
-    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
-@endsection
+@section('script')@include('admin.alerts.sweetalert.delete-confirm',['className'=>'delete'])@endsection

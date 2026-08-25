@@ -71,7 +71,7 @@
 
                     <div class="space-y-2 lg:col-span-2">
                         <label for="answer" class="text-sm font-semibold text-slate-700">پاسخ</label>
-                        <textarea name="answer" id="answer" rows="10" class="ckeditor w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white">{{ old('answer') }}</textarea>
+                        <textarea name="answer" id="answer" rows="10" class="ckeditor w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white" value="{{ old('answer') }}"></textarea>
                         @error('answer')
                             <p class="text-sm text-rose-600">{{ $message }}</p>
                         @enderror

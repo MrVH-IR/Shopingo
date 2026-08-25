@@ -1,92 +1,99 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>اطلاعیه ایمیلی</title>
-<link rel="stylesheet" href="{{ asset('admin-assets/css/status.css') }}">
+    <title>اطلاعیه ایمیلی</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.email.index') }}">بخش اطلاع رسانی</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            اطلاعیه ایمیلی
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'اطلاعیه ایمیلی',
+            'description' => 'ایجاد، ویرایش، فعال‌سازی و مدیریت فایل‌های اطلاعیه‌های ایمیلی.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'بخش اطلاع رسانی', 'url' => route('admin.email.index')],
+                ['label' => 'اطلاعیه ایمیلی'],
+            ],
+            'actionUrl' => route('admin.email.create'),
+            'actionLabel' => 'ایجاد اطلاعیه ایمیلی',
+            'actionIcon' => 'fas fa-envelope',
+        ])
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        اطلاعیه ایمیلی
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.email.create') }}" class="btn btn-info btn-sm">ایجاد اطلاعیه ایمیلی جدید</a>
-                    <div class="max-width-16-rem">
-                        <input type="text" placeholder="جستجو" name="search" id="search" class="form-control form-control-sm form-text">
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">فهرست اطلاعیه‌های ایمیلی</h2>
+                    <p class="mt-1 text-sm text-slate-500">وضعیت و فایل‌های ضمیمه هر اطلاعیه در دسترس است.</p>
+                </div>
+                <div class="w-full max-w-sm">
+                    <label for="search" class="sr-only">جستجو</label>
+                    <div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <i class="fas fa-search text-slate-400"></i>
+                        <input id="search" type="text" placeholder="جستجو" name="search" class="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400">
                     </div>
-                </section>
+                </div>
+            </div>
 
-                <section class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <th>#</th>
-                            <th>متن ایمیل</th>
-                            <th>تاریخ ارسال</th>
-                            <th>وضعیت</th>
-                            <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </thead>
-                        <tbody>
-                        @foreach($emails as $key => $value)
+            <div class="overflow-hidden rounded-2xl border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
                             <tr>
-                                <th>{{ $key +1 }}</th>
-                                <td>{{ $value->subject }}</td>
-                                <td>{{ $value->published_at_jalali }}</td>
-                                <td>
-                                    <label>
-                                        <div class="status-wrapper" style="position: relative;">
-                                            <input id="status-{{ $value->id }}" onchange="changeStatus('status-{{ $value->id }}')" type="checkbox"
-                                                   @if($value->status == 1) checked @endif
-                                                   data-url="{{ route('admin.email.status' , $value->id) }}">
-                                        </div>
-                                    </label>
-                                </td>
-                                <td class="width-16-rem text-left">
-                                    @if($value->files->isNotEmpty())
-                                        <a href="{{ route('admin.email.file.view' , $value->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-file"></i>  فایل های ضمیمه شده</a>
-                                    @endif
-                                    <a href="{{ route('admin.email.edit' , $value->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>  ویرایش</a>
-                                    <form action="{{ route('admin.email.destroy' , $value->id) }}" class="d-none" id="delete-form-{{ $value->id }}" method="POST">
-                                        @csrf
-                                        @method("DELETE")
-                                    </form>
-                                    <button type="submit" form="delete-form-{{ $value->id }}"
-                                            class="btn btn-danger btn-sm delete"
-                                            data-id="{{ $value->id }}">
-                                        <i class="fa fa-clock"></i>   حذف
-                                    </button>
-                                </td>
+                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">#</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">متن ایمیل</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">تاریخ ارسال</th>
+                                <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500">وضعیت</th>
+                                <th class="px-6 py-3 text-center text-xs font-semibold text-slate-500">تنظیمات</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            @foreach($emails as $key => $value)
+                                <tr class="transition hover:bg-slate-50">
+                                    <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">{{ $key + 1 }}</td>
+                                    <td class="px-6 py-4 text-sm font-medium text-slate-700">{{ $value->subject }}</td>
+                                    <td class="px-6 py-4 text-sm text-slate-600">{{ $value->published_at_jalali }}</td>
+                                    <td class="px-6 py-4">
+                                        @include('admin.components.ui.status-toggle', [
+                                            'id' => 'status-' . $value->id,
+                                            'checked' => $value->status == 1,
+                                            'url' => route('admin.email.status', $value->id),
+                                            'onChange' => "changeStatus('status-{$value->id}')",
+                                        ])
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-wrap items-center justify-center gap-2">
+                                            @if($value->files->isNotEmpty())
+                                                <a href="{{ route('admin.email.file.view', $value->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-100">
+                                                    <i class="fas fa-paperclip"></i>
+                                                    فایل ها
+                                                </a>
+                                            @endif
+                                            <a href="{{ route('admin.email.edit', $value->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-100">
+                                                <i class="fas fa-pen"></i>
+                                                ویرایش
+                                            </a>
+                                            <form action="{{ route('admin.email.destroy', $value->id) }}" id="delete-form-{{ $value->id }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" form="delete-form-{{ $value->id }}" class="delete inline-flex items-center gap-2 rounded-2xl bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100" data-id="{{ $value->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                    حذف
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                </section>
-            </section>
+                </div>
+            </div>
+            <div class="mt-6 border-t border-slate-100 pt-4">{{ $emails->links() }}</div>
         </section>
-    </section>
-
-    {{ $emails->links() }}
-
+    </div>
 @endsection
+
 @section('script')
     <script type="text/javascript" src="{{ asset('admin-assets/js/status.js') }}"></script>
-    @include('admin.alerts.sweetalert.delete-confirm' , ['className' => 'delete'])
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection

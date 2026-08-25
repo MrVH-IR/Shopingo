@@ -76,7 +76,7 @@
                                         <a href="{{ route('admin.market.color.index', $product->id) }}" class="inline-flex items-center gap-2 rounded-xl bg-cyan-50 px-3 py-2 text-sm font-semibold text-cyan-700"><i class="fas fa-palette"></i> رنگ</a>
                                         <a href="{{ route('admin.market.guarantee.index', $product->id) }}" class="inline-flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700"><i class="fas fa-shield-alt"></i> گارانتی</a>
                                         <a href="{{ route('admin.market.product.edit', $product->id) }}" class="inline-flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700"><i class="fas fa-pen"></i> ویرایش</a>
-                                        <form action="{{ route('admin.market.product.destroy', $product->id) }}" method="POST" class="d-none" id="delete-form-{{ $product->id }}">
+                                        <form action="{{ route('admin.market.product.destroy', $product->id) }}" method="POST" class="hidden" id="delete-form-{{ $product->id }}">
                                             @csrf
                                             @method('DELETE')
                                         </form>

@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-slate-200 bg-slate-950/95 text-white shadow-lg shadow-slate-900/10 backdrop-blur">
+<header class="print:hidden sticky top-0 z-40 border-b border-slate-200 bg-slate-950/95 text-white shadow-lg shadow-slate-900/10 backdrop-blur">
     <div class="mx-auto flex h-20 max-w-[100vw] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-3">
             <button id="sidebar-toggle-show" type="button" class="hidden rounded-2xl border border-white/10 bg-white/5 p-2 text-slate-100 transition hover:bg-white/10">

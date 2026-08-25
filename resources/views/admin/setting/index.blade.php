@@ -1,99 +1,96 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<title>تنظیمات</title>
-<link rel="stylesheet" href="{{ asset('admin-assets/css/modalStyle.css') }}">
+    <title>تنظیمات</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            تنظیمات
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'تنظیمات سایت',
+            'description' => 'مدیریت عنوان، توضیحات، کلمات کلیدی، لوگو و favicon سایت.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'تنظیمات'],
+            ],
+            'actionLabel' => 'ایجاد تنظیمات',
+            'actionDisabled' => true,
+            'actionIcon' => 'fas fa-plus',
+        ])
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                        تنظیمات
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a class="btn btn-info btn-sm disabled">ایجاد تنظیمات چدید</a>
-                </section>
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">اطلاعات فعلی سایت</h2>
+                    <p class="mt-1 text-sm text-slate-500">تنها یک رکورد تنظیمات فعال در این بخش مدیریت می‌شود.</p>
+                </div>
+            </div>
 
-                <section class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <th>#</th>
-                            <th>نام سایت</th>
-                            <th>توضیحات سایت</th>
-                            <th>کلمات کلیدی</th>
-                            <th>لوگو</th>
-                            <th>آیکون</th>
-                            <th>Optimization</th>
-                            <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
-                        </thead>
-                        <tbody>
+            <div class="overflow-hidden rounded-2xl border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
                             <tr>
-                                <th>{{ $setting->id }}</th>
-                                <td>{{ $setting->title }}</td>
-                                <td>{{ $setting->description }}</td>
-                                <td>{{ $setting->keywords }}</td>
-                                <td>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">#</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">نام سایت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">توضیحات سایت</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">کلمات کلیدی</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">لوگو</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">آیکون</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500">Optimization</th>
+                                <th class="px-5 py-3 text-center text-xs font-semibold text-slate-500">تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr class="transition hover:bg-slate-50">
+                                <td class="px-5 py-4 text-sm font-semibold text-slate-900">{{ $setting->id }}</td>
+                                <td class="px-5 py-4 text-sm font-medium text-slate-700">{{ $setting->title }}</td>
+                                <td class="max-w-xs px-5 py-4 text-sm text-slate-600">{{ $setting->description }}</td>
+                                <td class="max-w-xs px-5 py-4 text-sm text-slate-600">{{ $setting->keywords }}</td>
+                                <td class="px-5 py-4">
                                     @if(isset($setting->logo))
-                                        <img src="{{ asset($setting->logo) }}"
-                                             data-large="{{ asset($setting->logo) }}"
-                                             alt="{{ $setting->logo }}"
-                                             class="preview-img"
-                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
-                                             loading="lazy">
+                                        <img src="{{ asset($setting->logo) }}" data-large="{{ asset($setting->logo) }}" alt="{{ $setting->logo }}" class="preview-img h-16 w-16 cursor-pointer rounded-2xl border border-slate-200 object-contain bg-slate-50" loading="lazy">
                                     @else
-                                        <span class="text-muted">بدون تصویر</span>
+                                        <span class="text-sm text-slate-400">بدون تصویر</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="px-5 py-4">
                                     @if(isset($setting->favicon))
-                                        <img src="{{ asset($setting->favicon) }}"
-                                             data-large="{{ asset($setting->favicon) }}"
-                                             alt="{{ $setting->favicon }}"
-                                             class="preview-img"
-                                             style="max-width: 150px; max-height: 150px; width: auto; height: auto; cursor: pointer;"
-                                             loading="lazy">
+                                        <img src="{{ asset($setting->favicon) }}" data-large="{{ asset($setting->favicon) }}" alt="{{ $setting->favicon }}" class="preview-img h-16 w-16 cursor-pointer rounded-2xl border border-slate-200 object-contain bg-slate-50" loading="lazy">
                                     @else
-                                        <span class="text-muted">بدون تصویر</span>
+                                        <span class="text-sm text-slate-400">بدون تصویر</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <button type="submit" form="optimization_form" class="bg-info">Optimize</button>
+                                <td class="px-5 py-4">
+                                    <form action="{{ route('admin.setting.optimization') }}" method="POST">@csrf
+                                        <button type="submit" class="inline-flex items-center gap-2 rounded-2xl bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                            Optimize
+                                        </button>
+                                    </form>
                                 </td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.setting.edit' , $setting->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>  ویرایش</a>
+                                <td class="px-5 py-4 text-center">
+                                    <a href="{{ route('admin.setting.edit', $setting->id) }}" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-50 px-4 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-100">
+                                        <i class="fas fa-pen"></i>
+                                        ویرایش
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </section>
-            </section>
+                </div>
+            </div>
         </section>
-    </section>
 
-<div id="imageModal" class="modal-overlay">
-    <span class="close-btn">&times;</span>
-    <img class="modal-content" id="modalImage">
-</div>
-
-    <form class="d-none" action="{{ route('admin.setting.optimization') }}" method="POST" id="optimization_form">@csrf</form>
-
+        <div id="imageModal" class="modal-overlay fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/80 px-4">
+            <button type="button" class="close-btn absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg">
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="modal-content max-h-[85vh] max-w-4xl rounded-3xl object-contain shadow-2xl" id="modalImage" alt="preview">
+        </div>
+    </div>
 @endsection
+
 @section('script')
     <script type="text/javascript" src="{{ asset('admin-assets/js/modalImage.js') }}"></script>
 @endsection

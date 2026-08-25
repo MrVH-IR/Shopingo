@@ -1,146 +1,98 @@
 @extends('admin.layouts.master')
 
-
 @section('head-tag')
-<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-<title>ایجاد اطلاعیه ایمیلی</title>
-<style>
-    .custom-file-input {
-        display: none;
-    }
-    .custom-file-label {
-        display: inline-block;
-        padding: 8px 16px;
-        border: 2px dashed #6c757d;
-        border-radius: 8px;
-        cursor: pointer;
-        background-color: #f8f9fa;
-        transition: 0.3s;
-    }
-    .custom-file-label:hover {
-        background-color: #e9ecef;
-    }
-</style>
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <title>ایجاد اطلاعیه ایمیل</title>
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item font-size-12">
-             <a href="{{ route('admin.home') }}">خانه</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-             <a href="#">اطلاع رسانی</a>
-        </li>
-        <li class="breadcrumb-item font-size-12">
-            <a href="{{ route('admin.email.index') }}">اطلاعیه ایمیلی</a>
-        </li>
-        <li class="breadcrumb-item font-size-12 active" aria-current="page">
-            ایجاد اطلاعیه ایمیلی
-        </li>
-    </ol>
-</nav>
+    <div class="space-y-6">
+        @include('admin.components.ui.page-header', [
+            'title' => 'ایجاد اطلاعیه ایمیل',
+            'description' => 'اطلاعات اطلاعیه ایمیل را تکمیل کنید.',
+            'breadcrumbs' => [
+                ['label' => 'خانه', 'url' => route('admin.home')],
+                ['label' => 'اطلاع رسانی', 'url' => route('admin.email.index')],
+                ['label' => 'اطلاعیه ایمیل', 'url' => route('admin.email.index')],
+                ['label' => 'ایجاد'],
+            ],
+        ])
 
-    <section class="row">
-        <section class="col-12">
-            <section class="main-body-container">
-                <section class="main-body-container-header">
-                    <h5>
-                         ایجاد اطلاعیه ایمیلی
-                    </h5>
-                </section>
-                <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.email.index') }}" class="btn btn-info btn-sm">بازگشت</a>
-                </section>
+        <section class="animate__animated animate__fadeInUp rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">فرم اطلاعیه ایمیل</h2>
+                    <p class="mt-1 text-sm text-slate-500">فیلدهای مورد نیاز را تکمیل کنید.</p>
+                </div>
+                <a href="{{ route('admin.email.index') }}" class="inline-flex items-center gap-2 rounded-2xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت
+                </a>
+            </div>
 
-                <section>
-                    <form action="{{ route('admin.email.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <section class="row">
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="subject" class="h6">عنوان ایمیل</label>
-                                        <input type="text" name="subject" id="subject" class="form-control form-control-sm" value="{{ old('subject') }}">
-                                </div>
-                                @error('subject')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="publish_date" class="h6">تاریخ انتشار</label>
-                                    <input type="text" id="publish_date" name="published_at" class="form-control form-control-sm jalali-input" data-jdp data-jdp-format="YYYY-MM-DD"
-                                     value="{{ old('published_at') }}">
-                                    <i class="fa fa-calendar position-absolute" id="calendar_icon"
-                                       style="top: 60%; left: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                @error('published_at')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
-                            <section class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="Status-Select" class="h6">وضعیت</label>
-                                    <select name="status" id="Status-Select" class="form-control form-control-sm">
-                                        <option value="default">انتخاب کنید</option>
-                                        <option value="0" @if(old('status') == 0) selected @endif>غیر قعال</option>
-                                        <option value="1" @if(old('status') == 1) selected @endif>فعال</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
-                                </div>
-                                @enderror
-                            </section>
+            <form action="{{ route('admin.email.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="space-y-2">
+                        <label for="subject" class="text-sm font-semibold text-slate-700">عنوان ایمیل</label>
+                        <input type="text" name="subject" id="subject" value="{{ old('subject') }}" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
+                        @include('admin.components.ui.field-error', ['name' => 'subject'])
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="published_at" class="text-sm font-semibold text-slate-700">تاریخ انتشار</label>
+                        <div class="relative">
+                            <input type="text" id="published_at" name="published_at" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100 pl-12 jalali-input" data-jdp data-jdp-format="YYYY-MM-DD" value="{{ old('published_at') }}">
+                            <i class="fas fa-calendar absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                        @include('admin.components.ui.field-error', ['name' => 'published_at'])
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
+                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
+                            <option value="default">انتخاب کنید</option>
+                            <option value="0" @selected(old('status') == 0)>غیرفعال</option>
+                            <option value="1" @selected(old('status') == 1)>فعال</option>
+                        </select>
+                        @include('admin.components.ui.field-error', ['name' => 'status'])
+                    </div>
+
+                    <div class="space-y-3 lg:col-span-2">
+                        <div class="grid gap-4 sm:grid-cols-2">
                             @for($i = 0; $i < 2; $i++)
-                                <section class="col-12 col-md-6 mt-4">
-                                    <div class="form-group">
-                                        <input type="file" id="file_{{ $i }}" name="files[]" class="custom-file-input">
-                                        <label for="file_{{ $i }}" class="custom-file-label">📎 انتخاب فایل</label>
-                                        <span id="file-chosen-{{ $i }}" style="margin-right:10px;">هیچ فایلی انتخاب نشده</span>
-                                    </div>
-                                    @error("files.$i")
-                                    <div class="alert alert-danger">
-                                        <li>{{ $message }}</li>
-                                    </div>
-                                    @enderror
-                                </section>
-                            @endfor
-                            <section class="col-12">
-                                <label for="faq">متن ایمیل</label>
-                                <textarea name="body" id="body" class="form-control form-control-sm ckeditor" rows="10">
-                                    {{ old('body') }}
-                                </textarea>
-                                @error('body')
-                                <div class="alert alert-danger">
-                                    <li>
-                                        {{ $message }}
-                                    </li>
+                                <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4">
+                                    <label for="file_{{ $i }}" class="flex cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
+                                        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700"><i class="fas fa-paperclip"></i></span>
+                                        انتخاب فایل پیوست
+                                    </label>
+                                    <input type="file" id="file_{{ $i }}" name="files[]" class="mt-3 block w-full text-sm text-slate-600 file:ml-4 file:rounded-xl file:border-0 file:bg-cyan-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-cyan-700">
+                                    <p id="file-chosen-{{ $i }}" class="mt-2 text-xs text-slate-500">هیچ فایلی انتخاب نشده</p>
+                                    @include('admin.components.ui.field-error', ['name' => "files.$i"])
                                 </div>
-                                @enderror
-                            </section>
-                            <section class="col-12">
-                                <button class="btn btn-primary btn-sm">ثبت</button>
-                            </section>
-                        </section>
-                    </form>
-                </section>
-            </section>
-        </section>
-    </section>
+                            @endfor
+                        </div>
+                    </div>
+                    
 
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="body" class="text-sm font-semibold text-slate-700">متن ایمیل</label>
+                        <textarea name="body" id="body" class="ckeditor min-h-60 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-cyan-500 focus:bg-white" rows="10">{{ old('body') }}</textarea>
+                        @include('admin.components.ui.field-error', ['name' => 'body'])
+                    </div>
+                </div>
+
+                <div class="flex justify-end border-t border-slate-100 pt-4">
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-2xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700">
+                        <i class="fas fa-save"></i>
+                        ثبت اطلاعیه
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
 @endsection
 
 @section('script')
@@ -148,8 +100,11 @@
     <script type="text/javascript" src="{{ asset('admin-assets/js/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin-assets/js/jalaliDatePicker.js') }}"></script>
     <script>
-        document.getElementById("file").addEventListener("change", function(){
-            document.getElementById("file-chosen").textContent = this.files[0]?.name || "هیچ فایلی انتخاب نشده";
-        });
-    </script>
+            document.querySelectorAll('input[type="file"][name="files[]"]').forEach(function (input) {
+                input.addEventListener('change', function () {
+                    const target = document.getElementById('file-chosen-' + this.id.replace('file_', ''));
+                    if (target) target.textContent = this.files[0]?.name || 'هیچ فایلی انتخاب نشده';
+                });
+            });
+        </script>
 @endsection
