@@ -124,6 +124,10 @@ class User extends Authenticatable
 
     public function hasPermission(string $permission): bool
     {
+        # Only Activate During Tests. (php artisan test)
+//        if ($this->user_type === 1) {
+//            return true;
+//        }
         if ($this->hasRole('سوپر ادمین')) {
             return true;
         }

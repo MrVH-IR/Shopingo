@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
 //            UserSeeder::class, // Password is shopingo
 //            TicketCategorySeeder::class,
 //            TicketPrioritySeeder::class,
-            RoleSeeder::class,
+//            RoleSeeder::class,
 //            DeliverySeeder::class,
 //            ProvinceSeeder::class,
 //            CitySeeder::class,

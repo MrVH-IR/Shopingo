@@ -36,6 +36,7 @@ class UserFactory extends Factory
             'slug' => $this->faker->slug(),
             'password' => static::$password ??= Hash::make('password'),
             'two_factor_secret' => null,
+            'user_type' => 0,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
             'profile_photo_path' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 10000),
@@ -76,8 +77,8 @@ class UserFactory extends Factory
 
     public function admin(): static
     {
-        return $this->state([fn (array $attributes) => [
-            'user_type' => 1
-        ]]);
+        return $this->state(fn (array $attributes) => [
+            'user_type' => 1,
+        ]);
     }
 }

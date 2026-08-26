@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Market\Brand;
 use App\Models\User;
+use App\Models\User\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Test;
@@ -18,6 +19,12 @@ class BrandRoutesTest extends TestCase
         parent::setUp();
         $this->admin = User::factory()->admin()->create();
         $this->actingAs($this->admin);
+//        dump([
+//            'user_type' => $this->admin->user_type,
+//            'permissions_count' => Permission::count(),
+//            'active_permissions' => Permission::where('status', 1)->pluck('name')->toArray(),
+//        ]);
+//        dd($this->admin);
     }
 
     #[Test]

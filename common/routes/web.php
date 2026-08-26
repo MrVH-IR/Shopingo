@@ -381,7 +381,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified'
         Route::get('/new-tickets' , action: [TicketController::class , 'newTickets'])->name('admin.ticket.newtickets')->can('tickets.view');
         Route::get('/open-tickets' , [TicketController::class , 'openTickets'])->name('admin.ticket.opentickets')->can('tickets.view');
         Route::get('/close-tickets' , [TicketController::class , 'closeTickets'])->name('admin.ticket.closetickets')->can('tickets.view');
-        Route::get('/create' , [TicketController::class , 'create'])->name('admin.ticket.create')->can('tickets.create');
+//        Route::get('/create' , [TicketController::class , 'create'])->name('admin.ticket.create')->can('tickets.create');
         Route::get('/show/{ticket}' , [TicketController::class , 'show'])->name('admin.ticket.show')->can('tickets.view');
         Route::post('/answer/{ticket}' , [TicketController::class , 'answer'])->name('admin.ticket.answer')->can('tickets.answer');
         Route::get('/change/{ticket}' , [TicketController::class , 'change'])->name('admin.ticket.change')->can('tickets.change');
