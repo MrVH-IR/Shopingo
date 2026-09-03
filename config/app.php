@@ -127,4 +127,6 @@ return [
     'kavenegar_number' => env('APP_KAVENEGAR_NUMBER', null),
     'kavenegar_number_2' => env('APP_KAVENEGAR_NUMBER_2', null),
 
+    'admin_url' => env('APP_ADMIN_URL', '/admin'),
+
 ];

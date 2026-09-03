@@ -42,7 +42,7 @@ use App\Http\Controllers\Admin\{AdminDashboardController,
  * -------------------------------------------------------------
  */
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified', 'admin', 'lock-screen'])->prefix( '/admin')->group(function() {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session') , 'verified', 'admin', 'lock-screen'])->prefix( config('app.admin_url'))->group(function() {
     Route::get('/' , [AdminDashboardController::class , 'index'])->name('admin.home');
 
     Route::prefix('market')->namespace('Market')->group(function() {
