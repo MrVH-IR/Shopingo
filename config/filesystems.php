@@ -60,14 +60,16 @@ return [
             'report' => false,
         ],
 
-        'ceph' => [
+        'minio' => [
             'driver' => 's3',
-            'key' => env('CEPH_KEY'),
-            'secret' => env('CEPH_SECRET'),
-            'region' => 'default',
-            'bucket' => env('CEPH_BUCKET'),
-            'endpoint' => env('CEPH_ENDPOINT'),
-            'use_path_style_endpoint' => true,
+            'key' => env('MINIO_KEY'),
+            'secret' => env('MINIO_SECRET'),
+            'region' => env('MINIO_REGION', 'default'),
+            'bucket' => env('MINIO_BUCKET'),
+            'endpoint' => env('MINIO_ENDPOINT'),
+            'use_path_style_endpoint' => env('MINIO_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => env('MINIO_THROW_EXCEPTION', false),
+            'report' => env('MINIO_REPORT', false),
         ],
 
     ],

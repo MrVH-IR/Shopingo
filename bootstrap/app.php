@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Common\BlockedUsersMiddleware;
+use App\Http\Middleware\Common\BlockFloodRequests;
 use App\Http\Middleware\LockScreenMiddleware;
 use Common\Services\SalesProcess\Middleware\CheckProfile;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append([
             BlockedUsersMiddleware::class,
+            BlockFloodRequests::class
         ]);
         $middleware->alias([
             'profile-complete' => CheckProfile::class,

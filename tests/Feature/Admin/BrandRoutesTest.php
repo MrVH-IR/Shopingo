@@ -19,12 +19,6 @@ class BrandRoutesTest extends TestCase
         parent::setUp();
         $this->admin = User::factory()->admin()->create();
         $this->actingAs($this->admin);
-//        dump([
-//            'user_type' => $this->admin->user_type,
-//            'permissions_count' => Permission::count(),
-//            'active_permissions' => Permission::where('status', 1)->pluck('name')->toArray(),
-//        ]);
-//        dd($this->admin);
     }
 
     #[Test]

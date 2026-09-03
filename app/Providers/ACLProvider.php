@@ -26,7 +26,7 @@ class ACLProvider extends ServiceProvider
     {
         $tables = Schema::getTables();
         if (empty($tables)) {
-            return;
+            exit(500);
         }
         $permissions = Cache::remember('permissions', now()->addHours(3), function () {
             return Permission::where('status', 1)->get();
