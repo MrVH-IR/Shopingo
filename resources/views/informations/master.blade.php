@@ -25,4 +25,5 @@
 
     @include('informations.footer')
     @livewireScripts()
+    @stack('scripts')
 </body>

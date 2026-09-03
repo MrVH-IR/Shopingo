@@ -34,6 +34,10 @@ Route::get('/partnership', function() {
 Route::get('/privacy-policy', function() {
     return view('informations.privacy');
 });
+Route::get('/faq', function() {
+    $faqs = \App\Models\Content\FAQ::where('status', 1)->paginate(10);
+    return view('informations.faq', compact('faqs'));
+});
 // End Information Route
 
 Route::namespace('Auth')->middleware('throttle:20,1')->group(function () {
