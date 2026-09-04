@@ -21,7 +21,7 @@ build-job:
     - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "sudo apt-get update -y && sudo apt-get install -y php8.4-fpm php8.4-common php8.4-cli php8.4-mbstring php8.4-gd composer npm"
     - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "mkdir -p $DIRECTORY && mv $PROJECT $DIRECTORY"
     - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY && composer install --no-ansi --no-interaction && npm install"
-    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY && php artisan migrate --seed && php artisan key:generate"
+    - sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER "cd $DIRECTORY && php artisan key:generate && php artisan migrate --seed"
 
 # -------------------- DEPLOY --------------------
 deploy-job:

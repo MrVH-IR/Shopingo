@@ -16,8 +16,6 @@ class ProductController extends BaseController
             $orderBy = $this->sortOrder((int) request()->query('sort'));
         }
 
-//        dd(is_numeric(request()->query('sort')));
-
         $query = Product::query();
 
         if (request()->filled('sort')) {

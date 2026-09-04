@@ -27,6 +27,10 @@ class CartController extends BaseController
     {
         try {
             $result = DB::transaction(function () use ($request, $product) {
+                $product->refreshForUpdate();
+                if ($product->frozen_number >= $product->marketable) {
+                    return false;
+                }
                 $color = $request->input('color');
                 $guarantee = $request->input('guarantee');
                 $cartItem = CartItem::query()
