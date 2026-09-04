@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Log;
 class InvalidOtpException extends Exception
 {
     /**
-     * @throws InvalidOtpException
+     * @throws Exception
      */
     public function render()
     {
         Log::error("Invalid OTP" , ["message" => $this->getMessage()]);
-        throw new InvalidOtpException('Invalid OTP');
+        throw new Exception('Invalid OTP');
     }
 }
