@@ -285,7 +285,7 @@ Configuration is correct.
 sudo systemctl reload nginx
 ```
 
-### Add Most Visited URL Here
+### Add Most Visited URI Here
 ```text
 public/sitemap.xml
 ```
