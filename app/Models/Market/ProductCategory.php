@@ -2,6 +2,7 @@
 
 namespace App\Models\Market;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -45,5 +46,12 @@ class ProductCategory extends Model
     public function attributes()
     {
         return $this->hasMany(CategoryAttribute::class);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query
+            ->where('status', 1)
+            ->where('show_in_menu', 1);
     }
 }

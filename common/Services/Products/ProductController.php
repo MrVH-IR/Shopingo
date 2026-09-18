@@ -3,45 +3,34 @@
 namespace Common\Services\Products;
 
 use App\Models\Market\Product;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use \Illuminate\View\View as ViewAlias;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends BaseController
 {
 
     use ProductTrait;
 
-    public function index()
+    public function index(): Factory|View|ViewAlias
     {
-        if (is_numeric(request()->has('sort'))) {
-            $orderBy = $this->sortOrder((int) request()->query('sort'));
-        }
-
         $query = Product::query();
-
-        if (request()->filled('sort')) {
-            [$column, $direction] = $this->sortOrder((int) request('sort'));
-
-            $query->orderBy($column, $direction);
-        }
+        $this->applyProductFilters($query);
 
         $products = $query
-            ->when(request('search'), function ($query) {
-                $search = request('search');
-
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('slug', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%")
-                        ->orWhere('tags', 'like', "%{$search}%");
-                });
-            })
             ->paginate(20)
             ->withQueryString();
 
-        return view('customer.products.products', compact('products'));
+        $brands = $this->getBrands();
+        $categories = $this->getProductCategories();
+        return view('customer.products.products', compact('products', 'brands', 'categories')
+        );
     }
 
-    public function search(Request $request): \Illuminate\Http\JsonResponse
+    public function search(Request $request): JsonResponse
     {
         $search = trim((string) $request->input('search'));
 
@@ -49,33 +38,7 @@ class ProductController extends BaseController
             return response()->json([]);
         }
 
-        $products = Product::query()
-            ->select([
-                'id',
-                'name',
-                'slug',
-                'price',
-                'image',
-            ])
-            ->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%")
-                    ->orWhere('tags', 'like', "%{$search}%");
-            })
-            ->limit(5)
-            ->get()
-            ->map(function ($product) {
-                $image = data_get($product->image, 'indexArray.medium');
-
-                return [
-                    'name'  => $product->name,
-                    'slug'  => $product->slug,
-                    'price' => $product->price,
-                    'image' => $image ? asset($image) : null,
-                    'url'   => route('customer.market.product', $product->slug),
-                ];
-            });
+        $products = $this->searchResult($search);
 
         return response()->json($products);
     }
@@ -84,4 +47,6 @@ class ProductController extends BaseController
     {
 
     }
+
+
 }

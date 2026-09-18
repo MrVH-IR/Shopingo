@@ -8,7 +8,7 @@
 
 @include('customer.layouts.header')
 <section class="container-xxl body-container">
-    @include('customer.layouts.sidebar')
+{{--    @include('customer.layouts.sidebar')--}}
 </section>
 @include('customer.alerts.bootstrap-alert-success')
 @include('customer.alerts.bootstrap-alert-info')
