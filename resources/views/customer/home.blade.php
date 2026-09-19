@@ -1,7 +1,6 @@
 @extends('customer.layouts.master-one-col')
 
 @section('head-tag')
-    <title>فروشگاه شاپینگو</title>
     <link rel="stylesheet" href="{{ asset('customer-assets/css/home.css') }}">
 @endsection
 

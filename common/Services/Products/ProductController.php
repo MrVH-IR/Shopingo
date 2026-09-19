@@ -3,22 +3,22 @@
 namespace Common\Services\Products;
 
 use App\Models\Market\Product;
+use App\Models\Market\ProductCategory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use \Illuminate\View\View as ViewAlias;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ProductController extends BaseController
 {
 
     use ProductTrait;
 
-    public function index(): Factory|View|ViewAlias
+    public function index(?ProductCategory $category = null): Factory|View|ViewAlias
     {
         $query = Product::query();
-        $this->applyProductFilters($query);
+        $this->applyProductFilters($query, $category);
 
         $products = $query
             ->paginate(20)
@@ -26,7 +26,7 @@ class ProductController extends BaseController
 
         $brands = $this->getBrands();
         $categories = $this->getProductCategories();
-        return view('customer.products.products', compact('products', 'brands', 'categories')
+        return view('customer.products.products', compact('products', 'brands', 'categories', 'category')
         );
     }
 
@@ -42,11 +42,4 @@ class ProductController extends BaseController
 
         return response()->json($products);
     }
-
-    public function sort(Request $request)
-    {
-
-    }
-
-
 }

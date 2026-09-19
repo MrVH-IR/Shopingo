@@ -30,13 +30,14 @@ trait ProductTrait
         return Cache::remember($key, now()->addHour(), fn() => Brand::query()->select(['id','persian_name', 'original_name'])->latest()->get());
     }
 
-    protected function applyProductFilters(Builder $query): Builder
+    protected function applyProductFilters(Builder $query, ?ProductCategory $productCategory = null): Builder
     {
         $this->applySearchFilter($query);
         $this->applyPriceFilter($query);
         $this->applyBrandFilter($query);
         $this->applyFavoriteState($query);
         $this->applySort($query);
+        $this->applyCategoryFilter($query , $productCategory);
 
         return $query;
     }
@@ -103,6 +104,12 @@ trait ProductTrait
         $query->withExists([
             'user as is_favorite' => fn($query) => $query->whereKey(auth()->id()),
         ]);
+    }
+
+    protected function applyCategoryFilter(Builder $query, ?ProductCategory $category = null): void
+    {
+        if (!$category) return;
+        $query->where('product_categories', $category->id);
     }
 
     protected function searchResult(string $search): Collection|\Illuminate\Support\Collection

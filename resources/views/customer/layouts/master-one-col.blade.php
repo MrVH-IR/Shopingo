@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         @include('customer.layouts.head-tag')
+        <title>{{ config('app.app_persian_name') }}</title>
         @yield('head-tag')
     </head>
     <body>

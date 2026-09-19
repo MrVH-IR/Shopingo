@@ -4,7 +4,7 @@
             <details class="group">
                 <summary class="flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-slate-50">
                     <a
-                        href="{{ route('customer.home') }}"
+                        href="{{ route('products.products', $category->id) }}"
                         onclick="event.stopPropagation()"
                         class="flex min-w-0 flex-1 items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-200 hover:text-slate-900"
                     >
@@ -23,7 +23,7 @@
             </details>
         @else
             <a
-                href="{{ route('customer.home') }}"
+                href="{{ route('products.products', $category->id) }}"
                 class="group flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-slate-50 hover:text-slate-900"
             >
                 <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-slate-300 transition-all duration-200 group-hover:bg-indigo-500"></span>

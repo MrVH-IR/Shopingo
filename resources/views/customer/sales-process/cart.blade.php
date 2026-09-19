@@ -1,7 +1,7 @@
 @extends('customer.layouts.master-two-col')
 
 @section('head-tag')
-<title>سبد خرید شما</title>
+<title>سبد خرید شما {{ config('app.app_persian_name') }}</title>
 @endsection
 
 @section('content')

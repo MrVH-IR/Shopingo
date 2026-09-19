@@ -1,7 +1,7 @@
 @extends('customer.layouts.master-two-col')
 
 @section('head-tag')
-    <title>لیست علاقه مندی ها</title>
+    <title>لیست علاقه مندی ها {{ config('app.app_persian_name') }}</title>
 @endsection
 
 @section('content')

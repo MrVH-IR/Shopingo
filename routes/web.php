@@ -108,7 +108,6 @@ Route::prefix('profile')
 Route::prefix('products')
     ->name('products.')
     ->group(function () {
-        Route::get('/', [CustomerProductController::class, 'index'])->name('products');
-        Route::get('/sort', [CustomerProductController::class, 'sort'])->name('products');
+        Route::get('/{category?}', [CustomerProductController::class, 'index'])->name('products');
         Route::get('/search', [CustomerProductController::class, 'search'])->name('search');
     });

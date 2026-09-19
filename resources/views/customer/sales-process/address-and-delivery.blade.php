@@ -1,7 +1,7 @@
 @extends('customer.layouts.master-two-col')
 
 @section('head-tag')
-    <title>مدیریت آدرس ها</title>
+    <title>مدیریت آدرس ها {{ config('app.app_persian_name') }}</title>
     <link rel="stylesheet" href="{{ asset('customer-assets/css/address-and-delivery.css') }}"></link>
 @endsection
 

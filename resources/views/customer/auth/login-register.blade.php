@@ -1,6 +1,6 @@
 @extends('customer.layouts.master-simple')
 @section('head-tag')
-    <title>ورود یا ثبت نام</title>
+    <title>ورود یا ثبت نام {{ config('app.app_persian_name') }}</title>
 @endsection
 @section('content')
     <section class="vh-100 d-flex justify-content-center align-items-center pb-5">

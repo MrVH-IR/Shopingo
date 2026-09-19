@@ -1,7 +1,7 @@
 @extends('customer.layouts.master-two-col')
 
 @section('head-tag')
-    <title>تکمیل اطلاعات حساب کاربری</title>
+    <title>تکمیل اطلاعات حساب کاربری {{ config('app.app_persian_name') }}</title>
 @endsection
 
 @section('content')
