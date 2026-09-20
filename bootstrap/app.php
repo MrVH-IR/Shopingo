@@ -4,6 +4,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Common\BlockedUsersMiddleware;
 use App\Http\Middleware\Common\BlockFloodRequests;
 use App\Http\Middleware\LockScreenMiddleware;
+use App\Http\Middleware\VerifyTurnstile;
 use Common\Services\SalesProcess\Middleware\CheckProfile;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'profile-complete' => CheckProfile::class,
             'admin' => AdminMiddleware::class,
             'lock-screen' => LockScreenMiddleware::class,
+            'turnstile' => VerifyTurnstile::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

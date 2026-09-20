@@ -129,5 +129,6 @@ return [
 
     'admin_url' => env('APP_ADMIN_URL', '/admin'),
     'app_persian_name' => env('APP_PERSIAN_NAME', 'شاپینگو'),
-
+    'cloudflare_key' => env('TURNSTILE_KEY', null),
+    'cloudflare_secret' => env('TURNSTILE_SECRET', null),
 ];
