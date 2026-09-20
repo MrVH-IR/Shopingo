@@ -34,7 +34,7 @@ class HomePageService
 
     private function getBrands()
     {
-        // TO-DO Most Visited
+        // TODO MostVisited Brands
         return Cache::remember(
             'brands',
             now()->addHour(),
@@ -44,11 +44,11 @@ class HomePageService
 
     private function getProducts()
     {
-        // TO-DO Most Visited
         return Cache::remember(
             'products',
             now()->addHour(),
             fn () => Product::query()
+                ->orderByDesc('view')
                 ->latest()
                 ->take(10)
                 ->get()
@@ -61,6 +61,7 @@ class HomePageService
             'offerProducts',
             now()->addHour(),
             fn () => Product::query()
+                ->orderByDesc('sold_out')
                 ->latest()
                 ->take(10)
                 ->get()

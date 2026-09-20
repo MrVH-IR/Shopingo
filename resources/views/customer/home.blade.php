@@ -50,7 +50,7 @@
                     <span class="w-1.5 h-5 rounded-full bg-indigo-500 inline-block"></span>
                     پربازدیدترین کالاها
                 </h2>
-                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                <a href="{{ route('products.products', ['sort' => '4']) }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
                     مشاهده همه <i class="fa fa-angle-left text-xs"></i>
                 </a>
             </section>
@@ -146,9 +146,9 @@
             <section class="flex justify-between items-center mb-5">
                 <h2 class="flex items-center gap-2 text-lg font-bold text-gray-900">
                     <span class="w-1.5 h-5 rounded-full bg-amber-500 inline-block"></span>
-                    پیشنهاد شاپینگو به شما
+                    پیشنهاد {{ config('app.app_persian_name') }} به شما
                 </h2>
-                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
+                <a href="{{ route('products.products', ['sort' => '5']) }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
                     مشاهده همه <i class="fa fa-angle-left text-xs"></i>
                 </a>
             </section>
@@ -236,73 +236,33 @@
 
     {{-- Featured Brands --}}
     <section class="max-w-7xl mx-auto px-4 my-10">
-
         <div class="flex items-center justify-between mb-6">
-
             <div class="flex items-center gap-3">
                 <div class="w-2 h-8 rounded-full bg-blue-600"></div>
-
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800">
                         برندهای ویژه
                     </h2>
-
                     <p class="text-sm text-gray-500">
                         محبوب‌ترین برندهای فروشگاه
                     </p>
                 </div>
             </div>
-
             <i class="fa-solid fa-award text-4xl text-amber-400 hidden md:block"></i>
-
         </div>
 
         <section class="brands owl-carousel owl-theme">
-
             @foreach($homePage['brands'] as $brand)
-
                 <div class="item py-2">
-
-                    <a href="#"
-                       class="group block">
-
+                    <a href="{{ route('products.products', ['search' => '', 'brand' => [$brand->id], 'min_price' => '', 'max_price' => '']) }}" class="group block">
                         <div
-                            class="bg-white
-                               rounded-2xl
-                               h-32
-                               flex
-                               items-center
-                               justify-center
-                               border
-                               border-gray-200
-                               shadow-sm
-                               transition-all
-                               duration-300
-                               hover:-translate-y-1
-                               hover:shadow-xl
-                               hover:border-blue-500">
-
-                            <img
-                                src="{{ asset($brand->image['indexArray']['medium']) }}"
-                                alt="{{ $brand->persian_name }}"
-                                class="h-16
-                                   w-36
-                                   object-contain
-                                   grayscale
-                                   group-hover:grayscale-0
-                                   transition-all
-                                   duration-300">
-
+                            class="bg-white rounded-2xl h-32 flex items-center justify-center border border-gray-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500">
+                            <img src="{{ asset($brand->image['indexArray']['medium']) }}" alt="{{ $brand->persian_name }}" class="h-16 w-36 object-contain grayscale group-hover:grayscale-0 transition-all duration-300">
                         </div>
-
                     </a>
-
                 </div>
-
             @endforeach
-
         </section>
-
     </section>
 
     @include('customer.notifications.toast')
