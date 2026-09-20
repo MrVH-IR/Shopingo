@@ -63,7 +63,21 @@ DB_PORT=3306
 DB_DATABASE=shopingo
 DB_USERNAME=admin
 DB_PASSWORD=secret
-APP_KAVENEGAR_API=your_kavenegar_api
+APP_KAVENEGAR_API=
+APP_KAVENEGAR_NUMBER=
+APP_KAVENEGAR_NUMBER_2=
+ZARINPAL_MERCHANT_ID=
+ZARINPAL_SANDBOX=false
+TURNSTILE_KEY=
+TURNSTILE_SECRET=
+MINIO_REGION=default
+MINIO_SECRET=some-long-string
+MINIO_KEY=
+MINIO_ENDPOINT=
+MINIO_USE_PATH_STYLE_ENDPOINT=
+MINIO_REPORT=
+MINIO_BUCKET=shopingo
+MINIO_THROW_EXCEPTION=
 MAIL_MAILER=
 MAIL_SCHEME=
 MAIL_HOST=
@@ -71,6 +85,11 @@ MAIL_PORT=
 MAIL_USERNAME=
 MAIL_PASSWORD=
 MAIL_FROM_ADDRESS=
+REDIS_CLIENT=phpredis
+REDIS_HOST=
+REDIS_PASSWORD=
+REDIS_PORT=
+REDIS_PREFIX=shopingo_redis_db
 ```
 
 ## Laravel Commands
@@ -168,8 +187,19 @@ This File is for running this application on Ubuntu/Debian PHP-FPM
 - PHP 8.4 FPM
 - Composer
 - Laravel
-
+- Cloudflare Account
+- MinIO
+- Redis
+- MariaDB
+- Zarinpal Account
+- Kavenegar Account
 ---
+
+## Server Requirements #BestPractice(Depends On RPS)
+
+- 16 GB Ram
+- 8 Core CPU
+- 100 GB SSD
 
 ## Project Structure
 
