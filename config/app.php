@@ -129,6 +129,7 @@ return [
 
     'admin_url' => env('APP_ADMIN_URL', '/admin'),
     'app_persian_name' => env('APP_PERSIAN_NAME', 'شاپینگو'),
+    'app_english_name' => env('APP_ENGLISH_NAME', 'Shopingo'),
     'cloudflare_key' => env('TURNSTILE_KEY', null),
     'cloudflare_secret' => env('TURNSTILE_SECRET', null),
 ];

@@ -18,7 +18,7 @@
         <div class="hidden lg:block">
             <h1
                 class="text-xl font-black text-gray-800 group-hover:text-blue-600 transition">
-                Shopingo
+                {{ config('app.app_english_name') }}
             </h1>
             <p
                 class="text-xs text-gray-500">
