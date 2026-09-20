@@ -31,33 +31,19 @@ class ProductController extends BaseController
                 ->take(10)
                 ->get();
         });
-        $this->incrementView($product);
+        self::incrementView($product);
         return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts]);
     }
 
-    public function addComment(Product $product , Request $request): RedirectResponse
+    public function addComment(Product $product , CommentRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'comment' => 'required|string|min:5|max:255',
-        ], [
-            'comment.required' => 'متن خود را وارد کنید',
-            'comment.string' => 'نوع متن اشتباه است',
-            'comment.max' => 'مقدار ورودی نمی تواند بیش از ۲۵۵ کاراکتر باشد',
-            'comment.min' => 'مقدار ورودی نمی تواند کمتر از ۵ کاراکتر باشد'
-        ]);
+        $validated = $request->validated();
         $body = str_replace(PHP_EOL , '</br>' , $request->comment);
         $author = Auth::user()->id;
         $product = $product->id;
         $commentable = Product::class;
-        Comment::create([
-            'body' => $body,
-            'author_id' => $author,
-            'commentable_type' => $commentable,
-            'commentable_id' => $product,
-            'approved' => 0,
-            'status' => 0,
-            'seen' => 0
-        ]);
+        $success = self::createComment($body , $author, $commentable, $product);
+        if (!$success) { return back()->with('swal-error', 'اختلال در سیستم به وجود آمده است. لطفا بعدا تلاش فرمایید'); }
         return back()->with('swal-success' , 'نظر شما ثبت شد. بعد از تایید مدیریت در سایت قرار داده خواهد شد.');
     }
 
@@ -65,12 +51,7 @@ class ProductController extends BaseController
     {
         $user = Auth::user();
 
-        $product->user()->toggle($user->id);
-
-        $isFavorite = $product
-            ->user()
-            ->whereKey($user->id)
-            ->exists();
+        $isFavorite = self::createFavorite($product, $user);
 
         return response()->json([
             'success' => true,
