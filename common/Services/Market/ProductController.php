@@ -19,9 +19,17 @@ class ProductController extends BaseController
 
     public function product(Product $product): View
     {
-        // TO-DO Related Post
-        $relatedProducts = Cache::remember('relatedProducts', now()->addHours(2), function () {
-            return Product::get()->take(10);
+        $key = "relatedProducts:{$product->id}";
+        $relatedProducts = Cache::remember($key, now()->addHours(2), function () use ($product) {
+            return Product::query()
+                ->where(function ($q) use ($product) {
+                    $q->where('brand_id', $product->brand_id)
+                        ->orWhere('product_categories', $product->product_categories);
+                })
+                ->whereKeyNot($product->id)
+                ->latest()
+                ->take(10)
+                ->get();
         });
         $this->incrementView($product);
         return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts]);
