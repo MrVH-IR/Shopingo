@@ -70,6 +70,7 @@ Route::prefix('market')
         Route::post('/add-comment/product/{product:slug}', [ProductController::class, 'addComment'])->name('add-comment');
         Route::middleware('auth')->group(function () {
             Route::post('/favorite/{product:slug}', [ProductController::class, 'toggleFavorite'])->name('product.favorite');
+            Route::post('/compare-product/{product:slug}', [ProductController::class, 'compareProduct'])->name('product.compare');
         });
 });
 // Sales process

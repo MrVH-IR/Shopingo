@@ -271,7 +271,7 @@
                                             cartLoading: false
                                         }"
                                         class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/60">
-                                        @if(auth()->check())
+                                        @auth
                                             <button
                                                 type="button"
                                                 @click="
@@ -309,7 +309,7 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733C11.285 4.876 9.623 3.75 7.688 3.75 5.099 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                                                 </svg>
                                             </button>
-                                        @endif
+                                        @endauth
 
                                             {{-- Add to Cart --}}
                                             @if($product->colors->count() > 0)

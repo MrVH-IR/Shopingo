@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Market\Compare;
 use App\Models\Market\Order;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
@@ -183,5 +184,10 @@ class User extends Authenticatable
     public function favoriteProducts(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_user');
+    }
+
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
     }
 }

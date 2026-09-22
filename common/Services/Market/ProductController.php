@@ -4,6 +4,7 @@ namespace Common\Services\Market;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content\Comment;
+use App\Models\Market\Compare;
 use App\Models\Market\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends BaseController
 {
@@ -32,7 +34,8 @@ class ProductController extends BaseController
                 ->get();
         });
         self::incrementView($product);
-        return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts]);
+        $isCompared = $this->isCompared($product);
+        return view('customer.market.product.product' , ['product' => $product , 'relatedProducts' => $relatedProducts, 'isCompared' => $isCompared,]);
     }
 
     public function addComment(Product $product , CommentRequest $request): RedirectResponse
@@ -60,5 +63,40 @@ class ProductController extends BaseController
                 ? 'محصول به علاقه‌مندی‌ها اضافه شد.'
                 : 'محصول از علاقه‌مندی‌ها حذف شد.',
         ]);
+    }
+
+    public function compareProduct(Product $product): JsonResponse
+    {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'auth' => false], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = Auth::user();
+        $compare = $user->compare()->firstOrCreate();
+
+        $isCompared = $compare->products()->whereKey($product->id)->exists();
+
+        if ($isCompared) {
+            $compare->products()->detach($product->id);
+            $action = 'removed';
+            $message = 'محصول از لیست مقایسه حذف شد.';
+        } else {
+            $compare->products()->attach($product->id);
+            $action = 'added';
+            $message = 'محصول به لیست مقایسه اضافه شد.';
+        }
+
+        return response()->json([
+            'success' => true,
+            'action' => $action,
+            'message' => $message,
+        ]);
+    }
+
+    private function isCompared(Product $product): bool
+    {
+        $compare = Auth::user()?->compare;
+
+        return $compare?->products()->whereKey($product->id)->exists() ?? false;
     }
 }

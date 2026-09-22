@@ -183,6 +183,18 @@
                                                 {{ $isFavorite ? 'در علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها' }}
                                             </span>
                                         </button>
+                                        <button
+                                            type="button"
+                                            class="wishlist-btn mb-4 compare-btn"
+                                            data-url="{{ route('customer.market.product.compare', $product->slug) }}"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="left"
+                                            title="{{ $isCompared ? 'حذف از مقایسه' : 'افزودن به مقایسه' }}">
+                                            <i class="fa fa-exchange {{ $isCompared ? 'text-primary' : '' }}"></i>
+                                            <span>
+                                                {{ $isCompared ? 'در لیست مقایسه' : 'افزودن به مقایسه' }}
+                                            </span>
+                                        </button>
                                         {{-- تعداد --}}
                                         <div class="mb-4">
                                             <label class="small text-muted mb-2 d-block">
@@ -652,4 +664,5 @@
     <script src="{{ asset('customer-assets/js/utils.js') }}"></script>
     <script src="{{ asset('customer-assets/js/product.js') }}"></script>
     <script src="{{ asset('customer-assets/js/addToFavorite.js') }}"></script>
+    <script src="{{ asset('customer-assets/js/addToCompare.js') }}"></script>
 @endsection
