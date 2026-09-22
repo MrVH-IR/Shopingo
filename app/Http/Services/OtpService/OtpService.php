@@ -3,12 +3,14 @@
 namespace App\Http\Services\OtpService;
 
 use Common\Models\Otp;
+use Illuminate\Support\Facades\Log;
 
 class OtpService {
 
     public function generateAndSave(string $identify , int $userID , $type , $token): void
     {
         $code = rand(1111111 , 999999);
+        Log::info("UserID: $userID Trying Login with $type $identify", [$code]);
         Otp::create([
             'token' => $token,
             'user_id' => $userID,

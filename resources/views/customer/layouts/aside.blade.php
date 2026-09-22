@@ -43,13 +43,27 @@
                 </span>
                 <span>لیست علاقه‌مندی</span>
             </a>
-            <a href="{{ route('customer.profile.my-tickets') }}"
+            <a href="{{ route('customer.profile.my-compares') }}"
                class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-                      {{ request()->routeIs('customer.profile.my-favorites')
+                      {{ request()->routeIs('customer.profile.my-compares')
                           ? 'bg-orange-50 text-orange-600 font-semibold'
                           : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }}">
                 <span class="flex items-center justify-center w-9 h-9 rounded-lg
-                             {{ request()->routeIs('customer.profile.my-favorites')
+                             {{ request()->routeIs('customer.profile.my-compares')
+                                 ? 'bg-orange-100 text-orange-600'
+                                 : 'bg-gray-100 text-gray-500 group-hover:bg-orange-100 group-hover:text-orange-600' }}
+                             transition-colors duration-200">
+                    <i class="fa fa-exchange"></i>
+                </span>
+                <span>لیست مقایسه های من</span>
+            </a>
+            <a href="{{ route('customer.profile.my-tickets') }}"
+               class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+                      {{ request()->routeIs('customer.profile.my-tickets')
+                          ? 'bg-orange-50 text-orange-600 font-semibold'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }}">
+                <span class="flex items-center justify-center w-9 h-9 rounded-lg
+                             {{ request()->routeIs('customer.profile.my-tickets')
                                  ? 'bg-orange-100 text-orange-600'
                                  : 'bg-gray-100 text-gray-500 group-hover:bg-orange-100 group-hover:text-orange-600' }}
                              transition-colors duration-200">
