@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $productCategories = ProductCategory::simplePaginate(10);
+        $productCategories = ProductCategory::query()->paginate(15);
         return view('admin.market.category.index' , compact('productCategories'));
     }
 

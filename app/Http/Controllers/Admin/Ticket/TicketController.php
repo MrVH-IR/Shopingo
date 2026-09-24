@@ -11,25 +11,25 @@ class TicketController extends Controller
 {
     public function newTickets()
     {
-        $tickets = Ticket::where('seen', 0)->simplePaginate(15);
+        $tickets = Ticket::query()->where('seen', 0)->paginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
     public function openTickets()
     {
-        $tickets = Ticket::where('status', 1)->simplePaginate(15);
+        $tickets = Ticket::query()->where('status', 1)->paginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
     public function closeTickets()
     {
-        $tickets = Ticket::where('status', 0)->simplePaginate(15);
+        $tickets = Ticket::query()->where('status', 0)->paginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
     public function index()
     {
-        $tickets = Ticket::simplePaginate(15);
+        $tickets = Ticket::query()->paginate(15);
         return view('admin.ticket.index', compact('tickets'));
     }
 
