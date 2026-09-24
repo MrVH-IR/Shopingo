@@ -98,6 +98,9 @@
             </div>
         </section>
     </div>
+
+    {{ $productCategories->links('admin.layouts.pagination', ['title' => 'دسته بندی']) }}
+
 @endsection
 
 @section('script')

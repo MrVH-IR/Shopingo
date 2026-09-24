@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 border-t border-slate-100 pt-4">{{ $tickets->links() }}</div>
+            {{ $tickets->links('admin.layouts.pagination', ['title' => 'تیکت']) }}
         </section>
     </div>
 @endsection

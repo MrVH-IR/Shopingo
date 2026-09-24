@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Models\Content\Page;
 use App\Models\Market\CartItem;
+use Common\Services\Products\ProductTrait;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class CustomerServiceProvider extends ServiceProvider
 {
+    use ProductTrait;
     /**
      * Register services.
      */
@@ -27,6 +29,9 @@ class CustomerServiceProvider extends ServiceProvider
         });
         View::composer('customer.layouts.footer', function ($view) {
             $view->with('pages', Page::select(['title', 'slug'])->orderByDesc('id')->get());
+        });
+        View::composer('customer.layouts.header', function ($view) {
+            $view->with('categories', $this->getProductCategoriesWithNoParents());
         });
     }
 }

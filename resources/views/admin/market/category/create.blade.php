@@ -46,6 +46,9 @@
                             <option value="">منو اصلی</option>
                             @foreach($productCategories as $productCategory)
                                 <option value="{{ $productCategory->id }}" @selected(old('parent_id') == $productCategory->id)>{{ $productCategory->name }}</option>
+                                @if($productCategory->children->isNotEmpty())
+                                    @include('admin.market.category.create-menu', ['productCategory' => $productCategory])
+                                @endif
                             @endforeach
                         </select>
                         @error('parent_id')

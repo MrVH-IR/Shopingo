@@ -156,4 +156,20 @@ trait ProductTrait
                 ->get()
         );
     }
+
+    protected function getProductCategoriesWithNoParents(): Collection
+    {
+        $key = 'categories:products:menu';
+
+        return Cache::remember(
+            $key,
+            now()->addHour(),
+            callback: fn() => ProductCategory::query()
+                ->select(['id', 'name', 'parent_id'])
+                ->whereNull('parent_id')
+                ->where('show_in_menu', 1)
+                ->with('children')
+                ->get()
+        );
+    }
 }
