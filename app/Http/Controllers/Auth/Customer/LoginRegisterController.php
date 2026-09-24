@@ -48,7 +48,7 @@ class LoginRegisterController extends Controller
                 $newUser['mobile'] = $validated['identify'];
             }
         } else {
-            $errorText = "شناسه ورودی شما نه شماره موباید است نه ایمیل";
+            $errorText = "شناسه ورودی شما نه شماره موبایل است نه ایمیل";
             return redirect()->route('auth.customer.login-register-form')
                 ->withErrors(["identify" => $errorText]);
         }
