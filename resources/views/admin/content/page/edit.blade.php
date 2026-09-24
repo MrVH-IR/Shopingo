@@ -77,6 +77,16 @@
                             <p class="text-sm text-rose-600">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="space-y-2 lg:col-span-2">
+                        <label for="customStyle" class="text-sm font-semibold text-slate-700">توجه: اگر قسمت محتوا را پر کرده اید این قسمت را خالی بگذارید. فقط یک قسمت را میتوانید پر کنید.</label>
+                        <br>
+                        <label for="customStyle" class="text-sm font-semibold text-slate-700">شخصی سازی با استفاده از تگ ها و استایل های HTML CSS</label>
+                        <textarea name="customStyle" id="customStyle" rows="10" class="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white">{{ old('body', $page->body) }}</textarea>
+                        @error('customStyle')
+                        <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">

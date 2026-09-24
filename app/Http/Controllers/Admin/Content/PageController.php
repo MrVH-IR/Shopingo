@@ -39,6 +39,7 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
+            if ($validated['customStyle']) $validated['body'] = $validated['customStyle'];
             $validated['slug'] = Str::slug(strtolower($request->title) . '-' . Str::random(5));
             $page = Page::create($validated);
             DB::commit();
@@ -80,6 +81,7 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
+            if ($validated['customStyle']) $validated['body'] = $validated['customStyle'];
             $validated['slug'] = Str::slug(strtolower($request->title) . '-' . Str::random(5));
             $page->update($validated);
             DB::commit();

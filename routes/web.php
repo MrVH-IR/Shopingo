@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Security\SecurityController;
 use Common\Services\{Home\HomeController,
     Market\ProductController,
+    Page\PageController,
     Profile\FavoriteController,
     Profile\OrderController,
     Profile\ProfileController as UserProfileController,
@@ -17,12 +18,9 @@ use Common\Services\{Home\HomeController,
     Products\ProductController as CustomerProductController
 };
 use Illuminate\Support\Facades\Route;
-
-Route::get('/verify-human', [SecurityController::class, 'show'])
-    ->name('verify-human');
-
-Route::post('/verify-human', [SecurityController::class, 'verify'])
-    ->name('verify-human.check');
+// Security Check Routes
+Route::get('/verify-human', [SecurityController::class, 'show'])->name('verify-human');
+Route::post('/verify-human', [SecurityController::class, 'verify'])->name('verify-human.check');
 
 Route::get('/', [HomeController::class , 'index'])->middleware('turnstile')->name('customer.home');
 
@@ -35,15 +33,8 @@ Route::get('/contact-us', function () {
     return view('informations.contact');
 })->name('contact-us');
 
-Route::get('/partnership', function() {
-    return view('informations.partnership');
-});
 Route::get('/privacy-policy', function() {
     return view('informations.privacy');
-});
-Route::get('/faq', function() {
-    $faqs = \App\Models\Content\FAQ::where('status', 1)->paginate(10);
-    return view('informations.faq', compact('faqs'));
 });
 // End Information Route
 
@@ -120,4 +111,11 @@ Route::prefix('products')
     ->group(function () {
         Route::get('/{category?}', [CustomerProductController::class, 'index'])->name('products');
         Route::get('/search', [CustomerProductController::class, 'search'])->name('search');
+    });
+
+Route::prefix('pages')
+    ->name('pages.')
+    ->middleware('turnstile')
+    ->group(function () {
+        Route::get('/{page:slug}', [PageController::class, 'index'])->name('customer');
     });
