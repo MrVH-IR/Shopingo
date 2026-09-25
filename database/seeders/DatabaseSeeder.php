@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
 //            DeliverySeeder::class,
 //            ProvinceSeeder::class,
 //            CitySeeder::class,
+//            ProductCategorySeeder::class,
         ]);
     }
 }

@@ -27,7 +27,7 @@ Route::get('/', [HomeController::class , 'index'])->middleware('turnstile')->nam
 // Information
 Route::get('/about-us', function () {
     return view('informations.about');
-});
+})->name('about-us');
 
 Route::get('/contact-us', function () {
     return view('informations.contact');

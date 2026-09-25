@@ -88,7 +88,7 @@
                     </table>
                 </div>
             </div>
-            <div class="mt-6 border-t border-slate-100 pt-4">{{ $emails->links() }}</div>
+            {{ $emails->links('admin.layouts.pagination', ['title' => 'ایمیل ها']) }}
         </section>
     </div>
 @endsection

@@ -1,0 +1,377 @@
+/* =========================================================
+     MAIN NAVIGATION
+   ========================================================= */
+
+.top-nav {
+    position: relative;
+    z-index: 1000;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+}
+
+.navigation-links{display:flex;align-items:center;gap:4px;margin-right:10px;flex-wrap:wrap}
+.navigation-link{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:10px;color:#475569;text-decoration:none;font-size:13px;font-weight:500;white-space:nowrap;transition:all .2s ease}
+.navigation-link i{font-size:13px;color:#64748b;transition:color .2s ease}
+.navigation-link:hover{background:#f1f5f9;color:#0f172a}
+.navigation-link:hover i{color:#0f172a}
+.navigation-link-sale{color:#dc2626;background:#fff7f7}
+.navigation-link-sale i{color:#dc2626}
+.navigation-link-sale:hover{background:#fee2e2;color:#b91c1c}
+.navigation-link-badge{font-size:9px;font-weight:700;padding:2px 5px;border-radius:5px;background:#dc2626;color:#fff;line-height:1}
+/* =========================================================
+   CATEGORIES TRIGGER
+========================================================= */
+
+.categories-menu {
+    position: relative;
+    height: 52px;
+}
+
+.categories-menu-trigger {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 18px;
+    border: 0;
+    background: transparent;
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color .2s ease;
+}
+
+.categories-menu-trigger:hover {
+    color: #2563eb;
+}
+
+.categories-menu-trigger > i:first-child {
+    font-size: 16px;
+}
+
+.categories-menu-arrow {
+    margin-right: 5px;
+    font-size: 10px;
+    transition: transform .2s ease;
+}
+
+
+/* =========================================================
+   MEGA MENU
+========================================================= */
+
+.categories-mega-menu {
+    position: absolute;
+    top: 52px;
+    right: 0;
+    width: min(1100px, calc(100vw - 30px));
+    min-height: 430px;
+    display: flex;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 15px 45px rgba(15, 23, 42, .12);
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+}
+
+.categories-menu:hover .categories-mega-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.categories-menu:hover .categories-menu-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   LEFT SIDEBAR
+========================================================= */
+
+.categories-sidebar {
+    width: 235px;
+    flex: 0 0 235px;
+    background: #f8fafc;
+    border-left: 1px solid #e5e7eb;
+    padding: 10px 0;
+    overflow-y: auto;
+}
+
+.category-sidebar-item {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 18px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background .15s ease, color .15s ease;
+}
+
+.category-sidebar-item:hover,
+.category-sidebar-item.active {
+    background: #fff;
+    color: #2563eb;
+}
+
+.category-sidebar-item i {
+    font-size: 9px;
+    opacity: .6;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+========================================================= */
+
+.categories-content {
+    flex: 1;
+    min-width: 0;
+    background: #fff;
+    padding: 24px 26px;
+}
+
+.category-panel {
+    display: none;
+    height: 100%;
+}
+
+.category-panel.active {
+    display: block;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.category-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.category-panel-title {
+    display: block;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.category-panel-count {
+    display: block;
+    margin-top: 5px;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.view-all-categories {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.view-all-categories:hover {
+    color: #1d4ed8;
+}
+
+.view-all-categories i {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   CATEGORY COLUMNS
+========================================================= */
+
+.category-columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 24px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding-left: 5px;
+}
+
+.category-column {
+    min-width: 0;
+}
+
+.category-column-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+    margin-bottom: 10px;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.category-column-title:hover {
+    color: #2563eb;
+}
+
+.category-column-title i {
+    color: #9ca3af;
+    font-size: 8px;
+}
+
+.category-column-items {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-right: 2px;
+}
+
+.category-column-item {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.7;
+    text-decoration: none;
+    transition: color .15s ease, transform .15s ease;
+}
+
+.category-column-item:hover {
+    color: #2563eb;
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.category-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   NAVIGATION LINKS
+========================================================= */
+
+.navigation-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 15px;
+    height: 52px;
+}
+
+.navigation-link {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    color: #4b5563;
+    font-size: 12px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .2s ease, background .2s ease;
+}
+
+.navigation-link:hover {
+    color: #2563eb;
+    background: #f8fafc;
+}
+
+.navigation-link-sale {
+    color: #dc2626;
+}
+
+.navigation-link-sale:hover {
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.categories-sidebar::-webkit-scrollbar,
+.category-columns::-webkit-scrollbar {
+    width: 5px;
+}
+
+.categories-sidebar::-webkit-scrollbar-track,
+.category-columns::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.categories-sidebar::-webkit-scrollbar-thumb,
+.category-columns::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1199px) {
+    .categories-mega-menu {
+        width: min(950px, calc(100vw - 30px));
+    }
+
+    .categories-sidebar {
+        width: 210px;
+        flex-basis: 210px;
+    }
+
+    .navigation-link {
+        padding: 0 9px;
+        font-size: 11px;
+    }
+
+    .category-columns {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991px) {
+    .categories-mega-menu {
+        width: calc(100vw - 30px);
+    }
+
+    .navigation-links {
+        gap: 0;
+    }
+
+    .navigation-link {
+        padding: 0 7px;
+    }
+}

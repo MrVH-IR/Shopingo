@@ -21,7 +21,7 @@ class EmailController extends Controller
     {
         $emails = Email::orderBy("created_at", "DESC")
             ->with('files')
-            ->simplePaginate(10, ['*'], 'صفحه');
+            ->paginate(10, ['*'], 'صفحه');
         return view('admin.notification.email.index' , compact('emails'));
     }
 
@@ -196,5 +196,10 @@ class EmailController extends Controller
     public function downloadFile(EmailFile $file)
     {
         return response()->download(storage_path('app'. DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . $file->file_path));
+    }
+
+    public function sendMail(Email $email)
+    {
+
     }
 }
