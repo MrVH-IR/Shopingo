@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Content\Page;
 use App\Models\Market\CartItem;
+use App\Models\Setting\Setting;
 use Common\Services\Products\ProductTrait;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +33,9 @@ class CustomerServiceProvider extends ServiceProvider
         });
         View::composer('customer.layouts.header', function ($view) {
             $view->with('categories', $this->getProductCategoriesWithNoParents());
+        });
+        View::composer(['customer.layouts.head-tag', 'customer.layouts.header.logo'], function ($view) {
+            $view->with('settings', Setting::first());
         });
     }
 }

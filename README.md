@@ -100,7 +100,10 @@ php artisan migrate
 php artisan db:seed
 php artisan storage:link
 php artisan serve
+php artisan queue:work -vvv
+php artisan schedule:work
 ```
+#### User Supervisor Or SystemD For Queues & Schedule ALT (PHP-FPM)
 
 # Docker Installation
 
@@ -155,6 +158,10 @@ php artisan key:generate
 php artisan migrate
 
 php artisan storage:link
+
+php artisan queue:work -vvv
+
+php artisan schedule:work
 ```
 
 ---
@@ -268,22 +275,6 @@ sudo systemctl restart php8.4-fpm
 sudo chown -R www-data:www-data storage bootstrap/cache
 
 sudo chmod -R 775 storage bootstrap/cache
-```
-
----
-
-## Laravel Commands
-
-```bash
-composer install
-
-cp .env.example .env
-
-php artisan key:generate
-
-php artisan migrate
-
-php artisan storage:link
 ```
 
 ---

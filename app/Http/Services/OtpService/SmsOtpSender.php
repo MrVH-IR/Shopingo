@@ -3,7 +3,14 @@
 namespace App\Http\Services\OtpService;
 
 use App\Contracts\OtpSender;
+use App\Models\Notify\SMS;
+use Exception;
+use HttpException;
+use Illuminate\Http\Client\HttpClientException;
+use Illuminate\Support\Facades\Log;
 use Kavenegar\KavenegarApi;
+use File;
+
 
 class SmsOtpSender implements OtpSender {
 
@@ -23,5 +30,31 @@ class SmsOtpSender implements OtpSender {
             $to,
             $message
         );
+    }
+
+    public function sendNotification(string $to, string $message, ?string $subject = null, ?File $file = null): bool
+    {
+        try {
+            $api = new KavenegarApi(
+                config('app.kavenegar_api'),
+                insecure: app()->isLocal()
+            );
+
+            $api->Send(
+                config('app.kavenegar_number'),
+                $to,
+                $message,
+            );
+        } catch (HttpClientException | HttpException | Exception $e) {
+            Log::error("SMS Notification Was Not Send: " , [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace(),
+                'user' => $to,
+                'sendMessage' => $message,
+            ]);
+            return false;
+        }
+        return true;
     }
 }

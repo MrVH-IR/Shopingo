@@ -9,11 +9,19 @@
                 class="spinner-border spinner-border-sm text-white position-absolute"
                 role="status">
             </div>
-            <img
-                id="logo-image"
-                src="{{ asset('customer-assets/images/logo/android-chrome-512x512.png') }}"
-                alt="Logo"
-                class="hidden w-11 h-11 object-contain rounded-lg">
+            @if($settings?->logo)
+                <img
+                    id="logo-image"
+                    src="{{ asset($settings?->logo) }}"
+                    alt="Logo"
+                    class="hidden w-11 h-11 object-contain rounded-lg">
+            @else
+                <img
+                    id="logo-image"
+                    src="{{ asset('customer-assets/images/logo/android-chrome-512x512.png') }}"
+                    alt="Logo"
+                    class="hidden w-11 h-11 object-contain rounded-lg">
+            @endif
         </div>
         <div class="hidden lg:block">
             <h1

@@ -24,7 +24,6 @@ class EmailRequest extends FormRequest
         return [
             "subject" => "required|string|min:3|max:255",
             "body" => "required|string|min:3|max:500",
-            "status" => "required|boolean|numeric|in:0,1",
             "published_at" => "required|string",
             "file" => "nullable|array",
             "file.*" => [
@@ -46,10 +45,6 @@ class EmailRequest extends FormRequest
             "body.string" => "فیلد متن پیام نباید کاراکتر های غیر مجاز داشته باشد",
             "body.max" => "فیلد متن پیام نباید بیشتر از 500 کاراکتر باشد",
             "body.min" => "فیلد متن پیام نباید کمتر از 3 کاراکتر باشد",
-            "status.in" => "فیلد وضعیت باید فعال یا غیر فعال باشد",
-            "status.boolean" => "فیلد وضعیت باید فعال یا غیر فعال باشد",
-            "status.required" => "فیلد وضعیت الزامی است",
-            "status.numeric" => "فیلد وضغیت باید فعال یا غیر فعال باشد",
             "published_at.required" => "فیلد تاریخ انتشار الزامی است",
             "published_at.date" => "فیلد تاریخ انتشار باید تاریخ باشد",
             "file.file"       => "فایلی که انتخاب کرده‌اید معتبر نیست.",

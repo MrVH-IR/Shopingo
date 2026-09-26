@@ -33,7 +33,7 @@
 
             <form action="{{ route('admin.email.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
-                
+
                 <div class="grid gap-6 lg:grid-cols-2">
                     <div class="space-y-2">
                         <label for="subject" class="text-sm font-semibold text-slate-700">عنوان ایمیل</label>
@@ -48,16 +48,6 @@
                             <i class="fas fa-calendar absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         </div>
                         @include('admin.components.ui.field-error', ['name' => 'published_at'])
-                    </div>
-
-                    <div class="space-y-2">
-                        <label for="status" class="text-sm font-semibold text-slate-700">وضعیت</label>
-                        <select name="status" id="status" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-100">
-                            <option value="default">انتخاب کنید</option>
-                            <option value="0" @selected(old('status') == 0)>غیرفعال</option>
-                            <option value="1" @selected(old('status') == 1)>فعال</option>
-                        </select>
-                        @include('admin.components.ui.field-error', ['name' => 'status'])
                     </div>
 
                     <div class="space-y-3 lg:col-span-2">
@@ -75,7 +65,7 @@
                             @endfor
                         </div>
                     </div>
-                    
+
 
                     <div class="space-y-2 lg:col-span-2">
                         <label for="body" class="text-sm font-semibold text-slate-700">متن ایمیل</label>

@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Models\Content\Comment;
 use App\Models\Notification;
+use App\Models\Notify\Email;
+use App\Models\Notify\SMS;
+use App\Observers\Admin\EmailObserver;
+use App\Observers\Admin\SmsObserver;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -30,5 +34,7 @@ class AdminServiceProvider extends ServiceProvider
             $view->with('unSeenComment' , Comment::where('seen' , 0)->get());
             $view->with('notifications' , Notification::where('read_at' , null)->get());
         });
+        Email::observe(EmailObserver::class);
+        SMS::observe(SMSObserver::class);
     }
 }

@@ -34,16 +34,19 @@ class SMSController extends Controller
      */
     public function store(SMSRequest $request , SMS $sms , TimeService $timeService)
     {
-        list($jalaliDate , $time) = explode(' ' , $request->published_at);
-        $jy = substr($request->published_at,0,4);
-        $jm = substr($request->published_at,5,2);
-        $jd = substr($request->published_at,8,2);
-        $published_at = $timeService->jalali_to_gregorian($jy, $jm , $jd);
-        $gy = $published_at[0];
-        $gm = str_pad($published_at[1], 2, "0", STR_PAD_LEFT);
-        $gd = str_pad($published_at[2], 2, "0", STR_PAD_LEFT);
+        [$date, $time] = explode(' ', $request->published_at);
 
-        $published_at = "$gy-$gm-$gd " . $time;
+        [$year, $month, $day] = explode('/', $date);
+        $tempType = $timeService->jalali_to_gregorian($year, $month, $day);
+
+        $published_at = sprintf(
+            '%04d-%02d-%02d %s',
+            $tempType[0],
+            $tempType[1],
+            $tempType[2],
+            $time
+        );
+
         DB::beginTransaction();
         try {
             $validated = $request->validated();
@@ -146,5 +149,10 @@ class SMSController extends Controller
     public function status(SMS $sms)
     {
         return $this->changeStatus($sms);
+    }
+
+    public function sendSMS()
+    {
+
     }
 }
