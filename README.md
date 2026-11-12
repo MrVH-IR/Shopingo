@@ -1,7 +1,7 @@
 ## About Shopingo - Laravel E-Commerce Project
 
 A modern Laravel-based e-commerce application with a powerful admin panel.  
-Built with **Laravel 12** and **PHP 8.4**, this project uses **jQuery**, **Bootstrap**, and **FontAwesome** to provide a clean and responsive UI for both the admin and customer sides.
+Built with **Laravel 13** and **PHP 8.4**, this project uses **jQuery**, **Bootstrap**, and **FontAwesome** to provide a clean and responsive UI for both the admin and customer sides.
 
 ## 🚀 Features
 
