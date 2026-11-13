@@ -4,6 +4,7 @@ namespace Common\Services\Payment\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ChooseAddressAndDeliveryRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class ChooseAddressAndDeliveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address' => 'required|exists:addresses,id',
-            'delivery_type' => 'required|exists:deliveries,id',
+            'address' => ['required', 'integer', Rule::exists('addresses', 'id')->where('user_id', auth()->id())],
+            'delivery_type' => ['required', 'integer', 'exists:deliveries,id'],
         ];
     }
 

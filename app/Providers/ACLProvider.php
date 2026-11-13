@@ -26,7 +26,7 @@ class ACLProvider extends ServiceProvider
     {
         $tables = Schema::getTables();
         if (empty($tables)) {
-            exit(500);
+            abort(500, "Permission Table Does not exists. Either comment my condition or create permission table.");
         }
         $permissions = Cache::remember('permissions', now()->addHours(3), function () {
             return Permission::where('status', 1)->get();
